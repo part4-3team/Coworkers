@@ -1,10 +1,9 @@
 ---
-name: "✨ Feat"
-about: 새로운 기능 구현
-title: '[✨Feat]'
-labels: '✨ Feat'
-assignees: ''
-
+name: Feature report
+about: 기능 구현
+title: "[✨Feature] "
+labels: "✨ Feature"
+assignees: ""
 ---
 
 ## 📌 설명
