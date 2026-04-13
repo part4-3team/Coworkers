@@ -2,7 +2,7 @@
 name: "✨ Feat"
 about: 새로운 기능 구현
 title: '[✨Feat]'
-labels: '✨Feat'
+labels: 'Feat'
 assignees: ''
 
 ---
