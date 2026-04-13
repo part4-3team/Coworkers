@@ -1,8 +1,8 @@
 ---
-name: "✨ Feature"
+name: "✨ Feat"
 about: 새로운 기능 구현
-title: '[✨Feature]'
-labels: 'feature'
+title: '[✨Feat]'
+labels: '✨Feat'
 assignees: ''
 
 ---
