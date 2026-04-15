@@ -12,6 +12,11 @@ code_review:
     include_drafts: true
 ignore_patterns:
   - "*.lock"
+  - "*.md"
+  - "**/*.d.ts"
   - ".next/**"
   - "node_modules/**"
   - "dist/**"
+  - "public/**"
+  - "*.config.ts"
+  - "*.config.js"
