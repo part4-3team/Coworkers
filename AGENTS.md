@@ -64,6 +64,10 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - 기본 스타일링은 Tailwind를 사용한다.
 - 인라인 스타일과 다른 CSS-in-JS 혼용은 지양한다.
 - Tailwind에는 공통 색상 위주로 정의하고, 폰트 사이즈는 별도 커스텀 정의를 최소화한다.
+- Tailwind 임의값 문법인 `[]` 사용은 지양한다.
+- 간격, 크기, 반경, 위치 등 수치가 필요한 스타일은 Tailwind 기본 scale 값을 우선 사용한다.
+- 예: `w-[320px]`보다 `w-80`, `p-[16px]`보다 `p-4`, `gap-[12px]`보다 `gap-3`를 사용한다.
+- Figma 수치와 완전히 일치하는 기본 scale이 없을 때만 임의값 사용을 검토한다.
 - 모바일 퍼스트 기준으로 작성한다.
 - 반응형 처리는 프로젝트 브레이크포인트 기준을 따른다.
 
@@ -167,6 +171,11 @@ import Button from "../../common/Button";
 // 사용
 import Button from "@/components/common/Button";
 ```
+
+예외:
+
+- Next.js 전역 CSS처럼 프레임워크 관례상 같은 폴더에서 직접 연결하는 파일은 상대경로를 허용한다.
+- 예: `src/app/layout.tsx`의 `import "./globals.css";`
 
 ## 주석 규칙
 
