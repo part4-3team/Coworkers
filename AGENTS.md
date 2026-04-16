@@ -27,6 +27,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - Zod: 폼/API 데이터 검증과 TypeScript 타입 추론
   - React Hook Form: 폼 상태와 검증 흐름 관리
   - NextAuth.js: Next.js 앱 인증 기능 보조
+  - clsx: 조건부 className 조합
+  - tailwind-merge: Tailwind class 충돌 병합
   - Gitmoji: 커밋 메시지 가독성 향상
 
 ## 작업 원칙
@@ -88,6 +90,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - 간격, 크기, 반경, 위치 등 수치가 필요한 스타일은 Tailwind 기본 scale 값을 우선 사용한다.
 - 예: `w-[320px]`보다 `w-80`, `p-[16px]`보다 `p-4`, `gap-[12px]`보다 `gap-3`를 사용한다.
 - Figma 수치와 완전히 일치하는 기본 scale이 없을 때만 임의값 사용을 검토한다.
+- 조건부 className 조합은 `clsx`를 직접 쓰기보다 `@/utils/cn`의 `cn` 유틸을 사용한다.
+- Tailwind class 충돌이 생길 수 있는 컴포넌트 props 병합도 `cn` 유틸을 사용한다.
 - 모바일 퍼스트 기준으로 작성한다.
 - 반응형 처리는 프로젝트 브레이크포인트 기준을 따른다.
 
