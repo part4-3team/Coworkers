@@ -48,7 +48,7 @@ async function getErrorMessage(res: Response) {
  * @param endpoint - API 엔드포인트
  * @param options - fetch 옵션 및 토큰
  */
-export async function fetcher<T>(
+export async function apiClient<T>(
   endpoint: string,
   options: FetchOptions = {},
 ): Promise<T> {

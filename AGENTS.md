@@ -27,6 +27,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - Zod: 폼/API 데이터 검증과 TypeScript 타입 추론
   - React Hook Form: 폼 상태와 검증 흐름 관리
   - NextAuth.js: Next.js 앱 인증 기능 보조
+  - clsx: 조건부 className 조합
+  - tailwind-merge: Tailwind class 충돌 병합
   - Gitmoji: 커밋 메시지 가독성 향상
 
 ## 작업 원칙
@@ -43,6 +45,23 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - API 연결은 fetch 기반 공통 래퍼를 우선 사용한다.
 - 절대경로 별칭 `@/`를 사용하고 상대경로 import는 사용하지 않는다.
 - Next.js 관련 코드를 작성하기 전에는 이 프로젝트에 설치된 Next.js 문서를 확인한다.
+
+## 프로젝트 폴더 구조
+
+- `public`: 외부 서비스가 URL로 직접 접근해야 하는 정적 파일과 공유 이미지
+- `public/fonts`: 로컬 폰트 파일
+- `src/api`: fetch 기반 API 함수와 공통 API 클라이언트
+- `src/assets`: 코드에서 import해서 사용하는 아이콘, 이미지, 로고
+- `src/app`: Next.js App Router 라우트
+- `src/components/common`: 전역 공통 컴포넌트
+- `src/components/layout`: 레이아웃 관련 컴포넌트
+- `src/components/{feature}`: 기능별 컴포넌트
+- `src/constants`: 공통 상수
+- `src/contexts`: Toast, Modal 등 클라이언트 UI 전역 상태
+- `src/hooks`: 커스텀 훅
+- `src/styles`: 전역 스타일과 Tailwind v4 관련 CSS
+- `src/types`: TypeScript 공통 타입
+- `src/utils`: 공통 유틸리티와 공통 설정
 
 ## 코드 작성 원칙
 
@@ -63,11 +82,16 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 - 기본 스타일링은 Tailwind를 사용한다.
 - 인라인 스타일과 다른 CSS-in-JS 혼용은 지양한다.
+- 기본 본문 폰트는 Pretendard를 사용한다.
+- 로고 텍스트 폰트는 Montserrat Alternates를 사용한다.
+- 로고 텍스트에는 Tailwind 클래스 `font-logo`를 사용한다.
 - Tailwind에는 공통 색상 위주로 정의하고, 폰트 사이즈는 별도 커스텀 정의를 최소화한다.
 - Tailwind 임의값 문법인 `[]` 사용은 지양한다.
 - 간격, 크기, 반경, 위치 등 수치가 필요한 스타일은 Tailwind 기본 scale 값을 우선 사용한다.
 - 예: `w-[320px]`보다 `w-80`, `p-[16px]`보다 `p-4`, `gap-[12px]`보다 `gap-3`를 사용한다.
 - Figma 수치와 완전히 일치하는 기본 scale이 없을 때만 임의값 사용을 검토한다.
+- 조건부 className 조합은 `clsx`를 직접 쓰기보다 `@/utils/cn`의 `cn` 유틸을 사용한다.
+- Tailwind class 충돌이 생길 수 있는 컴포넌트 props 병합도 `cn` 유틸을 사용한다.
 - 모바일 퍼스트 기준으로 작성한다.
 - 반응형 처리는 프로젝트 브레이크포인트 기준을 따른다.
 
@@ -175,7 +199,7 @@ import Button from "@/components/common/Button";
 예외:
 
 - Next.js 전역 CSS처럼 프레임워크 관례상 같은 폴더에서 직접 연결하는 파일은 상대경로를 허용한다.
-- 예: `src/app/layout.tsx`의 `import "./globals.css";`
+- 현재 전역 CSS는 `src/app/layout.tsx`에서 `import "@/styles/globals.css";`로 가져온다.
 
 ## 주석 규칙
 
