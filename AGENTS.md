@@ -48,8 +48,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## 프로젝트 폴더 구조
 
-아직 구현 전인 라우트와 컴포넌트는 `.gitkeep`으로 폴더만 유지한다.
+아직 구현 전인 라우트와 컴포넌트 폴더는 `.gitkeep`으로 폴더만 유지한다.
 `page.tsx`나 컴포넌트 파일은 해당 기능 구현 시점에 생성한다.
+App Router 특수 파일은 Next.js 파일명 규칙을 우선한다.
+예: `page.tsx`, `layout.tsx`, `route.ts`, `loading.tsx`, `error.tsx`, `not-found.tsx`
+실제 화면 컴포넌트는 필요하면 PascalCase 파일로 분리해서 사용한다.
 
 ```text
 public/
@@ -104,6 +107,7 @@ src/
 │
 ├─ components/
 │  ├─ common/                         // 어디서든 재사용 가능한 전역 공통 UI 컴포넌트
+│  │  ├─ Logo.tsx                     // 서비스 로고 텍스트
 │  │  ├─ Button.tsx                   // 공용 버튼
 │  │  ├─ Input.tsx                    // 공용 입력창
 │  │  ├─ Dropdown.tsx                 // 공용 드롭다운
@@ -111,6 +115,7 @@ src/
 │  ├─ layout/                         // 페이지 전체 레이아웃 컴포넌트
 │  │  └─ Header.tsx                   // 상단 네비게이션바
 │  ├─ landing/                        // 랜딩 페이지 전용 컴포넌트
+│  │  ├─ MainPage.tsx                 // 랜딩 페이지 실제 화면 컴포넌트
 │  │  └─ MainBanner.tsx
 │  ├─ auth/                           // 로그인·회원가입 관련 UI 컴포넌트
 │  │  ├─ LoginForm.tsx
@@ -225,6 +230,8 @@ src/
   - 예: `task-list`, `auth-form`
 - 컴포넌트/페이지 `.tsx`: PascalCase
   - 예: `MainPage.tsx`, `TaskCard.tsx`
+- Next.js App Router 특수 파일은 프레임워크 규칙을 우선한다.
+  - 예: `page.tsx`, `layout.tsx`, `route.ts`
 - 일반 JS/TS 파일: camelCase
   - 예: `useAuth.ts`, `apiClient.ts`
 - 아이콘 에셋: `ic_` + snake_case

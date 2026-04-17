@@ -49,6 +49,8 @@
 #### 파일명
 
 - 컴포넌트/페이지 `.tsx` 파일은 `PascalCase` 사용. 예시: `MainPage.tsx`, `TaskCard.tsx`
+- Next.js App Router 특수 파일은 프레임워크 규칙을 우선한다. 예시: `page.tsx`, `layout.tsx`, `route.ts`
+- App Router 특수 파일 안의 실제 화면 컴포넌트는 필요하면 `PascalCase` 파일로 분리한다.
 - 훅, 유틸, API, 일반 모듈 파일은 `camelCase.ts` 사용. 예시: `useAuth.ts`, `apiClient.ts`
 - 아이콘 에셋은 `ic_` + snake_case 사용. 예시: `ic_arrow.svg`
 - 이미지 에셋은 `img_` + snake_case 사용. 예시: `img_back.png`, `img_logo.png`
