@@ -1,8 +1,8 @@
-@import "tailwindcss";
-@import "./colors.css";
+@import 'tailwindcss';
+@import './colors.css';
 
 body {
-  background: var(--color-background-secondary);
+  background: var(--color-background-primary);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
 }
