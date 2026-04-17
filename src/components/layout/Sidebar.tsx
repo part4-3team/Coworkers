@@ -62,8 +62,8 @@ export default function Sidebar() {
             <Image
               src={isExpanded ? icIndentLeftLarge : icIndentRightLarge}
               alt=""
-              width={22}
-              height={22}
+              width={isExpanded ? 25 : 22}
+              height={isExpanded ? 25 : 22}
               className={cn(!isExpanded && 'relative translate-x-0.5')}
             />
           </button>
