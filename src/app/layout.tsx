@@ -1,8 +1,12 @@
+/**
+ * 애플리케이션의 루트 레이아웃을 정의하는 파일입니다.
+ */
+
 import type { Metadata } from 'next';
-import { Montserrat_Alternates } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import Providers from '@/app/providers';
+import { cn } from '@/utils/cn';
 
 import '@/styles/globals.css';
 
@@ -10,13 +14,6 @@ const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
   variable: '--font-pretendard',
   weight: '45 920',
-  display: 'swap',
-});
-
-const montserratAlternates = Montserrat_Alternates({
-  variable: '--font-montserrat-alternates',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
   display: 'swap',
 });
 
@@ -31,10 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="ko"
-      className={`${pretendard.variable} ${montserratAlternates.variable} h-full antialiased`}
-    >
+    <html lang="ko" className={cn(pretendard.variable, 'h-full antialiased')}>
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
       </body>
