@@ -48,20 +48,112 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## 프로젝트 폴더 구조
 
-- `public`: 외부 서비스가 URL로 직접 접근해야 하는 정적 파일과 공유 이미지
-- `public/fonts`: 로컬 폰트 파일
-- `src/api`: fetch 기반 API 함수와 공통 API 클라이언트
-- `src/assets`: 코드에서 import해서 사용하는 아이콘, 이미지, 로고
-- `src/app`: Next.js App Router 라우트
-- `src/components/common`: 전역 공통 컴포넌트
-- `src/components/layout`: 레이아웃 관련 컴포넌트
-- `src/components/{feature}`: 기능별 컴포넌트
-- `src/constants`: 공통 상수
-- `src/contexts`: Toast, Modal 등 클라이언트 UI 전역 상태
-- `src/hooks`: 커스텀 훅
-- `src/styles`: 전역 스타일과 Tailwind v4 관련 CSS
-- `src/types`: TypeScript 공통 타입
-- `src/utils`: 공통 유틸리티와 공통 설정
+아직 구현 전인 라우트와 컴포넌트 폴더는 `.gitkeep`으로 폴더만 유지한다.
+`page.tsx`나 컴포넌트 파일은 해당 기능 구현 시점에 생성한다.
+App Router 특수 파일은 Next.js 파일명 규칙을 우선한다.
+예: `page.tsx`, `layout.tsx`, `route.ts`, `loading.tsx`, `error.tsx`, `not-found.tsx`
+실제 화면 컴포넌트는 필요하면 PascalCase 파일로 분리해서 사용한다.
+
+```text
+public/
+├─ favicon.ico                        // 브라우저 탭 아이콘
+├─ fonts/                             // 웹폰트 파일 보관 (woff2 등)
+└─ og-image.png                       // 외부 서비스가 URL로 직접 접근하는 OG 공유 이미지, 이미지 확정 시 추가
+
+src/
+├─ api/                               // 서버와 통신하는 fetch 기반 API 함수 모음
+│  ├─ apiClient.ts                    // 공통 fetcher (baseURL, 헤더, 에러 처리 등 설정)
+│  ├─ authApi.ts                      // 로그인·회원가입·토큰 갱신 등 인증 관련 API
+│  ├─ groupApi.ts                     // 팀 생성·수정·삭제·멤버 초대 등 팀/그룹 관련 API
+│  ├─ taskApi.ts                      // 할 일·할 일 목록 생성·수정·삭제·완료 처리 API
+│  ├─ commentApi.ts                   // 할 일 상세·게시판 댓글 생성·수정·삭제 API
+│  └─ boardApi.ts                     // 자유게시판 게시글 CRUD API
+│
+├─ assets/                            // JS/TS에서 import해서 쓰는 내부 정적 에셋
+│  ├─ icons/
+│  │  └─ ic_*.svg                     // 아이콘 SVG 파일
+│  ├─ images/
+│  │  └─ img_*.png                    // 일반 이미지 파일
+│  ├─ logos/
+│  │  └─ logo.svg                     // 서비스 로고 SVG
+│  └─ index.ts                        // 에셋 일괄 export 배럴 파일
+│
+├─ app/                               // Next.js App Router 기반 페이지 라우트 루트
+│  ├─ layout.tsx                      // 전체 앱 공통 레이아웃
+│  ├─ page.tsx                        // 랜딩 페이지 "/"
+│  ├─ providers.tsx                   // React Query, Toast 등 클라이언트 Provider 묶음
+│  ├─ login/                          // 로그인 페이지 "/login"
+│  │  └─ page.tsx                     // 이메일·비밀번호 입력, 소셜 로그인 버튼 포함
+│  ├─ signup/                         // 회원가입 페이지 "/signup"
+│  │  └─ page.tsx                     // 이메일·이름·비밀번호 입력, 유효성 검사 포함
+│  ├─ oauth/
+│  │  └─ signup/
+│  │     └─ [provider]/               // "/oauth/signup/{provider}"
+│  │        └─ page.tsx               // OAuth 후 이름 입력해서 최종 가입 처리
+│  ├─ addteam/                        // 팀 생성 페이지 "/addteam"
+│  │  └─ page.tsx                     // 팀 이름·프로필 이미지 입력 후 팀 생성
+│  ├─ myhistory/                      // 마이 히스토리 페이지 "/myhistory"
+│  │  └─ page.tsx                     // 날짜별 내가 완료한 할 일 목록 표시
+│  ├─ mypage/                         // 계정 설정 페이지 "/mypage"
+│  │  └─ page.tsx                     // 프로필·비밀번호 변경, 회원 탈퇴
+│  ├─ boards/                         // 자유게시판 페이지 "/boards"
+│  │  └─ page.tsx                     // 게시글 목록·베스트 게시글·검색 기능 포함
+│  └─ [teamId]/                       // 팀 페이지 "/{teamId}"
+│     ├─ page.tsx                     // 팀 정보·할 일 목록·멤버 리스트·리포트 표시
+│     ├─ tasklist/                    // 할 일 리스트 페이지 "/{teamId}/tasklist"
+│     │  └─ page.tsx                  // 할 일 목록, 할 일 추가·반복 설정
+│     └─ [taskId]/                    // 할 일 상세 페이지 "/{teamId}/{taskId}"
+│        └─ page.tsx                  // 할 일 상세·수정·삭제·완료·댓글 CRUD
+│
+├─ components/
+│  ├─ common/                         // 어디서든 재사용 가능한 전역 공통 UI 컴포넌트
+│  │  ├─ Logo.tsx                     // 서비스 로고 텍스트
+│  │  ├─ Button.tsx                   // 공용 버튼
+│  │  ├─ Input.tsx                    // 공용 입력창
+│  │  ├─ Dropdown.tsx                 // 공용 드롭다운
+│  │  └─ Modal.tsx                    // 공용 모달
+│  ├─ layout/                         // 페이지 전체 레이아웃 컴포넌트
+│  │  └─ Header.tsx                   // 상단 네비게이션바
+│  ├─ landing/                        // 랜딩 페이지 전용 컴포넌트
+│  │  ├─ MainPage.tsx                 // 랜딩 페이지 실제 화면 컴포넌트
+│  │  └─ MainBanner.tsx
+│  ├─ auth/                           // 로그인·회원가입 관련 UI 컴포넌트
+│  │  ├─ LoginForm.tsx
+│  │  ├─ SignupForm.tsx
+│  │  └─ OAuthButton.tsx
+│  ├─ team/                           // 팀 관련 UI 컴포넌트
+│  │  └─ TeamCard.tsx
+│  ├─ task/                           // 할 일 관련 UI 컴포넌트
+│  │  └─ TaskCard.tsx
+│  └─ board/                          // 자유게시판 관련 UI 컴포넌트
+│     └─ ArticleCard.tsx
+│
+├─ constants/
+│  └─ ROUTES.ts                       // 앱 내 모든 페이지 경로 상수
+│
+├─ contexts/                          // 전역 클라이언트 UI 상태 관리
+│  └─ ToastContext.tsx                // 토스트 알림 전역 상태 및 트리거 함수
+│
+├─ hooks/
+│  ├─ useFormField.ts                 // 입력 필드 상태 관리 훅
+│  ├─ useAuth.ts                      // 로그인 여부와 유저 정보 조회 훅
+│  └─ useToast.ts                     // 토스트 트리거 함수 사용 훅
+│
+├─ styles/                            // 전역 스타일 및 Tailwind v4 CSS 설정
+│  ├─ colors.css                      // 디자인 시스템 컬러 토큰 CSS 변수
+│  └─ globals.css                     // 전역 기본 스타일
+│
+├─ types/
+│  ├─ auth.ts                         // 로그인·회원가입·토큰 관련 타입
+│  ├─ group.ts                        // 팀·멤버 관련 타입
+│  ├─ task.ts                         // 할 일·할 일 목록·댓글 관련 타입
+│  └─ board.ts                        // 게시글·댓글 관련 타입
+│
+└─ utils/
+   ├─ cn.ts                           // clsx + tailwind-merge className 유틸
+   ├─ queryClient.ts                  // TanStack Query 클라이언트 설정
+   └─ formatDate.ts                   // 날짜 포맷 변환 유틸
+```
 
 ## 코드 작성 원칙
 
@@ -138,6 +230,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - 예: `task-list`, `auth-form`
 - 컴포넌트/페이지 `.tsx`: PascalCase
   - 예: `MainPage.tsx`, `TaskCard.tsx`
+- Next.js App Router 특수 파일은 프레임워크 규칙을 우선한다.
+  - 예: `page.tsx`, `layout.tsx`, `route.ts`
 - 일반 JS/TS 파일: camelCase
   - 예: `useAuth.ts`, `apiClient.ts`
 - 아이콘 에셋: `ic_` + snake_case
@@ -177,7 +271,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - 이미지 사용 예:
 
 ```ts
-import { imgLogo, icArrow } from "@/index";
+import { imgLogo, icArrow } from "@/assets";
 ```
 
 ## import 경로 규칙
