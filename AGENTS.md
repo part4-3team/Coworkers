@@ -1,7 +1,9 @@
 <!-- BEGIN:nextjs-agent-rules -->
+
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+
 <!-- END:nextjs-agent-rules -->
 
 # Coworkers Project Guide
@@ -75,7 +77,11 @@ src/
 │  ├─ images/
 │  │  └─ img_*.png                    // 일반 이미지 파일
 │  ├─ logos/
-│  │  └─ logo.svg                     // 서비스 로고 SVG
+│  │  ├─ logo_text_large.svg          // 텍스트 로고 large
+│  │  ├─ logo_text_small.svg          // 텍스트 로고 small
+│  │  ├─ logo_full_large.svg          // 심볼+텍스트 로고 large
+│  │  ├─ logo_full_small.svg          // 심볼+텍스트 로고 small
+│  │  └─ logo_symbol_large.svg        // 심볼 로고 large
 │  └─ index.ts                        // 에셋 일괄 export 배럴 파일
 │
 ├─ app/                               // Next.js App Router 기반 페이지 라우트 루트
@@ -107,7 +113,7 @@ src/
 │
 ├─ components/
 │  ├─ common/                         // 어디서든 재사용 가능한 전역 공통 UI 컴포넌트
-│  │  ├─ Logo.tsx                     // 서비스 로고 텍스트
+│  │  ├─ Logo.tsx                     // 서비스 로고 SVG
 │  │  ├─ Button.tsx                   // 공용 버튼
 │  │  ├─ Input.tsx                    // 공용 입력창
 │  │  ├─ Dropdown.tsx                 // 공용 드롭다운
@@ -175,8 +181,8 @@ src/
 - 기본 스타일링은 Tailwind를 사용한다.
 - 인라인 스타일과 다른 CSS-in-JS 혼용은 지양한다.
 - 기본 본문 폰트는 Pretendard를 사용한다.
-- 로고 텍스트 폰트는 Montserrat Alternates를 사용한다.
-- 로고 텍스트에는 Tailwind 클래스 `font-logo`를 사용한다.
+- 로고는 텍스트 폰트를 별도 로드하지 않고 SVG 에셋으로 사용한다.
+- 로고 SVG는 `src/assets/logos`에서 `logo_` + snake_case 형식으로 관리한다.
 - Tailwind에는 공통 색상 위주로 정의하고, 폰트 사이즈는 별도 커스텀 정의를 최소화한다.
 - Tailwind 임의값 문법인 `[]` 사용은 지양한다.
 - 간격, 크기, 반경, 위치 등 수치가 필요한 스타일은 Tailwind 기본 scale 값을 우선 사용한다.
@@ -271,7 +277,7 @@ src/
 - 이미지 사용 예:
 
 ```ts
-import { imgLogo, icArrow } from "@/assets";
+import { imgLogo, icArrow } from '@/assets';
 ```
 
 ## import 경로 규칙
@@ -280,14 +286,14 @@ import { imgLogo, icArrow } from "@/assets";
 
 ```ts
 // 사용 금지
-import Button from "../../common/Button";
+import Button from '../../common/Button';
 ```
 
 절대경로 별칭 `@/`를 사용한다.
 
 ```ts
 // 사용
-import Button from "@/components/common/Button";
+import Button from '@/components/common/Button';
 ```
 
 예외:
@@ -309,10 +315,10 @@ import Button from "@/components/common/Button";
 
 모바일 퍼스트 기준으로 작성한다.
 
-| prefix | 최소 너비 | 대상 |
-| --- | --- | --- |
-| `sm` | 640px | 필요 시 사용 |
-| `md` | 768px | 태블릿 |
-| `lg` | 1024px | 데스크탑 |
-| `xl` | 1280px | 필요 시 사용 |
-| `2xl` | 1536px | 필요 시 사용 |
+| prefix | 최소 너비 | 대상         |
+| ------ | --------- | ------------ |
+| `sm`   | 640px     | 필요 시 사용 |
+| `md`   | 768px     | 태블릿       |
+| `lg`   | 1024px    | 데스크탑     |
+| `xl`   | 1280px    | 필요 시 사용 |
+| `2xl`  | 1536px    | 필요 시 사용 |
