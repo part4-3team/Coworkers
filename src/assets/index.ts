@@ -2,11 +2,11 @@
  * 프로젝트에서 사용하는 정적 에셋을 일괄 export하는 파일입니다.
  */
 
-export { default as logoFullLarge } from './logos/logo_full_large.svg';
-export { default as logoFullSmall } from './logos/logo_full_small.svg';
-export { default as logoSymbolLarge } from './logos/logo_symbol_large.svg';
-export { default as logoTextLarge } from './logos/logo_text_large.svg';
-export { default as logoTextSmall } from './logos/logo_text_small.svg';
+export { default as imgLogoFullLarge } from './logos/img_logo_full_large.svg';
+export { default as imgLogoFullSmall } from './logos/img_logo_full_small.svg';
+export { default as imgLogoSymbolLarge } from './logos/img_logo_symbol_large.svg';
+export { default as imgLogoTextLarge } from './logos/img_logo_text_large.svg';
+export { default as imgLogoTextSmall } from './logos/img_logo_text_small.svg';
 
 export { default as icAlertCircleLarge } from './icons/ic_alert_circle_large.svg';
 export { default as icAlertCircleSmall } from './icons/ic_alert_circle_small.svg';

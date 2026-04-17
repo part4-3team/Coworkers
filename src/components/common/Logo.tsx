@@ -4,18 +4,18 @@
 
 import Image from 'next/image';
 
-import { logoTextLarge, logoTextSmall } from '@/assets';
+import { imgLogoTextLarge, imgLogoTextSmall } from '@/assets';
 
 type LogoSize = 'small' | 'large';
 
 const LOGO_SIZE_MAP = {
   small: {
-    src: logoTextSmall,
+    src: imgLogoTextSmall,
     width: 158,
     height: 22,
   },
   large: {
-    src: logoTextLarge,
+    src: imgLogoTextLarge,
     width: 225,
     height: 31,
   },
