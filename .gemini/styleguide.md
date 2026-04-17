@@ -98,7 +98,7 @@
 ### 11 import 규칙
 
 - 상대경로 import는 사용하지 않는다.
-- 절대경로 별칭 `@/`를 사용한다. 예시: `import Button from "@/components/common/Button"`
+- 절대경로 별칭 `@/`를 사용한다. 예시: `import Button from "@/components/common/button/Button"`
 - 예외: 프레임워크나 외부 패키지 CSS가 특정 import 방식을 요구하는 경우에만 팀 합의 후 허용한다.
 - 현재 전역 CSS는 `src/app/layout.tsx`에서 `import "@/styles/globals.css"`로 가져온다.
 

@@ -133,16 +133,40 @@ src/
 │
 ├─ components/
 │  ├─ common/                         // 어디서든 재사용 가능한 전역 공통 UI 컴포넌트
-│  │  ├─ Logo.tsx                     // 로고 SVG를 렌더링하는 공용 컴포넌트
-│  │  ├─ Button.tsx                   // 공용 버튼 (variant, size, disabled 등 props 지원)
-│  │  ├─ Input.tsx                    // 공용 입력창 (에러 메시지·라벨·blur 핸들러 포함)
-│  │  ├─ DatePicker.tsx               // 공용 날짜 선택 컴포넌트
-│  │  ├─ Dropdown.tsx                 // 공용 드롭다운 선택 컴포넌트
-│  │  ├─ Modal.tsx                    // 공용 모달 (오버레이·닫기 버튼·포탈 렌더링 포함)
-│  │  └─ Toast.tsx                    // 공용 토스트 알림 렌더링 컴포넌트
+│  │  ├─ logo/
+│  │  │  └─ Logo.tsx                  // 로고 SVG를 렌더링하는 공용 컴포넌트
+│  │  ├─ avatar/
+│  │  │  ├─ Avatar.tsx                // 프로필 이미지 아바타 컴포넌트
+│  │  │  ├─ AvatarStack.tsx           // 여러 유저 아바타 묶음 컴포넌트
+│  │  │  └─ UserProfile.tsx           // 유저 프로필 정보 컴포넌트
+│  │  ├─ badge/
+│  │  │  └─ Badge.tsx                 // 완료 개수와 진행 상태를 표시하는 pill 배지
+│  │  ├─ todo/
+│  │  │  ├─ TodoUnchecked.tsx         // 완료되지 않은 할 일 항목 공용 컴포넌트
+│  │  │  └─ TodoChecked.tsx           // 완료된 할 일 항목 공용 컴포넌트
+│  │  ├─ button/
+│  │  │  ├─ Button.tsx                // 공용 버튼 (variant, size, disabled 등 props 지원)
+│  │  │  ├─ PrimaryButton.tsx         // 로그인·회원가입·팀 참여하기 주요 액션 버튼
+│  │  │  ├─ FloatingButton.tsx        // 화면 위에 떠 있는 추가 액션 버튼
+│  │  │  └─ ProfileImageButton.tsx    // 프로필 사진 추가·변경 버튼
+│  │  ├─ form/
+│  │  │  ├─ Input.tsx                 // 공용 입력창 (에러 메시지·라벨·blur 핸들러 포함)
+│  │  │  ├─ AuthInput.tsx             // 로그인·회원가입·팀 참여하기 공용 입력창
+│  │  │  ├─ TitleInput.tsx            // 제목 입력 공용 입력창
+│  │  │  ├─ ContentInput.tsx          // 내용 입력 공용 입력창
+│  │  │  ├─ DatePicker.tsx            // 공용 날짜 선택 컴포넌트
+│  │  │  └─ Dropdown.tsx              // 공용 드롭다운 선택 컴포넌트
+│  │  ├─ modal/
+│  │  │  ├─ ModalPortal.tsx           // 모달을 최상단 DOM으로 렌더링하는 포탈
+│  │  │  ├─ ModalFrame.tsx            // 모달 배경과 흰색 박스 프레임
+│  │  │  ├─ AddModal.tsx              // 파란색 버튼을 사용하는 추가/생성 모달
+│  │  │  └─ DeleteModal.tsx           // 빨간색 버튼을 사용하는 삭제/위험 액션 모달
+│  │  └─ feedback/
+│  │     └─ Toast.tsx                 // 공용 토스트 알림 렌더링 컴포넌트
 │  │
 │  ├─ layout/                         // 페이지 전체 레이아웃을 구성하는 컴포넌트
-│  │  └─ Header.tsx                   // 상단 네비게이션바 (로고·프로필 드롭다운 메뉴 포함)
+│  │  ├─ Header.tsx                   // 상단 네비게이션바 (로고·프로필 드롭다운 메뉴 포함)
+│  │  └─ Sidebar.tsx                  // 사이드바 메뉴 레이아웃
 │  │
 │  ├─ landing/                        // 랜딩 페이지 전용 컴포넌트
 │  │  └─ MainBanner.tsx               // 랜딩 메인 배너 (지금 시작하기 버튼 포함)
@@ -341,7 +365,7 @@ import Button from '../../common/Button';
 
 ```ts
 // 사용
-import Button from '@/components/common/Button';
+import Button from '@/components/common/button/Button';
 ```
 
 예외:

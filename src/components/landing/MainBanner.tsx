@@ -2,7 +2,7 @@
  * 랜딩 페이지의 메인 배너를 구성하는 컴포넌트입니다.
  */
 
-import Logo from '@/components/common/Logo';
+import Logo from '@/components/common/logo/Logo';
 
 export default function MainBanner() {
   return (

@@ -2,8 +2,8 @@
  * 팀 멤버 초대 모달 컴포넌트입니다.
  */
 
-import Modal from '@/components/common/Modal';
+import ModalFrame from '@/components/common/modal/ModalFrame';
 
 export default function InviteModal() {
-  return <Modal>팀 멤버 초대</Modal>;
+  return <ModalFrame>팀 멤버 초대</ModalFrame>;
 }

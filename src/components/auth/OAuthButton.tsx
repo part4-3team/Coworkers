@@ -2,7 +2,7 @@
  * 소셜 로그인/회원가입 버튼 컴포넌트입니다.
  */
 
-import Button from '@/components/common/Button';
+import Button from '@/components/common/button/Button';
 
 interface OAuthButtonProps {
   children?: string;
