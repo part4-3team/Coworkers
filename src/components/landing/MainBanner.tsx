@@ -1,10 +1,10 @@
 /**
- * 랜딩 페이지의 초기 화면을 구성하는 페이지 컴포넌트입니다.
+ * 랜딩 페이지의 메인 배너를 구성하는 컴포넌트입니다.
  */
 
 import Logo from '@/components/common/Logo';
 
-export default function MainPage() {
+export default function MainBanner() {
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center px-6 py-16 text-center">
       <section className="flex max-w-2xl flex-col items-center gap-5">

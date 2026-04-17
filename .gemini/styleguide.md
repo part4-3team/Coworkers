@@ -49,17 +49,18 @@
 
 #### 파일명
 
-- 컴포넌트/페이지 `.tsx` 파일은 `PascalCase` 사용. 예시: `MainPage.tsx`, `TaskCard.tsx`
+- 컴포넌트/페이지 `.tsx` 파일은 `PascalCase` 사용. 예시: `MainBanner.tsx`, `TaskCard.tsx`
 - Next.js App Router 특수 파일은 프레임워크 규칙을 우선한다. 예시: `page.tsx`, `layout.tsx`, `route.ts`
 - App Router 특수 파일 안의 실제 화면 컴포넌트는 필요하면 `PascalCase` 파일로 분리한다.
 - 훅, 유틸, API, 일반 모듈 파일은 `camelCase.ts` 사용. 예시: `useAuth.ts`, `apiClient.ts`
 - 아이콘 에셋은 `ic_` + snake_case 사용. 예시: `ic_arrow.svg`
-- 이미지 에셋은 `img_` + snake_case 사용. 예시: `img_back.png`, `img_logo.png`
+- 이미지 에셋은 `img_` + snake_case 사용. 예시: `img_back.png`, `img_no_team.png`
+- 서비스 로고도 `img_logo_` + snake_case를 사용. 예시: `img_logo_text_large.svg`
 - 숫자 접두사는 두 자리로 통일. 예시: `01_feature.yml`, `02_bug.yml`
 
 ### 7 함수/변수 규칙
 
-- 페이지 및 컴포넌트 함수는 `PascalCase`. 예시: `MainPage`, `MyDashBoardPage`
+- 페이지 및 컴포넌트 함수는 `PascalCase`. 예시: `MainBanner`, `MyDashBoardPage`
 - 변수와 일반 함수명은 `camelCase`. 예시: `userData`, `fetchData`
 - 이벤트 핸들러는 `handle + 동사` 형식을 사용. 예시: `handleClick`, `handleLoad`
 - prop으로 내리는 이벤트 핸들러는 `on + 동사` 형식을 사용. 예시: `onClick`, `onLoad`
@@ -87,15 +88,19 @@
 ### 10 프로젝트 폴더 구조
 
 - 상세 폴더 구조는 `AGENTS.md`의 `프로젝트 폴더 구조` 섹션을 기준으로 한다.
-- 아직 구현 전인 라우트와 컴포넌트는 `.gitkeep`으로 폴더만 유지한다.
-- `page.tsx`나 컴포넌트 파일은 해당 기능 구현 시점에 생성한다.
-- `app/` 하위 라우트 폴더는 기획서 URL을 우선한다. 예: `addteam`, `myhistory`, `mypage`, `tasklist`
+- 아직 구현 전인 라우트와 컴포넌트 파일은 최소 placeholder로 생성한다.
+- 세부 UI와 로직은 해당 기능 구현 시점에 채운다.
+- `app/` 하위 라우트 폴더는 기획서 URL을 우선한다. 예: `addteam`, `jointeam`, `myhistory`, `mypage`, `tasklist`
+- 공개 페이지를 새로 추가하면 `src/proxy.ts`의 인증 예외 경로도 함께 확인한다.
+- `src/proxy.ts`는 Next.js Proxy 파일 컨벤션상 `src` 루트에 둔다.
+- Proxy 세부 로직이 길어질 경우 별도 모듈로 분리하고 `src/proxy.ts`에서 import한다.
 
 ### 11 import 규칙
 
 - 상대경로 import는 사용하지 않는다.
 - 절대경로 별칭 `@/`를 사용한다. 예시: `import Button from "@/components/common/Button"`
-- 예외: Next.js 전역 CSS처럼 프레임워크 관례상 같은 폴더에서 직접 연결하는 파일은 상대경로를 허용한다. 예시: `import "./globals.css"`
+- 예외: 프레임워크나 외부 패키지 CSS가 특정 import 방식을 요구하는 경우에만 팀 합의 후 허용한다.
+- 현재 전역 CSS는 `src/app/layout.tsx`에서 `import "@/styles/globals.css"`로 가져온다.
 
 ### 12 유틸 사용 규칙
 

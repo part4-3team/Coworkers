@@ -1,0 +1,19 @@
+/**
+ * 공용 버튼 컴포넌트입니다.
+ */
+
+import type { ButtonHTMLAttributes } from 'react';
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+
+export default function Button({
+  children,
+  type = 'button',
+  ...props
+}: ButtonProps) {
+  return (
+    <button type={type} {...props}>
+      {children}
+    </button>
+  );
+}
