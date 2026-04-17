@@ -17,6 +17,10 @@ import { cn } from '@/utils/cn';
 export default function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const handleToggleSidebar = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
   return (
     <aside
       className={cn(
@@ -51,12 +55,12 @@ export default function Sidebar() {
             aria-label={
               isExpanded ? '사이드바 메뉴 접기' : '사이드바 메뉴 펼치기'
             }
-            onClick={() => setIsExpanded((prev) => !prev)}
+            onClick={handleToggleSidebar}
             className={cn(
               'flex cursor-pointer items-center justify-center',
               isExpanded
                 ? 'static rounded-none border-0'
-                : 'absolute -right-5 top-9 size-8 rounded-full bg-background-inverse border border-[#CBD5E1]',
+                : 'absolute -right-5 top-9 size-8 rounded-full bg-background-inverse border border-slate-300',
             )}
           >
             <Image
