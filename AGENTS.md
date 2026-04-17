@@ -29,6 +29,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - Zod: 폼/API 데이터 검증과 TypeScript 타입 추론
   - React Hook Form: 폼 상태와 검증 흐름 관리
   - NextAuth.js: Next.js 앱 인증 기능 보조
+  - react-datepicker: 날짜 선택 UI 구현
   - clsx: 조건부 className 조합
   - tailwind-merge: Tailwind class 충돌 병합
   - Gitmoji: 커밋 메시지 가독성 향상
@@ -116,6 +117,7 @@ src/
 │  │  ├─ Logo.tsx                     // 서비스 로고 SVG
 │  │  ├─ Button.tsx                   // 공용 버튼
 │  │  ├─ Input.tsx                    // 공용 입력창
+│  │  ├─ DatePicker.tsx               // 공용 날짜 선택 컴포넌트
 │  │  ├─ Dropdown.tsx                 // 공용 드롭다운
 │  │  └─ Modal.tsx                    // 공용 모달
 │  ├─ layout/                         // 페이지 전체 레이아웃 컴포넌트
@@ -175,6 +177,7 @@ src/
 - 페이지 컴포넌트에는 페이지 조립과 데이터 흐름을 두고, 세부 UI는 작은 컴포넌트로 분리한다.
 - 재사용 가능한 UI는 공용 컴포넌트로 분리한다.
 - 폼 로직은 React Hook Form과 Zod 조합을 우선 사용한다.
+- 날짜 선택 UI는 `react-datepicker`를 직접 사용하지 않고 공용 `DatePicker` 컴포넌트로 감싸서 사용한다.
 
 ## 스타일링 원칙
 
@@ -190,6 +193,8 @@ src/
 - Figma 수치와 완전히 일치하는 기본 scale이 없을 때만 임의값 사용을 검토한다.
 - 조건부 className 조합은 `clsx`를 직접 쓰기보다 `@/utils/cn`의 `cn` 유틸을 사용한다.
 - Tailwind class 충돌이 생길 수 있는 컴포넌트 props 병합도 `cn` 유틸을 사용한다.
+- `react-datepicker` 기본 CSS는 공용 `DatePicker` 컴포넌트 또는 전역 스타일에서 한 번만 import한다.
+- 달력 팝업 내부처럼 라이브러리가 생성하는 DOM은 필요한 경우 `src/styles` 하위 CSS에서 제한적으로 override한다.
 - 모바일 퍼스트 기준으로 작성한다.
 - 반응형 처리는 프로젝트 브레이크포인트 기준을 따른다.
 

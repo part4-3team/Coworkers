@@ -32,6 +32,7 @@
 ### 4 재사용/가독성
 
 - 반복되는 패턴은 **UI 컴포넌트로 승격**.
+- 날짜 선택 UI는 `react-datepicker`를 직접 사용하지 않고 공용 `DatePicker` 컴포넌트를 통해 사용.
 
 ### 5 접근성 & SEO
 
@@ -118,3 +119,11 @@ import { cn } from '@/utils/cn';
 - UI 작업을 먼저 완료한 뒤, 필요한 화면부터 순서대로 API를 연결한다.
 - API 함수는 `src/api/` 하위에 도메인별로 분리하여 작성한다.
 - 기술 스택에 없는 라이브러리는 팀원과 논의 후 추가한다.
+
+### 14 달력 사용 규칙
+
+- 달력 UI는 `react-datepicker`를 사용한다.
+- 각 페이지에서 `react-datepicker`를 직접 import하지 않는다.
+- 공용 `DatePicker` 컴포넌트에서 날짜 포맷, 기본 스타일, disabled, minDate, maxDate 정책을 관리한다.
+- `react-datepicker/dist/react-datepicker.css`는 한 곳에서만 import한다.
+- 라이브러리 내부 DOM 스타일 override가 필요하면 `src/styles` 하위 CSS에서 관리한다.
