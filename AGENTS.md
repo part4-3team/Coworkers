@@ -88,7 +88,6 @@ src/
 │
 ├─ app/                               // Next.js App Router 기반 페이지 라우트 루트
 │  ├─ layout.tsx                      // 전체 앱 공통 레이아웃 (폰트·메타데이터·Provider 등 포함)
-│  ├─ page.tsx                        // 랜딩 페이지 "/"
 │  ├─ providers.tsx                   // React Query, Toast 등 클라이언트 Provider 묶음
 │  │
 │  ├─ api/
@@ -96,40 +95,46 @@ src/
 │  │     └─ [...nextauth]/
 │  │        └─ route.ts               // NextAuth 라우트 핸들러
 │  │
-│  ├─ login/                          // 로그인 페이지 "/login"
-│  │  └─ page.tsx                     // 이메일·비밀번호 입력, 소셜 로그인 버튼 포함
+│  ├─ (landing)/                      // URL에 포함되지 않는 랜딩 전용 route group
+│  │  └─ page.tsx                     // 랜딩 페이지 "/", 사이드바 없음
 │  │
-│  ├─ signup/                         // 회원가입 페이지 "/signup"
-│  │  └─ page.tsx                     // 이메일·이름·비밀번호 입력, 유효성 검사 포함
-│  │
-│  ├─ oauth/
-│  │  └─ signup/
-│  │     └─ [provider]/               // 소셜 간편 회원가입 페이지 "/oauth/signup/{provider}"
-│  │        └─ page.tsx               // 카카오·구글 OAuth 후 이름 입력해서 최종 가입 처리
-│  │
-│  ├─ addteam/                        // 팀 생성 페이지 "/addteam"
-│  │  └─ page.tsx                     // 팀 이름·프로필 이미지 입력 후 팀 생성
-│  │
-│  ├─ jointeam/                       // 팀 참여하기 페이지 "/jointeam"
-│  │  └─ page.tsx                     // 초대 링크를 통한 팀 참여 처리
-│  │
-│  ├─ myhistory/                      // 마이 히스토리 페이지 "/myhistory"
-│  │  └─ page.tsx                     // 날짜별 내가 완료한 할 일 목록 표시
-│  │
-│  ├─ mypage/                         // 계정 설정 페이지 "/mypage"
-│  │  └─ page.tsx                     // 프로필 이미지·이름 변경, 비밀번호 변경, 회원 탈퇴
-│  │
-│  ├─ boards/                         // 자유게시판 페이지 "/boards"
-│  │  ├─ page.tsx                     // 게시글 목록·베스트 게시글·검색 기능 포함
-│  │  └─ [articleId]/
-│  │     └─ page.tsx                  // 게시글 상세 페이지 "/boards/{articleId}"
-│  │
-│  └─ [teamId]/                       // 팀 페이지 "/{teamId}"
-│     ├─ page.tsx                     // 팀 정보·할 일 목록·멤버 리스트·오늘의 리포트 표시
-│     ├─ tasklist/                    // 할 일 리스트 페이지 "/{teamId}/tasklist"
-│     │  └─ page.tsx                  // 전체 할 일 목록 표시, 할 일 추가·반복 설정 가능
-│     └─ [taskId]/                    // 할 일 상세 페이지 "/{teamId}/{taskId}"
-│        └─ page.tsx                  // 할 일 상세 정보·수정·삭제·완료 처리·댓글 CRUD
+│  └─ (service)/                      // URL에 포함되지 않는 서비스 화면 route group
+│     ├─ layout.tsx                   // 랜딩을 제외한 화면에 270px 사이드바 적용
+│     │
+│     ├─ login/                       // 로그인 페이지 "/login"
+│     │  └─ page.tsx                  // 이메일·비밀번호 입력, 소셜 로그인 버튼 포함
+│     │
+│     ├─ signup/                      // 회원가입 페이지 "/signup"
+│     │  └─ page.tsx                  // 이메일·이름·비밀번호 입력, 유효성 검사 포함
+│     │
+│     ├─ oauth/
+│     │  └─ signup/
+│     │     └─ [provider]/            // 소셜 간편 회원가입 페이지 "/oauth/signup/{provider}"
+│     │        └─ page.tsx            // 카카오·구글 OAuth 후 이름 입력해서 최종 가입 처리
+│     │
+│     ├─ addteam/                     // 팀 생성 페이지 "/addteam"
+│     │  └─ page.tsx                  // 팀 이름·프로필 이미지 입력 후 팀 생성
+│     │
+│     ├─ jointeam/                    // 팀 참여하기 페이지 "/jointeam"
+│     │  └─ page.tsx                  // 초대 링크를 통한 팀 참여 처리
+│     │
+│     ├─ myhistory/                   // 마이 히스토리 페이지 "/myhistory"
+│     │  └─ page.tsx                  // 날짜별 내가 완료한 할 일 목록 표시
+│     │
+│     ├─ mypage/                      // 계정 설정 페이지 "/mypage"
+│     │  └─ page.tsx                  // 프로필 이미지·이름 변경, 비밀번호 변경, 회원 탈퇴
+│     │
+│     ├─ boards/                      // 자유게시판 페이지 "/boards"
+│     │  ├─ page.tsx                  // 게시글 목록·베스트 게시글·검색 기능 포함
+│     │  └─ [articleId]/
+│     │     └─ page.tsx               // 게시글 상세 페이지 "/boards/{articleId}"
+│     │
+│     └─ [teamId]/                    // 팀 페이지 "/{teamId}"
+│        ├─ page.tsx                  // 팀 정보·할 일 목록·멤버 리스트·오늘의 리포트 표시
+│        ├─ tasklist/                 // 할 일 리스트 페이지 "/{teamId}/tasklist"
+│        │  └─ page.tsx               // 전체 할 일 목록 표시, 할 일 추가·반복 설정 가능
+│        └─ [taskId]/                 // 할 일 상세 페이지 "/{teamId}/{taskId}"
+│           └─ page.tsx               // 할 일 상세 정보·수정·삭제·완료 처리·댓글 CRUD
 │
 ├─ components/
 │  ├─ common/                         // 어디서든 재사용 가능한 전역 공통 UI 컴포넌트
@@ -166,7 +171,7 @@ src/
 │  │
 │  ├─ layout/                         // 페이지 전체 레이아웃을 구성하는 컴포넌트
 │  │  ├─ Header.tsx                   // 상단 네비게이션바 (로고·프로필 드롭다운 메뉴 포함)
-│  │  └─ Sidebar.tsx                  // 사이드바 메뉴 레이아웃
+│  │  └─ Sidebar.tsx                  // 270px 너비의 공통 사이드바 메뉴 레이아웃
 │  │
 │  ├─ landing/                        // 랜딩 페이지 전용 컴포넌트
 │  │  └─ MainBanner.tsx               // 랜딩 메인 배너 (지금 시작하기 버튼 포함)
@@ -252,10 +257,9 @@ src/
 - 로고는 텍스트 폰트를 별도 로드하지 않고 SVG 에셋으로 사용한다.
 - 로고 SVG는 `src/assets/logos`에서 `img_logo_` + snake_case 형식으로 관리한다.
 - Tailwind에는 공통 색상 위주로 정의하고, 폰트 사이즈는 별도 커스텀 정의를 최소화한다.
-- Tailwind 임의값 문법인 `[]` 사용은 지양한다.
-- 간격, 크기, 반경, 위치 등 수치가 필요한 스타일은 Tailwind 기본 scale 값을 우선 사용한다.
-- 예: `w-[320px]`보다 `w-80`, `p-[16px]`보다 `p-4`, `gap-[12px]`보다 `gap-3`를 사용한다.
-- Figma 수치와 완전히 일치하는 기본 scale이 없을 때만 임의값 사용을 검토한다.
+- Tailwind 임의값 `[]` 사용은 지양하고 기본 scale을 우선한다.
+- 단, 이는 무조건 CSS 변수나 토큰으로 분리하라는 뜻이 아니다.
+- 예: `p-[16px]` → `p-4`, `w-[320px]` → `w-80`, `270px` → `w-67.5`
 - 조건부 className 조합은 `clsx`를 직접 쓰기보다 `@/utils/cn`의 `cn` 유틸을 사용한다.
 - Tailwind class 충돌이 생길 수 있는 컴포넌트 props 병합도 `cn` 유틸을 사용한다.
 - `react-datepicker` 기본 CSS는 공용 `DatePicker` 컴포넌트 또는 전역 스타일에서 한 번만 import한다.
