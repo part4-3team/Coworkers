@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { icCloseMedium, icAlertCircleLarge } from '@/assets/index';
 import { useState } from 'react';
 
-interface ModalFrameProps {
+type ModalFrameProps = {
   children?: ReactNode;
   icon?: boolean;
   showCloseButton?: boolean; // 1. 닫기 버튼 유무
@@ -23,7 +23,7 @@ interface ModalFrameProps {
   subButtonText?: string; // 9. 빨간 버튼 텍스트
   onSubButtonClick?: () => void; // 9-2. 빨간 버튼 핸들러
   buttonAlign?: boolean; //버튼 정렬 true는 1열 / false 2열
-}
+};
 export default function ModalFrame({
   children,
   icon,
