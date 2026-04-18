@@ -13,6 +13,6 @@ export const config = {
     '/myhistory',
     '/mypage',
     '/boards/:path*',
-    '/((?!$|login|signup|oauth|api|_next/static|_next/image|favicon.ico|reset-password|password-reset).*)',
+    // '/((?!$|login|signup|oauth|api|_next/static|_next/image|favicon.ico|reset-password|password-reset).*)',
   ],
 };
