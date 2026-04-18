@@ -343,6 +343,24 @@ src/
 - 상수: UPPER_SNAKE_CASE
   - 예: `API_BASE_URL`, `MAX_COUNT`
 
+## TypeScript 타입 규칙
+
+- 타입 정의는 기본적으로 `interface` 대신 `type`을 사용한다.
+- 컴포넌트 props, API 요청/응답, 도메인 모델 타입 모두 `type`으로 작성한다.
+- `interface`는 외부 라이브러리의 선언 병합이나 확장이 꼭 필요한 경우에만 팀 합의 후 사용한다.
+
+```ts
+// 사용 금지
+interface UserProfileProps {
+  name: string;
+}
+
+// 사용
+type UserProfileProps = {
+  name: string;
+};
+```
+
 ## 에셋 규칙
 
 - 아이콘과 로고는 SVG를 사용한다.
