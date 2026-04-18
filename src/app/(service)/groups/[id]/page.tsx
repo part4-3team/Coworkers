@@ -103,6 +103,7 @@ export default function TaskDetailPage() {
             subButtonText="멤버 삭제하기"
             onSubButtonClick={() => setOpenModal(null)}
             buttonAlign={true}
+            onClose={() => setOpenModal(null)}
           >
             선택한 멤버 프로필
           </ModalFrame>

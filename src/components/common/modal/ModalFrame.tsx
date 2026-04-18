@@ -39,26 +39,19 @@ export default function ModalFrame({
   subButtonText,
   onSubButtonClick,
   buttonAlign,
+  onClose,
 }: ModalFrameProps) {
-  // ModalFrame 내부에 상태 추가
-  const [isVisible, setIsVisible] = useState(true);
-
-  if (!isVisible) return null;
-
   return (
     <div
       className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-[#000a] z-9999 px-4"
-      onClick={() => setIsVisible(false)}
+      onClick={onClose}
     >
       <div
         className="max-w-sm bg-white rounded-2xl p-6 pt-10 min-w-80 w-full relative text-center flex flex-col gap-4 items-center"
         onClick={(e) => e.stopPropagation()}
       >
         {showCloseButton && (
-          <button
-            className="absolute right-4 top-4"
-            onClick={() => setIsVisible(false)}
-          >
+          <button className="absolute right-4 top-4" onClick={onClose}>
             <Image src={icCloseMedium} alt="모달 닫기" width="24" height="24" />
           </button>
         )}
