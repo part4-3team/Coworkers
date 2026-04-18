@@ -68,6 +68,7 @@ export default function TaskDetailPage() {
           <ModalFrame
             title="멤버"
             subTitle="(4명)"
+            showCloseButton={false}
             onClose={() => setOpenModal(null)}
             lineButtonText="닫기"
             onLineButtonClick={() => setOpenModal(null)}
