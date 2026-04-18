@@ -74,12 +74,30 @@
 - `is + 명사/형용사`: `isLoading`, `isModalOpen`
 - `has + 명사`: `hasToken`, `hasError`
 
-### 8 상수 규칙
+### 8 TypeScript 타입 규칙
+
+- 타입 정의는 기본적으로 `interface` 대신 `type`을 사용한다.
+- 컴포넌트 props, API 요청/응답, 도메인 모델 타입 모두 `type`으로 작성한다.
+- `interface`는 외부 라이브러리의 선언 병합이나 확장이 꼭 필요한 경우에만 팀 합의 후 사용한다.
+
+```ts
+// 사용 금지
+interface UserProfileProps {
+  name: string;
+}
+
+// 사용
+type UserProfileProps = {
+  name: string;
+};
+```
+
+### 9 상수 규칙
 
 - 상수는 전체 `UPPER_SNAKE_CASE`를 사용.
 - 예시: `API_BASE_URL`, `MAX_COUNT`
 
-### 9 주석 가이드
+### 10 주석 가이드
 
 - TSDoc은 `/** ... */` 형식을 사용.
 - 파일 맨 위에 전체적인 설명을 TSDoc으로 작성.
@@ -88,7 +106,7 @@
 - 작업이 남은 부분은 `// TODO: 내용` 형식을 사용.
 - **주석에 이모지 사용 금지.**
 
-### 10 프로젝트 폴더 구조
+### 11 프로젝트 폴더 구조
 
 - 상세 폴더 구조는 `AGENTS.md`의 `프로젝트 폴더 구조` 섹션을 기준으로 한다.
 - 아직 구현 전인 라우트와 컴포넌트 파일은 최소 placeholder로 생성한다.
@@ -98,14 +116,14 @@
 - `src/proxy.ts`는 Next.js Proxy 파일 컨벤션상 `src` 루트에 둔다.
 - Proxy 세부 로직이 길어질 경우 별도 모듈로 분리하고 `src/proxy.ts`에서 import한다.
 
-### 11 import 규칙
+### 12 import 규칙
 
 - 상대경로 import는 사용하지 않는다.
 - 절대경로 별칭 `@/`를 사용한다. 예시: `import Button from "@/components/common/button/Button"`
 - 예외: 프레임워크나 외부 패키지 CSS가 특정 import 방식을 요구하는 경우에만 팀 합의 후 허용한다.
 - 현재 전역 CSS는 `src/app/layout.tsx`에서 `import "@/styles/globals.css"`로 가져온다.
 
-### 12 유틸 사용 규칙
+### 13 유틸 사용 규칙
 
 - `cn` 유틸은 `@/utils/cn`에 정의된 함수를 사용한다. (`clsx` + `tailwind-merge` 조합)
 - `clsx` 또는 `tailwind-merge`를 컴포넌트에서 직접 import하지 않는다.
@@ -122,13 +140,13 @@ import { cn } from '@/utils/cn';
 <div className={cn('px-4 py-2', isActive && 'bg-primary', className)} />;
 ```
 
-### 13 API 연결 순서
+### 14 API 연결 순서
 
 - UI 작업을 먼저 완료한 뒤, 필요한 화면부터 순서대로 API를 연결한다.
 - API 함수는 `src/api/` 하위에 도메인별로 분리하여 작성한다.
 - 기술 스택에 없는 라이브러리는 팀원과 논의 후 추가한다.
 
-### 14 달력 사용 규칙
+### 15 달력 사용 규칙
 
 - 달력 UI는 `react-datepicker`를 사용한다.
 - 각 페이지에서 `react-datepicker`를 직접 import하지 않는다.
