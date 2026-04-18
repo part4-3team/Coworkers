@@ -46,8 +46,14 @@ export default function ModalFrame({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-[#000a] z-9999 px-4">
-      <div className="max-w-sm bg-white rounded-2xl p-6 pt-10 min-w-80 w-full relative text-center flex flex-col gap-4 items-center">
+    <div
+      className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-[#000a] z-9999 px-4"
+      onClick={() => setIsVisible(false)}
+    >
+      <div
+        className="max-w-sm bg-white rounded-2xl p-6 pt-10 min-w-80 w-full relative text-center flex flex-col gap-4 items-center"
+        onClick={(e) => e.stopPropagation()}
+      >
         {showCloseButton && (
           <button
             className="absolute right-4 top-4"
