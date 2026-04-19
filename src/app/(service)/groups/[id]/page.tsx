@@ -36,22 +36,7 @@ export default function TaskDetailPage() {
       >
         2(블루,레드)모달 열기
       </button>
-      {/* <ModalFrame
-          showCloseButton={true}
-          title="모달 타이틀"
-          subTitle="서브 타이틀"
-          description="기본 문구 (진함)"
-          subDescription="서브 문구 (회색)"
-          onClose={() => setIsOpen(false)}
-          lineButtonText="취소"
-          onLineButtonClick={() => {}}
-          primaryButtonText="확인"
-          onPrimaryButtonClick={() => {}}
-          subButtonText="삭제"
-          onSubButtonClick={() => {}}
-        >
-          ㅋㅋㅋㅋㅋ 내용내용
-        </ModalFrame> */}
+
       {openModal === 1 && (
         <ModalPortal>
           <ModalFrame
@@ -68,7 +53,7 @@ export default function TaskDetailPage() {
           <ModalFrame
             title="멤버"
             subTitle="(4명)"
-            showCloseButton={false}
+            hasCloseButton={false}
             onClose={() => setOpenModal(null)}
             lineButtonText="닫기"
             onLineButtonClick={() => setOpenModal(null)}
@@ -82,10 +67,10 @@ export default function TaskDetailPage() {
       {openModal === 3 && (
         <ModalPortal>
           <ModalFrame
-            icon={true}
+            hasIcon={true}
             title="할일을 삭제하시겠습니까?"
             description="할일 정보가 삭제됩니다."
-            showCloseButton={false}
+            hasCloseButton={false}
             onClose={() => setOpenModal(null)}
             lineButtonText="닫기"
             onLineButtonClick={() => setOpenModal(null)}
@@ -97,12 +82,12 @@ export default function TaskDetailPage() {
       {openModal === 4 && (
         <ModalPortal>
           <ModalFrame
-            showCloseButton={true}
+            hasCloseButton={true}
             primaryButtonText="이메일 복사하기"
             onPrimaryButtonClick={() => setOpenModal(null)}
             subButtonText="멤버 삭제하기"
             onSubButtonClick={() => setOpenModal(null)}
-            buttonAlign={true}
+            isButtonAlign={true}
             onClose={() => setOpenModal(null)}
           >
             선택한 멤버 프로필
