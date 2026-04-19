@@ -1,9 +1,9 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
 
-interface FetchOptions extends RequestInit {
+type FetchOptions = RequestInit & {
   token?: string;
-}
+};
 
 function normalizeEndpoint(endpoint: string) {
   return endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
