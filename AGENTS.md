@@ -33,6 +33,10 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - clsx, tailwind-merge
 - Gitmoji
 
+## 참고 링크
+
+- Swagger API: https://fe-project-cowokers.vercel.app/docs/#/
+
 ## 폴더 구조
 
 현재 구조는 아래를 기준으로 한다. 기능별 개인 컴포넌트 폴더는 각 담당자가 구현 시점에 추가한다.
@@ -95,8 +99,12 @@ src/
 │     ├─ Header.tsx
 │     └─ sidebar/
 │        ├─ index.tsx
-│        ├─ Sidebar.tsx
 │        ├─ components/
+│        │  ├─ Sidebar.tsx
+│        │  ├─ SidebarHeader.tsx
+│        │  ├─ SidebarNav.tsx
+│        │  ├─ SidebarNavItem.tsx
+│        │  └─ SidebarFooter.tsx
 │        ├─ hooks/
 │        ├─ constants.ts
 │        └─ types.ts
@@ -115,7 +123,8 @@ src/
 - 공통으로 2곳 이상 쓰일 UI만 `src/components/common`에 둔다.
 - 페이지 전체 레이아웃 요소는 `src/components/layout`에 둔다.
 - 기능별 개인 컴포넌트는 구현 담당자가 필요할 때 별도 폴더로 추가한다.
-- 사이드바처럼 파일이 많아지는 컴포넌트는 `index.tsx`, 대표 컴포넌트, `components/`, `hooks/`, `constants.ts`, `types.ts` 구조를 사용한다.
+- 사이드바처럼 파일이 많아지는 컴포넌트는 `index.tsx`, `components/`, `hooks/`, `constants.ts`, `types.ts` 구조를 사용한다.
+- 해당 폴더의 실제 UI 컴포넌트는 대표 컴포넌트까지 모두 `components/` 안에 둔다.
 - 날짜 선택 UI는 `react-datepicker`를 직접 쓰지 않고 공용 `DatePicker` 컴포넌트로 감싸서 사용한다.
 
 ## 코드 컨벤션
@@ -142,7 +151,7 @@ src/
 ## 네이밍 규칙
 
 - 디렉토리명: kebab-case
-- App Router 라우트 세그먼트: 기획서 URL 우선. 예: `addteam`, `myhistory`, `tasklist`
+- App Router 라우트 세그먼트: 임의 변경 금지, 변경이 필요하면 팀원과 먼저 상의
 - 컴포넌트 `.tsx`: PascalCase
 - App Router 특수 파일: `page.tsx`, `layout.tsx`, `route.ts`
 - 훅, 유틸, API, 일반 모듈: camelCase
