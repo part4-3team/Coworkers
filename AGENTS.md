@@ -79,10 +79,12 @@ src/
 │     ├─ mypage/page.tsx
 │     ├─ boards/page.tsx
 │     ├─ boards/[articleId]/page.tsx
-│     └─ [teamId]/
+│     └─ groups/
 │        ├─ page.tsx
-│        ├─ tasklist/page.tsx
-│        └─ [taskId]/page.tsx
+│        └─ [groupId]/
+│           ├─ page.tsx
+│           ├─ tasklist/page.tsx
+│           └─ [taskId]/page.tsx
 │
 ├─ components/
 │  ├─ common/

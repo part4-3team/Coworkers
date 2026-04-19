@@ -32,9 +32,10 @@ export default function SidebarNav({ isExpanded }: SidebarNavProps) {
           <SidebarNavItem
             key={team.id}
             href={ROUTES.TEAM(team.id)}
-            icon={SIDEBAR_ICONS.team}
+            icon={team.isOwner ? SIDEBAR_ICONS.teamOwner : SIDEBAR_ICONS.team}
             isActive={team.id === ACTIVE_TEAM_ID}
             isExpanded={isExpanded}
+            isOriginalIconColor={team.isOwner}
             label={team.name}
             variant="team"
           />

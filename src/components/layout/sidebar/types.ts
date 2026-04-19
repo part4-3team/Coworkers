@@ -22,6 +22,7 @@ export type SidebarIcon = {
 
 export type SidebarTeam = {
   id: string;
+  isOwner?: boolean;
   name: string;
 };
 
@@ -36,6 +37,7 @@ export type SidebarNavItemProps = SidebarExpandedProps & {
   href: string;
   icon: SidebarIcon;
   isActive?: boolean;
+  isOriginalIconColor?: boolean;
   label: string;
   variant?: SidebarNavItemVariant;
 };
