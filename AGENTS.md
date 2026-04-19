@@ -67,7 +67,11 @@ src/
 │  ├─ layout.tsx
 │  ├─ providers.tsx
 │  ├─ api/auth/[...nextauth]/route.ts
-│  ├─ (landing)/page.tsx
+│  ├─ (landing)/
+│  │  ├─ page.tsx
+│  │  ├─ components/
+│  │  ├─ constants.ts
+│  │  └─ types.ts
 │  └─ (service)/
 │     ├─ layout.tsx
 │     ├─ login/page.tsx
@@ -124,8 +128,11 @@ src/
 
 - 공통으로 2곳 이상 쓰일 UI만 `src/components/common`에 둔다.
 - 페이지 전체 레이아웃 요소는 `src/components/layout`에 둔다.
-- 기능별 개인 컴포넌트는 구현 담당자가 필요할 때 별도 폴더로 추가한다.
-- 사이드바처럼 파일이 많아지는 컴포넌트는 `index.tsx`, `components/`, `hooks/`, `constants.ts`, `types.ts` 구조를 사용한다.
+- 페이지 전용 컴포넌트는 해당 `app` 라우트 폴더 안에 두는 것을 기본으로 한다.
+- 분리할 파일이 거의 없는 단순 화면만 `page.tsx` 안에서 단순화할 수 있다.
+- 라우트 전용 폴더는 기본적으로 `components/`, `constants.ts`, `types.ts` 구조를 사용한다.
+- `app` 라우트 폴더에는 배럴용 `index.ts`를 만들지 않는다.
+- 훅이 필요한 경우에만 `hooks/`를 추가한다.
 - 해당 폴더의 실제 UI 컴포넌트는 대표 컴포넌트까지 모두 `components/` 안에 둔다.
 - 날짜 선택 UI는 `react-datepicker`를 직접 쓰지 않고 공용 `DatePicker` 컴포넌트로 감싸서 사용한다.
 

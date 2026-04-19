@@ -11,22 +11,22 @@
 - 기준은 `AGENTS.md`이며, 구조 위반은 PR에서 반드시 코멘트한다.
 - App Router 라우트는 임의로 변경하지 않는다. 변경이 필요하면 팀원과 먼저 상의한다.
 - `src/components` 기본 폴더는 `common/`, `layout/`이다.
-- 기능별 컴포넌트 폴더는 실제 기능 구현 시점에만 추가한다.
-- 여러 파일로 구성되는 컴포넌트 폴더는 아래 구조를 우선한다.
+- 페이지 전용 컴포넌트는 해당 `app` 라우트 폴더 안에 둔다.
+- 분리할 파일이 거의 없는 단순 화면만 `page.tsx` 안에서 단순화할 수 있다.
+- 라우트 전용 폴더는 아래 구조를 기본으로 리뷰한다.
 
 ```text
-feature-name/
-├─ index.ts 또는 index.tsx
+route-segment/
 ├─ components/
-├─ hooks/
 ├─ constants.ts
 └─ types.ts
 ```
 
+- `app` 라우트 폴더에는 배럴용 `index.ts`를 만들지 않는다.
+- 훅이 필요한 경우에만 `hooks/`를 추가한다.
 - 실제 UI 컴포넌트는 대표 컴포넌트까지 `components/` 안에 둔다.
-- 전용 훅이 없으면 `hooks/`는 만들지 않아도 된다.
 - props/variant 타입은 `types.ts`, 목데이터/옵션/반복 설정값은 `constants.ts`로 분리한다.
-- 예: `src/components/layout/sidebar/components/Sidebar.tsx`, `src/components/common/modal/components/ModalFrame.tsx`
+- 예: `src/app/(landing)/components/LandingPage.tsx`
 - `.vite`, `.next`, `node_modules`, 빌드 캐시는 PR에 포함하지 않는다.
 
 ### 2. import
