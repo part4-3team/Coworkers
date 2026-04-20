@@ -4,30 +4,34 @@
 'use client';
 import Image from 'next/image';
 import { icUserLarge, icProfileEditLarge } from '@/assets/index';
-import { useRef, useState } from 'react';
-import { ImgAddButtonProps } from './type';
+import { useEffect, useRef, useState } from 'react';
+import { ImgAddButtonProps } from './types';
 
 export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [imgSrc, setImgSrc] = useState<string | null>(src ?? null);
+
+  const [localImgSrc, setLocalImgSrc] = useState<string | null>(null);
+  const imgSrc = localImgSrc ?? src ?? null;
+
+  useEffect(() => {
+    return () => {
+      if (localImgSrc) {
+        URL.revokeObjectURL(localImgSrc);
+      }
+    };
+  }, [localImgSrc]);
 
   function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const imgFile = e.target.files?.[0];
-
     if (!imgFile) return;
 
     const imgFileURL = URL.createObjectURL(imgFile);
-
-    setImgSrc(imgFileURL);
+    setLocalImgSrc(imgFileURL);
     onChangeFile?.(imgFile);
-
-    return () => {
-      URL.revokeObjectURL(imgFileURL);
-    };
   }
 
   return (
-    <div className="w-fit ml-auto mr-auto">
+    <div className="w-fit mx-auto">
       <input
         type="file"
         accept="image/*"
@@ -56,13 +60,13 @@ export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {
               alt="유저 프로필 이미지"
               width="98"
               height="98"
-              className="object-cover h-full mx-1"
+              className="object-cover h-full"
             />
           )}
         </div>
         <Image
           src={icProfileEditLarge}
-          alt="프로필 기본 이미지"
+          alt="프로필 수정"
           width="32"
           height="32"
           className="absolute bottom-0 -right-1 border-2 border-background-secondary rounded-3xl w-5 h-5 md:w-8 md:h-8 md:-right-2 md:border-0"
