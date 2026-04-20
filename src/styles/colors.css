@@ -35,5 +35,7 @@
   --color-icon-inverse: #f8fafc;
   --color-icon-brand: #74a1fb;
 
+  --shadow-floating: 0 5px 5px #31549933;
+
   --font-sans: var(--font-pretendard);
 }
