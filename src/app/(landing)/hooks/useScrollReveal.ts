@@ -20,20 +20,12 @@ export function useScrollReveal({
       return;
     }
 
-    if (
+    const shouldAnimateImmediately =
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      !('IntersectionObserver' in window)
-    ) {
-      const animationFrameId = window.requestAnimationFrame(() => {
-        setIsVisible(true);
-      });
+      !('IntersectionObserver' in window) ||
+      animateOnMount;
 
-      return () => {
-        window.cancelAnimationFrame(animationFrameId);
-      };
-    }
-
-    if (animateOnMount) {
+    if (shouldAnimateImmediately) {
       const animationFrameId = window.requestAnimationFrame(() => {
         setIsVisible(true);
       });
