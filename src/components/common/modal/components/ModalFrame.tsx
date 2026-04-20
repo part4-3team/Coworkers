@@ -1,6 +1,5 @@
 /**
  * ModalFrame 컴포넌트 Props
- *
  * - children (ReactNode): 모달 내부 콘텐츠
  * - hasIcon (boolean): 아이콘 표시 여부 (true 시 느낌표 아이콘)
  * - hasCloseButton (boolean): 닫기 버튼 표시 여부
@@ -68,21 +67,21 @@ export default function ModalFrame({
             height="24"
           />
         )}
-        <div className="flex gap-1 items-center justify-center">
-          {title && <p className="text-xl font-bold">{title}</p>}
-          {subTitle && (
-            <p className="text-base text-text-default">{subTitle}</p>
-          )}
-        </div>
+        {title && (
+          <div className="flex gap-1 items-center justify-center">
+            <p className="text-xl font-bold">{title}</p>
+            {subTitle && (
+              <p className="text-base text-text-default">{subTitle}</p>
+            )}
+          </div>
+        )}
         {description && (
           <p className="text-sm text-text-secondary">{description}</p>
         )}
         {subDescription && (
           <p className="text-sm text-gray-400">{subDescription}</p>
         )}
-
         {children && <div>{children}</div>}
-
         <div
           className={`flex gap-2 mt-2 w-full ${isButtonAlign ? 'flex-col px-4' : 'flex-row px-0'} max-w-80`}
         >
