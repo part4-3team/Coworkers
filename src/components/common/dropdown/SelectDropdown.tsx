@@ -41,12 +41,12 @@ export default function SelectDropdown<T extends string>({
         onClick={toggle}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        className="flex w-full items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-800"
+        className="flex w-full items-center justify-between gap-2 rounded-xl border border-border-secondary bg-background-primary px-4 py-2.5 text-sm text-text-primary"
       >
         <span>{selectedLabel}</span>
         <span
           className={cn(
-            'text-xs text-gray-500 transition-transform duration-200',
+            'text-xs text-text-default transition-transform duration-200',
             isOpen && 'rotate-180',
           )}
         >
@@ -57,7 +57,7 @@ export default function SelectDropdown<T extends string>({
         <ul
           role="listbox"
           className={cn(
-            'absolute left-0 z-10 mt-2 w-full rounded-xl bg-white py-2 shadow-lg',
+            'absolute left-0 z-10 mt-2 w-full rounded-xl bg-background-primary py-2 shadow-lg',
             menuClassName,
           )}
         >
@@ -70,8 +70,8 @@ export default function SelectDropdown<T extends string>({
               <button
                 type="button"
                 className={cn(
-                  'w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50',
-                  item.value === value && 'font-medium text-violet-600',
+                  'w-full px-4 py-2.5 text-left text-sm text-text-primary hover:bg-background-secondary',
+                  item.value === value && 'font-medium text-point-purple',
                 )}
                 onClick={() => {
                   onChange(item.value);

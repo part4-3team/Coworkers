@@ -35,7 +35,7 @@ export default function ListDropdown({
       {isOpen && (
         <ul
           className={cn(
-            'absolute right-0 z-10 mt-2 min-w-max rounded-xl bg-white py-2 shadow-lg',
+            'absolute right-0 z-10 mt-2 min-w-max rounded-xl bg-background-primary py-2 shadow-lg',
             menuClassName,
           )}
           role="menu"
@@ -44,7 +44,7 @@ export default function ListDropdown({
             <li key={item.label} role="menuitem">
               <button
                 type="button"
-                className="w-full px-6 py-3 text-center text-sm text-gray-800 hover:bg-gray-50"
+                className="w-full px-6 py-3 text-center text-sm text-text-primary hover:bg-background-secondary"
                 onClick={() => {
                   item.onClick();
                   close();
