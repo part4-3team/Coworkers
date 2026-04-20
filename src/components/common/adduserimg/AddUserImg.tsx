@@ -40,7 +40,7 @@ export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {
         onClick={() => fileInputRef.current?.click()}
         className="w-16 h-16 md:w-25 md:h-25 relative"
       >
-        <div className="bg-border-secondary border-2 border-border-primary rounded-[20px] flex justify-center items-center w-full h-full md:rounded-4xl">
+        <div className="bg-border-secondary border-2 border-border-primary rounded-[20px] flex justify-center items-center w-full h-full md:rounded-4xl overflow-hidden">
           {!imgSrc && (
             <Image
               src={icUserLarge}
