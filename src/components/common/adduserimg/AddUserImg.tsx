@@ -3,7 +3,7 @@
  */
 'use client';
 import Image from 'next/image';
-import { icUserLarge, icProfileEditLarge } from '@/assets/index';
+import { icUserXlarge, icProfileEditLarge } from '@/assets/index';
 import { useEffect, useRef, useState } from 'react';
 import { ImgAddButtonProps } from './types';
 
@@ -47,10 +47,11 @@ export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {
         <div className="bg-border-secondary border-2 border-border-primary rounded-[20px] flex justify-center items-center w-full h-full md:rounded-4xl overflow-hidden">
           {!imgSrc && (
             <Image
-              src={icUserLarge}
+              src={icUserXlarge}
               alt="프로필 기본 이미지"
-              width="40"
-              height="40"
+              width="64"
+              height="64"
+              className="w-10 h-10 md:w-16 md:h-16"
             />
           )}
 
