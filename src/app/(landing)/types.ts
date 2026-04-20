@@ -10,7 +10,7 @@ export type LandingTaskColumnImage = {
   image: StaticImageData;
 };
 
-export type LandingFeatureSectionData = {
+export type LandingSectionContent = {
   description: string;
   eyebrow: string;
   image?: StaticImageData;
@@ -18,14 +18,24 @@ export type LandingFeatureSectionData = {
   title: string;
 };
 
-export type LandingFeatureSectionProps = {
-  children?: ReactNode;
+export type LandingRevealDirection = 'left' | 'right' | 'scale' | 'up';
+
+export type LandingRevealDelay = 'long' | 'medium' | 'none' | 'short';
+
+export type LandingScrollRevealProps = {
+  animateOnMount?: boolean;
+  children: ReactNode;
+  className?: string;
+  delay?: LandingRevealDelay;
+  direction?: LandingRevealDirection;
+};
+
+export type LandingFeatureCopyProps = {
+  className?: string;
   description: string;
-  eyebrow: string;
-  image?: StaticImageData;
-  imageAlt?: string;
-  imagePlacement?: 'start' | 'end';
-  isTextInverse?: boolean;
+  icon: StaticImageData;
+  iconClassName?: string;
+  isInverse?: boolean;
+  revealDirection?: LandingRevealDirection;
   title: string;
-  variant?: 'default' | 'brand' | 'muted';
 };

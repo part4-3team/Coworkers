@@ -16,7 +16,9 @@ export { default as imgLandingTasklist } from './images/img_landing_tasklist.png
 export { default as imgNoTeam } from './images/img_no_team.png';
 
 export { default as icAlertCircleLarge } from './icons/ic_alert_circle_large.svg';
+export { default as icBlueCheck } from './icons/ic_blue_check.svg';
 export { default as icAlertCircleSmall } from './icons/ic_alert_circle_small.svg';
+export { default as icSpeechBubble } from './icons/ic_speech_bubble.svg';
 export { default as icArrowUpCircle } from './icons/ic_arrow_up_circle.svg';
 export { default as icArrowUpCircleActive } from './icons/ic_arrow_up_circle_active.svg';
 export { default as icBadgeDefault } from './icons/ic_badge_default.svg';
@@ -81,3 +83,4 @@ export { default as icUserLarge } from './icons/ic_user_large.svg';
 export { default as icUserXlarge } from './icons/ic_user_xlarge.svg';
 export { default as icVisibility } from './icons/ic_visibility.svg';
 export { default as icVisibilityOff } from './icons/ic_visibility_off.svg';
+export { default as icFolder } from './icons/ic_folder.svg';
