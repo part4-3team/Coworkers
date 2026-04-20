@@ -37,93 +37,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 - Swagger API: https://fe-project-cowokers.vercel.app/docs/#/
 
-## 폴더 구조
-
-현재 구조는 아래를 기준으로 한다. 기능별 개인 컴포넌트 폴더는 각 담당자가 구현 시점에 추가한다.
-
-```text
-public/
-├─ favicon.ico
-├─ fonts/
-│  └─ PretendardVariable.woff2
-└─ og-image.png
-
-src/
-├─ api/
-│  ├─ apiClient.ts
-│  ├─ authApi.ts
-│  ├─ groupApi.ts
-│  ├─ taskApi.ts
-│  ├─ commentApi.ts
-│  └─ boardApi.ts
-│
-├─ assets/
-│  ├─ icons/
-│  ├─ images/
-│  ├─ logos/
-│  └─ index.ts
-│
-├─ app/
-│  ├─ layout.tsx
-│  ├─ providers.tsx
-│  ├─ api/auth/[...nextauth]/route.ts
-│  ├─ (landing)/
-│  │  ├─ page.tsx
-│  │  ├─ components/
-│  │  ├─ constants.ts
-│  │  └─ types.ts
-│  └─ (service)/
-│     ├─ layout.tsx
-│     ├─ login/page.tsx
-│     ├─ signup/page.tsx
-│     ├─ oauth/signup/[provider]/page.tsx
-│     ├─ addteam/page.tsx
-│     ├─ jointeam/page.tsx
-│     ├─ myhistory/page.tsx
-│     ├─ mypage/page.tsx
-│     ├─ boards/page.tsx
-│     ├─ boards/[articleId]/page.tsx
-│     └─ groups/
-│        ├─ page.tsx
-│        └─ [groupId]/
-│           ├─ page.tsx
-│           ├─ tasklist/page.tsx
-│           └─ [taskId]/page.tsx
-│
-├─ components/
-│  ├─ common/
-│  │  ├─ logo/
-│  │  ├─ avatar/
-│  │  ├─ button/
-│  │  ├─ form/
-│  │  ├─ modal/
-│  │  ├─ dropdown/
-│  │  ├─ toast/
-│  │  ├─ badge/
-│  │  └─ todo/
-│  └─ layout/
-│     ├─ Header.tsx
-│     └─ sidebar/
-│        ├─ index.tsx
-│        ├─ components/
-│        │  ├─ Sidebar.tsx
-│        │  ├─ SidebarHeader.tsx
-│        │  ├─ SidebarNav.tsx
-│        │  ├─ SidebarNavItem.tsx
-│        │  └─ SidebarFooter.tsx
-│        ├─ hooks/
-│        ├─ constants.ts
-│        └─ types.ts
-│
-├─ constants/
-├─ contexts/
-├─ hooks/
-├─ proxy.ts
-├─ styles/
-├─ types/
-└─ utils/
-```
-
 ## 컴포넌트 규칙
 
 - 공통으로 2곳 이상 쓰일 UI만 `src/components/common`에 둔다.
@@ -145,6 +58,8 @@ src/
 - 이벤트 핸들러는 `handle + 동사`, prop 이벤트는 `on + 동사`로 작성한다.
 - Boolean 변수는 `is`, `has` 접두사를 사용한다.
 - 상수는 `UPPER_SNAKE_CASE`를 사용한다.
+- 컴포넌트나 모듈 파일이 100줄을 초과하면 역할 단위로 파일을 분리한다.
+- import 구문과 타입 선언은 줄 수 계산에서 제외한다.
 
 ## 스타일 규칙
 
