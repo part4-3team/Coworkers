@@ -7,6 +7,12 @@ export { default as imgLogoFullSmall } from './logos/img_logo_full_small.svg';
 export { default as imgLogoSymbolLarge } from './logos/img_logo_symbol_large.svg';
 export { default as imgLogoTextLarge } from './logos/img_logo_text_large.svg';
 export { default as imgLogoTextSmall } from './logos/img_logo_text_small.svg';
+export { default as imgLandingDashboard } from './images/img_landing_dashboard.png';
+export { default as imgLandingTaskColumnDone } from './images/img_landing_task_column_done.png';
+export { default as imgLandingTaskColumnProgress } from './images/img_landing_task_column_progress.png';
+export { default as imgLandingTaskColumnTodo } from './images/img_landing_task_column_todo.png';
+export { default as imgLandingTaskDetail } from './images/img_landing_task_detail.png';
+export { default as imgLandingTasklist } from './images/img_landing_tasklist.png';
 export { default as imgNoTeam } from './images/img_no_team.png';
 
 export { default as icAlertCircleLarge } from './icons/ic_alert_circle_large.svg';
