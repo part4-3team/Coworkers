@@ -17,7 +17,6 @@
 
   --color-interaction-inactive: #94a3b8;
   --color-interaction-hover: #416EC8;
-  --color-interaction-pressed: #047857;
 
   --color-border-primary: #f8fafc80;
   --color-border-secondary: #cbd5e1;
@@ -30,6 +29,7 @@
   --color-text-disabled: #e2e8f0;
 
   --color-status-danger: #fc4b4b;
+  --color-status-hover: #C03737;
 
   --color-icon-primary: #64748b;
   --color-icon-inverse: #f8fafc;
