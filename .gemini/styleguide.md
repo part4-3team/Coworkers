@@ -8,22 +8,26 @@
 
 ### 1. 프로젝트 구조
 
-- 현재 폴더 구조의 기준 문서는 `AGENTS.md`다.
-- `src/components` 아래는 현재 `common/`, `layout/`만 둔다.
-- `auth/`, `board/`, `landing/`, `task/`, `team/` 같은 기능별 컴포넌트 폴더는 담당자가 실제 구현할 때 추가한다.
-- 공통 UI는 `src/components/common`에 둔다.
-- 레이아웃 UI는 `src/components/layout`에 둔다.
-- 사이드바처럼 파일이 많아지는 컴포넌트는 아래 구조를 따른다.
+- 기준은 `AGENTS.md`이며, 구조 위반은 PR에서 반드시 코멘트한다.
+- App Router 라우트는 임의로 변경하지 않는다. 변경이 필요하면 팀원과 먼저 상의한다.
+- `src/components` 기본 폴더는 `common/`, `layout/`이다.
+- 페이지 전용 컴포넌트는 해당 `app` 라우트 폴더 안에 둔다.
+- 분리할 파일이 거의 없는 단순 화면만 `page.tsx` 안에서 단순화할 수 있다.
+- 라우트 전용 폴더는 아래 구조를 기본으로 리뷰한다.
 
 ```text
-sidebar/
-├─ index.tsx
-├─ Sidebar.tsx
+route-segment/
 ├─ components/
-├─ hooks/
 ├─ constants.ts
 └─ types.ts
 ```
+
+- `app` 라우트 폴더에는 배럴용 `index.ts`를 만들지 않는다.
+- 훅이 필요한 경우에만 `hooks/`를 추가한다.
+- 실제 UI 컴포넌트는 대표 컴포넌트까지 `components/` 안에 둔다.
+- props/variant 타입은 `types.ts`, 목데이터/옵션/반복 설정값은 `constants.ts`로 분리한다.
+- 예: `src/app/(landing)/components/LandingPage.tsx`
+- `.vite`, `.next`, `node_modules`, 빌드 캐시는 PR에 포함하지 않는다.
 
 ### 2. import
 
@@ -64,7 +68,7 @@ type ButtonProps = {
 ### 5. 네이밍
 
 - 디렉토리명은 kebab-case를 사용한다.
-- App Router 라우트 세그먼트는 기획서 URL을 우선한다. 예: `addteam`, `myhistory`, `tasklist`
+- App Router 라우트 세그먼트는 임의로 변경하지 않는다. 변경이 필요하면 팀원과 먼저 상의한다.
 - 컴포넌트 `.tsx` 파일은 PascalCase를 사용한다.
 - App Router 특수 파일은 `page.tsx`, `layout.tsx`, `route.ts`를 사용한다.
 - 훅, 유틸, API, 일반 모듈 파일은 camelCase를 사용한다.
@@ -80,6 +84,8 @@ type ButtonProps = {
 - prop 이벤트는 `on + 동사` 형식을 사용한다.
 - Boolean 값은 `is`, `has` 접두사를 사용한다.
 - 상수는 `UPPER_SNAKE_CASE`를 사용한다.
+- 컴포넌트나 모듈 파일이 100줄을 초과하면 역할 단위로 파일을 분리한다.
+- import 구문, 타입 선언은 줄 수 계산에서 제외한다.
 
 ### 7. 접근성
 

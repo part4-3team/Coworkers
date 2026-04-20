@@ -21,10 +21,10 @@ const LOGO_SIZE_MAP = {
   },
 } as const;
 
-interface LogoProps {
+type LogoProps = {
   className?: string;
   size?: LogoSize;
-}
+};
 
 export default function Logo({ className, size = 'large' }: LogoProps) {
   const logo = LOGO_SIZE_MAP[size];

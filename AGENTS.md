@@ -33,89 +33,20 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - clsx, tailwind-merge
 - Gitmoji
 
-## 폴더 구조
+## 참고 링크
 
-현재 구조는 아래를 기준으로 한다. 기능별 개인 컴포넌트 폴더는 각 담당자가 구현 시점에 추가한다.
-
-```text
-public/
-├─ favicon.ico
-├─ fonts/
-│  └─ PretendardVariable.woff2
-└─ og-image.png
-
-src/
-├─ api/
-│  ├─ apiClient.ts
-│  ├─ authApi.ts
-│  ├─ groupApi.ts
-│  ├─ taskApi.ts
-│  ├─ commentApi.ts
-│  └─ boardApi.ts
-│
-├─ assets/
-│  ├─ icons/
-│  ├─ images/
-│  ├─ logos/
-│  └─ index.ts
-│
-├─ app/
-│  ├─ layout.tsx
-│  ├─ providers.tsx
-│  ├─ api/auth/[...nextauth]/route.ts
-│  ├─ (landing)/page.tsx
-│  └─ (service)/
-│     ├─ layout.tsx
-│     ├─ login/page.tsx
-│     ├─ signup/page.tsx
-│     ├─ oauth/signup/[provider]/page.tsx
-│     ├─ addteam/page.tsx
-│     ├─ jointeam/page.tsx
-│     ├─ myhistory/page.tsx
-│     ├─ mypage/page.tsx
-│     ├─ boards/page.tsx
-│     ├─ boards/[articleId]/page.tsx
-│     └─ [teamId]/
-│        ├─ page.tsx
-│        ├─ tasklist/page.tsx
-│        └─ [taskId]/page.tsx
-│
-├─ components/
-│  ├─ common/
-│  │  ├─ logo/
-│  │  ├─ avatar/
-│  │  ├─ button/
-│  │  ├─ form/
-│  │  ├─ modal/
-│  │  ├─ dropdown/
-│  │  ├─ toast/
-│  │  ├─ badge/
-│  │  └─ todo/
-│  └─ layout/
-│     ├─ Header.tsx
-│     └─ sidebar/
-│        ├─ index.tsx
-│        ├─ Sidebar.tsx
-│        ├─ components/
-│        ├─ hooks/
-│        ├─ constants.ts
-│        └─ types.ts
-│
-├─ constants/
-├─ contexts/
-├─ hooks/
-├─ proxy.ts
-├─ styles/
-├─ types/
-└─ utils/
-```
+- Swagger API: https://fe-project-cowokers.vercel.app/docs/#/
 
 ## 컴포넌트 규칙
 
 - 공통으로 2곳 이상 쓰일 UI만 `src/components/common`에 둔다.
 - 페이지 전체 레이아웃 요소는 `src/components/layout`에 둔다.
-- 기능별 개인 컴포넌트는 구현 담당자가 필요할 때 별도 폴더로 추가한다.
-- 사이드바처럼 파일이 많아지는 컴포넌트는 `index.tsx`, 대표 컴포넌트, `components/`, `hooks/`, `constants.ts`, `types.ts` 구조를 사용한다.
+- 페이지 전용 컴포넌트는 해당 `app` 라우트 폴더 안에 두는 것을 기본으로 한다.
+- 분리할 파일이 거의 없는 단순 화면만 `page.tsx` 안에서 단순화할 수 있다.
+- 라우트 전용 폴더는 기본적으로 `components/`, `constants.ts`, `types.ts` 구조를 사용한다.
+- `app` 라우트 폴더에는 배럴용 `index.ts`를 만들지 않는다.
+- 훅이 필요한 경우에만 `hooks/`를 추가한다.
+- 해당 폴더의 실제 UI 컴포넌트는 대표 컴포넌트까지 모두 `components/` 안에 둔다.
 - 날짜 선택 UI는 `react-datepicker`를 직접 쓰지 않고 공용 `DatePicker` 컴포넌트로 감싸서 사용한다.
 
 ## 코드 컨벤션
@@ -127,6 +58,8 @@ src/
 - 이벤트 핸들러는 `handle + 동사`, prop 이벤트는 `on + 동사`로 작성한다.
 - Boolean 변수는 `is`, `has` 접두사를 사용한다.
 - 상수는 `UPPER_SNAKE_CASE`를 사용한다.
+- 컴포넌트나 모듈 파일이 100줄을 초과하면 역할 단위로 파일을 분리한다.
+- import 구문과 타입 선언은 줄 수 계산에서 제외한다.
 
 ## 스타일 규칙
 
@@ -142,7 +75,7 @@ src/
 ## 네이밍 규칙
 
 - 디렉토리명: kebab-case
-- App Router 라우트 세그먼트: 기획서 URL 우선. 예: `addteam`, `myhistory`, `tasklist`
+- App Router 라우트 세그먼트: 임의 변경 금지, 변경이 필요하면 팀원과 먼저 상의
 - 컴포넌트 `.tsx`: PascalCase
 - App Router 특수 파일: `page.tsx`, `layout.tsx`, `route.ts`
 - 훅, 유틸, API, 일반 모듈: camelCase

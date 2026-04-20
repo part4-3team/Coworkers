@@ -2,6 +2,8 @@
  * 사이드바에서 사용하는 TypeScript 타입을 정의하는 파일입니다.
  */
 
+import type { StaticImageData } from 'next/image';
+
 export type SidebarProps = Record<string, never>;
 
 export type SidebarExpandedProps = {
@@ -16,12 +18,11 @@ export type SidebarNavProps = SidebarExpandedProps;
 
 export type SidebarFooterProps = SidebarExpandedProps;
 
-export type SidebarIcon = {
-  src: string;
-};
+export type SidebarIcon = StaticImageData;
 
 export type SidebarTeam = {
   id: string;
+  isOwner?: boolean;
   name: string;
 };
 
@@ -36,6 +37,7 @@ export type SidebarNavItemProps = SidebarExpandedProps & {
   href: string;
   icon: SidebarIcon;
   isActive?: boolean;
+  isOriginalIconColor?: boolean;
   label: string;
   variant?: SidebarNavItemVariant;
 };

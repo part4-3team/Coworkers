@@ -3,6 +3,7 @@
  */
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 import type { SidebarNavItemProps } from '@/components/layout/sidebar/types';
 import { cn } from '@/utils/cn';
@@ -12,6 +13,7 @@ export default function SidebarNavItem({
   icon,
   isActive = false,
   isExpanded,
+  isOriginalIconColor = false,
   label,
   variant = 'team',
 }: SidebarNavItemProps) {
@@ -42,20 +44,24 @@ export default function SidebarNavItem({
       )}
       aria-current={isActive ? 'page' : undefined}
     >
-      <span
-        aria-hidden="true"
-        className={cn(
-          'block size-5 shrink-0',
-          variant === 'team' &&
-            (isActive ? 'bg-brand-primary' : 'bg-text-disabled'),
-          variant === 'addTeam' && 'bg-brand-primary',
-          variant === 'board' && 'bg-text-disabled',
-        )}
-        style={{
-          WebkitMask: `url(${icon.src}) center / contain no-repeat`,
-          mask: `url(${icon.src}) center / contain no-repeat`,
-        }}
-      />
+      {isOriginalIconColor ? (
+        <Image src={icon} alt="" width={20} height={20} className="shrink-0" />
+      ) : (
+        <span
+          aria-hidden="true"
+          className={cn(
+            'block size-5 shrink-0',
+            variant === 'team' &&
+              (isActive ? 'bg-brand-primary' : 'bg-text-disabled'),
+            variant === 'addTeam' && 'bg-brand-primary',
+            variant === 'board' && 'bg-text-disabled',
+          )}
+          style={{
+            WebkitMask: `url(${icon.src}) center / contain no-repeat`,
+            mask: `url(${icon.src}) center / contain no-repeat`,
+          }}
+        />
+      )}
       {isExpanded && <span className="whitespace-nowrap">{label}</span>}
     </Link>
   );
