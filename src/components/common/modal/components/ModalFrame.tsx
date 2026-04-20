@@ -87,7 +87,7 @@ export default function ModalFrame({
         >
           {lineButtonText && (
             <button
-              className="border border-border-secondary rounded-xl px-4 py-2.75 w-full text-text-default font-medium hover:enabled:bg-background-secondary"
+              className="border border-border-secondary rounded-xl px-4 py-2.75 w-full text-text-default font-medium hover:enabled:bg-background-secondary disabled:cursor-default"
               onClick={onLineButtonClick}
             >
               {lineButtonText}
@@ -95,7 +95,7 @@ export default function ModalFrame({
           )}
           {primaryButtonText && (
             <button
-              className="bg-brand-primary rounded-xl px-4 py-2.75 w-full text-white font-medium hover:enabled:bg-interaction-hover disabled:bg-interaction-inactive"
+              className="bg-brand-primary rounded-xl px-4 py-2.75 w-full text-white font-medium hover:enabled:bg-interaction-hover disabled:bg-interaction-inactive disabled:cursor-default"
               onClick={onPrimaryButtonClick}
             >
               {primaryButtonText}
@@ -103,7 +103,7 @@ export default function ModalFrame({
           )}
           {subButtonText && (
             <button
-              className="bg-status-danger rounded-xl px-4 py-2.75 w-full text-white font-medium hover:enabled:bg-status-hover disabled:bg-interaction-inactive"
+              className="bg-status-danger rounded-xl px-4 py-2.75 w-full text-white font-medium hover:enabled:bg-status-hover disabled:bg-interaction-inactive disabled:cursor-default"
               onClick={onSubButtonClick}
             >
               {subButtonText}
