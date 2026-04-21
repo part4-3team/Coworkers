@@ -30,7 +30,7 @@ export default function SelectDropdown<T extends string>({
         onClick={toggle}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        className="flex w-full items-center justify-between gap-2 rounded-xl border border-border-secondary bg-background-primary px-4 py-2.5 text-sm text-text-primary"
+        className="flex w-full items-center justify-between gap-2 rounded-lg border border-border-secondary bg-background-primary p-2 text-sm text-text-primary md:rounded-xl md:px-3.5 md:py-2.5"
       >
         <span>{selectedLabel}</span>
         <span
