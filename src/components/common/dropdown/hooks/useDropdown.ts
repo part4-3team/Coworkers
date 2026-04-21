@@ -2,7 +2,7 @@
  * 드롭다운 열림/닫힘 상태와 바깥 클릭 감지를 관리하는 커스텀 훅입니다.
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type UseDropdownReturn = {
   isOpen: boolean;
@@ -15,8 +15,8 @@ export function useDropdown(): UseDropdownReturn {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const toggle = () => setIsOpen((prev) => !prev);
-  const close = () => setIsOpen(false);
+  const toggle = useCallback(() => setIsOpen((prev) => !prev), []);
+  const close = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -35,7 +35,7 @@ export function useDropdown(): UseDropdownReturn {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [isOpen]);
+  }, [isOpen, close]);
 
   return { isOpen, toggle, close, containerRef };
 }

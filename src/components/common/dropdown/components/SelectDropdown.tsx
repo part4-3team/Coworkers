@@ -52,13 +52,11 @@ export default function SelectDropdown<T extends string>({
           )}
         >
           {items.map((item) => (
-            <li
-              key={item.value}
-              role="option"
-              aria-selected={item.value === value}
-            >
+            <li key={item.value} role="none">
               <button
                 type="button"
+                role="option"
+                aria-selected={item.value === value}
                 className={cn(
                   'w-full px-4 py-2.5 text-left text-sm text-text-primary hover:bg-background-secondary',
                   item.value === value && 'font-medium text-point-purple',

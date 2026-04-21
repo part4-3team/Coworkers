@@ -31,15 +31,16 @@ export default function ListDropdown({
       {isOpen && (
         <ul
           className={cn(
-            'absolute right-0 z-10 mt-2 w-30 rounded-xl bg-background-primary py-0 shadow-lg md:w-[135px]',
+            'absolute right-0 z-10 mt-2 w-[120px] rounded-xl bg-background-primary py-0 shadow-lg md:w-[135px]',
             menuClassName,
           )}
           role="menu"
         >
           {items.map((item) => (
-            <li key={item.label} role="menuitem">
+            <li key={item.label} role="none">
               <button
                 type="button"
+                role="menuitem"
                 className="w-full whitespace-nowrap px-6 py-3 text-center text-sm text-text-primary hover:bg-background-secondary"
                 onClick={() => {
                   item.onClick();
