@@ -99,7 +99,10 @@ export function useUpdateBoardComment() {
     onSuccess: async (_, variables) => {
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: queryKeys.boardComment.all(variables.teamId),
+          queryKey: queryKeys.boardComment.list(
+            variables.teamId,
+            variables.articleId,
+          ),
         }),
         queryClient.invalidateQueries({
           queryKey: queryKeys.board.detail(
@@ -121,7 +124,10 @@ export function useDeleteBoardComment() {
     onSuccess: async (_, variables) => {
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: queryKeys.boardComment.all(variables.teamId),
+          queryKey: queryKeys.boardComment.list(
+            variables.teamId,
+            variables.articleId,
+          ),
         }),
         queryClient.invalidateQueries({
           queryKey: queryKeys.board.detail(

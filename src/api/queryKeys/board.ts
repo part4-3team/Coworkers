@@ -39,10 +39,9 @@ export const boardCommentQueryKeys = {
     withQueryParams(
       createTeamScopeQueryKey(
         teamId,
-        'boards',
-        articleId,
-        'comments',
+        'boardComments',
         'infiniteList',
+        articleId,
       ),
       params,
     ),
@@ -52,7 +51,7 @@ export const boardCommentQueryKeys = {
     params?: CursorPaginationQueryParams,
   ) =>
     withQueryParams(
-      createTeamScopeQueryKey(teamId, 'boards', articleId, 'comments', 'list'),
+      createTeamScopeQueryKey(teamId, 'boardComments', 'list', articleId),
       params,
     ),
 } as const;

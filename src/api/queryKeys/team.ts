@@ -95,13 +95,7 @@ export const commentQueryKeys = {
     params?: CursorPaginationQueryParams,
   ) =>
     withQueryParams(
-      createTeamScopeQueryKey(
-        teamId,
-        'tasks',
-        taskId,
-        'comments',
-        'infiniteList',
-      ),
+      createTeamScopeQueryKey(teamId, 'comments', 'infiniteList', taskId),
       params,
     ),
   list: (
@@ -110,7 +104,7 @@ export const commentQueryKeys = {
     params?: CursorPaginationQueryParams,
   ) =>
     withQueryParams(
-      createTeamScopeQueryKey(teamId, 'tasks', taskId, 'comments', 'list'),
+      createTeamScopeQueryKey(teamId, 'comments', 'list', taskId),
       params,
     ),
 } as const;

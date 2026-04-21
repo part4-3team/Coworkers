@@ -6,7 +6,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { userQueryOptions } from '@/api/queryOptions/userQueryOptions';
+import { userQueryOptions } from '@/api/queryOptions';
 import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
