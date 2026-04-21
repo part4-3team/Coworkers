@@ -16,6 +16,7 @@ export { default as imgLandingTasklist } from './images/img_landing_tasklist.png
 export { default as imgNoTeam } from './images/img_no_team.png';
 
 export { default as icAlertCircleLarge } from './icons/ic_alert_circle_large.svg';
+export { default as icAlertCircleWhiteLarge } from './icons/ic_alert_circle_white_large.svg';
 export { default as icBlueCheck } from './icons/ic_blue_check.svg';
 export { default as icAlertCircleSmall } from './icons/ic_alert_circle_small.svg';
 export { default as icSpeechBubble } from './icons/ic_speech_bubble.svg';

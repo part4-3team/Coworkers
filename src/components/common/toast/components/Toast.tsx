@@ -8,7 +8,7 @@
 
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
-import { icAlertCircleLarge } from '@/assets';
+import { icAlertCircleWhiteLarge } from '@/assets';
 import type { ToastItem } from '@/components/common/toast/types';
 
 type ToastProps = {
@@ -35,7 +35,7 @@ export default function Toast({ toast, onRemove }: ToastProps) {
     >
       <div className="flex items-center gap-2">
         <span className="hidden md:block">
-          <Image src={icAlertCircleLarge} alt="" />
+          <Image src={icAlertCircleWhiteLarge} alt="" />
         </span>
         <p className="text-sm font-medium text-text-inverse md:text-base">
           {toast.message}
@@ -45,7 +45,7 @@ export default function Toast({ toast, onRemove }: ToastProps) {
         <button
           type="button"
           onClick={handleAction}
-          className="ml-4 shrink-0 rounded-lg border border-text-inverse px-3 py-1.5 text-sm font-medium text-text-inverse hover:bg-white/20"
+          className="ml-4 shrink-0 rounded-lg bg-background-primary px-3 py-1.5 text-sm font-medium text-brand-primary hover:bg-background-secondary"
         >
           {toast.actionLabel}
         </button>
