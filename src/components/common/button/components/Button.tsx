@@ -3,7 +3,7 @@
  */
 
 import type { ButtonProps } from '@/components/common/button/types';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '@/utils/cn';
 
 export default function Button({
   children,
@@ -18,7 +18,7 @@ export default function Button({
   return (
     <button
       type={type}
-      className={twMerge(
+      className={cn(
         'inline-flex items-center justify-center',
         'disabled:bg-interaction-inactive',
         className,
