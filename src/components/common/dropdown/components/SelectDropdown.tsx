@@ -5,21 +5,8 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { useDropdown } from '@/components/common/dropdown/useDropdown';
-
-type SelectDropdownItem<T extends string> = {
-  label: string;
-  value: T;
-};
-
-type SelectDropdownProps<T extends string> = {
-  items: SelectDropdownItem<T>[];
-  value: T;
-  onChange: (value: T) => void;
-  placeholder?: string;
-  className?: string;
-  menuClassName?: string;
-};
+import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
+import type { SelectDropdownProps } from '@/components/common/dropdown/types';
 
 export default function SelectDropdown<T extends string>({
   items,

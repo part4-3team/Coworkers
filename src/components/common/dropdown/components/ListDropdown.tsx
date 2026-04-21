@@ -5,19 +5,8 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { useDropdown } from '@/components/common/dropdown/useDropdown';
-
-type ListDropdownItem = {
-  label: string;
-  onClick: () => void;
-};
-
-type ListDropdownProps = {
-  trigger: React.ReactNode;
-  items: ListDropdownItem[];
-  className?: string;
-  menuClassName?: string;
-};
+import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
+import type { ListDropdownProps } from '@/components/common/dropdown/types';
 
 export default function ListDropdown({
   trigger,
