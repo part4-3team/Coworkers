@@ -5,7 +5,7 @@ export const MOCK_MEMBERS = {
       userImage: '/testImage/1.jpg',
       userEmail: 'admin@test.com',
       userName: '김석진',
-      groupId: 1,
+      groupId: 4002,
       userId: 1,
     },
     {
@@ -13,7 +13,7 @@ export const MOCK_MEMBERS = {
       userImage: '/testImage/2.jpg',
       userEmail: 'user1@test.com',
       userName: '김철수',
-      groupId: 1,
+      groupId: 4002,
       userId: 2,
     },
     {
@@ -21,7 +21,7 @@ export const MOCK_MEMBERS = {
       userImage: '/testImage/3.jpg',
       userEmail: 'user2@test.com',
       userName: '이영희',
-      groupId: 1,
+      groupId: 4002,
       userId: 3,
     },
   ],

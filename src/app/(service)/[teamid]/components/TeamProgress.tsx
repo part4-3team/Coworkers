@@ -12,7 +12,7 @@ export default function TeamProgress() {
         <h2 className="text-text-primary font-bold text-xl md:text-2xl">
           경영관리팀
         </h2>
-        <div className="flex justify-between flex-1 items-center lg:hidden">
+        <div className="flex justify-between flex-1 items-center xl:hidden">
           <MemberChip members={MOCK_MEMBERS.members} />
           <button>
             <Image
@@ -65,7 +65,7 @@ export default function TeamProgress() {
               transitionDuration="1s"
             ></ProgressBar>
           </div>
-          <button className="hidden lg:block">
+          <button className="hidden xl:block">
             <Image
               src={icSettingsLarge}
               width="24"

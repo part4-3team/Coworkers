@@ -23,10 +23,12 @@ export default function TaskDetailPage({
   }
 
   return (
-    <main className="flex gap-4 flex-wrap md:px-6 md:py-18 xl:w-full xl:py-30 xl:max-w-6xl xl:px-20">
+    <main className="flex gap-4 flex-wrap md:gap-8 md:px-6 md:py-18 xl:w-full xl:py-30 xl:max-w-6xl xl:px-20">
       <TeamProgress />
-      <TeamTaskList />
-      <TeamMemberList />
+      <div className="flex w-full xl:border-t xl:border-background-tertiary xl:pt-8 xl:gap-6">
+        <TeamTaskList />
+        <TeamMemberList />
+      </div>
     </main>
   );
 }

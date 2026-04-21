@@ -1,13 +1,18 @@
 import TaskItem from './TaskItem';
+import { TaskProps } from '../types';
+import Image from 'next/image';
+import { icPlusSub } from '@/assets/index';
 
-interface TaskGroupProps {
-  status: '시작 전' | '진행 중' | '완료';
-}
-
-export default function TaskGroup({ status }: TaskGroupProps) {
+export default function TaskGroup({ status }: TaskProps) {
   return (
-    <div>
-      <h3>{status}</h3>
+    <div className="flex flex-col gap-5">
+      <div className="flex justify-between items-center bg-background-tertiary rounded-xl pl-5 pr-2 h-9.5">
+        <h3 className="text-text-primary text-sm font-medium">{status}</h3>
+        <button className="border border-border-secondary rounded-lg bg-background-inverse w-6 h-6 flex justify-center items-center">
+          <Image src={icPlusSub} alt="할일 추가 버튼" width="16" height="16" />
+        </button>
+      </div>
+      <TaskItem title="법인 설립" />
       {/* tasks.map */}
     </div>
   );
