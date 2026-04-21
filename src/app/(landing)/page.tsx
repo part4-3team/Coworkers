@@ -1,7 +1,6 @@
 /**
  * 랜딩 페이지를 구성하는 파일입니다.
  */
-import DropdownTest from '@/app/(landing)/DropdownTest';
 import Logo from '@/components/common/logo/Logo';
 
 export default function MainPage() {
@@ -16,7 +15,6 @@ export default function MainPage() {
           팀의 할 일과 진행 상황을 한곳에서 정리하는 협업 도구입니다.
         </p>
       </section>
-      <DropdownTest />
     </main>
   );
 }
