@@ -1,5 +1,5 @@
 /**
- * 사이드바의 팀 목록, 팀 추가, 자유게시판 링크 영역입니다.
+ * 사이드바의 팀 목록, 팀 추가, 채용 / 홍보 링크 영역입니다.
  */
 
 import SidebarNavItem from '@/components/layout/sidebar/components/SidebarNavItem';

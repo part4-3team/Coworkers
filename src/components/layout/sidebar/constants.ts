@@ -37,6 +37,6 @@ export const SIDEBAR_LINKS = {
   },
   boards: {
     href: ROUTES.BOARDS,
-    label: '채용 공고 / 홍보',
+    label: '채용 / 홍보',
   },
 } as const;
