@@ -8,8 +8,10 @@ import ProgressBar from '@ramonak/react-progress-bar';
 export default function TeamProgress() {
   return (
     <section className="w-full bg-background-inverse p-6 flex flex-col gap-5 md:rounded-[20px]">
-      <div className="flex gap-3">
-        <h2 className="text-text-primary font-bold text-xl">경영관리팀</h2>
+      <div className="flex gap-3 items-center">
+        <h2 className="text-text-primary font-bold text-xl md:text-2xl">
+          경영관리팀
+        </h2>
         <div className="flex justify-between flex-1 items-center lg:hidden">
           <MemberChip members={MOCK_MEMBERS.members} />
           <button>
@@ -25,28 +27,34 @@ export default function TeamProgress() {
       <div className="flex flex-col gap-3 md:gap-4">
         <div className="flex justify-between">
           <div>
-            <p className="text-xs font-medium text-interaction-inactive">
+            <p className="text-xs font-medium text-interaction-inactive md:text-sm">
               오늘의 진행 상황
             </p>
-            <p className="text-[32px] font-bold text-brand-primary">25%</p>
+            <p className="text-[32px] font-bold text-brand-primary  md:text-[40px]">
+              25%
+            </p>
           </div>
           <div className="flex items-end">
             <div className="px-4 flex flex-col gap-1 justify-center items-center border-r border-background-tertiary">
-              <span className="text-xs font-medium text-interaction-inactive">
+              <span className="text-xs font-medium text-interaction-inactive md:text-sm">
                 오늘의 할 일
               </span>
-              <p className="text-2xl text-text-default font-bold">20</p>
+              <p className="text-2xl text-text-default font-bold  md:text-[32px]">
+                20
+              </p>
             </div>
             <div className="pl-4 flex flex-col gap-1 justify-center items-center">
-              <span className="text-xs font-medium text-interaction-inactive">
+              <span className="text-xs font-medium text-interaction-inactive md:text-sm">
                 완료 🙌
               </span>
-              <p className="text-2xl text-brand-primary font-bold">5</p>
+              <p className="text-2xl text-brand-primary font-bold md:text-[32px]">
+                5
+              </p>
             </div>
           </div>
         </div>
-        <div>
-          <div className="h-[20px] md:h-[28px]">
+        <div className="flex gap-4">
+          <div className="w-full h-5 md:h-7">
             <ProgressBar
               completed="25"
               bgColor="var(--color-brand-primary)"
