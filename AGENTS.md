@@ -30,6 +30,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - React Hook Form
 - NextAuth.js
 - react-datepicker
+- react-circular-progressbar
+- @ramonak/react-progress-bar
 - clsx, tailwind-merge
 - Gitmoji
 
