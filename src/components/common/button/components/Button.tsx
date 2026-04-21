@@ -9,12 +9,9 @@ export default function Button({
   children,
   type = 'button',
   className,
-  isLoading,
   disabled,
   ...props
 }: ButtonProps) {
-  const isButtonDisabled = disabled || isLoading;
-
   return (
     <button
       type={type}
@@ -23,10 +20,10 @@ export default function Button({
         'disabled:bg-interaction-inactive',
         className,
       )}
-      disabled={isButtonDisabled}
+      disabled={disabled}
       {...props}
     >
-      {isLoading ? '로딩 중...' : children}
+      {children}
     </button>
   );
 }

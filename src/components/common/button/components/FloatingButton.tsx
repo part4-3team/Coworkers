@@ -12,7 +12,7 @@
 import Button from '@/components/common/button/components/Button';
 import type { FloatingButtonProps } from '@/components/common/button/types';
 import Image from 'next/image';
-import plusIcon from '@/assets/icons/ic_plus_large.svg';
+import ic_plus_large from '@/assets/icons/ic_plus_large.svg';
 import { cn } from '@/utils/cn';
 
 export default function FloatingButton({
@@ -29,7 +29,14 @@ export default function FloatingButton({
       )}
       {...props}
     >
-      <Image src={plusIcon} alt="추가 아이콘" width={24} height={24} priority />
+      <Image
+        src={ic_plus_large}
+        alt="추가 아이콘"
+        width={24}
+        height={24}
+        loading="eager"
+        fetchPriority="high"
+      />
     </Button>
   );
 }
