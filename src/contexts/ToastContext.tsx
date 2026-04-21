@@ -4,7 +4,15 @@
 
 'use client';
 
-import { createContext, useCallback, useContext, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
+
+const TOAST_DURATION = 3000;
 import type {
   ToastContextValue,
   ToastItem,
@@ -41,14 +49,16 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       if (!action) {
         setTimeout(() => {
           removeToast(id);
-        }, 3000);
+        }, TOAST_DURATION);
       }
     },
     [removeToast],
   );
 
+  const contextValue = useMemo(() => ({ showToast }), [showToast]);
+
   return (
-    <ToastContext.Provider value={{ showToast }}>
+    <ToastContext.Provider value={contextValue}>
       {children}
       {toasts.length > 0 && (
         <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 flex-col gap-2">

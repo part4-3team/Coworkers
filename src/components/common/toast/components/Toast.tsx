@@ -20,8 +20,8 @@ export default function Toast({ toast, onRemove }: ToastProps) {
   const isSuccess = toast.type === 'success';
 
   const handleAction = () => {
-    toast.onAction?.();
     onRemove(toast.id);
+    toast.onAction?.();
   };
 
   return (
