@@ -4,9 +4,11 @@
 
 'use client';
 
+import Image from 'next/image';
 import { cn } from '@/utils/cn';
 import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
 import type { SelectDropdownProps } from '@/components/common/dropdown/types';
+import { icDownArrowLarge, icDownArrowSmall } from '@/assets';
 
 export default function SelectDropdown<T extends string>({
   items,
@@ -33,11 +35,12 @@ export default function SelectDropdown<T extends string>({
         <span>{selectedLabel}</span>
         <span
           className={cn(
-            'text-xs text-text-default transition-transform duration-200',
+            'transition-transform duration-200',
             isOpen && 'rotate-180',
           )}
         >
-          ▼
+          <Image src={icDownArrowSmall} alt="" className="md:hidden" />
+          <Image src={icDownArrowLarge} alt="" className="hidden md:block" />
         </span>
       </button>
       {isOpen && (

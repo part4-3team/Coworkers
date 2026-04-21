@@ -18,9 +18,16 @@ export default function ListDropdown({
 
   return (
     <div ref={containerRef} className={cn('relative inline-block', className)}>
-      <button type="button" onClick={toggle}>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        onClick={toggle}
+        onKeyDown={(e) => e.key === 'Enter' && toggle()}
+      >
         {trigger}
-      </button>
+      </div>
       {isOpen && (
         <ul
           className={cn(
@@ -33,7 +40,7 @@ export default function ListDropdown({
             <li key={item.label} role="menuitem">
               <button
                 type="button"
-                className="w-full px-6 py-3 text-center text-sm text-text-primary hover:bg-background-secondary"
+                className="w-full px-6 py-3 text-left text-sm text-text-primary hover:bg-background-secondary"
                 onClick={() => {
                   item.onClick();
                   close();
