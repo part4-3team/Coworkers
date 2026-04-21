@@ -6,9 +6,24 @@ import TeamProgress from './components/TeamProgress';
 import TeamTaskList from './components/TeamTaskList';
 import TeamMemberList from './components/TeamMemberList';
 
-export default function TaskDetailPage() {
+import { use } from 'react';
+import { notFound } from 'next/navigation';
+
+export default function TaskDetailPage({
+  params,
+}: {
+  params: Promise<{ teamid: string }>;
+}) {
+  const { teamid } = use(params);
+
+  console.log('teamid:', teamid); // 실제 값 확인용
+
+  if (!/^\d+$/.test(teamid)) {
+    notFound();
+  }
+
   return (
-    <main className="flex gap-4 px-16 py-16">
+    <main className="flex gap-4 flex-wrap md:px-6 md:py-18 xl:w-full xl:py-30 xl:max-w-6xl xl:px-20">
       <TeamProgress />
       <TeamTaskList />
       <TeamMemberList />

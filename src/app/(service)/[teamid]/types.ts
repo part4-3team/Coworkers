@@ -7,3 +7,12 @@ export type MemberCardProps = {
   name: string;
   email: string;
 };
+
+export type MemberChipsProps = {
+  role: string;
+  userImage: string;
+  userEmail: string;
+  userName: string;
+  groupId: number;
+  userId: number;
+};
