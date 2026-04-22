@@ -81,7 +81,7 @@ export default function ModalFrame({
         {subDescription && (
           <p className="text-sm text-gray-400">{subDescription}</p>
         )}
-        {children && <div>{children}</div>}
+        {children && <div className="w-full">{children}</div>}
         <div
           className={`flex gap-2 mt-2 w-full ${isButtonAlign ? 'flex-col px-4' : 'flex-row px-0'} max-w-80`}
         >

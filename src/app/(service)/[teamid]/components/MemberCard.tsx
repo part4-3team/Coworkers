@@ -19,8 +19,12 @@ export default function MemberCard({
         />
       </div>
       <div className="flex-1">
-        <p className="font-semibold text-text-primary text-sm">{name}</p>
-        <p className="font-normal text-text-secondary text-xs">{email}</p>
+        <p className="font-semibold text-text-primary text-sm text-left">
+          {name}
+        </p>
+        <p className="font-normal text-text-secondary text-xs text-left">
+          {email}
+        </p>
       </div>
       <button>
         <Image src={icMoreVerticalLarge} width="16" height="16" alt="" />

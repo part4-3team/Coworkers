@@ -2,10 +2,19 @@ import Image from 'next/image';
 import MemberChip from './MemberChip';
 import { icSettingsLarge } from '@/assets/index';
 import { MOCK_MEMBERS } from '../constants';
-import React from 'react';
 import ProgressBar from '@ramonak/react-progress-bar';
+import { useState } from 'react';
+import { ModalMembers, ModalMembersInvite } from './ModalMembers';
 
 export default function TeamProgress() {
+  const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+
+  const handleInvite = () => {
+    setIsMemberModalOpen(false);
+    setIsInviteModalOpen(true);
+  };
+
   return (
     <section className="w-full bg-background-inverse p-6 flex flex-col gap-5 md:rounded-[20px]">
       <div className="flex gap-3 items-center">
@@ -13,7 +22,9 @@ export default function TeamProgress() {
           경영관리팀
         </h2>
         <div className="flex justify-between flex-1 items-center xl:hidden">
-          <MemberChip members={MOCK_MEMBERS.members} />
+          <button onClick={() => setIsMemberModalOpen(true)}>
+            <MemberChip members={MOCK_MEMBERS.members} />
+          </button>
           <button>
             <Image
               src={icSettingsLarge}
@@ -75,6 +86,15 @@ export default function TeamProgress() {
           </button>
         </div>
       </div>
+      {isMemberModalOpen && (
+        <ModalMembers
+          onClose={() => setIsMemberModalOpen(false)}
+          onPrimaryButtonClick={handleInvite} // 초대하기 → 멤버모달 닫고 초대모달 열기
+        />
+      )}
+      {isInviteModalOpen && (
+        <ModalMembersInvite onClose={() => setIsInviteModalOpen(false)} />
+      )}
     </section>
   );
 }

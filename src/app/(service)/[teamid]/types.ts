@@ -19,3 +19,8 @@ export type MemberChipsProps = {
   groupId: number;
   userId: number;
 };
+
+export type ModalMembersProps = {
+  onClose: () => void;
+  onPrimaryButtonClick?: () => void;
+};
