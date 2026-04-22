@@ -29,7 +29,11 @@ export default function ProfileImageButton({
 
   return (
     <>
-      <Button onClick={() => ref.current?.click()} disabled={disabled}>
+      <Button
+        type="button"
+        onClick={() => ref.current?.click()}
+        disabled={disabled}
+      >
         {buttonText}
       </Button>
 

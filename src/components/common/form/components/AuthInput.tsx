@@ -55,9 +55,9 @@ export default function AuthInput({
           aria-invalid={hasError}
           aria-describedby={hasError ? errorId : undefined}
           className={cn(
-            'pr-4',
             isPasswordInput && 'pr-16',
             hasError && 'border-red-500 focus:border-red-500',
+            'pr-4',
             className,
           )}
           {...props}
