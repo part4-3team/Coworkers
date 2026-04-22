@@ -21,6 +21,7 @@ export type ContentInputProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
 };
 
 export type DatePickerProps = {
+  id?: string;
   selected: Date | null;
   onChange: (date: Date | null) => void;
   placeholder?: string;

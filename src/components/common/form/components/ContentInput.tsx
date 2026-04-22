@@ -4,6 +4,7 @@
 
 import type { ContentInputProps } from '@/components/common/form/types';
 import { cn } from '@/utils/cn';
+import { useId } from 'react';
 
 export default function ContentInput({
   id,
@@ -12,16 +13,19 @@ export default function ContentInput({
   className,
   ...props
 }: ContentInputProps) {
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+
   const hasError = Boolean(errorMessage);
-  const errorId = id ? `${id}-error` : undefined;
+  const errorId = hasError ? `${inputId}-error` : undefined;
 
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="relative">
         <textarea
-          id={id}
+          id={inputId}
           aria-invalid={hasError}
-          aria-describedby={hasError ? errorId : undefined}
+          aria-describedby={errorId}
           className={cn(
             'min-h-32 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none',
             'placeholder:text-slate-400',
