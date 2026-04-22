@@ -1,21 +1,19 @@
 import { useState } from 'react';
+import { ModalKey } from '../types';
 
 export function useModalState() {
-  const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
-  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [openModal, setOpenModal] = useState<ModalKey | null>(null);
 
-  const handleInvite = () => {
-    setIsMemberModalOpen(false);
-    setIsInviteModalOpen(true);
-  };
+  const open = (key: ModalKey) => setOpenModal(key);
+  const close = () => setOpenModal(null);
+
+  const handleInvite = () => setOpenModal('memberInvite');
 
   return {
-    isMemberModalOpen,
-    isInviteModalOpen,
-    openMemberModal: () => setIsMemberModalOpen(true),
-    closeMemberModal: () => setIsMemberModalOpen(false),
-    openInviteModal: () => setIsInviteModalOpen(true),
-    closeInviteModal: () => setIsInviteModalOpen(false),
+    openModal,
+    open,
+    close,
     handleInvite,
+    is: (key: ModalKey) => openModal === key,
   };
 }

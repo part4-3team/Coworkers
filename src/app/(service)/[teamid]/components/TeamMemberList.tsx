@@ -1,12 +1,11 @@
 import MemberCard from './MemberCard';
 import { MOCK_MEMBERS } from '../constants';
 import { MemberChipsProps } from '../types';
-import { ModalMembersInvite } from './ModalMembers';
 import { useModalState } from '../hooks/useModalState';
+import { ModalMembersInvite } from './ModalMembers';
 
 export default function TeamMemberList() {
-  const { isInviteModalOpen, openInviteModal, closeInviteModal } =
-    useModalState();
+  const { open, close, is } = useModalState();
 
   return (
     <section className="hidden xl:flex w-60 bg-background-inverse mt-11 px-5 py-6 rounded-2xl border border-border-secondary shrink-0 flex-col gap-4 ">
@@ -19,14 +18,15 @@ export default function TeamMemberList() {
         </h2>
         <button
           className="text-brand-primary font-semibold text-sm"
-          onClick={openInviteModal}
+          onClick={() => {
+            open('memberInvite');
+          }}
         >
           초대하기 +
         </button>
       </div>
       <TeamMemberListContent members={MOCK_MEMBERS.members} />
-
-      {isInviteModalOpen && <ModalMembersInvite onClose={closeInviteModal} />}
+      {is('memberInvite') && <ModalMembersInvite onClose={close} />}
     </section>
   );
 }

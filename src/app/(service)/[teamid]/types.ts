@@ -20,6 +20,16 @@ export type MemberChipsProps = {
   userId: number;
 };
 
+export type ModalKey =
+  | 'memberList'
+  | 'memberInvite'
+  | 'memberDetail'
+  | 'memberDelete'
+  | 'taskAdd'
+  | 'todoDelete'
+  | 'teamDelete'
+  | 'teamLeave';
+
 export type ModalMembersProps = {
   onClose: () => void;
   onPrimaryButtonClick?: () => void;

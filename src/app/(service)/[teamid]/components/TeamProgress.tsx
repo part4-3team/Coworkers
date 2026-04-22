@@ -3,17 +3,32 @@ import MemberChip from './MemberChip';
 import { icSettingsLarge } from '@/assets/index';
 import { MOCK_MEMBERS } from '../constants';
 import ProgressBar from '@ramonak/react-progress-bar';
-import { useState } from 'react';
-import { ModalMembers, ModalMembersInvite } from './ModalMembers';
+import { ListDropdown } from '@/components/common/dropdown';
+import { useModalState } from '../hooks/useModalState';
+import {
+  ModalMembers,
+  ModalMembersInvite,
+  ModalTeamDelete,
+  ModalTeamLeave,
+} from './ModalMembers';
+import { useRouter, useParams } from 'next/navigation';
 
 export default function TeamProgress() {
-  const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
-  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const router = useRouter();
+  const params = useParams();
 
-  const handleInvite = () => {
-    setIsMemberModalOpen(false);
-    setIsInviteModalOpen(true);
-  };
+  const settingButton = (
+    <Image src={icSettingsLarge} width="24" height="24" alt="설정 아이콘" />
+  );
+  const { open, close, handleInvite, is } = useModalState();
+
+  const MasterItems = [
+    { label: '수정하기', onClick: () => router.push(`/${params.teamid}/edit`) },
+    { label: '삭제하기', onClick: () => open('teamDelete') },
+  ];
+  const memberItems = [
+    { label: '팀 나가기', onClick: () => open('teamLeave') },
+  ];
 
   return (
     <section className="w-full bg-background-inverse p-6 flex flex-col gap-5 md:rounded-[20px]">
@@ -22,17 +37,14 @@ export default function TeamProgress() {
           경영관리팀
         </h2>
         <div className="flex justify-between flex-1 items-center xl:hidden">
-          <button onClick={() => setIsMemberModalOpen(true)}>
+          <button onClick={() => open('memberList')}>
             <MemberChip members={MOCK_MEMBERS.members} />
           </button>
-          <button>
-            <Image
-              src={icSettingsLarge}
-              width="24"
-              height="24"
-              alt="설정 아이콘"
-            />
-          </button>
+          <ListDropdown
+            trigger={settingButton}
+            items={MasterItems}
+            className=""
+          />
         </div>
       </div>
       <div className="flex flex-col gap-3 md:gap-4">
@@ -76,25 +88,21 @@ export default function TeamProgress() {
               transitionDuration="1s"
             ></ProgressBar>
           </div>
-          <button className="hidden xl:block">
-            <Image
-              src={icSettingsLarge}
-              width="24"
-              height="24"
-              alt="설정 아이콘"
+          <div className="hidden xl:block">
+            <ListDropdown
+              trigger={settingButton}
+              items={MasterItems}
+              className=""
             />
-          </button>
+          </div>
         </div>
       </div>
-      {isMemberModalOpen && (
-        <ModalMembers
-          onClose={() => setIsMemberModalOpen(false)}
-          onPrimaryButtonClick={handleInvite} // 초대하기 → 멤버모달 닫고 초대모달 열기
-        />
+      {is('memberList') && (
+        <ModalMembers onClose={close} onPrimaryButtonClick={handleInvite} />
       )}
-      {isInviteModalOpen && (
-        <ModalMembersInvite onClose={() => setIsInviteModalOpen(false)} />
-      )}
+      {is('memberInvite') && <ModalMembersInvite onClose={close} />}
+      {is('teamDelete') && <ModalTeamDelete onClose={close} />}
+      {is('teamLeave') && <ModalTeamLeave onClose={close} />}
     </section>
   );
 }
