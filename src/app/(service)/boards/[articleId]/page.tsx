@@ -3,5 +3,5 @@
  */
 
 export default function BoardDetailPage() {
-  return <main>게시글 상세</main>;
+  return <section>게시글 상세</section>;
 }

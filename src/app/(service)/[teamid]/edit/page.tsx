@@ -6,8 +6,8 @@ import AddUserImg from '@/components/common/adduserimg/AddUserImg';
 
 export default function EditTeamPage() {
   return (
-    <main>
+    <section>
       <AddUserImg />
-    </main>
+    </section>
   );
 }

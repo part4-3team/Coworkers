@@ -93,6 +93,9 @@ type ButtonProps = {
 - 장식 이미지는 `alt=""`를 사용한다.
 - `main`, `nav`, `footer` 등 시맨틱 태그와 헤딩 계층을 지킨다.
 - ARIA 레이블은 필요한 곳에만 사용한다.
+- `next/image` 사용 시 Next.js 16 기준으로 deprecated 된 `priority` prop은 사용하지 않는다.
+- 이미지 우선 로딩이 필요할 경우 `preload`, `loading="eager"`, `fetchPriority="high"` 중 상황에 맞는 한 가지 방식을 우선 검토한다.
+- 작은 로고, 아이콘, 일반 UI 이미지는 불필요하게 high priority 로딩을 지정하지 않는다.
 
 ### 8. API와 폼
 

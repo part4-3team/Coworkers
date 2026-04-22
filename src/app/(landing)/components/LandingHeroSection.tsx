@@ -12,7 +12,7 @@ import { ROUTES } from '@/constants/ROUTES';
 
 export default function LandingHeroSection() {
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden bg-background-secondary lg:py-20">
+    <section className="relative flex min-h-screen items-center overflow-hidden bg-background-secondary py-10 md:py-12 lg:py-20">
       <div className="flex w-full flex-col gap-12 lg:flex-row lg:items-center lg:gap-0">
         <LandingScrollReveal
           animateOnMount
@@ -27,29 +27,31 @@ export default function LandingHeroSection() {
             <Logo size="small" className="lg:hidden" />
             <Logo size="large" className="hidden lg:block" />
           </div>
+          {/* 데스크탑 버튼 */}
           <Link
             href={ROUTES.LOGIN}
-            className="hidden h-12 w-40 items-center justify-center rounded-lg bg-brand-primary text-base font-semibold text-text-inverse transition-colors hover:bg-interaction-hover lg:mt-116.25 lg:flex"
+            className="hidden h-10 w-32 items-center justify-center rounded-lg bg-brand-primary text-sm font-semibold text-text-inverse transition-colors hover:bg-interaction-hover md:h-12 md:w-40 md:text-base lg:mt-116.25 lg:flex"
           >
             지금 시작하기
           </Link>
         </LandingScrollReveal>
 
-        <div className="ml-auto w-11/12 lg:ml-100 lg:w-auto lg:flex-1">
+        <div className="ml-auto w-11/12 lg:ml-[min(25rem,10vw)] lg:w-auto lg:flex-1">
           <div className="rounded-l-2xl shadow-xl shadow-text-default/10">
             <Image
               src={imgLandingDashboard}
               alt="팀 대시보드와 할 일 목록 예시"
               fetchPriority="high"
               loading="eager"
-              className="w-full min-w-150 rounded-l-2xl object-contain lg:min-w-0"
+              className="w-full min-w-180 rounded-l-2xl object-contain md:min-w-200"
               sizes="(min-width: 1024px) calc(100vw - 320px), 90vw"
             />
           </div>
+          {/* 태블릿/모바일 버튼 */}
           <div className="mt-6 flex justify-end pr-6 lg:hidden">
             <Link
               href={ROUTES.LOGIN}
-              className="mt-5 flex h-12 w-40 items-center justify-center rounded-lg bg-brand-primary text-base font-semibold text-text-inverse transition-colors hover:bg-interaction-hover"
+              className="mt-5 flex h-10 w-32 items-center justify-center rounded-lg bg-brand-primary text-sm font-semibold text-text-inverse transition-colors hover:bg-interaction-hover md:h-12 md:w-40 md:text-base"
             >
               지금 시작하기
             </Link>

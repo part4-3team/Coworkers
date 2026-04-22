@@ -3,5 +3,5 @@
  */
 
 export default function MyHistoryPage() {
-  return <main>마이 히스토리</main>;
+  return <section>마이 히스토리</section>;
 }

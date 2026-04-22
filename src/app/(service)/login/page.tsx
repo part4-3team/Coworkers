@@ -3,5 +3,5 @@
  */
 
 export default function LoginPage() {
-  return <main>로그인 폼</main>;
+  return <section>로그인 폼</section>;
 }
