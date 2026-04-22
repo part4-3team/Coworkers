@@ -13,19 +13,30 @@ import type { SidebarNavProps } from '@/components/layout/sidebar/types';
 import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
 
-export default function SidebarNav({ isExpanded }: SidebarNavProps) {
+export default function SidebarNav({
+  isExpanded,
+  isMobileDrawer = false,
+}: SidebarNavProps) {
   return (
     <nav
       aria-label="사이드바 메뉴"
       className={cn(
         'flex flex-col',
-        isExpanded ? 'mt-14 px-3.75' : 'mt-11 items-center px-3',
+        isMobileDrawer
+          ? 'px-4 pb-8'
+          : isExpanded
+            ? 'mt-14 px-3.75'
+            : 'mt-11 items-center px-3',
       )}
     >
       <ul
         className={cn(
           'flex flex-col',
-          isExpanded ? 'w-full gap-2' : 'items-center gap-2',
+          isMobileDrawer
+            ? 'w-full gap-3'
+            : isExpanded
+              ? 'w-full gap-2'
+              : 'items-center gap-2',
         )}
       >
         {SIDEBAR_TEAMS.map((team) => (
@@ -35,6 +46,7 @@ export default function SidebarNav({ isExpanded }: SidebarNavProps) {
             icon={team.isOwner ? SIDEBAR_ICONS.teamOwner : SIDEBAR_ICONS.team}
             isActive={team.id === ACTIVE_TEAM_ID}
             isExpanded={isExpanded}
+            isMobileDrawer={isMobileDrawer}
             isOriginalIconColor={team.isOwner}
             label={team.name}
             variant="team"
@@ -46,6 +58,7 @@ export default function SidebarNav({ isExpanded }: SidebarNavProps) {
         href={SIDEBAR_LINKS.addTeam.href}
         icon={SIDEBAR_ICONS.teamAdd}
         isExpanded={isExpanded}
+        isMobileDrawer={isMobileDrawer}
         label={SIDEBAR_LINKS.addTeam.label}
         variant="addTeam"
       />
@@ -53,7 +66,11 @@ export default function SidebarNav({ isExpanded }: SidebarNavProps) {
       <div
         className={cn(
           'bg-background-tertiary',
-          isExpanded ? 'my-7 h-px w-full' : 'my-6 h-px w-10',
+          isMobileDrawer
+            ? 'mb-3 mt-6 h-px w-full'
+            : isExpanded
+              ? 'my-7 h-px w-full'
+              : 'my-6 h-px w-10',
         )}
       />
 
@@ -61,6 +78,7 @@ export default function SidebarNav({ isExpanded }: SidebarNavProps) {
         href={SIDEBAR_LINKS.boards.href}
         icon={SIDEBAR_ICONS.board}
         isExpanded={isExpanded}
+        isMobileDrawer={isMobileDrawer}
         label={SIDEBAR_LINKS.boards.label}
         variant="board"
       />

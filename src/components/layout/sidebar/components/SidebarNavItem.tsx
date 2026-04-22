@@ -13,6 +13,7 @@ export default function SidebarNavItem({
   icon,
   isActive = false,
   isExpanded,
+  isMobileDrawer = false,
   isOriginalIconColor = false,
   label,
   variant = 'team',
@@ -23,9 +24,11 @@ export default function SidebarNavItem({
       className={cn(
         'flex items-center overflow-hidden font-medium transition-colors',
         variant === 'team' &&
-          (isExpanded
-            ? 'h-12 gap-4 rounded-lg px-5 text-base hover:bg-background-secondary'
-            : 'size-10 justify-center rounded-lg hover:bg-background-secondary'),
+          (isMobileDrawer
+            ? 'h-11 gap-4 rounded-lg px-5 text-sm hover:bg-background-secondary'
+            : isExpanded
+              ? 'h-12 gap-4 rounded-lg px-5 text-base hover:bg-background-secondary'
+              : 'size-10 justify-center rounded-lg hover:bg-background-secondary'),
         variant === 'team' &&
           (isActive
             ? 'bg-brand-secondary text-brand-primary'
@@ -33,14 +36,18 @@ export default function SidebarNavItem({
         variant === 'addTeam' &&
           'justify-center border border-brand-primary text-brand-primary hover:bg-brand-secondary',
         variant === 'addTeam' &&
-          (isExpanded
-            ? 'mt-6 h-12 w-full gap-2 rounded-lg text-base'
-            : 'mt-6 size-10 rounded-lg'),
+          (isMobileDrawer
+            ? 'mt-3 h-11 w-full gap-2 rounded-lg text-sm'
+            : isExpanded
+              ? 'mt-6 h-12 w-full gap-2 rounded-lg text-base'
+              : 'mt-6 size-10 rounded-lg'),
         variant === 'board' && 'text-text-primary',
         variant === 'board' &&
-          (isExpanded
-            ? 'h-12 w-full gap-4 rounded-lg px-5 text-base hover:bg-background-secondary'
-            : 'size-10 justify-center rounded-lg hover:bg-background-secondary'),
+          (isMobileDrawer
+            ? 'h-11 w-full gap-4 rounded-lg px-5 text-sm hover:bg-background-secondary'
+            : isExpanded
+              ? 'h-12 w-full gap-4 rounded-lg px-5 text-base hover:bg-background-secondary'
+              : 'size-10 justify-center rounded-lg hover:bg-background-secondary'),
       )}
       aria-current={isActive ? 'page' : undefined}
     >
