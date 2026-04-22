@@ -42,7 +42,7 @@ export default function AuthInput({
     <div className="flex w-full flex-col gap-3">
       <label
         htmlFor={inputId}
-        className="text-base font-medium leading-6 text-slate-800"
+        className="text-base font-medium leading-6 text-text-primary"
       >
         {label}
       </label>
@@ -56,8 +56,7 @@ export default function AuthInput({
           aria-describedby={hasError ? errorId : undefined}
           className={cn(
             isPasswordInput && 'pr-16',
-            hasError && 'border-red-500 focus:border-red-500',
-            'pr-4',
+            hasError && 'border-status-danger focus:border-status-danger',
             className,
           )}
           {...props}
@@ -70,8 +69,8 @@ export default function AuthInput({
             disabled={disabled}
             aria-label={isPasswordVisible ? '비밀번호 숨기기' : '비밀번호 보기'}
             className={cn(
-              'absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-500',
-              disabled && 'cursor-not-allowed text-slate-400',
+              'absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-default',
+              disabled && 'cursor-not-allowed text-interaction-inactive',
             )}
           >
             {isPasswordVisible ? '숨기기' : '보기'}
@@ -80,7 +79,7 @@ export default function AuthInput({
       </div>
 
       {hasError && (
-        <p id={errorId} className="text-sm font-medium text-red-500">
+        <p id={errorId} className="text-sm font-medium text-status-danger">
           {errorMessage}
         </p>
       )}

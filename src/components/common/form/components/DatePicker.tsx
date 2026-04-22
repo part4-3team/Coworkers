@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import type { DatePickerProps } from '@/components/common/form/types';
 import { cn } from '@/utils/cn';
+import { useId } from 'react';
 
 export default function DatePicker({
   selected,
@@ -30,16 +31,16 @@ export default function DatePicker({
         placeholderText={placeholder ?? '날짜 선택'}
         showPopperArrow={false}
         className={cn(
-          'h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-800 outline-none',
-          'placeholder:text-slate-400',
-          'focus:border-blue-500',
-          hasError && 'border-red-500 focus:border-red-500',
+          'h-12 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
+          'placeholder:text-text-default',
+          'focus:border-brand-primary',
+          hasError && 'border-status-danger focus:border-status-danger',
           className,
         )}
       />
 
       {hasError && (
-        <p className="text-sm font-medium text-red-500">{errorMessage}</p>
+        <p className="text-sm font-medium text-status-danger">{errorMessage}</p>
       )}
     </div>
   );

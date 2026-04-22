@@ -5,6 +5,7 @@
 import Input from '@/components/common/form/components/Input';
 import type { TitleInputProps } from '@/components/common/form/types';
 import { cn } from '@/utils/cn';
+import { useId } from 'react';
 
 export default function TitleInput({
   id,
@@ -23,14 +24,14 @@ export default function TitleInput({
         aria-describedby={hasError ? errorId : undefined}
         className={cn(
           'text-base font-medium',
-          hasError && 'border-red-500 focus:border-red-500',
+          hasError && 'border-status-danger focus:border-status-danger',
           className,
         )}
         {...props}
       />
 
       {hasError && (
-        <p id={errorId} className="text-sm font-medium text-red-500">
+        <p id={errorId} className="text-sm font-medium text-status-danger">
           {errorMessage}
         </p>
       )}

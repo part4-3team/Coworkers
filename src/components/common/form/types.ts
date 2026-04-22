@@ -15,9 +15,18 @@ export type TitleInputProps = InputHTMLAttributes<HTMLInputElement> & {
   errorMessage?: string;
 };
 
-export type ContentInputProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  errorMessage?: string;
-  button?: ReactNode;
+export type ContentTextareaProps =
+  TextareaHTMLAttributes<HTMLTextAreaElement> & {
+    errorMessage?: string;
+    button?: ReactNode;
+  };
+
+export type CommentInputProps = {
+  id?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  className?: string;
+  onSubmit?: (value: string) => void;
 };
 
 export type DatePickerProps = {
@@ -27,12 +36,4 @@ export type DatePickerProps = {
   placeholder?: string;
   errorMessage?: string;
   className?: string;
-};
-
-export type ProfileImageButtonProps = Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  'type' | 'onChange'
-> & {
-  buttonText?: string;
-  onChange?: (file: File | null) => void;
 };
