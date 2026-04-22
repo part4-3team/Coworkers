@@ -44,6 +44,8 @@ export { default as icClipboardSmall } from './icons/ic_clipboard_small.svg';
 export { default as icClockLarge } from './icons/ic_clock_large.svg';
 export { default as icClockSmall } from './icons/ic_clock_small.svg';
 export { default as icCloseLarge } from './icons/ic_close_large.svg';
+export { default as icDownArrowLarge } from './icons/ic_down_arrow_large.svg';
+export { default as icDownArrowSmall } from './icons/ic_down_arrow_small.svg';
 export { default as icCloseMedium } from './icons/ic_close_medium.svg';
 export { default as icCloseSmall } from './icons/ic_close_small.svg';
 export { default as icComment } from './icons/ic_comment.svg';
