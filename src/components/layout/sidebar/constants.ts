@@ -20,9 +20,6 @@ export const SIDEBAR_TEAMS: SidebarTeam[] = [
   { id: 'contents', name: '콘텐츠팀' },
 ];
 
-// TODO: API/라우팅 연결 후 현재 groupId 기준으로 활성 팀을 계산합니다.
-export const ACTIVE_TEAM_ID = '22-3';
-
 export const SIDEBAR_ICONS = {
   board: icClipboardLarge,
   team: icPinSmall,

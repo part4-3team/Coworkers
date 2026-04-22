@@ -34,17 +34,25 @@ export default function SidebarNavItem({
       ? isActive
         ? 'bg-brand-secondary text-brand-primary'
         : 'text-text-primary'
-      : variant === 'addTeam'
-        ? 'justify-center border border-brand-primary text-brand-primary hover:bg-brand-secondary'
-        : 'text-text-primary';
+      : variant === 'board'
+        ? isActive
+          ? 'bg-brand-secondary text-brand-primary'
+          : 'text-text-primary'
+        : variant === 'addTeam'
+          ? 'justify-center border border-brand-primary text-brand-primary hover:bg-brand-secondary'
+          : 'text-text-primary';
   const iconColorClass =
     variant === 'team'
       ? isActive
         ? 'bg-brand-primary'
         : 'bg-text-disabled'
-      : variant === 'addTeam'
-        ? 'bg-brand-primary'
-        : 'bg-text-disabled';
+      : variant === 'board'
+        ? isActive
+          ? 'bg-brand-primary'
+          : 'bg-text-disabled'
+        : variant === 'addTeam'
+          ? 'bg-brand-primary'
+          : 'bg-text-disabled';
 
   const linkElement = (
     <Link

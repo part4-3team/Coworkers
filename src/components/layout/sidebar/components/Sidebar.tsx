@@ -16,7 +16,7 @@ export default function Sidebar() {
   return (
     <aside
       className={cn(
-        'hidden md:flex sticky top-0 h-screen flex-col justify-between bg-background-inverse text-text-default transition-all duration-300',
+        'hidden md:flex sticky top-0 h-screen flex-col justify-between border-r border-background-tertiary bg-background-inverse text-text-default transition-all duration-300',
         isExpanded ? 'w-67.5 min-w-67.5' : 'w-18 min-w-18',
       )}
     >
