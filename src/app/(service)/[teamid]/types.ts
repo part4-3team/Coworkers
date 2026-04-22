@@ -8,6 +8,7 @@ export type TaskItemProps = {
 export type MemberCardProps = {
   name: string;
   email: string;
+  userImage: string;
 };
 
 export type MemberChipsProps = {

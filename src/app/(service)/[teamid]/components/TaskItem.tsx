@@ -5,7 +5,7 @@ import { icMoreVerticalGray } from '@/assets/index';
 export default function TaskItem({ title }: TaskItemProps) {
   return (
     <div>
-      <div className="bg-background-inverse p-6 rounded-2xl">
+      <div className="bg-background-inverse p-6 rounded-2xl border border-border-secondary">
         <div className="flex gap-3">
           <p
             className="flex-1 text-text-primary text-sm font-semibold whitespace-nowrap
