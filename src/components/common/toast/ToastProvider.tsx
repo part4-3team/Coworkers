@@ -1,8 +1,8 @@
-/**
- * 토스트 알림 전역 상태와 트리거 함수를 제공하는 Context 파일입니다.
- */
-
 'use client';
+
+/**
+ * 토스트 알림 전역 상태와 트리거 함수를 제공하는 Provider 파일입니다.
+ */
 
 import {
   createContext,
@@ -12,21 +12,21 @@ import {
   useState,
 } from 'react';
 
-const TOAST_DURATION = 3000;
+import Toast from '@/components/common/toast/components/Toast';
 import type {
   ToastContextValue,
   ToastItem,
   ToastType,
 } from '@/components/common/toast/types';
-import Toast from '@/components/common/toast/components/Toast';
 
+const TOAST_DURATION = 3000;
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
   const removeToast = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
+    setToasts((prev) => prev.filter((toast) => toast.id !== id));
   }, []);
 
   const showToast = useCallback(
@@ -47,7 +47,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       setToasts((prev) => [...prev, newToast]);
 
       if (!action) {
-        setTimeout(() => {
+        window.setTimeout(() => {
           removeToast(id);
         }, TOAST_DURATION);
       }
@@ -73,8 +73,10 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 
 export function useToastContext() {
   const context = useContext(ToastContext);
+
   if (!context) {
     throw new Error('useToastContext는 ToastProvider 안에서 사용해야 합니다.');
   }
+
   return context;
 }

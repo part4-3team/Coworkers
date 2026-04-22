@@ -17,7 +17,7 @@
  * });
  */
 
-import { useToastContext } from '@/contexts/ToastContext';
+import { useToastContext } from '@/components/common/toast/ToastProvider';
 
 export function useToast() {
   return useToastContext();

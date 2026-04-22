@@ -4,8 +4,8 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { ReactNode } from 'react';
 
+import { ToastProvider } from '@/components/common/toast';
 import { queryClient } from '@/utils/queryClient';
-import { ToastProvider } from '@/contexts/ToastContext';
 
 export default function Providers({ children }: { children: ReactNode }) {
   return (
