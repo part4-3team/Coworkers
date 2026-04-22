@@ -50,6 +50,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - 훅이 필요한 경우에만 `hooks/`를 추가한다.
 - 해당 폴더의 실제 UI 컴포넌트는 대표 컴포넌트까지 모두 `components/` 안에 둔다.
 - 날짜 선택 UI는 `react-datepicker`를 직접 쓰지 않고 공용 `DatePicker` 컴포넌트로 감싸서 사용한다.
+- `next/image` 사용 시 Next.js 16 기준으로 deprecated 된 `priority` prop은 사용하지 않는다.
+- 이미지 우선 로딩이 필요할 경우 `preload`, `loading="eager"`, `fetchPriority="high"` 중 상황에 맞는 한 가지 방식을 우선 검토한다.
+- 작은 로고, 아이콘, 일반 UI 이미지는 불필요하게 high priority 로딩을 지정하지 않는다.
 
 ## 코드 컨벤션
 

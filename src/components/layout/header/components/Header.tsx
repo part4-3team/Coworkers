@@ -42,7 +42,6 @@ export default function Header() {
               src={imgLogoSymbolLarge}
               alt="Coworkers"
               className="h-6 w-auto"
-              priority
             />
           </Link>
         </div>
