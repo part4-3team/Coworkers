@@ -65,12 +65,12 @@ export default function SidebarNav({
 
       <div
         className={cn(
-          'bg-background-tertiary',
+          'h-px bg-background-tertiary',
           isMobileDrawer
-            ? 'mb-3 mt-6 h-px w-full'
+            ? 'mb-3 mt-6 w-full'
             : isExpanded
-              ? 'my-7 h-px w-full'
-              : 'my-6 h-px w-10',
+              ? 'my-7 w-full'
+              : 'my-6 w-10',
         )}
       />
 

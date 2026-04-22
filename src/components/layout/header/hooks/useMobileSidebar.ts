@@ -7,9 +7,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
+import type { UseMobileSidebarReturn } from '@/components/layout/header/types';
+
 const MOBILE_SIDEBAR_ANIMATION_DURATION = 300;
 
-export default function useMobileSidebar() {
+export default function useMobileSidebar(): UseMobileSidebarReturn {
   const pathname = usePathname();
   const [isRendered, setIsRendered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);

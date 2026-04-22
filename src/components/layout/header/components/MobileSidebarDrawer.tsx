@@ -9,14 +9,9 @@ import Link from 'next/link';
 
 import { icCloseLarge, imgLogoSymbolLarge } from '@/assets';
 import SidebarNav from '@/components/layout/sidebar/components/SidebarNav';
+import type { MobileSidebarDrawerProps } from '@/components/layout/header/types';
 import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
-
-type MobileSidebarDrawerProps = {
-  isRendered: boolean;
-  isVisible: boolean;
-  onClose: () => void;
-};
 
 export default function MobileSidebarDrawer({
   isRendered,
@@ -56,8 +51,9 @@ export default function MobileSidebarDrawer({
             <Image
               src={imgLogoSymbolLarge}
               alt="Coworkers"
+              width={24}
+              height={24}
               className="h-6 w-auto"
-              priority
             />
           </Link>
 

@@ -3,5 +3,5 @@
  */
 
 export default function TeamPage() {
-  return <main className="min-h-full" />;
+  return <section className="min-h-full" />;
 }

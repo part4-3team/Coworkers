@@ -3,5 +3,5 @@
  */
 
 export default function MyPage() {
-  return <main>계정 설정</main>;
+  return <section>계정 설정</section>;
 }

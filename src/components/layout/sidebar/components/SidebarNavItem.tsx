@@ -18,36 +18,42 @@ export default function SidebarNavItem({
   label,
   variant = 'team',
 }: SidebarNavItemProps) {
+  const isMenuVariant = variant === 'team' || variant === 'board';
+  const linkSizeClass = isMobileDrawer
+    ? 'h-11 gap-4 rounded-lg px-5 text-sm hover:bg-background-secondary'
+    : isExpanded
+      ? 'h-12 gap-4 rounded-lg px-5 text-base hover:bg-background-secondary'
+      : 'size-10 justify-center rounded-lg hover:bg-background-secondary';
+  const addTeamSizeClass = isMobileDrawer
+    ? 'mt-3 h-11 w-full gap-2 rounded-lg text-sm'
+    : isExpanded
+      ? 'mt-6 h-12 w-full gap-2 rounded-lg text-base'
+      : 'mt-6 size-10 rounded-lg';
+  const linkToneClass =
+    variant === 'team'
+      ? isActive
+        ? 'bg-brand-secondary text-brand-primary'
+        : 'text-text-primary'
+      : variant === 'addTeam'
+        ? 'justify-center border border-brand-primary text-brand-primary hover:bg-brand-secondary'
+        : 'text-text-primary';
+  const iconColorClass =
+    variant === 'team'
+      ? isActive
+        ? 'bg-brand-primary'
+        : 'bg-text-disabled'
+      : variant === 'addTeam'
+        ? 'bg-brand-primary'
+        : 'bg-text-disabled';
+
   const linkElement = (
     <Link
       href={href}
       className={cn(
         'flex items-center overflow-hidden font-medium transition-colors',
-        variant === 'team' &&
-          (isMobileDrawer
-            ? 'h-11 gap-4 rounded-lg px-5 text-sm hover:bg-background-secondary'
-            : isExpanded
-              ? 'h-12 gap-4 rounded-lg px-5 text-base hover:bg-background-secondary'
-              : 'size-10 justify-center rounded-lg hover:bg-background-secondary'),
-        variant === 'team' &&
-          (isActive
-            ? 'bg-brand-secondary text-brand-primary'
-            : 'text-text-primary'),
-        variant === 'addTeam' &&
-          'justify-center border border-brand-primary text-brand-primary hover:bg-brand-secondary',
-        variant === 'addTeam' &&
-          (isMobileDrawer
-            ? 'mt-3 h-11 w-full gap-2 rounded-lg text-sm'
-            : isExpanded
-              ? 'mt-6 h-12 w-full gap-2 rounded-lg text-base'
-              : 'mt-6 size-10 rounded-lg'),
-        variant === 'board' && 'text-text-primary',
-        variant === 'board' &&
-          (isMobileDrawer
-            ? 'h-11 w-full gap-4 rounded-lg px-5 text-sm hover:bg-background-secondary'
-            : isExpanded
-              ? 'h-12 w-full gap-4 rounded-lg px-5 text-base hover:bg-background-secondary'
-              : 'size-10 justify-center rounded-lg hover:bg-background-secondary'),
+        isMenuVariant && linkSizeClass,
+        variant === 'addTeam' && addTeamSizeClass,
+        linkToneClass,
       )}
       aria-current={isActive ? 'page' : undefined}
     >
@@ -56,13 +62,7 @@ export default function SidebarNavItem({
       ) : (
         <span
           aria-hidden="true"
-          className={cn(
-            'block size-5 shrink-0',
-            variant === 'team' &&
-              (isActive ? 'bg-brand-primary' : 'bg-text-disabled'),
-            variant === 'addTeam' && 'bg-brand-primary',
-            variant === 'board' && 'bg-text-disabled',
-          )}
+          className={cn('block size-5 shrink-0', iconColorClass)}
           style={{
             WebkitMask: `url(${icon.src}) center / contain no-repeat`,
             mask: `url(${icon.src}) center / contain no-repeat`,
