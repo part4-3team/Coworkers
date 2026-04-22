@@ -2,7 +2,16 @@
  * 완료되지 않은 할 일 항목을 표시하는 공용 컴포넌트입니다.
  */
 
-export default function TodoUnchecked() {
-  // TODO: 빈 체크박스와 진한 텍스트를 가진 할 일 항목 UI를 구현합니다.
-  return <div>벌인 설립 안내 드리기</div>;
+interface TodoUncheckedProps {
+  label: string;
+}
+
+export default function TodoUnchecked({ label }: TodoUncheckedProps) {
+  return (
+    <div className="inline-flex items-center gap-2">
+      <span className="h-4 w-4 shrink-0 rounded-[6px] border border-[#CBD5E1] bg-white" />
+
+      <span className="text-sm leading-none text-[#1E293B]">{label}</span>
+    </div>
+  );
 }
