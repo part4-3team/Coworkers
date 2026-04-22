@@ -9,6 +9,7 @@ export type MemberCardProps = {
   name: string;
   email: string;
   userImage: string;
+  onClick: () => void;
 };
 
 export type MemberChipsProps = {
@@ -33,4 +34,5 @@ export type ModalKey =
 export type ModalMembersProps = {
   onClose: () => void;
   onPrimaryButtonClick?: () => void;
+  member?: MemberChipsProps | null; // ✅ null 추가
 };

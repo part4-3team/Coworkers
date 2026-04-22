@@ -6,9 +6,10 @@ export default function MemberCard({
   name,
   email,
   userImage,
+  onClick,
 }: MemberCardProps) {
   return (
-    <div className="flex gap-3 items-center">
+    <div className="flex gap-3 items-center cursor-pointer" onClick={onClick}>
       <div className="overflow-hidden w-8 h-8 rounded-lg">
         <Image
           src={userImage}

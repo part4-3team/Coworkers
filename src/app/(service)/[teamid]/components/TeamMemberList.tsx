@@ -2,7 +2,7 @@ import MemberCard from './MemberCard';
 import { MOCK_MEMBERS } from '../constants';
 import { MemberChipsProps } from '../types';
 import { useModalState } from '../hooks/useModalState';
-import { ModalMembersInvite } from './ModalMembers';
+import { ModalMembersInvite, ModalMemberDetail } from './ModalMembers';
 
 export default function TeamMemberList() {
   const { open, close, is } = useModalState();
@@ -36,16 +36,21 @@ export function TeamMemberListContent({
 }: {
   members: MemberChipsProps[];
 }) {
+  const { is, openMemberDetail, selectedMember, close } = useModalState();
   return (
     <div className="flex flex-col gap-4.5">
-      {members.map((items: MemberChipsProps) => (
+      {members.map((item: MemberChipsProps) => (
         <MemberCard
-          key={items.userEmail}
-          userImage={items.userImage}
-          name={items.userName}
-          email={items.userEmail}
+          key={item.userEmail}
+          userImage={item.userImage}
+          name={item.userName}
+          email={item.userEmail}
+          onClick={() => openMemberDetail(item)}
         />
       ))}
+      {is('memberDetail') && (
+        <ModalMemberDetail onClose={close} member={selectedMember} />
+      )}
     </div>
   );
 }
