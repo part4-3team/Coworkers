@@ -3,5 +3,5 @@
  */
 
 export default function SignupPage() {
-  return <main>회원가입 폼</main>;
+  return <section>회원가입 폼</section>;
 }

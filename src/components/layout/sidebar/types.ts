@@ -14,7 +14,9 @@ export type SidebarHeaderProps = SidebarExpandedProps & {
   onToggle: () => void;
 };
 
-export type SidebarNavProps = SidebarExpandedProps;
+export type SidebarNavProps = SidebarExpandedProps & {
+  isMobileDrawer?: boolean;
+};
 
 export type SidebarFooterProps = SidebarExpandedProps;
 
@@ -37,6 +39,7 @@ export type SidebarNavItemProps = SidebarExpandedProps & {
   href: string;
   icon: SidebarIcon;
   isActive?: boolean;
+  isMobileDrawer?: boolean;
   isOriginalIconColor?: boolean;
   label: string;
   variant?: SidebarNavItemVariant;

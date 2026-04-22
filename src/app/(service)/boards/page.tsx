@@ -3,5 +3,5 @@
  */
 
 export default function BoardsPage() {
-  return <main>채용 / 홍보</main>;
+  return <section>채용 / 홍보</section>;
 }

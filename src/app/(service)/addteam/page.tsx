@@ -3,5 +3,5 @@
  */
 
 export default function AddTeamPage() {
-  return <main>팀 생성</main>;
+  return <section>팀 생성</section>;
 }
