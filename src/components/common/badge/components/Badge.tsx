@@ -22,13 +22,14 @@ import ProgressCircle from '@/components/common/badge/components/ProgressCircle'
 
 export default function Badge({ completed, total, className }: BadgeProps) {
   const getStatus = (): BadgeStatus => {
-    if (total === 0 || completed === 0) return 'start';
-    if (completed === total) return 'done';
+    if (total <= 0 || completed <= 0) return 'start';
+    if (completed >= total) return 'done';
     return 'ongoing';
   };
 
   const status = getStatus();
-  const percentage = total > 0 ? (completed / total) * 100 : 0;
+  const percentage =
+    total > 0 ? Math.max(0, Math.min(100, (completed / total) * 100)) : 0;
 
   return (
     <div
