@@ -5,9 +5,9 @@
 import TeamProgress from './components/TeamProgress';
 import TeamTaskList from './components/TeamTaskList';
 import TeamMemberList from './components/TeamMemberList';
+import NoGroups from './components/NoGroups';
 
 import { use } from 'react';
-import { notFound } from 'next/navigation';
 
 export default function TaskDetailPage({
   params,
@@ -16,10 +16,8 @@ export default function TaskDetailPage({
 }) {
   const { teamid } = use(params);
 
-  console.log('teamid:', teamid); // 실제 값 확인용
-
-  if (!/^\d+$/.test(teamid)) {
-    notFound();
+  if (teamid === 'nogroup') {
+    return <NoGroups />;
   }
 
   return (
