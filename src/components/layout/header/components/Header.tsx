@@ -41,7 +41,7 @@ export default function Header() {
             <Image
               src={imgLogoSymbolLarge}
               alt="Coworkers"
-              width={24}
+              width={35}
               height={24}
               className="h-6 w-auto"
             />
