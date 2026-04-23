@@ -50,18 +50,26 @@ queryKeys.task.list(teamId, { taskListId, date: '2026-04-21' });
 - `queryFn`
 - `placeholderData`
 - `staleTime`
+- 기본 규칙을 유지하되, 호출부에서 추가 `options`를 덧붙일 수 있게 열어둡니다.
 
 예시:
 
 ```ts
 export const boardQueryOptions = {
-  detail: (teamId: string, articleId: QueryKeyId) =>
-    createQueryOptions({
+  detail: <TData = BoardDetailData>(
+    teamId: string,
+    articleId: QueryKeyId,
+    options?: QueryOptionsOverrides<BoardDetailData, TData>,
+  ) =>
+    createQueryOptions<BoardDetailData, TData>({
+      options,
       queryFn: () => getBoardDetail(teamId, articleId),
       queryKey: queryKeys.board.detail(teamId, articleId),
     }),
 };
 ```
+
+즉, `queryOptions`는 규칙을 강제하는 닫힌 객체가 아니라 기본값을 제공하는 레이어로 보고, 실제 화면에서 `enabled`, `select`, `staleTime` 등을 유연하게 추가할 수 있어야 합니다.
 
 ### `src/hooks`
 
@@ -132,15 +140,15 @@ export const boardQueryOptions = {
 
 | 파일 | 책임 | 추천 export |
 | --- | --- | --- |
-| `src/hooks/useAuth.ts` | 로그인/회원가입/OAuth/토큰 갱신 | `useSignIn`, `useSignUp`, `useRefreshToken`, `useSignInWithOauth` |
-| `src/hooks/useImage.ts` | 프로필/팀 이미지 업로드 | `useUploadImage` |
-| `src/hooks/useUser.ts` | 내 정보, 내 그룹/멤버십, 마이페이지, 마이히스토리 | `useMe`, `useMyGroups`, `useMyMemberships`, `useCompletedTasks`, `useUpdateMe`, `useUpdatePassword`, `useSendResetPasswordEmail`, `useResetPassword`, `useDeleteMe` |
-| `src/hooks/useTeam.ts` | 그룹(프론트 팀) 상세, 멤버, 초대, 팀 수정 | `useTeamDetail`, `useCreateTeam`, `useUpdateTeam`, `useDeleteTeam`, `useTeamMembers`, `useInviteMember`, `useRemoveMember`, `useInvitationToken`, `useAcceptInvitation`, `useTeamTasksByDate` |
+| `src/hooks/useAuth.ts` | 로그인/회원가입/OAuth/토큰 갱신 | `useSignInMutation`, `useSignUpMutation`, `useRefreshTokenMutation`, `useSignInWithOauthMutation` |
+| `src/hooks/useImage.ts` | 프로필/팀 이미지 업로드 | `useUploadImageMutation` |
+| `src/hooks/useUser.ts` | 내 정보, 내 그룹/멤버십, 마이페이지, 마이히스토리 | `useMeQuery`, `useMyGroupsQuery`, `useMyMembershipsQuery`, `useCompletedTasksQuery`, `useUpdateMeMutation`, `useUpdatePasswordMutation`, `useSendResetPasswordEmailMutation`, `useResetPasswordMutation`, `useDeleteMeMutation` |
+| `src/hooks/useTeam.ts` | 그룹(프론트 팀) 상세, 멤버, 초대, 팀 수정 | `useTeamDetailQuery`, `useCreateTeamMutation`, `useUpdateTeamMutation`, `useDeleteTeamMutation`, `useTeamMembersQuery`, `useInviteMemberMutation`, `useRemoveMemberMutation`, `useInvitationTokenQuery`, `useAcceptInvitationMutation`, `useTeamTasksByDateQuery` |
 | `src/hooks/useTaskList.ts` | 컬럼 단위 할 일 목록 조회/생성/수정/삭제/순서 변경 | `useTaskList`, `useCreateTaskList`, `useUpdateTaskList`, `useDeleteTaskList`, `useUpdateTaskListOrder` |
-| `src/hooks/useTask.ts` | 할 일 조회/수정/삭제/정렬과 할 일 댓글 | `useTasks`, `useTaskDetail`, `useCreateTask`, `useUpdateTask`, `useDeleteTask`, `useUpdateTaskOrder`, `useTaskComments`, `useCreateTaskComment`, `useUpdateTaskComment`, `useDeleteTaskComment` |
-| `src/hooks/useRecurring.ts` | 반복 일정 생성/수정/삭제 | `useCreateRecurring`, `useUpdateRecurring`, `useDeleteRecurring` |
-| `src/hooks/useBoard.ts` | 게시글 목록/상세/작성/수정/삭제/좋아요 | `useBoardList`, `useBoardDetail`, `useCreateBoard`, `useUpdateBoard`, `useDeleteBoard`, `useLikeBoard`, `useUnlikeBoard` |
-| `src/hooks/useBoardComment.ts` | 게시글 댓글 목록/작성/수정/삭제 | `useBoardComments`, `useCreateBoardComment`, `useUpdateBoardComment`, `useDeleteBoardComment` |
+| `src/hooks/useTask.ts` | 할 일 조회/수정/삭제/정렬과 할 일 댓글 | `useTasksQuery`, `useTaskDetailQuery`, `useCreateTaskMutation`, `useUpdateTaskMutation`, `useDeleteTaskMutation`, `useUpdateTaskOrderMutation`, `useTaskCommentsQuery`, `useCreateTaskCommentMutation`, `useUpdateTaskCommentMutation`, `useDeleteTaskCommentMutation` |
+| `src/hooks/useRecurring.ts` | 반복 일정 생성/수정/삭제 | `useCreateRecurringMutation`, `useUpdateRecurringMutation`, `useDeleteRecurringMutation` |
+| `src/hooks/useBoard.ts` | 게시글 목록/상세/작성/수정/삭제/좋아요 | `useBoardListQuery`, `useBoardDetailQuery`, `useCreateBoardMutation`, `useUpdateBoardMutation`, `useDeleteBoardMutation`, `useLikeBoardMutation`, `useUnlikeBoardMutation` |
+| `src/hooks/useBoardComment.ts` | 게시글 댓글 목록/작성/수정/삭제 | `useBoardCommentsQuery`, `useCreateBoardCommentMutation`, `useUpdateBoardCommentMutation`, `useDeleteBoardCommentMutation` |
 
 ### 4-2. 바로 파일로 만들지 않아도 되는 도메인
 
@@ -191,7 +199,78 @@ export const boardQueryOptions = {
 
 즉, `queryOptions`는 `useQuery`, `useInfiniteQuery`가 실제로 필요한 도메인에 우선 적용합니다.
 
-## 7. 현재 기준 추천 사용 순서
+## 7. query / mutation options 확장 규칙
+
+현재 프로젝트는 공통 규칙은 `factory`에서 유지하되, 사용하는 쪽에서 옵션을 덧붙일 수 있는 구조를 기본으로 합니다.
+
+### 7-1. query 확장 방식
+
+공통 훅은 `options`를 받아서 그대로 `queryOptions`에 전달합니다.
+
+```ts
+export function useBoardListQuery<TData = BoardListData>({
+  options,
+  params,
+  teamId,
+}: UseBoardListParams<TData>) {
+  return useQuery(boardQueryOptions.list<TData>(teamId, params, options));
+}
+```
+
+화면에서는 이렇게 추가 옵션을 줄 수 있습니다.
+
+```ts
+const boardListQuery = useBoardListQuery({
+  teamId,
+  params: {
+    page: 1,
+    pageSize: 10,
+    orderBy: 'recent',
+  },
+  options: {
+    enabled: !!teamId,
+    staleTime: 1000 * 60,
+    select: (data) => data.list,
+  },
+});
+```
+
+### 7-2. mutation 확장 방식
+
+mutation 훅은 기본 invalidate 규칙은 내부에서 유지하고, 호출부에서 `onSuccess`, `onError`, `onSettled` 등을 추가할 수 있게 합니다.
+
+```ts
+export function useSignInMutation(
+  options?: MutationOptionsOverrides<SignInData, SignInVariables>,
+) {
+  const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
+
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ body, teamId }: SignInVariables) => signIn(teamId, body),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
+            queryClient.invalidateQueries({ queryKey: queryKeys.user.groups() }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
+}
+```
+
+이 구조의 장점은 아래와 같습니다.
+
+- 공통 invalidate 규칙이 빠지지 않음
+- 화면마다 필요한 콜백을 추가할 수 있음
+- 훅을 새로 복제하지 않고도 확장 가능
+
+## 8. 현재 기준 추천 사용 순서
 
 새로운 조회가 필요하면 아래 순서로 작업합니다.
 
@@ -201,7 +280,7 @@ export const boardQueryOptions = {
 4. `src/hooks/*`에 도메인 훅 추가
 5. 페이지/컴포넌트에서는 도메인 훅 사용
 
-## 8. 현재 완성된 예시: Board
+## 9. 현재 완성된 예시: Board
 
 현재 board는 실제 사용 예시로 볼 수 있습니다.
 
@@ -270,8 +349,12 @@ export const boardQueryOptions = {
 예시:
 
 ```ts
-export function useBoardList({ params, teamId }: UseBoardListParams) {
-  return useQuery(boardQueryOptions.list(teamId, params));
+export function useBoardListQuery<TData = BoardListData>({
+  options,
+  params,
+  teamId,
+}: UseBoardListParams<TData>) {
+  return useQuery(boardQueryOptions.list<TData>(teamId, params, options));
 }
 ```
 
@@ -280,19 +363,23 @@ export function useBoardList({ params, teamId }: UseBoardListParams) {
 ```tsx
 'use client';
 
-import { useBoardList } from '@/hooks/useBoard';
+import { useBoardListQuery } from '@/hooks/useBoard';
 
 type BoardPageProps = {
   teamId: string;
 };
 
 export default function BoardPage({ teamId }: BoardPageProps) {
-  const { data, isLoading, isError } = useBoardList({
+  const { data, isLoading, isError } = useBoardListQuery({
     teamId,
     params: {
       page: 1,
       pageSize: 10,
       orderBy: 'recent',
+    },
+    options: {
+      enabled: !!teamId,
+      staleTime: 1000 * 60,
     },
   });
 
@@ -308,7 +395,7 @@ export default function BoardPage({ teamId }: BoardPageProps) {
 }
 ```
 
-## 9. invalidate 예시
+## 10. invalidate 예시
 
 mutation 이후에는 관련 범위만 invalidate합니다.
 
@@ -330,7 +417,7 @@ await queryClient.invalidateQueries({
 
 목록만 다시 불러올지, 상세도 같이 다시 불러올지는 mutation 영향 범위에 따라 정합니다.
 
-## 10. 새 도메인 추가 예시
+## 11. 새 도메인 추가 예시
 
 예를 들어 task list 조회를 추가할 때는 아래 순서로 맞춥니다.
 
@@ -362,15 +449,20 @@ export async function getTaskLists(
 
 ```ts
 export const taskQueryOptions = {
-  taskLists: (teamId: string, params?: TaskListQueryParams) =>
-    createListQueryOptions({
+  taskLists: <TData = TaskListResponse>(
+    teamId: string,
+    params?: TaskListQueryParams,
+    options?: QueryOptionsOverrides<TaskListResponse, TData>,
+  ) =>
+    createListQueryOptions<TaskListResponse, TData>({
+      options,
       queryFn: () => getTaskLists(teamId, params),
       queryKey: queryKeys.taskList.list(teamId, params),
     }),
 };
 ```
 
-## 11. 지금 기준 최종 판단
+## 12. 지금 기준 최종 판단
 
 현재 프로젝트에서는 아래처럼 정리하는 것이 가장 좋습니다.
 
@@ -393,23 +485,29 @@ export const taskQueryOptions = {
 
 이 순서가 좋은 이유는 현재 기획 화면 기준으로 `myhistory/mypage`와 `tasklist` 화면이 가장 먼저 실제 데이터를 많이 쓰게 될 가능성이 높기 때문입니다.
 
-### 10-4. hook
+### 11-4. hook
 
 ```ts
-export function useTaskLists(teamId: string, params?: TaskListQueryParams) {
-  return useQuery(taskQueryOptions.taskLists(teamId, params));
+export function useTaskLists({
+  teamId,
+  params,
+  options,
+}: UseTaskListsParams) {
+  return useQuery(taskQueryOptions.taskLists(teamId, params, options));
 }
 ```
 
-## 12. 팀 규칙
+## 13. 팀 규칙
 
 - `queryKey`는 항상 `queryKeys`를 통해 생성합니다.
 - `queryFn`은 `api` 함수만 호출합니다.
 - `useQuery`는 되도록 `src/hooks`의 도메인 훅에서만 직접 씁니다.
+- `queryOptions`와 `mutation`은 기본 규칙을 유지하되, 호출부에서 `options`를 덧붙일 수 있게 열어둡니다.
+- mutation 훅은 기본 invalidate 이후에 사용자 정의 `onSuccess`가 실행되도록 유지합니다.
 - 페이지 전용 상태는 전역 hooks가 아니라 라우트 폴더 아래 `hooks/`로 둡니다.
 - 아직 API가 없는 도메인은 `queryOptions`와 `hook` 자리를 먼저 만들 수 있지만, 실제 fetch 함수가 없으면 가짜 요청은 넣지 않습니다.
 
-## 13. 현재 상태 정리
+## 14. 현재 상태 정리
 
 - 실제 패턴이 연결된 도메인: `auth`, `board`, `boardComment`, `comment`, `image`, `recurring`, `task`, `taskList`, `team`, `user`
 - 키만 먼저 정리된 도메인: `oauthApp`

@@ -2,6 +2,12 @@
  * 랜딩 페이지에서 사용하는 상수와 반복 데이터를 정의하는 파일입니다.
  */
 
+import type {
+  LandingRevealDelay,
+  LandingRevealDirection,
+  LandingSectionContent,
+  LandingTaskColumnImage,
+} from '@/app/(landing)/types';
 import {
   imgLandingTaskColumnDone,
   imgLandingTaskColumnProgress,
@@ -9,12 +15,6 @@ import {
   imgLandingTaskDetail,
   imgLandingTasklist,
 } from '@/assets';
-import type {
-  LandingRevealDelay,
-  LandingRevealDirection,
-  LandingSectionContent,
-  LandingTaskColumnImage,
-} from '@/app/(landing)/types';
 
 export const LANDING_TASK_COLUMN_IMAGES = [
   {

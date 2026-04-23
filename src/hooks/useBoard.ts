@@ -6,23 +6,38 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { boardQueryOptions } from '@/api/queryOptions';
+import { getBoardDetail, getBoardList } from '@/api/boardApi';
 import type { BoardListQueryParams, QueryKeyId } from '@/api/queryKeys';
+import { boardQueryOptions } from '@/api/queryOptions';
+import type { QueryOptionsOverrides } from '@/api/queryOptions/factory';
 
-type UseBoardListParams = {
+type BoardListData = Awaited<ReturnType<typeof getBoardList>>;
+type BoardDetailData = Awaited<ReturnType<typeof getBoardDetail>>;
+
+type UseBoardListParams<TData = BoardListData> = {
+  options?: QueryOptionsOverrides<BoardListData, TData>;
   params?: BoardListQueryParams;
   teamId: string;
 };
 
-type UseBoardDetailParams = {
+type UseBoardDetailParams<TData = BoardDetailData> = {
   articleId: QueryKeyId;
+  options?: QueryOptionsOverrides<BoardDetailData, TData>;
   teamId: string;
 };
 
-export function useBoardList({ params, teamId }: UseBoardListParams) {
-  return useQuery(boardQueryOptions.list(teamId, params));
+export function useBoardListQuery<TData = BoardListData>({
+  options,
+  params,
+  teamId,
+}: UseBoardListParams<TData>) {
+  return useQuery(boardQueryOptions.list<TData>(teamId, params, options));
 }
 
-export function useBoardDetail({ articleId, teamId }: UseBoardDetailParams) {
-  return useQuery(boardQueryOptions.detail(teamId, articleId));
+export function useBoardDetailQuery<TData = BoardDetailData>({
+  articleId,
+  options,
+  teamId,
+}: UseBoardDetailParams<TData>) {
+  return useQuery(boardQueryOptions.detail<TData>(teamId, articleId, options));
 }

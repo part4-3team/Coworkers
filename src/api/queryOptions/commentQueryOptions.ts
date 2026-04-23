@@ -3,28 +3,39 @@
  */
 
 import { getBoardComments, getTaskComments } from '@/api/commentApi';
+import type { CursorPaginationQueryParams, QueryKeyId } from '@/api/queryKeys';
+import { queryKeys } from '@/api/queryKeys';
 import {
   createListQueryOptions,
   createQueryOptions,
+  type QueryOptionsOverrides,
 } from '@/api/queryOptions/factory';
-import type { CursorPaginationQueryParams, QueryKeyId } from '@/api/queryKeys';
-import { queryKeys } from '@/api/queryKeys';
+
+type TaskCommentsData = Awaited<ReturnType<typeof getTaskComments>>;
+type BoardCommentsData = Awaited<ReturnType<typeof getBoardComments>>;
 
 export const commentQueryOptions = {
-  taskComments: (teamId: string, taskId: QueryKeyId) =>
-    createQueryOptions({
+  taskComments: <TData = TaskCommentsData>(
+    teamId: string,
+    taskId: QueryKeyId,
+    options?: QueryOptionsOverrides<TaskCommentsData, TData>,
+  ) =>
+    createQueryOptions<TaskCommentsData, TData>({
+      options,
       queryFn: () => getTaskComments(teamId, taskId),
       queryKey: queryKeys.comment.list(teamId, taskId),
     }),
 } as const;
 
 export const boardCommentQueryOptions = {
-  list: (
+  list: <TData = BoardCommentsData>(
     teamId: string,
     articleId: QueryKeyId,
     params: CursorPaginationQueryParams,
+    options?: QueryOptionsOverrides<BoardCommentsData, TData>,
   ) =>
-    createListQueryOptions({
+    createListQueryOptions<BoardCommentsData, TData>({
+      options,
       queryFn: () => getBoardComments(teamId, articleId, params),
       queryKey: queryKeys.boardComment.list(teamId, articleId, params),
     }),

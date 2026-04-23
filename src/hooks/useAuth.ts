@@ -13,6 +13,15 @@ import {
   signUp,
 } from '@/api/authApi';
 import { queryKeys } from '@/api/queryKeys';
+import {
+  createMutationOptions,
+  type MutationOptionsOverrides,
+} from '@/api/queryOptions/factory';
+
+type SignUpData = Awaited<ReturnType<typeof signUp>>;
+type SignInData = Awaited<ReturnType<typeof signIn>>;
+type RefreshAccessTokenData = Awaited<ReturnType<typeof refreshAccessToken>>;
+type SignInWithOauthData = Awaited<ReturnType<typeof signInWithOauth>>;
 
 type SignUpVariables = {
   body: {
@@ -50,61 +59,105 @@ type SignInWithOauthVariables = {
   teamId: string;
 };
 
-export function useSignUp() {
+export function useSignUpMutation(
+  options?: MutationOptionsOverrides<SignUpData, SignUpVariables>,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({ body, teamId }: SignUpVariables) => signUp(teamId, body),
-    onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.user.groups() }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.user.memberships(),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ body, teamId }: SignUpVariables) => signUp(teamId, body),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.user.groups(),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.user.memberships(),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }
 
-export function useSignIn() {
+export function useSignInMutation(
+  options?: MutationOptionsOverrides<SignInData, SignInVariables>,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({ body, teamId }: SignInVariables) => signIn(teamId, body),
-    onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.user.groups() }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.user.memberships(),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ body, teamId }: SignInVariables) => signIn(teamId, body),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.user.groups(),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.user.memberships(),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }
 
-export function useRefreshToken() {
-  return useMutation({
-    mutationFn: ({ body, teamId }: RefreshTokenVariables) =>
-      refreshAccessToken(teamId, body),
-  });
+export function useRefreshTokenMutation(
+  options?: MutationOptionsOverrides<
+    RefreshAccessTokenData,
+    RefreshTokenVariables
+  >,
+) {
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ body, teamId }: RefreshTokenVariables) =>
+        refreshAccessToken(teamId, body),
+      options,
+    }),
+  );
 }
 
-export function useSignInWithOauth() {
+export function useSignInWithOauthMutation(
+  options?: MutationOptionsOverrides<
+    SignInWithOauthData,
+    SignInWithOauthVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({ body, provider, teamId }: SignInWithOauthVariables) =>
-      signInWithOauth(teamId, provider, body),
-    onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.user.groups() }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.user.memberships(),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ body, provider, teamId }: SignInWithOauthVariables) =>
+        signInWithOauth(teamId, provider, body),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.user.groups(),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.user.memberships(),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }

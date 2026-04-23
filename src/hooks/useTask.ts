@@ -9,24 +9,41 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createTaskComment,
   deleteTaskComment,
+  getTaskComments,
   updateTaskComment,
 } from '@/api/commentApi';
-import { commentQueryOptions, taskQueryOptions } from '@/api/queryOptions';
 import type { QueryKeyId, TaskQueryParams } from '@/api/queryKeys';
 import { queryKeys } from '@/api/queryKeys';
+import { commentQueryOptions, taskQueryOptions } from '@/api/queryOptions';
+import {
+  createMutationOptions,
+  type MutationOptionsOverrides,
+  type QueryOptionsOverrides,
+} from '@/api/queryOptions/factory';
+import { getTaskDetail, getTasks } from '@/api/taskApi';
 
-type UseTasksParams = {
+type TasksData = Awaited<ReturnType<typeof getTasks>>;
+type TaskDetailData = Awaited<ReturnType<typeof getTaskDetail>>;
+type TaskCommentsData = Awaited<ReturnType<typeof getTaskComments>>;
+type CreateTaskCommentData = Awaited<ReturnType<typeof createTaskComment>>;
+type UpdateTaskCommentData = Awaited<ReturnType<typeof updateTaskComment>>;
+type DeleteTaskCommentData = Awaited<ReturnType<typeof deleteTaskComment>>;
+
+type UseTasksParams<TData = TasksData> = {
+  options?: QueryOptionsOverrides<TasksData, TData>;
   params: TaskQueryParams;
   teamId: string;
 };
 
-type UseTaskDetailParams = {
+type UseTaskDetailParams<TData = TaskDetailData> = {
+  options?: QueryOptionsOverrides<TaskDetailData, TData>;
   taskId: QueryKeyId;
   taskListId: QueryKeyId;
   teamId: string;
 };
 
-type UseTaskCommentsParams = {
+type UseTaskCommentsParams<TData = TaskCommentsData> = {
+  options?: QueryOptionsOverrides<TaskCommentsData, TData>;
   taskId: QueryKeyId;
   teamId: string;
 };
@@ -57,86 +74,149 @@ type DeleteTaskCommentVariables = {
   token?: string;
 };
 
-export function useTasks({ params, teamId }: UseTasksParams) {
-  return useQuery(taskQueryOptions.list(teamId, params));
+export function useTasksQuery<TData = TasksData>({
+  options,
+  params,
+  teamId,
+}: UseTasksParams<TData>) {
+  return useQuery(taskQueryOptions.list<TData>(teamId, params, options));
 }
 
-export function useTaskDetail({
+export function useTaskDetailQuery<TData = TaskDetailData>({
+  options,
   taskId,
   taskListId,
   teamId,
-}: UseTaskDetailParams) {
-  return useQuery(taskQueryOptions.detail(teamId, taskListId, taskId));
+}: UseTaskDetailParams<TData>) {
+  return useQuery(
+    taskQueryOptions.detail<TData>(teamId, taskListId, taskId, options),
+  );
 }
 
-export function useTaskComments({ taskId, teamId }: UseTaskCommentsParams) {
-  return useQuery(commentQueryOptions.taskComments(teamId, taskId));
+export function useTaskCommentsQuery<TData = TaskCommentsData>({
+  options,
+  taskId,
+  teamId,
+}: UseTaskCommentsParams<TData>) {
+  return useQuery(
+    commentQueryOptions.taskComments<TData>(teamId, taskId, options),
+  );
 }
 
-export function useCreateTaskComment() {
+export function useCreateTaskCommentMutation(
+  options?: MutationOptionsOverrides<
+    CreateTaskCommentData,
+    CreateTaskCommentVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({ body, taskId, teamId, token }: CreateTaskCommentVariables) =>
-      createTaskComment(teamId, taskId, body, token),
-    onSuccess: async (_, variables) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.comment.list(variables.teamId, variables.taskId),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.task.lists(variables.teamId),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({
+        body,
+        taskId,
+        teamId,
+        token,
+      }: CreateTaskCommentVariables) =>
+        createTaskComment(teamId, taskId, body, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.comment.list(
+                variables.teamId,
+                variables.taskId,
+              ),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.task.lists(variables.teamId),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }
 
-export function useUpdateTaskComment() {
+export function useUpdateTaskCommentMutation(
+  options?: MutationOptionsOverrides<
+    UpdateTaskCommentData,
+    UpdateTaskCommentVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({
-      body,
-      commentId,
-      taskId,
-      teamId,
-      token,
-    }: UpdateTaskCommentVariables) =>
-      updateTaskComment(teamId, taskId, commentId, body, token),
-    onSuccess: async (_, variables) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.comment.list(variables.teamId, variables.taskId),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.task.lists(variables.teamId),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({
+        body,
+        commentId,
+        taskId,
+        teamId,
+        token,
+      }: UpdateTaskCommentVariables) =>
+        updateTaskComment(teamId, taskId, commentId, body, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.comment.list(
+                variables.teamId,
+                variables.taskId,
+              ),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.task.lists(variables.teamId),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }
 
-export function useDeleteTaskComment() {
+export function useDeleteTaskCommentMutation(
+  options?: MutationOptionsOverrides<
+    DeleteTaskCommentData,
+    DeleteTaskCommentVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({
-      commentId,
-      taskId,
-      teamId,
-      token,
-    }: DeleteTaskCommentVariables) =>
-      deleteTaskComment(teamId, taskId, commentId, token),
-    onSuccess: async (_, variables) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.comment.list(variables.teamId, variables.taskId),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.task.lists(variables.teamId),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({
+        commentId,
+        taskId,
+        teamId,
+        token,
+      }: DeleteTaskCommentVariables) =>
+        deleteTaskComment(teamId, taskId, commentId, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.comment.list(
+                variables.teamId,
+                variables.taskId,
+              ),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.task.lists(variables.teamId),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }

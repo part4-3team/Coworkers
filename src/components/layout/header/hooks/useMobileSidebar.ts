@@ -5,6 +5,7 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+
 import { usePathname } from 'next/navigation';
 
 import type { UseMobileSidebarReturn } from '@/components/layout/header/types';
