@@ -23,7 +23,7 @@ export default function TitleInput({
         aria-invalid={hasError}
         aria-describedby={hasError ? errorId : undefined}
         className={cn(
-          'text-base font-medium',
+          'h-11 text-sm font-medium md:h-12 md:text-base',
           hasError && 'border-status-danger focus:border-status-danger',
           className,
         )}
@@ -31,7 +31,10 @@ export default function TitleInput({
       />
 
       {hasError && (
-        <p id={errorId} className="text-sm font-medium text-status-danger">
+        <p
+          id={errorId}
+          className="text-xs font-medium text-status-danger md:text-sm"
+        >
           {errorMessage}
         </p>
       )}

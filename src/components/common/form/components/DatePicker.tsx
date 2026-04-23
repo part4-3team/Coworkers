@@ -31,7 +31,8 @@ export default function DatePicker({
         placeholderText={placeholder ?? '날짜 선택'}
         showPopperArrow={false}
         className={cn(
-          'h-12 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
+          'h-11 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
+          'md:h-12 md:text-base',
           'placeholder:text-text-default',
           'focus:border-brand-primary',
           hasError && 'border-status-danger focus:border-status-danger',
@@ -40,7 +41,9 @@ export default function DatePicker({
       />
 
       {hasError && (
-        <p className="text-sm font-medium text-status-danger">{errorMessage}</p>
+        <p className="text-xs font-medium text-status-danger md:text-sm">
+          {errorMessage}
+        </p>
       )}
     </div>
   );

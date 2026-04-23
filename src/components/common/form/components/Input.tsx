@@ -16,7 +16,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         type={type}
         className={cn(
-          'h-12 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
+          'h-11 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
+          'md:h-12 md:text-base',
           'placeholder:text-text-default',
           'focus:border-brand-primary',
           'disabled:cursor-not-allowed disabled:bg-background-secondary',

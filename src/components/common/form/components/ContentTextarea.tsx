@@ -28,12 +28,13 @@ export default function ContentTextarea({
           aria-invalid={hasError}
           aria-describedby={errorId}
           className={cn(
-            'min-h-32 w-full resize-none rounded-xl border border-background-tertiary bg-background-primary px-4 py-3 text-sm text-text-primary outline-none',
+            'min-h-28 w-full resize-none rounded-xl border border-background-tertiary bg-background-primary px-4 py-3 text-sm text-text-primary outline-none',
+            'md:min-h-32 md:text-base',
             'placeholder:text-text-default',
             'focus:border-brand-primary',
             'disabled:cursor-not-allowed disabled:bg-background-secondary',
             hasError && 'border-status-danger focus:border-status-danger',
-            button && 'pr-16 pb-12',
+            button && 'pr-14 pb-12 md:pr-16',
             className,
           )}
           {...props}
@@ -43,7 +44,10 @@ export default function ContentTextarea({
       </div>
 
       {hasError && (
-        <p id={errorId} className="text-sm font-medium text-status-danger">
+        <p
+          id={errorId}
+          className="text-xs font-medium text-status-danger md:text-sm"
+        >
           {errorMessage}
         </p>
       )}

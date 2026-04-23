@@ -39,10 +39,10 @@ export default function AuthInput({
   };
 
   return (
-    <div className="flex w-full flex-col gap-3">
+    <div className="flex w-full flex-col gap-2 md:gap-3">
       <label
         htmlFor={inputId}
-        className="text-base font-medium leading-6 text-text-primary"
+        className="text-sm font-medium leading-5 text-text-primary md:text-base md:leading-6"
       >
         {label}
       </label>
@@ -55,7 +55,8 @@ export default function AuthInput({
           aria-invalid={hasError}
           aria-describedby={hasError ? errorId : undefined}
           className={cn(
-            isPasswordInput && 'pr-16',
+            'h-11 text-sm md:h-12 md:text-base',
+            isPasswordInput && 'pr-14 md:pr-16',
             hasError && 'border-status-danger focus:border-status-danger',
             className,
           )}
@@ -69,7 +70,7 @@ export default function AuthInput({
             disabled={disabled}
             aria-label={isPasswordVisible ? '비밀번호 숨기기' : '비밀번호 보기'}
             className={cn(
-              'absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text-default',
+              'absolute right-4 top-1/2 -translate-y-1/2 text-xs text-text-default md:text-sm',
               disabled && 'cursor-not-allowed text-interaction-inactive',
             )}
           >
@@ -79,7 +80,10 @@ export default function AuthInput({
       </div>
 
       {hasError && (
-        <p id={errorId} className="text-sm font-medium text-status-danger">
+        <p
+          id={errorId}
+          className="text-xs font-medium text-status-danger md:text-sm"
+        >
           {errorMessage}
         </p>
       )}
