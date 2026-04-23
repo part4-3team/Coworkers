@@ -4,6 +4,7 @@
 
 import Image from 'next/image';
 
+import type { MyHistoryTask } from '@/app/(service)/myhistory/types';
 import {
   icCalendarSmall,
   icCheckboxCheckedSmall,
@@ -11,7 +12,6 @@ import {
   icMoreVerticalSmall,
   icRepeatSmall,
 } from '@/assets';
-import type { MyHistoryTask } from '@/app/(service)/myhistory/types';
 
 type HistoryTaskCardProps = {
   task: MyHistoryTask;

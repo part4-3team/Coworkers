@@ -4,12 +4,12 @@
 
 import Image from 'next/image';
 
+import { MY_HISTORY_MONTH } from '@/app/(service)/myhistory/constants';
 import {
   icCalendarCircleLarge,
   icChevronLeftCircle,
   icChevronRightCircle,
 } from '@/assets';
-import { MY_HISTORY_MONTH } from '@/app/(service)/myhistory/constants';
 
 export default function HistoryMonthNavigator() {
   return (
