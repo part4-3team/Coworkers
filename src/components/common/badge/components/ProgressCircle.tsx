@@ -4,6 +4,7 @@
  */
 
 import Image from 'next/image';
+
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
