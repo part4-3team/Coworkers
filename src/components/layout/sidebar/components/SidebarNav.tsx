@@ -14,7 +14,7 @@ import {
   SIDEBAR_TEAMS,
 } from '@/components/layout/sidebar/constants';
 import type { SidebarNavProps } from '@/components/layout/sidebar/types';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
 
 export default function SidebarNav({
