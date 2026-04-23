@@ -2,9 +2,12 @@
  * 공용 유저 이미지 등록 컴포넌트입니다.
  */
 'use client';
-import Image from 'next/image';
-import { icUserLarge, icProfileEditLarge } from '@/assets/index';
 import { useEffect, useRef, useState } from 'react';
+
+import Image from 'next/image';
+
+import { icProfileEditLarge, icUserLarge } from '@/assets/index';
+
 import { ImgAddButtonProps } from './types';
 
 export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {

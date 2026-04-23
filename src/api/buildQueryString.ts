@@ -3,7 +3,7 @@
  */
 
 import { normalizeQueryParams } from '@/api/queryKeys/factory';
-import type { QueryParamValue, QueryParams } from '@/api/queryKeys/types';
+import type { QueryParams, QueryParamValue } from '@/api/queryKeys/types';
 
 function appendSearchParam(
   searchParams: URLSearchParams,

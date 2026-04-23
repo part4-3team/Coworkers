@@ -7,9 +7,10 @@
 'use client';
 
 import Image from 'next/image';
-import { cn } from '@/utils/cn';
+
 import { icAlertCircleWhiteLarge } from '@/assets';
 import type { ToastItem } from '@/components/common/toast/types';
+import { cn } from '@/utils/cn';
 
 type ToastProps = {
   toast: ToastItem;
@@ -29,7 +30,7 @@ export default function Toast({ toast, onRemove }: ToastProps) {
       role="status"
       aria-live="polite"
       className={cn(
-        'flex w-[343px] items-center justify-between rounded-xl px-4 py-3 md:w-[500px] md:px-5 md:py-4 lg:w-[868px]',
+        'flex w-85.75 items-center justify-between rounded-xl px-4 py-3 md:w-125 md:px-5 md:py-4 lg:w-217',
         isSuccess ? 'bg-brand-primary' : 'bg-status-danger',
       )}
     >

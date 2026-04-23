@@ -4,14 +4,33 @@
 
 import { apiClient, teamEndpoint } from '@/api/apiClient';
 import { buildQueryString } from '@/api/buildQueryString';
+import { API_PATH_SEGMENTS, HTTP_METHODS } from '@/api/constants';
 import type { CursorPaginationQueryParams, QueryKeyId } from '@/api/queryKeys';
 
 type CommentBody = {
   content: string;
 };
 
+function createTaskCommentsPath(taskId: QueryKeyId) {
+  return `${API_PATH_SEGMENTS.TASKS}/${taskId}${API_PATH_SEGMENTS.COMMENTS}`;
+}
+
+function createTaskCommentPath(taskId: QueryKeyId, commentId: QueryKeyId) {
+  return `${createTaskCommentsPath(taskId)}/${commentId}`;
+}
+
+function createBoardCommentsPath(articleId: QueryKeyId) {
+  return `${API_PATH_SEGMENTS.ARTICLES}/${articleId}${API_PATH_SEGMENTS.COMMENTS}`;
+}
+
+function createBoardCommentPath(commentId: QueryKeyId) {
+  return `${API_PATH_SEGMENTS.COMMENTS}/${commentId}`;
+}
+
 export async function getTaskComments(teamId: string, taskId: QueryKeyId) {
-  return apiClient<unknown>(teamEndpoint(`/tasks/${taskId}/comments`, teamId));
+  return apiClient<unknown>(
+    teamEndpoint(createTaskCommentsPath(taskId), teamId),
+  );
 }
 
 export async function createTaskComment(
@@ -20,11 +39,14 @@ export async function createTaskComment(
   body: CommentBody,
   token?: string,
 ) {
-  return apiClient<unknown>(teamEndpoint(`/tasks/${taskId}/comments`, teamId), {
-    body: JSON.stringify(body),
-    method: 'POST',
-    token,
-  });
+  return apiClient<unknown>(
+    teamEndpoint(createTaskCommentsPath(taskId), teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.POST,
+      token,
+    },
+  );
 }
 
 export async function updateTaskComment(
@@ -35,10 +57,10 @@ export async function updateTaskComment(
   token?: string,
 ) {
   return apiClient<unknown>(
-    teamEndpoint(`/tasks/${taskId}/comments/${commentId}`, teamId),
+    teamEndpoint(createTaskCommentPath(taskId, commentId), teamId),
     {
       body: JSON.stringify(body),
-      method: 'PATCH',
+      method: HTTP_METHODS.PATCH,
       token,
     },
   );
@@ -51,9 +73,9 @@ export async function deleteTaskComment(
   token?: string,
 ) {
   return apiClient<unknown>(
-    teamEndpoint(`/tasks/${taskId}/comments/${commentId}`, teamId),
+    teamEndpoint(createTaskCommentPath(taskId, commentId), teamId),
     {
-      method: 'DELETE',
+      method: HTTP_METHODS.DELETE,
       token,
     },
   );
@@ -65,7 +87,7 @@ export async function getBoardComments(
   params: CursorPaginationQueryParams,
 ) {
   const endpoint = `${teamEndpoint(
-    `/articles/${articleId}/comments`,
+    createBoardCommentsPath(articleId),
     teamId,
   )}${buildQueryString(params)}`;
 
@@ -79,10 +101,10 @@ export async function createBoardComment(
   token?: string,
 ) {
   return apiClient<unknown>(
-    teamEndpoint(`/articles/${articleId}/comments`, teamId),
+    teamEndpoint(createBoardCommentsPath(articleId), teamId),
     {
       body: JSON.stringify(body),
-      method: 'POST',
+      method: HTTP_METHODS.POST,
       token,
     },
   );
@@ -94,11 +116,14 @@ export async function updateBoardComment(
   body: CommentBody,
   token?: string,
 ) {
-  return apiClient<unknown>(teamEndpoint(`/comments/${commentId}`, teamId), {
-    body: JSON.stringify(body),
-    method: 'PATCH',
-    token,
-  });
+  return apiClient<unknown>(
+    teamEndpoint(createBoardCommentPath(commentId), teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.PATCH,
+      token,
+    },
+  );
 }
 
 export async function deleteBoardComment(
@@ -106,8 +131,11 @@ export async function deleteBoardComment(
   commentId: QueryKeyId,
   token?: string,
 ) {
-  return apiClient<unknown>(teamEndpoint(`/comments/${commentId}`, teamId), {
-    method: 'DELETE',
-    token,
-  });
+  return apiClient<unknown>(
+    teamEndpoint(createBoardCommentPath(commentId), teamId),
+    {
+      method: HTTP_METHODS.DELETE,
+      token,
+    },
+  );
 }

@@ -4,9 +4,9 @@
 
 import Image from 'next/image';
 
-import { icSpeechBubble } from '@/assets';
 import LandingFeatureCopy from '@/app/(landing)/components/LandingFeatureCopy';
 import { LANDING_TASK_DETAIL_SECTION } from '@/app/(landing)/constants';
+import { icSpeechBubble } from '@/assets';
 
 export default function LandingTaskDetailSection() {
   return (

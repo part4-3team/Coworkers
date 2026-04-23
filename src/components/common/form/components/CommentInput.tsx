@@ -9,7 +9,7 @@
  * - 내용이 길어지면 높이 자동 증가
  */
 
-import { useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { type ChangeEvent, type KeyboardEvent, useRef, useState } from 'react';
 
 import type { CommentInputProps } from '@/components/common/form/types';
 import { cn } from '@/utils/cn';
@@ -70,8 +70,9 @@ export default function CommentInput({
           disabled={disabled}
           rows={1}
           className={cn(
-            'min-h-12 w-full resize-none overflow-hidden rounded-xl border border-background-tertiary bg-background-primary',
-            'px-4 py-3 pr-14 text-sm text-text-primary outline-none',
+            'min-h-11 w-full resize-none overflow-hidden rounded-xl border border-background-tertiary bg-background-primary',
+            'md:min-h-12',
+            'px-4 py-3 pr-14 text-sm text-text-primary outline-none md:text-base',
             'placeholder:text-text-default',
             'focus:border-brand-primary',
             'disabled:cursor-not-allowed disabled:bg-background-secondary',

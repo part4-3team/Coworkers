@@ -8,8 +8,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { icCloseLarge, imgLogoSymbolLarge } from '@/assets';
-import SidebarNav from '@/components/layout/sidebar/components/SidebarNav';
 import type { MobileSidebarDrawerProps } from '@/components/layout/header/types';
+import SidebarNav from '@/components/layout/sidebar/components/SidebarNav';
 import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
 

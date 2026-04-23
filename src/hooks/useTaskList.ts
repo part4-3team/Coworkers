@@ -6,19 +6,27 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { taskQueryOptions } from '@/api/queryOptions';
 import type { QueryKeyId, TeamScopedDateQueryParams } from '@/api/queryKeys';
+import { taskQueryOptions } from '@/api/queryOptions';
+import type { QueryOptionsOverrides } from '@/api/queryOptions/factory';
+import { getTaskListDetail } from '@/api/taskApi';
 
-type UseTaskListDetailParams = {
+type TaskListDetailData = Awaited<ReturnType<typeof getTaskListDetail>>;
+
+type UseTaskListDetailParams<TData = TaskListDetailData> = {
+  options?: QueryOptionsOverrides<TaskListDetailData, TData>;
   params?: TeamScopedDateQueryParams;
   taskListId: QueryKeyId;
   teamId: string;
 };
 
-export function useTaskListDetail({
+export function useTaskListDetailQuery<TData = TaskListDetailData>({
+  options,
   params,
   taskListId,
   teamId,
-}: UseTaskListDetailParams) {
-  return useQuery(taskQueryOptions.taskListDetail(teamId, taskListId, params));
+}: UseTaskListDetailParams<TData>) {
+  return useQuery(
+    taskQueryOptions.taskListDetail<TData>(teamId, taskListId, params, options),
+  );
 }

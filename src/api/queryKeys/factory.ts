@@ -2,6 +2,10 @@
  * TanStack Query 키를 일관된 형태로 생성하는 공용 팩토리입니다.
  */
 
+import {
+  QUERY_KEY_RESOURCES,
+  QUERY_KEY_SEGMENTS,
+} from '@/api/queryKeys/constants';
 import type {
   QueryKeyId,
   QueryParams,
@@ -56,21 +60,25 @@ export function createResourceQueryKeys<const TBase extends readonly unknown[]>(
 ) {
   return {
     all: base,
-    detail: (id: QueryKeyId) => [...base, 'detail', id] as const,
-    details: () => [...base, 'detail'] as const,
+    detail: (id: QueryKeyId) =>
+      [...base, QUERY_KEY_SEGMENTS.DETAIL, id] as const,
+    details: () => [...base, QUERY_KEY_SEGMENTS.DETAIL] as const,
     infiniteList: <TParams extends QueryParams>(params?: TParams) =>
-      withQueryParams([...base, 'infiniteList'] as const, params),
-    infiniteLists: () => [...base, 'infiniteList'] as const,
+      withQueryParams(
+        [...base, QUERY_KEY_SEGMENTS.INFINITE_LIST] as const,
+        params,
+      ),
+    infiniteLists: () => [...base, QUERY_KEY_SEGMENTS.INFINITE_LIST] as const,
     list: <TParams extends QueryParams>(params?: TParams) =>
-      withQueryParams([...base, 'list'] as const, params),
-    lists: () => [...base, 'list'] as const,
+      withQueryParams([...base, QUERY_KEY_SEGMENTS.LIST] as const, params),
+    lists: () => [...base, QUERY_KEY_SEGMENTS.LIST] as const,
   };
 }
 
 export function createTeamScopeQueryKey<
   const TSegments extends readonly unknown[],
 >(teamId: string, ...segments: TSegments) {
-  return ['teams', teamId, ...segments] as const;
+  return [QUERY_KEY_RESOURCES.TEAMS, teamId, ...segments] as const;
 }
 
 export function createTeamResourceQueryKeys<const TResource extends string>(
