@@ -12,7 +12,7 @@ import {
   imgLogoSymbolLarge,
 } from '@/assets';
 import type { SidebarHeaderProps } from '@/components/layout/sidebar/types';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
 
 export default function SidebarHeader({
@@ -27,18 +27,22 @@ export default function SidebarHeader({
       )}
     >
       <Link href={ROUTES.HOME} aria-label="랜딩 페이지로 이동">
-        <Image
-          src={imgLogoSymbolLarge}
-          alt="Coworkers"
-          className={cn('h-6 w-auto', isExpanded && 'hidden')}
-          priority
-        />
-        <Image
-          src={imgLogoFullLarge}
-          alt="Coworkers"
-          className={cn('hidden h-6 w-auto', isExpanded && 'block')}
-          priority
-        />
+        {isExpanded ? (
+          <Image
+            src={imgLogoFullLarge}
+            alt="Coworkers"
+            width={144}
+            height={24}
+            loading="eager"
+          />
+        ) : (
+          <Image
+            src={imgLogoSymbolLarge}
+            alt="Coworkers"
+            width={35}
+            height={24}
+          />
+        )}
       </Link>
 
       <button
