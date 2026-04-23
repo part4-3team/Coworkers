@@ -2,7 +2,7 @@
  * 공통 레이아웃에서 사용하는 목업 인증 상태와 사용자 정보를 정의합니다.
  */
 
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/constants/ROUTES';
 
 export type LayoutCurrentUser = {
   name: string;
