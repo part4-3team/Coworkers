@@ -4,25 +4,29 @@
  */
 
 import Image from 'next/image';
-
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
-
 import 'react-circular-progressbar/dist/styles.css';
 
 import ic_progress_done_large from '@/assets/icons/ic_progress_done_large.svg';
-import { BADGE_COLORS } from '@/components/common/badge/constants';
+import {
+  BADGE_COLORS,
+  BADGE_STATUS,
+  PROGRESS_CIRCLE_TRANSPARENT,
+} from '@/components/common/badge/constants';
 import type { ProgressCircleProps } from '@/components/common/badge/types';
 
 export default function ProgressCircle({
   percentage,
   status,
 }: ProgressCircleProps) {
-  const isDone = status === 'done';
+  const isDone = status === BADGE_STATUS.DONE;
 
-  const pathColor = isDone ? 'transparent' : BADGE_COLORS.ICON_PRIMARY;
+  const pathColor = isDone
+    ? PROGRESS_CIRCLE_TRANSPARENT
+    : BADGE_COLORS.ICON_PRIMARY;
   const trailColor = isDone
-    ? 'transparent'
-    : status === 'start'
+    ? PROGRESS_CIRCLE_TRANSPARENT
+    : status === BADGE_STATUS.START
       ? BADGE_COLORS.BACKGROUND_TERTIARY
       : BADGE_COLORS.BACKGROUND_SECONDARY;
 

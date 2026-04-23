@@ -11,8 +11,8 @@
 
 import Image from 'next/image';
 
-import ic_plus_large from '@/assets/icons/ic_plus_large.svg';
 import Button from '@/components/common/button/components/Button';
+import ic_plus_large from '@/assets/icons/ic_plus_large.svg';
 import type { FloatingButtonProps } from '@/components/common/button/types';
 import { cn } from '@/utils/cn';
 
