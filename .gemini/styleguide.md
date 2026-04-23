@@ -67,11 +67,11 @@ type ButtonProps = {
 
 ### 5. 네이밍
 
-- 디렉토리명은 kebab-case를 사용한다.
 - App Router 라우트 세그먼트는 임의로 변경하지 않는다. 변경이 필요하면 팀원과 먼저 상의한다.
 - 컴포넌트 `.tsx` 파일은 PascalCase를 사용한다.
 - App Router 특수 파일은 `page.tsx`, `layout.tsx`, `route.ts`를 사용한다.
 - 훅, 유틸, API, 일반 모듈 파일은 camelCase를 사용한다.
+- 상수 파일은 UPPER_SNAKE_CASE를 사용한다.
 - 아이콘은 `ic_` + snake_case를 사용한다.
 - 이미지는 `img_` + snake_case를 사용한다.
 - 로고는 `img_logo_` + snake_case를 사용한다.
