@@ -3,6 +3,10 @@
  */
 
 import {
+  QUERY_KEY_RESOURCES,
+  QUERY_KEY_SEGMENTS,
+} from '@/api/queryKeys/constants';
+import {
   createTeamResourceQueryKeys,
   createTeamScopeQueryKey,
   withQueryParams,
@@ -14,23 +18,43 @@ import type {
 } from '@/api/queryKeys/types';
 
 export const boardQueryKeys = {
-  all: (teamId: string) => createTeamResourceQueryKeys(teamId, 'boards').all,
+  all: (teamId: string) =>
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.BOARDS).all,
   detail: (teamId: string, articleId: QueryKeyId) =>
-    createTeamResourceQueryKeys(teamId, 'boards').detail(articleId),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.BOARDS).detail(
+      articleId,
+    ),
   infiniteList: (teamId: string, params?: BoardListQueryParams) =>
-    createTeamResourceQueryKeys(teamId, 'boards').infiniteList(params),
+    createTeamResourceQueryKeys(
+      teamId,
+      QUERY_KEY_RESOURCES.BOARDS,
+    ).infiniteList(params),
   like: (teamId: string, articleId: QueryKeyId) =>
-    createTeamScopeQueryKey(teamId, 'boards', 'detail', articleId, 'like'),
+    createTeamScopeQueryKey(
+      teamId,
+      QUERY_KEY_RESOURCES.BOARDS,
+      QUERY_KEY_SEGMENTS.DETAIL,
+      articleId,
+      QUERY_KEY_SEGMENTS.LIKE,
+    ),
   list: (teamId: string, params?: BoardListQueryParams) =>
-    createTeamResourceQueryKeys(teamId, 'boards').list(params),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.BOARDS).list(
+      params,
+    ),
   lists: (teamId: string) =>
-    createTeamResourceQueryKeys(teamId, 'boards').lists(),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.BOARDS).lists(),
 } as const;
 
 export const boardCommentQueryKeys = {
-  all: (teamId: string) => createTeamScopeQueryKey(teamId, 'boardComments'),
+  all: (teamId: string) =>
+    createTeamScopeQueryKey(teamId, QUERY_KEY_RESOURCES.BOARD_COMMENTS),
   detail: (teamId: string, commentId: QueryKeyId) =>
-    createTeamScopeQueryKey(teamId, 'boardComments', 'detail', commentId),
+    createTeamScopeQueryKey(
+      teamId,
+      QUERY_KEY_RESOURCES.BOARD_COMMENTS,
+      QUERY_KEY_SEGMENTS.DETAIL,
+      commentId,
+    ),
   infiniteList: (
     teamId: string,
     articleId: QueryKeyId,
@@ -39,8 +63,8 @@ export const boardCommentQueryKeys = {
     withQueryParams(
       createTeamScopeQueryKey(
         teamId,
-        'boardComments',
-        'infiniteList',
+        QUERY_KEY_RESOURCES.BOARD_COMMENTS,
+        QUERY_KEY_SEGMENTS.INFINITE_LIST,
         articleId,
       ),
       params,
@@ -51,7 +75,12 @@ export const boardCommentQueryKeys = {
     params?: CursorPaginationQueryParams,
   ) =>
     withQueryParams(
-      createTeamScopeQueryKey(teamId, 'boardComments', 'list', articleId),
+      createTeamScopeQueryKey(
+        teamId,
+        QUERY_KEY_RESOURCES.BOARD_COMMENTS,
+        QUERY_KEY_SEGMENTS.LIST,
+        articleId,
+      ),
       params,
     ),
 } as const;

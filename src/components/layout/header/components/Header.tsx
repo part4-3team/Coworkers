@@ -12,7 +12,7 @@ import { icGnbMenu, icUserLarge, imgLogoSymbolLarge } from '@/assets';
 import { getLayoutAuthState } from '@/components/layout/constants';
 import MobileSidebarDrawer from '@/components/layout/header/components/MobileSidebarDrawer';
 import useMobileSidebar from '@/components/layout/header/hooks/useMobileSidebar';
-import { ROUTES } from '@/constants/ROUTES';
+import { ROUTES } from '@/constants/routes';
 
 export default function Header() {
   const pathname = usePathname();

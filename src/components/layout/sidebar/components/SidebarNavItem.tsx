@@ -2,8 +2,8 @@
  * 사이드바 메뉴 목록에서 하나의 링크 아이템을 렌더링하는 컴포넌트입니다.
  */
 
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import type { SidebarNavItemProps } from '@/components/layout/sidebar/types';
 import { cn } from '@/utils/cn';

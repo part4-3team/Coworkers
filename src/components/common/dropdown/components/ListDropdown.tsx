@@ -4,9 +4,9 @@
 
 'use client';
 
-import { cn } from '@/utils/cn';
 import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
 import type { ListDropdownProps } from '@/components/common/dropdown/types';
+import { cn } from '@/utils/cn';
 
 export default function ListDropdown({
   trigger,

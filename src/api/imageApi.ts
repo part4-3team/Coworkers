@@ -3,6 +3,11 @@
  */
 
 import { apiClient, teamEndpoint } from '@/api/apiClient';
+import {
+  API_FORM_DATA_FIELDS,
+  API_PATH_SEGMENTS,
+  HTTP_METHODS,
+} from '@/api/constants';
 
 export type UploadImageResponse = {
   url: string;
@@ -10,13 +15,13 @@ export type UploadImageResponse = {
 
 export async function uploadImage(teamId: string, file: File, token?: string) {
   const body = new FormData();
-  body.append('image', file);
+  body.append(API_FORM_DATA_FIELDS.IMAGE, file);
 
   return apiClient<UploadImageResponse>(
-    teamEndpoint('/images/upload', teamId),
+    teamEndpoint(`${API_PATH_SEGMENTS.IMAGES}/upload`, teamId),
     {
       body,
-      method: 'POST',
+      method: HTTP_METHODS.POST,
       token,
     },
   );

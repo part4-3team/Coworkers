@@ -3,6 +3,10 @@
  */
 
 import {
+  QUERY_KEY_RESOURCES,
+  QUERY_KEY_SEGMENTS,
+} from '@/api/queryKeys/constants';
+import {
   createResourceQueryKeys,
   createTeamResourceQueryKeys,
   createTeamScopeQueryKey,
@@ -17,85 +21,137 @@ import type {
   TeamScopedDateQueryParams,
 } from '@/api/queryKeys/types';
 
-const teamsResourceQueryKeys = createResourceQueryKeys(['teams'] as const);
+const teamsResourceQueryKeys = createResourceQueryKeys([
+  QUERY_KEY_RESOURCES.TEAMS,
+] as const);
 
 export const teamQueryKeys = {
   ...teamsResourceQueryKeys,
   detail: (teamId: string) => createTeamScopeQueryKey(teamId),
   invitations: (teamId: string, params?: QueryParams) =>
     withQueryParams(
-      createTeamScopeQueryKey(teamId, 'invitations', 'list'),
+      createTeamScopeQueryKey(
+        teamId,
+        QUERY_KEY_RESOURCES.INVITATIONS,
+        QUERY_KEY_SEGMENTS.LIST,
+      ),
       params,
     ),
   members: (teamId: string, params?: QueryParams) =>
-    withQueryParams(createTeamScopeQueryKey(teamId, 'members', 'list'), params),
+    withQueryParams(
+      createTeamScopeQueryKey(
+        teamId,
+        QUERY_KEY_RESOURCES.MEMBERS,
+        QUERY_KEY_SEGMENTS.LIST,
+      ),
+      params,
+    ),
   memberships: (teamId: string, params?: QueryParams) =>
     withQueryParams(
-      createTeamScopeQueryKey(teamId, 'memberships', 'list'),
+      createTeamScopeQueryKey(
+        teamId,
+        QUERY_KEY_RESOURCES.MEMBERSHIPS,
+        QUERY_KEY_SEGMENTS.LIST,
+      ),
       params,
     ),
   tasksByDate: (teamId: string, params: TeamScopedDateQueryParams) =>
-    withQueryParams(createTeamScopeQueryKey(teamId, 'tasksByDate'), params),
+    withQueryParams(
+      createTeamScopeQueryKey(teamId, QUERY_KEY_RESOURCES.TASKS_BY_DATE),
+      params,
+    ),
 } as const;
 
 export const taskListQueryKeys = {
-  all: (teamId: string) => createTeamResourceQueryKeys(teamId, 'taskLists').all,
+  all: (teamId: string) =>
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.TASK_LISTS).all,
   detail: (
     teamId: string,
     taskListId: QueryKeyId,
     params?: TeamScopedDateQueryParams,
   ) =>
     withQueryParams(
-      createTeamResourceQueryKeys(teamId, 'taskLists').detail(taskListId),
+      createTeamResourceQueryKeys(
+        teamId,
+        QUERY_KEY_RESOURCES.TASK_LISTS,
+      ).detail(taskListId),
       params,
     ),
   infiniteList: (teamId: string, params?: TaskListQueryParams) =>
-    createTeamResourceQueryKeys(teamId, 'taskLists').infiniteList(params),
+    createTeamResourceQueryKeys(
+      teamId,
+      QUERY_KEY_RESOURCES.TASK_LISTS,
+    ).infiniteList(params),
   list: (teamId: string, params?: TaskListQueryParams) =>
-    createTeamResourceQueryKeys(teamId, 'taskLists').list(params),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.TASK_LISTS).list(
+      params,
+    ),
   lists: (teamId: string) =>
-    createTeamResourceQueryKeys(teamId, 'taskLists').lists(),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.TASK_LISTS).lists(),
 } as const;
 
 export const taskQueryKeys = {
-  all: (teamId: string) => createTeamResourceQueryKeys(teamId, 'tasks').all,
+  all: (teamId: string) =>
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.TASKS).all,
   detail: (teamId: string, taskId: QueryKeyId, taskListId?: QueryKeyId) =>
     withQueryParams(
-      createTeamResourceQueryKeys(teamId, 'tasks').detail(taskId),
+      createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.TASKS).detail(
+        taskId,
+      ),
       taskListId ? { taskListId } : undefined,
     ),
   infiniteList: (teamId: string, params?: TaskQueryParams) =>
-    createTeamResourceQueryKeys(teamId, 'tasks').infiniteList(params),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.TASKS).infiniteList(
+      params,
+    ),
   list: (teamId: string, params?: TaskQueryParams) =>
-    createTeamResourceQueryKeys(teamId, 'tasks').list(params),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.TASKS).list(params),
   lists: (teamId: string) =>
-    createTeamResourceQueryKeys(teamId, 'tasks').lists(),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.TASKS).lists(),
 } as const;
 
 export const recurringQueryKeys = {
   all: (teamId: string) =>
-    createTeamResourceQueryKeys(teamId, 'recurrings').all,
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.RECURRINGS).all,
   detail: (teamId: string, recurringId: QueryKeyId) =>
-    createTeamResourceQueryKeys(teamId, 'recurrings').detail(recurringId),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.RECURRINGS).detail(
+      recurringId,
+    ),
   infiniteList: (teamId: string, params?: QueryParams) =>
-    createTeamResourceQueryKeys(teamId, 'recurrings').infiniteList(params),
+    createTeamResourceQueryKeys(
+      teamId,
+      QUERY_KEY_RESOURCES.RECURRINGS,
+    ).infiniteList(params),
   list: (teamId: string, params?: QueryParams) =>
-    createTeamResourceQueryKeys(teamId, 'recurrings').list(params),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.RECURRINGS).list(
+      params,
+    ),
   lists: (teamId: string) =>
-    createTeamResourceQueryKeys(teamId, 'recurrings').lists(),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.RECURRINGS).lists(),
 } as const;
 
 export const commentQueryKeys = {
-  all: (teamId: string) => createTeamScopeQueryKey(teamId, 'comments'),
+  all: (teamId: string) =>
+    createTeamScopeQueryKey(teamId, QUERY_KEY_RESOURCES.COMMENTS),
   detail: (teamId: string, commentId: QueryKeyId) =>
-    createTeamScopeQueryKey(teamId, 'comments', 'detail', commentId),
+    createTeamScopeQueryKey(
+      teamId,
+      QUERY_KEY_RESOURCES.COMMENTS,
+      QUERY_KEY_SEGMENTS.DETAIL,
+      commentId,
+    ),
   infiniteList: (
     teamId: string,
     taskId: QueryKeyId,
     params?: CursorPaginationQueryParams,
   ) =>
     withQueryParams(
-      createTeamScopeQueryKey(teamId, 'comments', 'infiniteList', taskId),
+      createTeamScopeQueryKey(
+        teamId,
+        QUERY_KEY_RESOURCES.COMMENTS,
+        QUERY_KEY_SEGMENTS.INFINITE_LIST,
+        taskId,
+      ),
       params,
     ),
   list: (
@@ -104,7 +160,12 @@ export const commentQueryKeys = {
     params?: CursorPaginationQueryParams,
   ) =>
     withQueryParams(
-      createTeamScopeQueryKey(teamId, 'comments', 'list', taskId),
+      createTeamScopeQueryKey(
+        teamId,
+        QUERY_KEY_RESOURCES.COMMENTS,
+        QUERY_KEY_SEGMENTS.LIST,
+        taskId,
+      ),
       params,
     ),
 } as const;

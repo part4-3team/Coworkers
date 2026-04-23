@@ -6,13 +6,21 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import type { QueryParams } from '@/api/queryKeys';
+import { queryKeys } from '@/api/queryKeys';
+import {
+  createMutationOptions,
+  type MutationOptionsOverrides,
+} from '@/api/queryOptions/factory';
 import {
   createRecurring,
   deleteRecurring,
   updateRecurring,
 } from '@/api/taskApi';
-import type { QueryParams } from '@/api/queryKeys';
-import { queryKeys } from '@/api/queryKeys';
+
+type CreateRecurringData = Awaited<ReturnType<typeof createRecurring>>;
+type UpdateRecurringData = Awaited<ReturnType<typeof updateRecurring>>;
+type DeleteRecurringData = Awaited<ReturnType<typeof deleteRecurring>>;
 
 type RecurringBody = QueryParams;
 
@@ -54,55 +62,100 @@ async function invalidateRecurringRelatedQueries(
   ]);
 }
 
-export function useCreateRecurring() {
+export function useCreateRecurringMutation(
+  options?: MutationOptionsOverrides<
+    CreateRecurringData,
+    CreateRecurringVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({
-      body,
-      taskListId,
-      teamId,
-      token,
-    }: CreateRecurringVariables) =>
-      createRecurring(teamId, taskListId, body, token),
-    onSuccess: async (_, variables) => {
-      await invalidateRecurringRelatedQueries(queryClient, variables.teamId);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({
+        body,
+        taskListId,
+        teamId,
+        token,
+      }: CreateRecurringVariables) =>
+        createRecurring(teamId, taskListId, body, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await invalidateRecurringRelatedQueries(
+            queryClient,
+            variables.teamId,
+          );
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }
 
-export function useUpdateRecurring() {
+export function useUpdateRecurringMutation(
+  options?: MutationOptionsOverrides<
+    UpdateRecurringData,
+    UpdateRecurringVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({
-      body,
-      recurringId,
-      taskListId,
-      teamId,
-      token,
-    }: UpdateRecurringVariables) =>
-      updateRecurring(teamId, taskListId, recurringId, body, token),
-    onSuccess: async (_, variables) => {
-      await invalidateRecurringRelatedQueries(queryClient, variables.teamId);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({
+        body,
+        recurringId,
+        taskListId,
+        teamId,
+        token,
+      }: UpdateRecurringVariables) =>
+        updateRecurring(teamId, taskListId, recurringId, body, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await invalidateRecurringRelatedQueries(
+            queryClient,
+            variables.teamId,
+          );
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }
 
-export function useDeleteRecurring() {
+export function useDeleteRecurringMutation(
+  options?: MutationOptionsOverrides<
+    DeleteRecurringData,
+    DeleteRecurringVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({
-      recurringId,
-      taskId,
-      taskListId,
-      teamId,
-      token,
-    }: DeleteRecurringVariables) =>
-      deleteRecurring(teamId, taskListId, taskId, recurringId, token),
-    onSuccess: async (_, variables) => {
-      await invalidateRecurringRelatedQueries(queryClient, variables.teamId);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({
+        recurringId,
+        taskId,
+        taskListId,
+        teamId,
+        token,
+      }: DeleteRecurringVariables) =>
+        deleteRecurring(teamId, taskListId, taskId, recurringId, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await invalidateRecurringRelatedQueries(
+            queryClient,
+            variables.teamId,
+          );
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }

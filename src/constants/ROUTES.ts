@@ -1,3 +1,7 @@
+/**
+ * 프론트 화면 이동에 사용하는 App Router 경로 상수입니다.
+ * 백엔드 호출 경로는 여기서 관리하지 않고 `src/api/constants.ts`에서 따로 관리합니다.
+ */
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
