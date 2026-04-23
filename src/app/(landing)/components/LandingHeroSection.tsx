@@ -5,10 +5,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { imgLandingDashboard, imgLogoSymbolLarge } from '@/assets';
 import LandingScrollReveal from '@/app/(landing)/components/LandingScrollReveal';
+import { imgLandingDashboard, imgLogoSymbolLarge } from '@/assets';
 import Logo from '@/components/common/logo/Logo';
-import { ROUTES } from '@/constants/ROUTES';
+import { ROUTES } from '@/constants/routes';
 
 export default function LandingHeroSection() {
   return (

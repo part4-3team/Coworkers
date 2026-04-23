@@ -6,36 +6,66 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { userQueryOptions } from '@/api/queryOptions';
 import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
 } from '@/api/queryKeys';
+import { userQueryOptions } from '@/api/queryOptions';
+import type { QueryOptionsOverrides } from '@/api/queryOptions/factory';
+import {
+  getCompletedTasks,
+  getMe,
+  getMyGroups,
+  getMyMemberships,
+} from '@/api/userApi';
 
-type UseCompletedTasksParams = {
+type CompletedTasksData = Awaited<ReturnType<typeof getCompletedTasks>>;
+type MeData = Awaited<ReturnType<typeof getMe>>;
+type MyGroupsData = Awaited<ReturnType<typeof getMyGroups>>;
+type MyMembershipsData = Awaited<ReturnType<typeof getMyMemberships>>;
+
+type UseCompletedTasksParams<TData = CompletedTasksData> = {
+  options?: QueryOptionsOverrides<CompletedTasksData, TData>;
   params?: CompletedTaskHistoryQueryParams;
 };
 
-type UseMyGroupsParams = {
+type UseMyGroupsParams<TData = MyGroupsData> = {
+  options?: QueryOptionsOverrides<MyGroupsData, TData>;
   params?: QueryParams;
 };
 
-type UseMyMembershipsParams = {
+type UseMyMembershipsParams<TData = MyMembershipsData> = {
+  options?: QueryOptionsOverrides<MyMembershipsData, TData>;
   params?: QueryParams;
 };
 
-export function useMe() {
-  return useQuery(userQueryOptions.me());
+type UseMeParams<TData = MeData> = {
+  options?: QueryOptionsOverrides<MeData, TData>;
+};
+
+export function useMeQuery<TData = MeData>({
+  options,
+}: UseMeParams<TData> = {}) {
+  return useQuery(userQueryOptions.me<TData>(options));
 }
 
-export function useMyGroups({ params }: UseMyGroupsParams = {}) {
-  return useQuery(userQueryOptions.groups(params));
+export function useMyGroupsQuery<TData = MyGroupsData>({
+  options,
+  params,
+}: UseMyGroupsParams<TData> = {}) {
+  return useQuery(userQueryOptions.groups<TData>(params, options));
 }
 
-export function useMyMemberships({ params }: UseMyMembershipsParams = {}) {
-  return useQuery(userQueryOptions.memberships(params));
+export function useMyMembershipsQuery<TData = MyMembershipsData>({
+  options,
+  params,
+}: UseMyMembershipsParams<TData> = {}) {
+  return useQuery(userQueryOptions.memberships<TData>(params, options));
 }
 
-export function useCompletedTasks({ params }: UseCompletedTasksParams = {}) {
-  return useQuery(userQueryOptions.completedTasks(params));
+export function useCompletedTasksQuery<TData = CompletedTasksData>({
+  options,
+  params,
+}: UseCompletedTasksParams<TData> = {}) {
+  return useQuery(userQueryOptions.completedTasks<TData>(params, options));
 }

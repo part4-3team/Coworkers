@@ -3,12 +3,15 @@
  * 진행 상태를 표시하는 원형 컴포넌트입니다.
  */
 
-import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import ic_progress_done_large from '@/assets/icons/ic_progress_done_large.svg';
-import type { ProgressCircleProps } from '@/components/common/badge/types';
 import Image from 'next/image';
+
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+
+import 'react-circular-progressbar/dist/styles.css';
+
+import ic_progress_done_large from '@/assets/icons/ic_progress_done_large.svg';
 import { BADGE_COLORS } from '@/components/common/badge/constants';
+import type { ProgressCircleProps } from '@/components/common/badge/types';
 
 export default function ProgressCircle({
   percentage,

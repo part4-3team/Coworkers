@@ -3,6 +3,7 @@
  */
 
 import { apiClient, teamEndpoint } from '@/api/apiClient';
+import { API_PATH_SEGMENTS, HTTP_METHODS } from '@/api/constants';
 import type { QueryKeyId } from '@/api/queryKeys';
 
 type SignUpBody = {
@@ -29,27 +30,36 @@ type SignInWithOauthBody = {
 };
 
 export async function signUp(teamId: string, body: SignUpBody) {
-  return apiClient<unknown>(teamEndpoint('/auth/signUp', teamId), {
-    body: JSON.stringify(body),
-    method: 'POST',
-  });
+  return apiClient<unknown>(
+    teamEndpoint(`${API_PATH_SEGMENTS.AUTH}/signUp`, teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.POST,
+    },
+  );
 }
 
 export async function signIn(teamId: string, body: SignInBody) {
-  return apiClient<unknown>(teamEndpoint('/auth/signIn', teamId), {
-    body: JSON.stringify(body),
-    method: 'POST',
-  });
+  return apiClient<unknown>(
+    teamEndpoint(`${API_PATH_SEGMENTS.AUTH}/signIn`, teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.POST,
+    },
+  );
 }
 
 export async function refreshAccessToken(
   teamId: string,
   body: RefreshTokenBody,
 ) {
-  return apiClient<unknown>(teamEndpoint('/auth/refresh-token', teamId), {
-    body: JSON.stringify(body),
-    method: 'POST',
-  });
+  return apiClient<unknown>(
+    teamEndpoint(`${API_PATH_SEGMENTS.AUTH}/refresh-token`, teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.POST,
+    },
+  );
 }
 
 export async function signInWithOauth(
@@ -57,8 +67,11 @@ export async function signInWithOauth(
   provider: QueryKeyId,
   body: SignInWithOauthBody,
 ) {
-  return apiClient<unknown>(teamEndpoint(`/auth/signIn/${provider}`, teamId), {
-    body: JSON.stringify(body),
-    method: 'POST',
-  });
+  return apiClient<unknown>(
+    teamEndpoint(`${API_PATH_SEGMENTS.AUTH}/signIn/${provider}`, teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.POST,
+    },
+  );
 }

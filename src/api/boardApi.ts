@@ -4,13 +4,14 @@
 
 import { apiClient, teamEndpoint } from '@/api/apiClient';
 import { buildQueryString } from '@/api/buildQueryString';
+import { API_PATH_SEGMENTS } from '@/api/constants';
 import type { BoardListQueryParams, QueryKeyId } from '@/api/queryKeys';
 
 export async function getBoardList(
   teamId: string,
   params?: BoardListQueryParams,
 ) {
-  const endpoint = `${teamEndpoint('/articles', teamId)}${buildQueryString(
+  const endpoint = `${teamEndpoint(API_PATH_SEGMENTS.ARTICLES, teamId)}${buildQueryString(
     params,
   )}`;
 
@@ -18,5 +19,7 @@ export async function getBoardList(
 }
 
 export async function getBoardDetail(teamId: string, articleId: QueryKeyId) {
-  return apiClient<unknown>(teamEndpoint(`/articles/${articleId}`, teamId));
+  return apiClient<unknown>(
+    teamEndpoint(`${API_PATH_SEGMENTS.ARTICLES}/${articleId}`, teamId),
+  );
 }
