@@ -1,6 +1,6 @@
 import { BADGE_STATUS } from '@/components/common/badge/constants';
 
-export type BadgeStatus = typeof BADGE_STATUS[keyof typeof BADGE_STATUS];
+export type BadgeStatus = (typeof BADGE_STATUS)[keyof typeof BADGE_STATUS];
 
 export type BadgeProps = {
   completed: number;
