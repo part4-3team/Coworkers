@@ -7,6 +7,7 @@
 import HistoryBoard from '@/app/(service)/myhistory/components/HistoryBoard';
 import MyHistorySummary from '@/app/(service)/myhistory/components/MyHistorySummary';
 import useHistoryFilters from '@/app/(service)/myhistory/hooks/useHistoryFilters';
+import { PageHeader } from '@/components/common/pageHeader';
 
 export default function MyHistoryPageContent() {
   const { activeFilterId, handleSelectFilter } = useHistoryFilters();
@@ -14,11 +15,7 @@ export default function MyHistoryPageContent() {
   return (
     <div className="min-h-screen bg-background-secondary px-5 pb-10 pt-14 min-[411px]:px-6.5 md:py-17.5 2xl:px-21 2xl:py-22.5">
       <div className="mx-auto w-full 2xl:mx-0 2xl:w-286.25">
-        <div className="2xl:flex 2xl:h-16 2xl:items-center 2xl:rounded-xl 2xl:bg-background-inverse 2xl:px-6 2xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]">
-          <h1 className="text-xl font-bold text-text-primary md:text-2xl">
-            내 히스토리
-          </h1>
-        </div>
+        <PageHeader title="경영관리팀" />
 
         <div className="mt-8 flex flex-col gap-10 2xl:mt-12 2xl:flex-row 2xl:items-start 2xl:gap-20.75">
           <MyHistorySummary
