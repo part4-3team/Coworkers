@@ -3,5 +3,5 @@
  */
 
 export default function TaskListPage() {
-  return <main>할 일 리스트</main>;
+  return <section>할 일 리스트</section>;
 }

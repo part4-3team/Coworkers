@@ -3,5 +3,5 @@
  */
 
 export default function OAuthSignupPage() {
-  return <main>소셜 간편 회원가입</main>;
+  return <section>소셜 간편 회원가입</section>;
 }

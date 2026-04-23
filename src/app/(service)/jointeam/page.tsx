@@ -3,5 +3,5 @@
  */
 
 export default function JoinTeamPage() {
-  return <main>팀 참여하기</main>;
+  return <section>팀 참여하기</section>;
 }
