@@ -1,9 +1,12 @@
 import Image from 'next/image';
+
 import { icPlusSub } from '@/assets/index';
-import TaskItem from './TaskItem';
-import { ModalTaskAdd } from './ModalMembers';
-import { TaskProps } from '../types';
+
 import { useModalState } from '../hooks/useModalState';
+import { TaskProps } from '../types';
+
+import { ModalTaskAdd } from './ModalMembers';
+import TaskItem from './TaskItem';
 
 export default function TaskGroup({ status }: TaskProps) {
   const { open, close, is } = useModalState();

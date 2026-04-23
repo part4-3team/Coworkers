@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { imgNoTeam } from '@/assets/index';
 
 export default function NoGroup() {

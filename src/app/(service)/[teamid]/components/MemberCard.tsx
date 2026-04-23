@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import { MemberCardProps } from '@/app/(service)/[teamid]/types';
 import { icMoreVerticalLarge } from '@/assets/index';
 

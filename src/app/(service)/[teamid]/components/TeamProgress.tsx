@@ -1,18 +1,21 @@
 import Image from 'next/image';
-import { icSettingsLarge } from '@/assets/index';
+import { useParams, useRouter } from 'next/navigation';
+
 import ProgressBar from '@ramonak/react-progress-bar';
+
+import { icSettingsLarge } from '@/assets/index';
 import { ListDropdown } from '@/components/common/dropdown';
+
 import { MOCK_MEMBERS } from '../constants';
 import { useModalState } from '../hooks/useModalState';
-import MemberChip from './MemberChip';
 
+import MemberChip from './MemberChip';
 import {
   ModalMembers,
   ModalMembersInvite,
   ModalTeamDelete,
   ModalTeamLeave,
 } from './ModalMembers';
-import { useRouter, useParams } from 'next/navigation';
 
 export default function TeamProgress() {
   const router = useRouter();

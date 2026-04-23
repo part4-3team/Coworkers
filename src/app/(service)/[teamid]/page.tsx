@@ -2,12 +2,12 @@
  * 팀 페이지를 구성하는 파일입니다.
  */
 'use client';
+import { use } from 'react';
+
+import NoGroups from './components/NoGroups';
+import TeamMemberList from './components/TeamMemberList';
 import TeamProgress from './components/TeamProgress';
 import TeamTaskList from './components/TeamTaskList';
-import TeamMemberList from './components/TeamMemberList';
-import NoGroups from './components/NoGroups';
-
-import { use } from 'react';
 
 export default function TaskDetailPage({
   params,

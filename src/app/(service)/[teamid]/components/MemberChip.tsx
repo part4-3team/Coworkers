@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import { MemberChipsProps } from '../types';
 
 export default function MemberChip({

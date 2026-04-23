@@ -1,8 +1,9 @@
-import MemberCard from './MemberCard';
 import { MOCK_MEMBERS } from '../constants';
-import { MemberChipsProps } from '../types';
 import { useModalState } from '../hooks/useModalState';
-import { ModalMembersInvite, ModalMemberDetail } from './ModalMembers';
+import { MemberChipsProps } from '../types';
+
+import MemberCard from './MemberCard';
+import { ModalMemberDetail, ModalMembersInvite } from './ModalMembers';
 
 export default function TeamMemberList() {
   const { open, close, is } = useModalState();
