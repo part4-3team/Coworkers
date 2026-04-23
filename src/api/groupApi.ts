@@ -4,19 +4,22 @@
 
 import { apiClient, teamEndpoint } from '@/api/apiClient';
 import { buildQueryString } from '@/api/buildQueryString';
+import { API_PATH_SEGMENTS } from '@/api/constants';
 import type { QueryKeyId, TeamScopedDateQueryParams } from '@/api/queryKeys';
 
 export async function getTeamDetail(groupId: QueryKeyId) {
-  return apiClient<unknown>(teamEndpoint(`/groups/${groupId}`));
+  return apiClient<unknown>(
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
+  );
 }
 
 export async function getTeamTasksByDate(
   groupId: QueryKeyId,
   params: TeamScopedDateQueryParams,
 ) {
-  const endpoint = `${teamEndpoint(`/groups/${groupId}/tasks`)}${buildQueryString(
-    params,
-  )}`;
+  const endpoint = `${teamEndpoint(
+    `${API_PATH_SEGMENTS.GROUPS}/${groupId}${API_PATH_SEGMENTS.TASKS}`,
+  )}${buildQueryString(params)}`;
 
   return apiClient<unknown>(endpoint);
 }

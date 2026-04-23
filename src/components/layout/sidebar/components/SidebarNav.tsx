@@ -1,10 +1,14 @@
+'use client';
+
 /**
  * 사이드바의 팀 목록, 팀 추가, 채용 / 홍보 링크 영역입니다.
  */
 
+import { usePathname } from 'next/navigation';
+
+import { getLayoutAuthState } from '@/components/layout/constants';
 import SidebarNavItem from '@/components/layout/sidebar/components/SidebarNavItem';
 import {
-  ACTIVE_TEAM_ID,
   SIDEBAR_ICONS,
   SIDEBAR_LINKS,
   SIDEBAR_TEAMS,
@@ -17,6 +21,12 @@ export default function SidebarNav({
   isExpanded,
   isMobileDrawer = false,
 }: SidebarNavProps) {
+  const pathname = usePathname();
+  const layoutAuthState = getLayoutAuthState(pathname);
+  const isBoardActive =
+    pathname === SIDEBAR_LINKS.boards.href ||
+    pathname.startsWith(`${SIDEBAR_LINKS.boards.href}/`);
+
   return (
     <nav
       aria-label="사이드바 메뉴"
@@ -29,54 +39,67 @@ export default function SidebarNav({
             : 'mt-11 items-center px-3',
       )}
     >
-      <ul
-        className={cn(
-          'flex flex-col',
-          isMobileDrawer
-            ? 'w-full gap-3'
-            : isExpanded
-              ? 'w-full gap-2'
-              : 'items-center gap-2',
-        )}
-      >
-        {SIDEBAR_TEAMS.map((team) => (
+      {layoutAuthState.isAuthenticated && (
+        <>
+          <ul
+            className={cn(
+              'flex flex-col',
+              isMobileDrawer
+                ? 'w-full gap-3'
+                : isExpanded
+                  ? 'w-full gap-2'
+                  : 'items-center gap-2',
+            )}
+          >
+            {SIDEBAR_TEAMS.map((team) => {
+              const teamHref = ROUTES.TEAM(team.id);
+              const isActive =
+                pathname === teamHref || pathname.startsWith(`${teamHref}/`);
+
+              return (
+                <SidebarNavItem
+                  key={team.id}
+                  href={teamHref}
+                  icon={
+                    team.isOwner ? SIDEBAR_ICONS.teamOwner : SIDEBAR_ICONS.team
+                  }
+                  isActive={isActive}
+                  isExpanded={isExpanded}
+                  isMobileDrawer={isMobileDrawer}
+                  isOriginalIconColor={team.isOwner}
+                  label={team.name}
+                  variant="team"
+                />
+              );
+            })}
+          </ul>
+
           <SidebarNavItem
-            key={team.id}
-            href={ROUTES.TEAM(team.id)}
-            icon={team.isOwner ? SIDEBAR_ICONS.teamOwner : SIDEBAR_ICONS.team}
-            isActive={team.id === ACTIVE_TEAM_ID}
+            href={SIDEBAR_LINKS.addTeam.href}
+            icon={SIDEBAR_ICONS.teamAdd}
             isExpanded={isExpanded}
             isMobileDrawer={isMobileDrawer}
-            isOriginalIconColor={team.isOwner}
-            label={team.name}
-            variant="team"
+            label={SIDEBAR_LINKS.addTeam.label}
+            variant="addTeam"
           />
-        ))}
-      </ul>
 
-      <SidebarNavItem
-        href={SIDEBAR_LINKS.addTeam.href}
-        icon={SIDEBAR_ICONS.teamAdd}
-        isExpanded={isExpanded}
-        isMobileDrawer={isMobileDrawer}
-        label={SIDEBAR_LINKS.addTeam.label}
-        variant="addTeam"
-      />
-
-      <div
-        className={cn(
-          'h-px bg-background-tertiary',
-          isMobileDrawer
-            ? 'mb-3 mt-6 w-full'
-            : isExpanded
-              ? 'my-7 w-full'
-              : 'my-6 w-10',
-        )}
-      />
+          <div
+            className={cn(
+              'h-px bg-background-tertiary',
+              isMobileDrawer
+                ? 'mb-3 mt-6 w-full'
+                : isExpanded
+                  ? 'my-7 w-full'
+                  : 'my-6 w-10',
+            )}
+          />
+        </>
+      )}
 
       <SidebarNavItem
         href={SIDEBAR_LINKS.boards.href}
         icon={SIDEBAR_ICONS.board}
+        isActive={isBoardActive}
         isExpanded={isExpanded}
         isMobileDrawer={isMobileDrawer}
         label={SIDEBAR_LINKS.boards.label}

@@ -9,10 +9,11 @@
  * ```
  */
 
+import Image from 'next/image';
+
+import ic_plus_large from '@/assets/icons/ic_plus_large.svg';
 import Button from '@/components/common/button/components/Button';
 import type { FloatingButtonProps } from '@/components/common/button/types';
-import Image from 'next/image';
-import ic_plus_large from '@/assets/icons/ic_plus_large.svg';
 import { cn } from '@/utils/cn';
 
 export default function FloatingButton({

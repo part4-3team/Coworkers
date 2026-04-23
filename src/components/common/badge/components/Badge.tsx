@@ -16,27 +16,24 @@
  * ```
  */
 
-import { cn } from '@/utils/cn';
-import type { BadgeProps, BadgeStatus } from '@/components/common/badge/types';
 import ProgressCircle from '@/components/common/badge/components/ProgressCircle';
+import { BADGE_STATUS } from '@/components/common/badge/constants';
+import type { BadgeProps } from '@/components/common/badge/types';
+import { getPercentage, getStatus } from '@/components/common/badge/utils';
+import { cn } from '@/utils/cn';
 
 export default function Badge({ completed, total, className }: BadgeProps) {
-  const getStatus = (): BadgeStatus => {
-    if (total <= 0 || completed <= 0) return 'start';
-    if (completed >= total) return 'done';
-    return 'ongoing';
-  };
-
-  const status = getStatus();
-  const percentage =
-    total > 0 ? Math.max(0, Math.min(100, (completed / total) * 100)) : 0;
+  const status = getStatus({ completed, total });
+  const percentage = getPercentage({ completed, total });
 
   return (
     <div
       className={cn(
         'inline-flex items-center justify-center gap-1',
         'text-sm font-normal leading-4',
-        status === 'start' ? 'text-interaction-inactive' : 'text-brand-primary',
+        status === BADGE_STATUS.START
+          ? 'text-interaction-inactive'
+          : 'text-brand-primary',
         className,
       )}
     >

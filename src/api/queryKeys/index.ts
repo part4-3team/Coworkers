@@ -6,13 +6,13 @@
  * - `board`는 Swagger의 Article 리소스를 의미합니다.
  */
 
+import { boardCommentQueryKeys, boardQueryKeys } from '@/api/queryKeys/board';
 import {
   authQueryKeys,
   imageQueryKeys,
   oauthAppQueryKeys,
   userQueryKeys,
 } from '@/api/queryKeys/common';
-import { boardCommentQueryKeys, boardQueryKeys } from '@/api/queryKeys/board';
 import {
   commentQueryKeys,
   recurringQueryKeys,
