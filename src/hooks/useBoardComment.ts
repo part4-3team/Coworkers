@@ -9,14 +9,26 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createBoardComment,
   deleteBoardComment,
+  getBoardComments,
   updateBoardComment,
 } from '@/api/commentApi';
-import { boardCommentQueryOptions } from '@/api/queryOptions';
 import type { CursorPaginationQueryParams, QueryKeyId } from '@/api/queryKeys';
 import { queryKeys } from '@/api/queryKeys';
+import { boardCommentQueryOptions } from '@/api/queryOptions';
+import {
+  createMutationOptions,
+  type MutationOptionsOverrides,
+  type QueryOptionsOverrides,
+} from '@/api/queryOptions/factory';
 
-type UseBoardCommentsParams = {
+type BoardCommentsData = Awaited<ReturnType<typeof getBoardComments>>;
+type CreateBoardCommentData = Awaited<ReturnType<typeof createBoardComment>>;
+type UpdateBoardCommentData = Awaited<ReturnType<typeof updateBoardComment>>;
+type DeleteBoardCommentData = Awaited<ReturnType<typeof deleteBoardComment>>;
+
+type UseBoardCommentsParams<TData = BoardCommentsData> = {
   articleId: QueryKeyId;
+  options?: QueryOptionsOverrides<BoardCommentsData, TData>;
   params: CursorPaginationQueryParams;
   teamId: string;
 };
@@ -47,95 +59,134 @@ type DeleteBoardCommentVariables = {
   token?: string;
 };
 
-export function useBoardComments({
+export function useBoardCommentsQuery<TData = BoardCommentsData>({
   articleId,
+  options,
   params,
   teamId,
-}: UseBoardCommentsParams) {
-  return useQuery(boardCommentQueryOptions.list(teamId, articleId, params));
+}: UseBoardCommentsParams<TData>) {
+  return useQuery(
+    boardCommentQueryOptions.list<TData>(teamId, articleId, params, options),
+  );
 }
 
-export function useCreateBoardComment() {
+export function useCreateBoardCommentMutation(
+  options?: MutationOptionsOverrides<
+    CreateBoardCommentData,
+    CreateBoardCommentVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({
-      articleId,
-      body,
-      teamId,
-      token,
-    }: CreateBoardCommentVariables) =>
-      createBoardComment(teamId, articleId, body, token),
-    onSuccess: async (_, variables) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.boardComment.list(
-            variables.teamId,
-            variables.articleId,
-          ),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.board.detail(
-            variables.teamId,
-            variables.articleId,
-          ),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({
+        articleId,
+        body,
+        teamId,
+        token,
+      }: CreateBoardCommentVariables) =>
+        createBoardComment(teamId, articleId, body, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.boardComment.list(
+                variables.teamId,
+                variables.articleId,
+              ),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.board.detail(
+                variables.teamId,
+                variables.articleId,
+              ),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }
 
-export function useUpdateBoardComment() {
+export function useUpdateBoardCommentMutation(
+  options?: MutationOptionsOverrides<
+    UpdateBoardCommentData,
+    UpdateBoardCommentVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({
-      body,
-      commentId,
-      teamId,
-      token,
-    }: UpdateBoardCommentVariables) =>
-      updateBoardComment(teamId, commentId, body, token),
-    onSuccess: async (_, variables) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.boardComment.list(
-            variables.teamId,
-            variables.articleId,
-          ),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.board.detail(
-            variables.teamId,
-            variables.articleId,
-          ),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({
+        body,
+        commentId,
+        teamId,
+        token,
+      }: UpdateBoardCommentVariables) =>
+        updateBoardComment(teamId, commentId, body, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.boardComment.list(
+                variables.teamId,
+                variables.articleId,
+              ),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.board.detail(
+                variables.teamId,
+                variables.articleId,
+              ),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }
 
-export function useDeleteBoardComment() {
+export function useDeleteBoardCommentMutation(
+  options?: MutationOptionsOverrides<
+    DeleteBoardCommentData,
+    DeleteBoardCommentVariables
+  >,
+) {
   const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
 
-  return useMutation({
-    mutationFn: ({ commentId, teamId, token }: DeleteBoardCommentVariables) =>
-      deleteBoardComment(teamId, commentId, token),
-    onSuccess: async (_, variables) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.boardComment.list(
-            variables.teamId,
-            variables.articleId,
-          ),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.board.detail(
-            variables.teamId,
-            variables.articleId,
-          ),
-        }),
-      ]);
-    },
-  });
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ commentId, teamId, token }: DeleteBoardCommentVariables) =>
+        deleteBoardComment(teamId, commentId, token),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.boardComment.list(
+                variables.teamId,
+                variables.articleId,
+              ),
+            }),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.board.detail(
+                variables.teamId,
+                variables.articleId,
+              ),
+            }),
+          ]);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
 }

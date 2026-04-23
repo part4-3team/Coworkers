@@ -5,10 +5,11 @@
 'use client';
 
 import Image from 'next/image';
-import { cn } from '@/utils/cn';
+
+import { icDownArrowLarge, icDownArrowSmall } from '@/assets';
 import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
 import type { SelectDropdownProps } from '@/components/common/dropdown/types';
-import { icDownArrowLarge, icDownArrowSmall } from '@/assets';
+import { cn } from '@/utils/cn';
 
 export default function SelectDropdown<T extends string>({
   items,

@@ -16,9 +16,9 @@
  * ```
  */
 
-import { cn } from '@/utils/cn';
-import type { BadgeProps, BadgeStatus } from '@/components/common/badge/types';
 import ProgressCircle from '@/components/common/badge/components/ProgressCircle';
+import type { BadgeProps, BadgeStatus } from '@/components/common/badge/types';
+import { cn } from '@/utils/cn';
 
 export default function Badge({ completed, total, className }: BadgeProps) {
   const getStatus = (): BadgeStatus => {

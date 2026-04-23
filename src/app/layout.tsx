@@ -2,11 +2,12 @@
  * 애플리케이션의 루트 레이아웃을 정의하는 파일입니다.
  */
 
-import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import Providers from '@/app/providers';
 import { cn } from '@/utils/cn';
+
+import type { Metadata } from 'next';
 
 import '@/styles/globals.css';
 

@@ -19,7 +19,9 @@
 
 'use client';
 import Image from 'next/image';
-import { icCloseMedium, icAlertCircleLarge } from '@/assets/index';
+
+import { icAlertCircleLarge, icCloseMedium } from '@/assets/index';
+
 import { ModalFrameProps } from '../types';
 
 export default function ModalFrame({

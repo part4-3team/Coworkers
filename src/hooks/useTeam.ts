@@ -6,25 +6,36 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { teamQueryOptions } from '@/api/queryOptions';
+import { getTeamDetail, getTeamTasksByDate } from '@/api/groupApi';
 import type { TeamScopedDateQueryParams } from '@/api/queryKeys';
+import { teamQueryOptions } from '@/api/queryOptions';
+import type { QueryOptionsOverrides } from '@/api/queryOptions/factory';
 
-type UseTeamDetailParams = {
+type TeamDetailData = Awaited<ReturnType<typeof getTeamDetail>>;
+type TeamTasksByDateData = Awaited<ReturnType<typeof getTeamTasksByDate>>;
+
+type UseTeamDetailParams<TData = TeamDetailData> = {
+  options?: QueryOptionsOverrides<TeamDetailData, TData>;
   teamId: string;
 };
 
-type UseTeamTasksByDateParams = {
+type UseTeamTasksByDateParams<TData = TeamTasksByDateData> = {
+  options?: QueryOptionsOverrides<TeamTasksByDateData, TData>;
   params: TeamScopedDateQueryParams;
   teamId: string;
 };
 
-export function useTeamDetail({ teamId }: UseTeamDetailParams) {
-  return useQuery(teamQueryOptions.detail(teamId));
+export function useTeamDetailQuery<TData = TeamDetailData>({
+  options,
+  teamId,
+}: UseTeamDetailParams<TData>) {
+  return useQuery(teamQueryOptions.detail<TData>(teamId, options));
 }
 
-export function useTeamTasksByDate({
+export function useTeamTasksByDateQuery<TData = TeamTasksByDateData>({
+  options,
   params,
   teamId,
-}: UseTeamTasksByDateParams) {
-  return useQuery(teamQueryOptions.tasksByDate(teamId, params));
+}: UseTeamTasksByDateParams<TData>) {
+  return useQuery(teamQueryOptions.tasksByDate<TData>(teamId, params, options));
 }

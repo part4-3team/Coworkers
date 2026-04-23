@@ -4,9 +4,9 @@
 
 import Image from 'next/image';
 
-import { icBlueCheck } from '@/assets';
 import LandingFeatureCopy from '@/app/(landing)/components/LandingFeatureCopy';
 import { LANDING_TASKLIST_SECTION } from '@/app/(landing)/constants';
+import { icBlueCheck } from '@/assets';
 
 export default function LandingTaskListSection() {
   return (

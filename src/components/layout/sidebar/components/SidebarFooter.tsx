@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { icUserLarge } from '@/assets';
 import { LAYOUT_AUTH_STATE } from '@/components/layout/constants';
 import type { SidebarFooterProps } from '@/components/layout/sidebar/types';
-import { ROUTES } from '@/constants/ROUTES';
+import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/cn';
 
 export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {

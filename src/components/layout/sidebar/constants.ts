@@ -9,7 +9,7 @@ import {
   icPlusLarge,
 } from '@/assets';
 import type { SidebarTeam } from '@/components/layout/sidebar/types';
-import { ROUTES } from '@/constants/ROUTES';
+import { ROUTES } from '@/constants/routes';
 
 export const SIDEBAR_DESKTOP_MEDIA_QUERY = '(min-width: 1024px)';
 

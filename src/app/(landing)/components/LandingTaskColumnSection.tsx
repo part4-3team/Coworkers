@@ -4,12 +4,12 @@
 
 import Image from 'next/image';
 
-import { icFolder } from '@/assets';
 import LandingFeatureCopy from '@/app/(landing)/components/LandingFeatureCopy';
 import {
   LANDING_TASK_COLUMN_IMAGES,
   LANDING_TASK_COLUMN_SECTION,
 } from '@/app/(landing)/constants';
+import { icFolder } from '@/assets';
 
 export default function LandingTaskColumnSection() {
   return (

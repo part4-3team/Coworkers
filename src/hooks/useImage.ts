@@ -8,6 +8,10 @@ import { useMutation } from '@tanstack/react-query';
 
 import { uploadImage } from '@/api/imageApi';
 import { queryKeys } from '@/api/queryKeys';
+import {
+  createMutationOptions,
+  type MutationOptionsOverrides,
+} from '@/api/queryOptions/factory';
 
 type UploadImageVariables = {
   file: File;
@@ -15,10 +19,17 @@ type UploadImageVariables = {
   token?: string;
 };
 
-export function useUploadImage() {
-  return useMutation({
-    mutationFn: ({ file, teamId, token }: UploadImageVariables) =>
-      uploadImage(teamId, file, token),
-    mutationKey: queryKeys.image.upload(),
-  });
+type UploadImageData = Awaited<ReturnType<typeof uploadImage>>;
+
+export function useUploadImageMutation(
+  options?: MutationOptionsOverrides<UploadImageData, UploadImageVariables>,
+) {
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ file, teamId, token }: UploadImageVariables) =>
+        uploadImage(teamId, file, token),
+      mutationKey: queryKeys.image.upload(),
+      options,
+    }),
+  );
 }
