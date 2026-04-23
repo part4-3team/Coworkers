@@ -31,8 +31,6 @@ const createSummaryDetails = (
     id: `${prefix}-${index + 1}`,
   }));
 
-export const MY_HISTORY_MONTH = '2025년 5월';
-
 export const MY_HISTORY_FILTERS = [
   { count: 3, id: 'management', label: '경영 관리팀' },
   { count: 20, id: 'product', label: '프로덕트 팀' },

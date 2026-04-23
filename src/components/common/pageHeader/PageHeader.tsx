@@ -2,7 +2,12 @@
  * 페이지 상단 제목 영역을 렌더링하는 공용 컴포넌트입니다.
  */
 
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
 import { icSettingsLarge } from '@/assets';
+import { EditDeleteModal } from '@/components/common/modal';
 import type { PageHeaderProps } from '@/components/common/pageHeader/types';
 import { cn } from '@/utils/cn';
 
@@ -11,6 +16,46 @@ export default function PageHeader({
   hasSettingsButton = false,
   title,
 }: PageHeaderProps) {
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
+  const settingsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isActionModalOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        settingsRef.current?.contains(event.target)
+      ) {
+        return;
+      }
+
+      setIsActionModalOpen(false);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsActionModalOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isActionModalOpen]);
+
+  const handleSettingsClick = () => {
+    setIsActionModalOpen((prev) => !prev);
+  };
+
+  const handleActionClick = () => {
+    setIsActionModalOpen(false);
+  };
+
   return (
     <div
       className={cn(
@@ -24,14 +69,28 @@ export default function PageHeader({
         </h1>
 
         {hasSettingsButton && (
-          <span
-            aria-hidden="true"
-            className="block size-5 cursor-pointer bg-interaction-inactive md:size-6"
-            style={{
-              WebkitMask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
-              mask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
-            }}
-          />
+          <div ref={settingsRef} className="relative">
+            <button
+              type="button"
+              aria-label={`${title} 설정 메뉴 열기`}
+              aria-haspopup="menu"
+              aria-expanded={isActionModalOpen}
+              className="block size-5 bg-interaction-inactive md:size-6"
+              style={{
+                WebkitMask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
+                mask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
+              }}
+              onClick={handleSettingsClick}
+            />
+
+            {isActionModalOpen && (
+              <EditDeleteModal
+                className="absolute right-0 top-full z-20 mt-2"
+                onEdit={handleActionClick}
+                onDelete={handleActionClick}
+              />
+            )}
+          </div>
         )}
       </div>
     </div>

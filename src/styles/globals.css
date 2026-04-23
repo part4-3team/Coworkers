@@ -1,5 +1,7 @@
 @import 'tailwindcss';
+@import 'react-datepicker/dist/react-datepicker.css';
 @import './colors.css';
+@import './datePicker.css';
 
 body {
   background: var(--color-background-primary);

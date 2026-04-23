@@ -2,8 +2,11 @@
  * 완료된 히스토리 할 일 카드 한 개를 렌더링하는 컴포넌트입니다.
  */
 
+'use client';
+
 import Image from 'next/image';
 
+import useTaskActionMenu from '@/app/(service)/myhistory/hooks/useTaskActionMenu';
 import type { MyHistoryTask } from '@/app/(service)/myhistory/types';
 import {
   icCalendarSmall,
@@ -12,14 +15,23 @@ import {
   icMoreVerticalSmall,
   icRepeatSmall,
 } from '@/assets';
+import { EditDeleteModal } from '@/components/common/modal';
 
 type HistoryTaskCardProps = {
   task: MyHistoryTask;
 };
 
 export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
+  const {
+    actionMenuButtonRef,
+    actionMenuRef,
+    closeActionMenu,
+    isActionMenuOpen,
+    toggleActionMenu,
+  } = useTaskActionMenu();
+
   return (
-    <article className="flex items-center rounded-lg bg-background-secondary px-3.5 py-3">
+    <article className="relative flex items-center rounded-lg bg-background-secondary px-3.5 py-3">
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
           <Image
@@ -58,12 +70,25 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
       </div>
 
       <button
+        ref={actionMenuButtonRef}
         type="button"
         aria-label={`${task.title} 더보기`}
+        aria-haspopup="menu"
+        aria-expanded={isActionMenuOpen}
         className="ml-3 flex size-8 shrink-0 items-center justify-center rounded-lg"
+        onClick={toggleActionMenu}
       >
         <Image src={icMoreVerticalSmall} alt="" width={22} height={22} />
       </button>
+
+      {isActionMenuOpen && (
+        <div ref={actionMenuRef} className="absolute top-12 right-3.5 z-20">
+          <EditDeleteModal
+            onEdit={closeActionMenu}
+            onDelete={closeActionMenu}
+          />
+        </div>
+      )}
     </article>
   );
 }

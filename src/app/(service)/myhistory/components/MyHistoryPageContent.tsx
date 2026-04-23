@@ -15,7 +15,7 @@ export default function MyHistoryPageContent() {
   return (
     <div className="min-h-screen bg-background-secondary px-5 pb-10 pt-14 min-[411px]:px-6.5 md:py-17.5 2xl:px-21 2xl:py-22.5">
       <div className="mx-auto w-full 2xl:mx-0 2xl:w-286.25">
-        <PageHeader title="경영관리팀" />
+        <PageHeader title="내 히스토리" />
 
         <div className="mt-8 flex flex-col gap-10 2xl:mt-12 2xl:flex-row 2xl:items-start 2xl:gap-20.75">
           <MyHistorySummary

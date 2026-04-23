@@ -1,5 +1,13 @@
 import type { ReactNode } from 'react';
 
+export type EditDeleteModalProps = {
+  className?: string;
+  deleteLabel?: string;
+  editLabel?: string;
+  onDelete: () => void;
+  onEdit: () => void;
+};
+
 export type ModalFrameProps = {
   children?: ReactNode;
   hasIcon?: boolean;

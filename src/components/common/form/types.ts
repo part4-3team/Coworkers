@@ -33,6 +33,9 @@ export type DatePickerProps = {
   id?: string;
   selected: Date | null;
   onChange: (date: Date | null) => void;
+  isInline?: boolean;
+  maxDate?: Date;
+  minDate?: Date;
   placeholder?: string;
   errorMessage?: string;
   className?: string;
