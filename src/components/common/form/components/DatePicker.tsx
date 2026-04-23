@@ -4,13 +4,12 @@
  * 공용 날짜 선택 컴포넌트입니다.
  */
 
-import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
+import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import type { DatePickerProps } from '@/components/common/form/types';
 import { cn } from '@/utils/cn';
-import { useId } from 'react';
 
 export default function DatePicker({
   selected,

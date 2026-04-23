@@ -3,9 +3,10 @@
  * 게시글 내용 입력, 설명 입력, 긴 텍스트 입력
  */
 
+import { useId } from 'react';
+
 import type { ContentTextareaProps } from '@/components/common/form/types';
 import { cn } from '@/utils/cn';
-import { useId } from 'react';
 
 export default function ContentTextarea({
   id,
