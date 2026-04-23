@@ -3,8 +3,8 @@
  */
 'use client';
 import Image from 'next/image';
-import { icUserXlarge, icProfileEditLarge } from '@/assets/index';
 import { useEffect, useRef, useState } from 'react';
+import { icUserXlarge, icProfileEditLarge } from '@/assets/index';
 import { ImgAddButtonProps } from './types';
 
 export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {

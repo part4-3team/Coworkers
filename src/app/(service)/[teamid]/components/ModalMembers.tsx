@@ -1,11 +1,11 @@
-import { MOCK_MEMBERS } from '../constants';
+import Image from 'next/image';
 import Modal from '@/components/common/modal';
-import { TeamMemberListContent } from './TeamMemberList';
+import Input from '@/components/common/form/Input';
 import { ModalFrameProps } from '@/components/common/modal/types';
 import { useToast } from '@/components/common/toast';
-import Input from '@/components/common/form/Input';
 import { ModalMembersProps } from '../types';
-import Image from 'next/image';
+import { MOCK_MEMBERS } from '../constants';
+import { TeamMemberListContent } from './TeamMemberList';
 
 // 멤버 리스트
 export function ModalMembers({
@@ -66,9 +66,7 @@ export function ModalMemberDetail({
     try {
       await navigator.clipboard.writeText(member?.userEmail ?? '');
       showToast('이메일이 복사되었습니다.', 'success');
-      console.log('onClose 호출 전'); // ✅ 찍히는지 확인
       onClose();
-      console.log('onClose 호출 후'); // ✅ 찍히는지 확인
     } catch (err) {
       console.error('복사 실패:', err);
     }

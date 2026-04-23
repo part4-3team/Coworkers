@@ -6,7 +6,6 @@ export default function MemberChip({
 }: {
   members: MemberChipsProps[];
 }) {
-  console.log(members);
   return (
     <div className="border-background-tertiary border rounded-lg flex gap-2 h-8 px-2 justify-center items-center pl-3 ">
       <div className="flex flex-row ">

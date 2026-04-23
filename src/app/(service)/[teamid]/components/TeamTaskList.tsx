@@ -15,6 +15,10 @@ export default function TeamTaskList() {
           <TaskGroup key={status} status={status} />
         ))}
       </div>
+      {/* Todo: 할 일 없을 때, 아래 내용 나올 예정 */}
+      {/* <div className="hidden xl:flex justify-center items-center py-40 font-normal text-sm text-text-default">
+        아직 할 일 목록이 없어요.
+      </div> */}
     </section>
   );
 }

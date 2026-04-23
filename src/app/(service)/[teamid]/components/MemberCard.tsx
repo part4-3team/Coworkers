@@ -1,5 +1,5 @@
-import { MemberCardProps } from '@/app/(service)/[teamid]/types';
 import Image from 'next/image';
+import { MemberCardProps } from '@/app/(service)/[teamid]/types';
 import { icMoreVerticalLarge } from '@/assets/index';
 
 export default function MemberCard({
@@ -9,7 +9,7 @@ export default function MemberCard({
   onClick,
 }: MemberCardProps) {
   return (
-    <div className="flex gap-3 items-center cursor-pointer" onClick={onClick}>
+    <div className="flex gap-3 items-center cursor-default">
       <div className="overflow-hidden w-8 h-8 rounded-lg">
         <Image
           src={userImage}
@@ -27,7 +27,7 @@ export default function MemberCard({
           {email}
         </p>
       </div>
-      <button>
+      <button onClick={onClick}>
         <Image src={icMoreVerticalLarge} width="16" height="16" alt="" />
       </button>
     </div>

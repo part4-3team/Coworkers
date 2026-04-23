@@ -46,7 +46,7 @@ export default function ModalFrame({
       onClick={onClose}
     >
       <div
-        className="w-full bg-white rounded-tl-xl rounded-tr-xl  p-6 pt-10 min-w-80 relative text-center flex flex-col gap-4 items-center md:max-w-sm md:rounded-br-xl md:rounded-bl-xl"
+        className="w-full bg-white rounded-tl-xl rounded-tr-xl  p-6 pt-10 min-w-80 relative text-center flex flex-col gap-4 items-center md:max-w-sm md:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
         {hasCloseButton && (
