@@ -1,0 +1,92 @@
+'use client';
+
+/**
+ * 로그인, 회원가입, 팀 참여하기 화면에서 공통으로 사용하는 입력창 컴포넌트입니다.
+ */
+
+import { useId, useState } from 'react';
+
+import Input from '@/components/common/form/components/Input';
+import type { AuthInputProps } from '@/components/common/form/types';
+import { cn } from '@/utils/cn';
+
+export default function AuthInput({
+  id,
+  type = 'text',
+  label,
+  errorMessage,
+  className,
+  disabled,
+  ...props
+}: AuthInputProps) {
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const errorId = `${inputId}-error`;
+
+  const isPasswordInput = type === 'password';
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const inputType = isPasswordInput
+    ? isPasswordVisible
+      ? 'text'
+      : 'password'
+    : type;
+
+  const hasError = Boolean(errorMessage);
+
+  const handleTogglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
+
+  return (
+    <div className="flex w-full flex-col gap-2 md:gap-3">
+      <label
+        htmlFor={inputId}
+        className="text-sm font-medium leading-5 text-text-primary md:text-base md:leading-6"
+      >
+        {label}
+      </label>
+
+      <div className="relative">
+        <Input
+          id={inputId}
+          type={inputType}
+          disabled={disabled}
+          aria-invalid={hasError}
+          aria-describedby={hasError ? errorId : undefined}
+          className={cn(
+            'h-11 text-sm md:h-12 md:text-base',
+            isPasswordInput && 'pr-14 md:pr-16',
+            hasError && 'border-status-danger focus:border-status-danger',
+            className,
+          )}
+          {...props}
+        />
+
+        {isPasswordInput && (
+          <button
+            type="button"
+            onClick={handleTogglePasswordVisibility}
+            disabled={disabled}
+            aria-label={isPasswordVisible ? '비밀번호 숨기기' : '비밀번호 보기'}
+            className={cn(
+              'absolute right-4 top-1/2 -translate-y-1/2 text-xs text-text-default md:text-sm',
+              disabled && 'cursor-not-allowed text-interaction-inactive',
+            )}
+          >
+            {isPasswordVisible ? '숨기기' : '보기'}
+          </button>
+        )}
+      </div>
+
+      {hasError && (
+        <p
+          id={errorId}
+          className="text-xs font-medium text-status-danger md:text-sm"
+        >
+          {errorMessage}
+        </p>
+      )}
+    </div>
+  );
+}
