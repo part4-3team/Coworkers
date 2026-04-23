@@ -6,36 +6,43 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { icGnbMenu, icUserLarge, imgLogoSymbolLarge } from '@/assets';
-import { LAYOUT_AUTH_STATE } from '@/components/layout/constants';
+import { getLayoutAuthState } from '@/components/layout/constants';
 import MobileSidebarDrawer from '@/components/layout/header/components/MobileSidebarDrawer';
 import useMobileSidebar from '@/components/layout/header/hooks/useMobileSidebar';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/constants/ROUTES';
 
 export default function Header() {
+  const pathname = usePathname();
+  const layoutAuthState = getLayoutAuthState(pathname);
   const { handleClose, handleToggle, isRendered, isVisible, menuButtonRef } =
     useMobileSidebar();
 
   return (
     <>
-      <header className="md:hidden sticky top-0 z-40 flex h-13 w-full items-center bg-background-inverse px-4">
+      <header className="md:hidden sticky top-0 z-40 flex h-13 w-full items-center border-b border-background-tertiary bg-background-inverse px-4">
         <div className="flex items-center gap-3">
-          <button
-            ref={menuButtonRef}
-            type="button"
-            aria-label={isVisible ? '사이드바 메뉴 닫기' : '사이드바 메뉴 열기'}
-            onClick={handleToggle}
-            className="flex size-6 shrink-0 items-center"
-          >
-            <Image
-              src={icGnbMenu}
-              alt=""
-              width={24}
-              height={24}
-              className="size-6"
-            />
-          </button>
+          {layoutAuthState.isAuthenticated && (
+            <button
+              ref={menuButtonRef}
+              type="button"
+              aria-label={
+                isVisible ? '사이드바 메뉴 닫기' : '사이드바 메뉴 열기'
+              }
+              onClick={handleToggle}
+              className="flex size-6 shrink-0 items-center"
+            >
+              <Image
+                src={icGnbMenu}
+                alt=""
+                width={24}
+                height={24}
+                className="size-6"
+              />
+            </button>
+          )}
 
           <Link href={ROUTES.HOME} aria-label="랜딩 페이지로 이동">
             <Image
@@ -48,7 +55,7 @@ export default function Header() {
           </Link>
         </div>
 
-        {LAYOUT_AUTH_STATE.isAuthenticated ? (
+        {layoutAuthState.isAuthenticated ? (
           <Link
             href={ROUTES.MY_PAGE}
             aria-label="계정 설정으로 이동"
@@ -72,11 +79,13 @@ export default function Header() {
         )}
       </header>
 
-      <MobileSidebarDrawer
-        isRendered={isRendered}
-        isVisible={isVisible}
-        onClose={handleClose}
-      />
+      {layoutAuthState.isAuthenticated && (
+        <MobileSidebarDrawer
+          isRendered={isRendered}
+          isVisible={isVisible}
+          onClose={handleClose}
+        />
+      )}
     </>
   );
 }
