@@ -67,6 +67,7 @@ type ButtonProps = {
 
 ### 5. 네이밍
 
+- 일반 디렉토리명은 camelCase를 사용한다. 예: `pageHeader`, `rightPanel`
 - App Router 라우트 세그먼트는 임의로 변경하지 않는다. 변경이 필요하면 팀원과 먼저 상의한다.
 - 컴포넌트 `.tsx` 파일은 PascalCase를 사용한다.
 - App Router 특수 파일은 `page.tsx`, `layout.tsx`, `route.ts`를 사용한다.

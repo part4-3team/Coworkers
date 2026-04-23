@@ -1,5 +1,5 @@
 /**
- * 마이 히스토리 페이지의 목데이터와 필터 값을 정의하는 파일입니다.
+ * 마이 히스토리 페이지 전반에서 사용하는 상수와 목업 데이터를 정의합니다.
  */
 
 import type {
@@ -8,6 +8,7 @@ import type {
   MyHistorySummaryItem,
   MyHistoryTask,
 } from '@/app/(service)/myhistory/types';
+import type { RightPanelComment } from '@/components/common/rightPanel/types';
 
 const DEFAULT_TASK = {
   commentCount: 3,
@@ -30,6 +31,31 @@ const createSummaryDetails = (
     ...item,
     id: `${prefix}-${index + 1}`,
   }));
+
+export const EMPTY_HISTORY_FILTER_ID = 'product';
+
+export const MY_HISTORY_DETAIL_ASSIGNEE = '안해나';
+
+export const MY_HISTORY_DETAIL_DESCRIPTION =
+  '필수 정보 10분 입력하면 3일 안에 빈 법인 설립이 완료되는 법인 설립 서비스의 장점에 대해 상세하게 설명드리기';
+
+export const MY_HISTORY_DETAIL_STARTED_AT = '2024년 7월 29일 오후 3:30';
+
+export const MY_HISTORY_DETAIL_COMMENTS = [
+  {
+    author: '김다혜',
+    content: '혹시 관련해서 미팅 오늘 중으로 가능하신가요?',
+    id: 'history-comment-1',
+    meta: '1일전',
+  },
+  {
+    author: '이연지',
+    content:
+      '법인 설립 비용 관련해서 해당 레퍼런스도 체크해보면 좋을 것 같아요\nhttps://www.codeit.kr',
+    id: 'history-comment-2',
+    meta: '2024. 07. 25',
+  },
+] as const satisfies readonly RightPanelComment[];
 
 export const MY_HISTORY_FILTERS = [
   { count: 3, id: 'management', label: '경영 관리팀' },

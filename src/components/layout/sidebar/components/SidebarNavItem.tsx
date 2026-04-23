@@ -16,6 +16,7 @@ export default function SidebarNavItem({
   isMobileDrawer = false,
   isOriginalIconColor = false,
   label,
+  onClick,
   variant = 'team',
 }: SidebarNavItemProps) {
   const isMenuVariant = variant === 'team' || variant === 'board';
@@ -64,6 +65,7 @@ export default function SidebarNavItem({
         linkToneClass,
       )}
       aria-current={isActive ? 'page' : undefined}
+      onClick={onClick}
     >
       {isOriginalIconColor ? (
         <Image src={icon} alt="" width={20} height={20} className="shrink-0" />

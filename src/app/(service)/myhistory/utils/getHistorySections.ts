@@ -1,10 +1,9 @@
+import { EMPTY_HISTORY_FILTER_ID } from '@/app/(service)/myhistory/constants';
 import type { MyHistoryDateSection } from '@/app/(service)/myhistory/types';
 import {
   addDays,
   formatHistoryDate,
 } from '@/app/(service)/myhistory/utils/formatHistoryDate';
-
-const EMPTY_HISTORY_FILTER_ID = 'product';
 
 export function hasHistoryTasks(
   activeFilterId: string | null,

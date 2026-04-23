@@ -4,19 +4,11 @@
  * 월별 히스토리 목록 카드 영역을 렌더링하는 컴포넌트입니다.
  */
 
-import { useState } from 'react';
-
 import HistoryDateSection from '@/app/(service)/myhistory/components/HistoryDateSection';
 import HistoryFilterTabs from '@/app/(service)/myhistory/components/HistoryFilterTabs';
 import HistoryMonthNavigator from '@/app/(service)/myhistory/components/HistoryMonthNavigator';
-import {
-  MY_HISTORY_FILTERS,
-  MY_HISTORY_SECTIONS,
-} from '@/app/(service)/myhistory/constants';
-import {
-  getDatedHistorySections,
-  hasHistoryTasks,
-} from '@/app/(service)/myhistory/utils/getHistorySections';
+import { MY_HISTORY_FILTERS } from '@/app/(service)/myhistory/constants';
+import useHistoryBoard from '@/app/(service)/myhistory/hooks/useHistoryBoard';
 import { cn } from '@/utils/cn';
 
 type HistoryBoardProps = {
@@ -28,12 +20,8 @@ export default function HistoryBoard({
   activeFilterId,
   onSelectFilter,
 }: HistoryBoardProps) {
-  const [selectedDate, setSelectedDate] = useState(() => new Date());
-  const hasTasks = hasHistoryTasks(activeFilterId, MY_HISTORY_SECTIONS);
-  const datedHistorySections = getDatedHistorySections(
-    MY_HISTORY_SECTIONS,
-    selectedDate,
-  );
+  const { datedHistorySections, hasTasks, selectedDate, setSelectedDate } =
+    useHistoryBoard(activeFilterId);
 
   return (
     <section

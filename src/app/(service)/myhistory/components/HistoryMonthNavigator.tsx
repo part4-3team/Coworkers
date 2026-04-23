@@ -6,17 +6,17 @@
 
 import Image from 'next/image';
 
+import HistoryCalendarPopover from '@/app/(service)/myhistory/components/HistoryCalendarPopover';
 import useHistoryCalendarPopover from '@/app/(service)/myhistory/hooks/useHistoryCalendarPopover';
 import {
-  addMonths,
   formatHistoryMonth,
+  getMonthStartDate,
 } from '@/app/(service)/myhistory/utils/formatHistoryDate';
 import {
   icCalendarCircleLarge,
   icChevronLeftCircle,
   icChevronRightCircle,
 } from '@/assets';
-import { DatePicker } from '@/components/common/form';
 
 type HistoryMonthNavigatorProps = {
   onSelectDate: (date: Date) => void;
@@ -43,13 +43,7 @@ export default function HistoryMonthNavigator({
   };
 
   const handleMoveMonth = (monthOffset: number) => {
-    const nextMonth = addMonths(selectedDate, monthOffset);
-    const firstDayOfMonth = new Date(
-      nextMonth.getFullYear(),
-      nextMonth.getMonth(),
-      1,
-    );
-    onSelectDate(firstDayOfMonth);
+    onSelectDate(getMonthStartDate(selectedDate, monthOffset));
   };
 
   return (
@@ -91,18 +85,11 @@ export default function HistoryMonthNavigator({
       </button>
 
       {isCalendarOpen && (
-        <div
-          ref={calendarRef}
-          role="dialog"
-          aria-label="날짜 선택 달력"
-          className="absolute top-12 right-0 z-20"
-        >
-          <DatePicker
-            isInline
-            selected={selectedDate}
-            onChange={handleDateChange}
-          />
-        </div>
+        <HistoryCalendarPopover
+          calendarRef={calendarRef}
+          onSelectDate={handleDateChange}
+          selectedDate={selectedDate}
+        />
       )}
     </div>
   );

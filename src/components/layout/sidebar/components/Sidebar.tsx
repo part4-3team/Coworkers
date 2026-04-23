@@ -11,7 +11,8 @@ import useSidebar from '@/components/layout/sidebar/hooks/useSidebar';
 import { cn } from '@/utils/cn';
 
 export default function Sidebar() {
-  const { handleToggleSidebar, isExpanded } = useSidebar();
+  const { handleSidebarInteraction, handleToggleSidebar, isExpanded } =
+    useSidebar();
 
   return (
     <aside
@@ -19,6 +20,7 @@ export default function Sidebar() {
         'hidden md:flex sticky top-0 h-screen flex-col justify-between border-r border-background-tertiary bg-background-inverse text-text-default transition-all duration-300',
         isExpanded ? 'w-67.5 min-w-67.5' : 'w-18 min-w-18',
       )}
+      onPointerDownCapture={handleSidebarInteraction}
     >
       <div className="min-h-0 flex-1">
         <SidebarHeader isExpanded={isExpanded} onToggle={handleToggleSidebar} />

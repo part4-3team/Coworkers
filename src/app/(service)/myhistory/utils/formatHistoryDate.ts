@@ -14,6 +14,12 @@ export function addMonths(date: Date, monthCount: number) {
   return nextDate;
 }
 
+export function getMonthStartDate(date: Date, monthOffset: number) {
+  const nextMonth = addMonths(date, monthOffset);
+
+  return new Date(nextMonth.getFullYear(), nextMonth.getMonth(), 1);
+}
+
 export function formatHistoryMonth(date: Date) {
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 }

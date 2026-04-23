@@ -13,6 +13,7 @@ import {
   SIDEBAR_LINKS,
   SIDEBAR_TEAMS,
 } from '@/components/layout/sidebar/constants';
+import useSidebar from '@/components/layout/sidebar/hooks/useSidebar';
 import type { SidebarNavProps } from '@/components/layout/sidebar/types';
 import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
@@ -21,6 +22,7 @@ export default function SidebarNav({
   isExpanded,
   isMobileDrawer = false,
 }: SidebarNavProps) {
+  const { handleSidebarInteraction } = useSidebar();
   const pathname = usePathname();
   const layoutAuthState = getLayoutAuthState(pathname);
   const isBoardActive =
@@ -68,6 +70,7 @@ export default function SidebarNav({
                   isMobileDrawer={isMobileDrawer}
                   isOriginalIconColor={team.isOwner}
                   label={team.name}
+                  onClick={handleSidebarInteraction}
                   variant="team"
                 />
               );
@@ -80,6 +83,7 @@ export default function SidebarNav({
             isExpanded={isExpanded}
             isMobileDrawer={isMobileDrawer}
             label={SIDEBAR_LINKS.addTeam.label}
+            onClick={handleSidebarInteraction}
             variant="addTeam"
           />
 
@@ -103,6 +107,7 @@ export default function SidebarNav({
         isExpanded={isExpanded}
         isMobileDrawer={isMobileDrawer}
         label={SIDEBAR_LINKS.boards.label}
+        onClick={handleSidebarInteraction}
         variant="board"
       />
     </nav>

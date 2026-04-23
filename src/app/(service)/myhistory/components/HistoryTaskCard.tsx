@@ -6,22 +6,33 @@
 
 import Image from 'next/image';
 
+import {
+  MY_HISTORY_DETAIL_ASSIGNEE,
+  MY_HISTORY_DETAIL_COMMENTS,
+  MY_HISTORY_DETAIL_DESCRIPTION,
+  MY_HISTORY_DETAIL_STARTED_AT,
+} from '@/app/(service)/myhistory/constants';
 import useTaskActionMenu from '@/app/(service)/myhistory/hooks/useTaskActionMenu';
 import type { MyHistoryTask } from '@/app/(service)/myhistory/types';
 import {
   icCalendarSmall,
   icCheckboxCheckedSmall,
+  icCheckInverse,
   icComment,
   icMoreVerticalSmall,
   icRepeatSmall,
 } from '@/assets';
 import { EditDeleteModal } from '@/components/common/modal';
+import TaskDetailPanelBody from '@/components/common/rightPanel/components/TaskDetailPanelBody';
+import TaskDetailPanelMeta from '@/components/common/rightPanel/components/TaskDetailPanelMeta';
+import useRightPanel from '@/components/layout/hooks/useRightPanel';
 
 type HistoryTaskCardProps = {
   task: MyHistoryTask;
 };
 
 export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
+  const { openRightPanel } = useRightPanel();
   const {
     actionMenuButtonRef,
     actionMenuRef,
@@ -29,6 +40,59 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
     isActionMenuOpen,
     toggleActionMenu,
   } = useTaskActionMenu();
+
+  const handleEdit = () => {
+    closeActionMenu();
+
+    openRightPanel({
+      body: (
+        <TaskDetailPanelBody
+          commentCount={task.commentCount}
+          comments={MY_HISTORY_DETAIL_COMMENTS}
+          description={MY_HISTORY_DETAIL_DESCRIPTION}
+        />
+      ),
+      footer: (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            className="inline-flex h-11 items-center gap-1.5 rounded-full bg-brand-primary px-5 text-sm font-semibold text-text-inverse md:h-12 md:px-6 md:text-base"
+          >
+            <Image
+              src={icCheckInverse}
+              alt=""
+              width={16}
+              height={16}
+              className="size-4"
+            />
+            완료하기
+          </button>
+        </div>
+      ),
+      headerAction: (
+        <span
+          className="flex size-6 items-center justify-center"
+          aria-hidden="true"
+        >
+          <Image
+            src={icMoreVerticalSmall}
+            alt=""
+            width={20}
+            height={20}
+            className="size-5"
+          />
+        </span>
+      ),
+      meta: (
+        <TaskDetailPanelMeta
+          assigneeName={MY_HISTORY_DETAIL_ASSIGNEE}
+          frequency={task.frequency}
+          startedAt={MY_HISTORY_DETAIL_STARTED_AT}
+        />
+      ),
+      title: task.title,
+    });
+  };
 
   return (
     <article className="relative flex items-center rounded-lg bg-background-secondary px-3.5 py-3">
@@ -83,10 +147,7 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
 
       {isActionMenuOpen && (
         <div ref={actionMenuRef} className="absolute top-12 right-3.5 z-20">
-          <EditDeleteModal
-            onEdit={closeActionMenu}
-            onDelete={closeActionMenu}
-          />
+          <EditDeleteModal onEdit={handleEdit} onDelete={closeActionMenu} />
         </div>
       )}
     </article>
