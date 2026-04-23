@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import { MemberCardProps } from '@/app/(service)/[teamid]/types';
-import { icMoreVerticalLarge } from '@/assets/index';
+import { icMoreVerticalLarge, icUserXlarge } from '@/assets/index';
 
 export default function MemberCard({
   name,
@@ -11,11 +11,11 @@ export default function MemberCard({
 }: MemberCardProps) {
   return (
     <div className="flex gap-3 items-center cursor-default">
-      <div className="overflow-hidden w-8 h-8 rounded-lg">
+      <div className="overflow-hidden w-8 h-8 rounded-lg bg-background-tertiary">
         <Image
-          src={userImage}
-          width="32"
-          height="32"
+          src={userImage || icUserXlarge}
+          width={userImage ? 32 : 24}
+          height={userImage ? 32 : 24}
           alt={`${name}'s profile photo`}
           className="w-full h-fit object-cover"
         />

@@ -10,7 +10,7 @@ export const MOCK_MEMBERS = {
     },
     {
       role: 'MEMBER',
-      userImage: '/testImage/2.jpg',
+      userImage: '',
       userEmail: 'user1@test.com',
       userName: '김철수',
       groupId: 4002,

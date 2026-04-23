@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { icUserXlarge } from '@/assets/index';
+
 import { MemberChipsProps } from '../types';
 
 export default function MemberChip({
@@ -13,9 +15,9 @@ export default function MemberChip({
         {members.map((member) => (
           <Image
             key={member.userId}
-            src={member.userImage}
+            src={member.userImage || icUserXlarge}
             alt={member.userName}
-            className="w-6 h-6 rounded-lg -ml-2 object-cover border border-background-inverse"
+            className="w-6 h-6 rounded-lg -ml-2 object-cover border border-background-inverse bg-background-tertiary"
             width="24"
             height="24"
           />
