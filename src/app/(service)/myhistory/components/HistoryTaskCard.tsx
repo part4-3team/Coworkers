@@ -10,13 +10,13 @@ import useHistoryTaskCard from '@/app/(service)/myhistory/hooks/useHistoryTaskCa
 import type { MyHistoryTask } from '@/app/(service)/myhistory/types';
 import {
   icCalendarSmall,
-  icCheckboxCheckedSmall,
   icComment,
   icMoreVerticalSmall,
   icRepeatSmall,
 } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import { TaskDeleteConfirmModal } from '@/components/common/modal';
+import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
 
 type HistoryTaskCardProps = {
   task: MyHistoryTask;
@@ -35,16 +35,7 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
     <article className="relative flex items-center rounded-lg bg-background-secondary px-3.5 py-3">
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
-          <Image
-            src={icCheckboxCheckedSmall}
-            alt=""
-            width={22}
-            height={22}
-            className="size-5.5 shrink-0"
-          />
-          <span className="truncate text-sm font-medium text-interaction-inactive line-through md:text-base">
-            {task.title}
-          </span>
+          <TodoCheckUncheck label={task.title} checked />
           <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base">
             <Image
               src={icComment}

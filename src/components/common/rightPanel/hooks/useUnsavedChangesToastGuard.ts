@@ -39,7 +39,7 @@ export default function useUnsavedChangesToastGuard({
       }
 
       isUnsavedToastVisibleRef.current = true;
-      showToast('저장되지 않은 사항이 있습니다.', 'error', {
+      showToast('저장하지 않은 변경사항이 있어요!', 'success', {
         label: '변경사항 취소',
         onClick: onDiscardChanges,
       });
