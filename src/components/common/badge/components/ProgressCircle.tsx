@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-import ic_progress_done_large from '@/assets/icons/ic_progress_done_large.svg';
+import ic_progress_done_large from '@/assets/icons/ic_progress_done_large.svg?url';
 import {
   BADGE_COLORS,
   BADGE_STATUS,

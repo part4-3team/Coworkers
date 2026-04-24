@@ -1,7 +1,27 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  turbopack: {
+    rules: {
+      '*.svg': [
+        {
+          condition: {
+            query: /[?&]url(?=&|$)/,
+          },
+          type: 'asset',
+        },
+        {
+          condition: {
+            not: {
+              query: /[?&]url(?=&|$)/,
+            },
+          },
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      ],
+    },
+  },
 };
 
 export default nextConfig;
