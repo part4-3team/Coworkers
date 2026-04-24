@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import Input from '@/components/common/form/Input';
+import { Input } from '@/components/common/form';
 import Modal from '@/components/common/modal';
 import { ModalFrameProps } from '@/components/common/modal/types';
 import { useToast } from '@/components/common/toast';

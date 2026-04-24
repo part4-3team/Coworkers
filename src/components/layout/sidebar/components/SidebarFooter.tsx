@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 import { icUserLarge } from '@/assets';
 import { getLayoutAuthState } from '@/components/layout/constants';
 import type { SidebarFooterProps } from '@/components/layout/sidebar/types';
-import { ROUTES } from '@/constants/ROUTES';
+import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/cn';
 
 export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {

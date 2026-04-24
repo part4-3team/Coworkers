@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { icCloseLarge, imgLogoSymbolLarge } from '@/assets';
 import type { MobileSidebarDrawerProps } from '@/components/layout/header/types';
 import SidebarNav from '@/components/layout/sidebar/components/SidebarNav';
-import { ROUTES } from '@/constants/ROUTES';
+import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/cn';
 
 export default function MobileSidebarDrawer({

@@ -26,3 +26,19 @@ export const MOCK_MEMBERS = {
     },
   ],
 };
+
+export const Todos = [
+  { id: 1, label: '법인 설립 안내 드리기', status: false },
+  { id: 2, label: '법인 설립 혹은 변경 등기 비용 안내 드리기', status: false },
+  {
+    id: 3,
+    label: '입력해주신 정보를 바탕으로 등기신청서 제출하기',
+    status: true,
+  },
+  { id: 4, label: '법인 설립 혹은 변경 등기 비용 안내 드리기', status: false },
+  {
+    id: 5,
+    label: '입력해주신 정보를 바탕으로 등기신청서 제출하기',
+    status: false,
+  },
+];

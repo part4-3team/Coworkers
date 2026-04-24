@@ -1,8 +1,8 @@
 /**
  * 팀 수정하기 페이지를 구성하는 파일입니다.
  */
-
 import AddUserImg from '@/components/common/adduserimg/AddUserImg';
+import { Input } from '@/components/common/form';
 
 export default function EditTeamPage() {
   return (
@@ -17,10 +17,7 @@ export default function EditTeamPage() {
             <label htmlFor="" className="text-sm text-text-primary font-medium">
               팀 이름
             </label>
-            <input
-              value="경영 관리"
-              className="text-sm border border-border-secondary h-11 px-4 rounded-xl"
-            />
+            <Input value="기존 팀이름 가져오기" />
           </div>
         </form>
         <button className="text-base text-text-inverse bg-brand-primary w-full h-12 rounded-xl mb-5 hover:bg-interaction-hover">

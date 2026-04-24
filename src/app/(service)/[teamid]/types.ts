@@ -3,6 +3,7 @@ export type TaskProps = {
 };
 export type TaskItemProps = {
   title: string;
+  status: string;
 };
 
 export type MemberCardProps = {

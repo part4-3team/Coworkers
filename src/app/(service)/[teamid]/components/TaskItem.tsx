@@ -1,15 +1,23 @@
+import { useState } from 'react';
+
 import Image from 'next/image';
 
+import { Todos } from '@/app/(service)/[teamid]/constants';
 import { TaskItemProps } from '@/app/(service)/[teamid]/types';
 import { icMoreVerticalGray } from '@/assets/index';
 import { Badge } from '@/components/common/badge';
 import { ListDropdown } from '@/components/common/dropdown';
+import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
+import { cn } from '@/utils/cn';
 
 import { useModalState } from '../hooks/useModalState';
 
 import { ModalTodoDelete } from './ModalMembers';
 
-export default function TaskItem({ title }: TaskItemProps) {
+export default function TaskItem({ title, status }: TaskItemProps) {
+  const [todos, setTodos] = useState(Todos);
+  const { open, close, is } = useModalState();
+
   const dropdownButton = (
     <Image
       src={icMoreVerticalGray}
@@ -19,7 +27,6 @@ export default function TaskItem({ title }: TaskItemProps) {
     />
   );
 
-  const { open, close, is } = useModalState();
   const DropdownItems = [
     { label: '수정하기', onClick: () => {} },
     {
@@ -30,9 +37,21 @@ export default function TaskItem({ title }: TaskItemProps) {
     },
     // TODO : 삭제 기능 추가되면 추가할 예쩡
   ];
+
+  const handleChange = (id: number, next: boolean) => {
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, status: next } : todo)),
+    );
+  };
+
   return (
-    <div>
-      <div className="bg-background-inverse p-6 pr-3 rounded-2xl border border-border-secondary flex flex-col gap-4">
+    <div className="w-full">
+      <div
+        className={cn(
+          'bg-background-inverse p-6 pr-3 rounded-2xl border border-border-secondary flex flex-col gap-4',
+          status === '완료' && 'pl-6 pr-3 py-3.5 h-13.5',
+        )}
+      >
         <div className="flex gap-3 items-center justify-center">
           <p className="flex-1 text-text-primary text-sm font-semibold whitespace-nowrap">
             {title}
@@ -44,8 +63,18 @@ export default function TaskItem({ title }: TaskItemProps) {
             <ListDropdown trigger={dropdownButton} items={DropdownItems} />
           </div>
         </div>
-        <div>인영님이 해주실 Todo 리스트!</div>
-        {/** TODO: 인영님이 List 해주시면 적용할 예정*/}
+        {status !== '완료' && (
+          <div className="flex flex-col gap-3 pr-2 w-full">
+            {todos.slice(0, 3).map((todo) => (
+              <TodoCheckUncheck
+                key={todo.id}
+                label={todo.label}
+                checked={todo.status}
+                onChange={(next) => handleChange(todo.id, next)}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {is('todoDelete') && <ModalTodoDelete onClose={close} />}
