@@ -29,7 +29,7 @@ export default function TeamProgress() {
   const memberItems = [
     { label: '팀 나가기', onClick: () => open('teamLeave') },
   ];
-  // Todo: 추후에 유저 상태 나뉘면 유저에 따라 드롭다운 구분할 예정
+  // TODO: 추후에 유저 상태 나뉘면 유저에 따라 드롭다운 구분할 예정
 
   return (
     <section className="w-full bg-background-inverse p-6 flex flex-col gap-5 md:rounded-[20px]">
@@ -61,7 +61,7 @@ export default function TeamProgress() {
               </span>
               <p className="text-2xl text-text-default font-bold  md:text-[32px]">
                 20
-                {/* Todo: 데이터 가져오면 교체 예정*/}
+                {/* TODO: 데이터 가져오면 교체 예정*/}
               </p>
             </div>
             <div className="pl-4 flex flex-col gap-1 justify-center items-center">
@@ -69,7 +69,7 @@ export default function TeamProgress() {
                 완료 🙌
               </span>
               <p className="text-2xl text-brand-primary font-bold md:text-[32px]">
-                5{/* Todo: 데이터 가져오면 교체 예정*/}
+                5{/* TODO: 데이터 가져오면 교체 예정*/}
               </p>
             </div>
           </div>
