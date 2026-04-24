@@ -9,34 +9,38 @@ import { useEffect, useRef } from 'react';
 type UseDragScrollReturn = {
   containerRef: React.RefObject<HTMLUListElement | null>;
   handleClickCapture: (event: React.MouseEvent<HTMLElement>) => void;
-  handleMouseDown: (event: React.MouseEvent<HTMLElement>) => void;
-  handleMouseMove: (event: React.MouseEvent<HTMLElement>) => void;
+  handlePointerDown: (event: React.PointerEvent<HTMLElement>) => void;
+  handlePointerMove: (event: React.PointerEvent<HTMLElement>) => void;
 };
 
 const DRAG_THRESHOLD = 8;
 
 export default function useDragScroll(): UseDragScrollReturn {
   const containerRef = useRef<HTMLUListElement>(null);
-  const isMouseDownRef = useRef(false);
+  const isPointerDownRef = useRef(false);
   const isDraggingRef = useRef(false);
   const hasDraggedRef = useRef(false);
   const startXRef = useRef(0);
   const startScrollLeftRef = useRef(0);
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLElement>) => {
-    if (event.button !== 0 || !containerRef.current) {
+  const handlePointerDown = (event: React.PointerEvent<HTMLElement>) => {
+    if (
+      (event.pointerType === 'mouse' && event.button !== 0) ||
+      !containerRef.current
+    ) {
       return;
     }
 
-    isMouseDownRef.current = true;
+    isPointerDownRef.current = true;
     isDraggingRef.current = false;
     hasDraggedRef.current = false;
     startXRef.current = event.clientX;
     startScrollLeftRef.current = containerRef.current.scrollLeft;
+    event.currentTarget.setPointerCapture(event.pointerId);
   };
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    if (!isMouseDownRef.current || !containerRef.current) {
+  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
+    if (!isPointerDownRef.current || !containerRef.current) {
       return;
     }
 
@@ -53,8 +57,8 @@ export default function useDragScroll(): UseDragScrollReturn {
   };
 
   useEffect(() => {
-    const handleMouseUp = () => {
-      isMouseDownRef.current = false;
+    const handlePointerUp = () => {
+      isPointerDownRef.current = false;
 
       if (!isDraggingRef.current) {
         return;
@@ -66,10 +70,12 @@ export default function useDragScroll(): UseDragScrollReturn {
       });
     };
 
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointercancel', handlePointerUp);
 
     return () => {
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerUp);
     };
   }, []);
 
@@ -87,7 +93,7 @@ export default function useDragScroll(): UseDragScrollReturn {
   return {
     containerRef,
     handleClickCapture,
-    handleMouseDown,
-    handleMouseMove,
+    handlePointerDown,
+    handlePointerMove,
   };
 }

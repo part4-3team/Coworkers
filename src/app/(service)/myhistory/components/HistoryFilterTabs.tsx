@@ -19,16 +19,20 @@ export default function HistoryFilterTabs({
   filters,
   onSelectFilter,
 }: HistoryFilterTabsProps) {
-  const { containerRef, handleClickCapture, handleMouseDown, handleMouseMove } =
-    useDragScroll();
+  const {
+    containerRef,
+    handleClickCapture,
+    handlePointerDown,
+    handlePointerMove,
+  } = useDragScroll();
 
   return (
     <ul
       ref={containerRef}
-      className="flex cursor-grab gap-1 overflow-x-auto select-none md:gap-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden active:cursor-grabbing"
+      className="flex cursor-grab gap-1 overflow-x-auto select-none touch-pan-y md:gap-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden active:cursor-grabbing"
       onClickCapture={handleClickCapture}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
     >
       {filters.map((filter) => {
         const isActive = activeFilterId === filter.id;
