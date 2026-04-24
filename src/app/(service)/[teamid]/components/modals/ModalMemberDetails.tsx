@@ -48,9 +48,9 @@ export function ModalMemberDetail({
         <div className="rounded-xl mb-4 w-10 h-10 overflow-hidden">
           <Image
             src={member.userImage}
-            alt=""
-            width="40"
-            height="40"
+            alt={`${member.userName} 프로필 이미지`}
+            width={40}
+            height={40}
             className="w-full h-full object-cover"
           />
         </div>

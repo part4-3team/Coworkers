@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ModalKey, MemberChipsProps } from '../types';
+
+import { MemberChipsProps, ModalKey } from '../types';
 
 export function useModalState() {
   const [openModal, setOpenModal] = useState<ModalKey | null>(null);
@@ -11,7 +12,7 @@ export function useModalState() {
   const open = (key: ModalKey) => setOpenModal(key);
   const close = () => {
     setOpenModal(null);
-    setSelectedMember(null); // ✅ 닫을 때 초기화
+    setSelectedMember(null); // 닫을 때 초기화
   };
   const openMemberDetail = (member: MemberChipsProps) => {
     // ✅ 추가

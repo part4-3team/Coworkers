@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import { Todos } from '@/app/(service)/[teamid]/constants';
+import { TODOS } from '@/app/(service)/[teamid]/constants';
 import { TaskItemProps } from '@/app/(service)/[teamid]/types';
 import { icMoreVerticalGray } from '@/assets/index';
 import { Badge } from '@/components/common/badge';
@@ -15,7 +15,7 @@ import { useModalState } from '../hooks/useModalState';
 import { ConfirmModal, ModalTaskEdit } from './modals';
 
 export default function TaskItem({ title, status }: TaskItemProps) {
-  const [todos, setTodos] = useState(Todos);
+  const [todos, setTodos] = useState(TODOS);
   const { open, close, is } = useModalState();
 
   const dropdownButton = (

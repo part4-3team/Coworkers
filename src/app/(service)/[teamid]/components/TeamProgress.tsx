@@ -21,7 +21,7 @@ export default function TeamProgress() {
   );
   const { open, close, is } = useModalState();
 
-  /** 현재 유저 상태?가 나눠있지 않아서 이렇게 만들어둠 */
+  // 현재 유저 상태가 나뉘어 있지 않아 임시로 구성함
   const MasterItems = [
     { label: '수정하기', onClick: () => router.push(`/${params.teamid}/edit`) },
     { label: '삭제하기', onClick: () => open('teamDelete') },

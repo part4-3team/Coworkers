@@ -27,7 +27,7 @@ export const MOCK_MEMBERS = {
   ],
 };
 
-export const Todos = [
+export const TODOS = [
   { id: 1, label: '법인 설립 안내 드리기', status: false },
   { id: 2, label: '법인 설립 혹은 변경 등기 비용 안내 드리기', status: false },
   {
