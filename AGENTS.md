@@ -85,7 +85,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - App Router 특수 파일: `page.tsx`, `layout.tsx`, `route.ts`
 - 훅, 유틸, API, 일반 모듈: camelCase
 - 상수 파일: UPPER_SNAKE_CASE
-- 아이콘: `ic_` + snake_case
+- 아이콘 파일명: `ic_` + snake_case
+- `src/assets/index.ts`의 아이콘 export 이름: camelCase
 - 이미지: `img_` + snake_case
 - 로고: `img_logo_` + snake_case
 
