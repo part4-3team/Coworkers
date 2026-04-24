@@ -78,7 +78,9 @@ export default function ModalFrame({
           </div>
         )}
         {description && (
-          <p className="text-sm text-text-secondary">{description}</p>
+          <p className="text-sm text-text-secondary whitespace-pre-line">
+            {description}
+          </p>
         )}
         {subDescription && (
           <p className="text-sm text-gray-400">{subDescription}</p>
