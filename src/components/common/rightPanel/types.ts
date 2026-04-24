@@ -9,11 +9,12 @@ export type RightPanelComment = {
 
 export type RightPanelContent = {
   ariaLabel?: string;
-  body: ReactNode;
+  body?: ReactNode;
+  content?: ReactNode;
   footer?: ReactNode;
   headerAction?: ReactNode;
   meta?: ReactNode;
-  title: string;
+  title?: ReactNode;
 };
 
 export type RightPanelProps = RightPanelContent & {

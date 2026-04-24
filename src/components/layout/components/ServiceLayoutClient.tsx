@@ -18,7 +18,7 @@ export default function ServiceLayoutClient({
     <ServiceLayoutProvider>
       <div className="flex min-h-dvh flex-col bg-background-secondary">
         <Header />
-        <div className="flex min-h-0 flex-1 bg-background-secondary">
+        <div className="flex min-h-0 flex-1 overflow-x-clip bg-background-secondary">
           <Sidebar />
           <main className="min-w-0 flex-1 md:pt-0">{children}</main>
           <ServiceRightPanelHost />

@@ -1,63 +1,72 @@
-/**
- * 오른쪽 패널 상세 화면 본문과 댓글 목록을 렌더링하는 컴포넌트입니다.
- */
-
-'use client';
-
-import { useState } from 'react';
-
-import TaskDetailCommentInput from '@/components/common/rightPanel/components/TaskDetailCommentInput';
-import TaskDetailCommentItem from '@/components/common/rightPanel/components/TaskDetailCommentItem';
+import { ContentTextarea } from '@/components/common/form';
+import TaskDetailCommentsSection from '@/components/common/rightPanel/components/TaskDetailCommentsSection';
 import type { RightPanelComment } from '@/components/common/rightPanel/types';
 
 type TaskDetailPanelBodyProps = {
+  activeCommentActionId: string | null;
   commentCount: number;
   comments: readonly RightPanelComment[];
   description: string;
+  draftCommentContent: string;
+  draftDescription: string;
+  editingCommentId: string | null;
+  isTaskEditing: boolean;
+  onCancelCommentAction: () => void;
+  onCancelCommentEdit: () => void;
+  onChangeDraftCommentContent: (value: string) => void;
+  onChangeDraftDescription: (value: string) => void;
+  onStartCommentEdit: (comment: RightPanelComment) => void;
+  onSubmitCommentEdit: () => void;
+  onToggleCommentAction: (commentId: string) => void;
 };
 
 export default function TaskDetailPanelBody({
+  activeCommentActionId,
   commentCount,
   comments,
   description,
+  draftCommentContent,
+  draftDescription,
+  editingCommentId,
+  isTaskEditing,
+  onCancelCommentAction,
+  onCancelCommentEdit,
+  onChangeDraftCommentContent,
+  onChangeDraftDescription,
+  onStartCommentEdit,
+  onSubmitCommentEdit,
+  onToggleCommentAction,
 }: TaskDetailPanelBodyProps) {
-  const [activeCommentId, setActiveCommentId] = useState<string | null>(null);
-
-  const handleToggleCommentAction = (commentId: string) => {
-    setActiveCommentId((prev) => (prev === commentId ? null : commentId));
-  };
-
   return (
-    <div className="space-y-8 md:space-y-9">
-      <p className="text-sm font-medium leading-6 text-text-secondary md:text-base">
-        {description}
-      </p>
+    <div className="mt-6 border-t border-background-tertiary pt-6 md:mt-7 md:pt-7">
+      {isTaskEditing ? (
+        <ContentTextarea
+          value={draftDescription}
+          placeholder="내용을 입력하세요."
+          className="min-h-24 md:min-h-28"
+          onChange={(event) => {
+            onChangeDraftDescription(event.target.value);
+          }}
+        />
+      ) : (
+        <p className="text-sm font-medium leading-6 text-text-secondary md:text-base">
+          {description}
+        </p>
+      )}
 
-      <section>
-        <h3 className="text-lg font-bold text-text-primary md:text-xl">
-          댓글 <span className="text-brand-primary">{commentCount}</span>
-        </h3>
-
-        <div className="mt-4">
-          <TaskDetailCommentInput />
-        </div>
-
-        <ul className="mt-5 divide-y divide-background-tertiary">
-          {comments.map((comment) => (
-            <TaskDetailCommentItem
-              key={comment.id}
-              comment={comment}
-              isActionOpen={activeCommentId === comment.id}
-              onCloseAction={() => {
-                setActiveCommentId(null);
-              }}
-              onToggleAction={() => {
-                handleToggleCommentAction(comment.id);
-              }}
-            />
-          ))}
-        </ul>
-      </section>
+      <TaskDetailCommentsSection
+        activeCommentActionId={activeCommentActionId}
+        commentCount={commentCount}
+        comments={comments}
+        draftCommentContent={draftCommentContent}
+        editingCommentId={editingCommentId}
+        onCancelCommentAction={onCancelCommentAction}
+        onCancelCommentEdit={onCancelCommentEdit}
+        onChangeDraftCommentContent={onChangeDraftCommentContent}
+        onStartCommentEdit={onStartCommentEdit}
+        onSubmitCommentEdit={onSubmitCommentEdit}
+        onToggleCommentAction={onToggleCommentAction}
+      />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { cn } from '@/utils/cn';
 export default function RightPanel({
   ariaLabel = '오른쪽 상세 패널',
   body,
+  content,
   footer,
   headerAction,
   isRendered,
@@ -26,6 +27,7 @@ export default function RightPanel({
       headerAction={headerAction}
       meta={meta}
       onClose={onClose}
+      content={content}
       title={title}
     />
   );

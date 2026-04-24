@@ -55,7 +55,7 @@ export default function TaskDetailCommentInput() {
 
   return (
     <div className="flex items-center gap-3 border-y border-background-tertiary py-3">
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-secondary md:size-9">
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-tertiary md:size-9">
         <Image src={icUserLarge} alt="" width={20} height={20} />
       </span>
 

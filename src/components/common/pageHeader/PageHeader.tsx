@@ -4,10 +4,8 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-
 import { icSettingsLarge } from '@/assets';
-import { EditDeleteModal } from '@/components/common/modal';
+import { ListDropdown } from '@/components/common/dropdown';
 import type { PageHeaderProps } from '@/components/common/pageHeader/types';
 import { cn } from '@/utils/cn';
 
@@ -16,45 +14,7 @@ export default function PageHeader({
   hasSettingsButton = false,
   title,
 }: PageHeaderProps) {
-  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
-  const settingsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!isActionModalOpen) return;
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (
-        event.target instanceof Node &&
-        settingsRef.current?.contains(event.target)
-      ) {
-        return;
-      }
-
-      setIsActionModalOpen(false);
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsActionModalOpen(false);
-      }
-    };
-
-    document.addEventListener('pointerdown', handlePointerDown);
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('pointerdown', handlePointerDown);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isActionModalOpen]);
-
-  const handleSettingsClick = () => {
-    setIsActionModalOpen((prev) => !prev);
-  };
-
-  const handleActionClick = () => {
-    setIsActionModalOpen(false);
-  };
+  const handleActionClick = () => undefined;
 
   return (
     <div
@@ -69,28 +29,27 @@ export default function PageHeader({
         </h1>
 
         {hasSettingsButton && (
-          <div ref={settingsRef} className="relative">
-            <button
-              type="button"
-              aria-label={`${title} 설정 메뉴 열기`}
-              aria-haspopup="menu"
-              aria-expanded={isActionModalOpen}
-              className="block size-5 bg-interaction-inactive md:size-6"
-              style={{
-                WebkitMask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
-                mask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
-              }}
-              onClick={handleSettingsClick}
-            />
-
-            {isActionModalOpen && (
-              <EditDeleteModal
-                className="absolute right-0 top-full z-20 mt-2"
-                onEdit={handleActionClick}
-                onDelete={handleActionClick}
-              />
-            )}
-          </div>
+          <ListDropdown
+            className="relative"
+            items={[
+              { label: '수정하기', onClick: handleActionClick },
+              { label: '삭제하기', onClick: handleActionClick },
+            ]}
+            menuClassName="mt-2 w-30 overflow-hidden rounded-lg border border-background-tertiary py-0 md:w-30"
+            trigger={
+              <>
+                <span className="sr-only">{`${title} 설정 메뉴 열기`}</span>
+                <span
+                  className="block size-5 bg-interaction-inactive md:size-6"
+                  aria-hidden="true"
+                  style={{
+                    WebkitMask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
+                    mask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
+                  }}
+                />
+              </>
+            }
+          />
         )}
       </div>
     </div>

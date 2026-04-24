@@ -22,7 +22,7 @@ export default function TaskDetailPanelMeta({
   return (
     <div>
       <div className="flex items-center gap-2.5">
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-secondary md:size-9">
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-tertiary md:size-9">
           <Image src={icUserLarge} alt="" width={20} height={20} />
         </span>
         <span className="text-sm font-semibold text-text-primary md:text-base">

@@ -19,6 +19,7 @@ export default function ServiceRightPanelHost() {
     <RightPanel
       ariaLabel={rightPanelContent.ariaLabel}
       body={rightPanelContent.body}
+      content={rightPanelContent.content}
       footer={rightPanelContent.footer}
       headerAction={rightPanelContent.headerAction}
       isRendered={isRightPanelRendered}
