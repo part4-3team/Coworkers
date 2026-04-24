@@ -14,10 +14,13 @@ export default function EditTeamPage() {
         <form className="flex flex-col gap-3">
           <AddUserImg />
           <div className="flex flex-col gap-2 mb-10">
-            <label htmlFor="" className="text-sm text-text-primary font-medium">
+            <label
+              htmlFor="teamName"
+              className="text-sm text-text-primary font-medium"
+            >
               팀 이름
             </label>
-            <Input value="기존 팀이름 가져오기" />
+            <Input id="teamName" value="기존 팀이름 가져오기" />
           </div>
         </form>
         <button className="text-base text-text-inverse bg-brand-primary w-full h-12 rounded-xl mb-5 hover:bg-interaction-hover">

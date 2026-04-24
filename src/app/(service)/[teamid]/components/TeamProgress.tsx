@@ -10,12 +10,7 @@ import { MOCK_MEMBERS } from '../constants';
 import { useModalState } from '../hooks/useModalState';
 
 import MemberChip from './MemberChip';
-import {
-  ModalMembers,
-  ModalMembersInvite,
-  ModalTeamDelete,
-  ModalTeamLeave,
-} from './ModalMembers';
+import { ConfirmModal, ModalMembers, ModalMembersInvite } from './modals';
 
 export default function TeamProgress() {
   const router = useRouter();
@@ -24,7 +19,7 @@ export default function TeamProgress() {
   const settingButton = (
     <Image src={icSettingsLarge} width="24" height="24" alt="설정 아이콘" />
   );
-  const { open, close, handleInvite, is } = useModalState();
+  const { open, close, is } = useModalState();
 
   /** 현재 유저 상태?가 나눠있지 않아서 이렇게 만들어둠 */
   const MasterItems = [
@@ -101,12 +96,25 @@ export default function TeamProgress() {
         </div>
       </div>
       {/* 각 레이어 불러오기 */}
-      {is('memberList') && (
-        <ModalMembers onClose={close} onPrimaryButtonClick={handleInvite} />
-      )}
+      {is('memberList') && <ModalMembers onClose={close} />}
       {is('memberInvite') && <ModalMembersInvite onClose={close} />}
-      {is('teamDelete') && <ModalTeamDelete onClose={close} />}
-      {is('teamLeave') && <ModalTeamLeave onClose={close} />}
+      {is('teamDelete') && (
+        <ConfirmModal
+          onClose={close}
+          title="해당 팀을 삭제하시겠습니까?"
+          description="팀 관련 모든 정보가 삭제됩니다."
+          confirmText="삭제"
+          toastMessage="삭제 되었습니다."
+        />
+      )}
+      {is('teamLeave') && (
+        <ConfirmModal
+          onClose={close}
+          title="해당 팀에서 나가시겠어요?"
+          confirmText="팀 나가기"
+          toastMessage="팀에서 나가기 되었습니다."
+        />
+      )}
     </section>
   );
 }

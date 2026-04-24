@@ -3,7 +3,7 @@ import { useModalState } from '../hooks/useModalState';
 import { MemberChipsProps } from '../types';
 
 import MemberCard from './MemberCard';
-import { ModalMemberDetail, ModalMembersInvite } from './ModalMembers';
+import { ModalMemberDetail, ModalMembersInvite } from './modals';
 
 export default function TeamMemberList() {
   const { open, close, is } = useModalState();

@@ -12,7 +12,7 @@ import { cn } from '@/utils/cn';
 
 import { useModalState } from '../hooks/useModalState';
 
-import { ModalTodoDelete } from './ModalMembers';
+import { ConfirmModal, ModalTaskEdit } from './modals';
 
 export default function TaskItem({ title, status }: TaskItemProps) {
   const [todos, setTodos] = useState(Todos);
@@ -28,11 +28,16 @@ export default function TaskItem({ title, status }: TaskItemProps) {
   );
 
   const DropdownItems = [
-    { label: '수정하기', onClick: () => {} },
+    {
+      label: '수정하기',
+      onClick: () => {
+        open('taskEdit');
+      },
+    },
     {
       label: '삭제하기',
       onClick: () => {
-        open('todoDelete');
+        open('taskDelete');
       },
     },
     // TODO : 삭제 기능 추가되면 추가할 예쩡
@@ -77,7 +82,15 @@ export default function TaskItem({ title, status }: TaskItemProps) {
         )}
       </div>
 
-      {is('todoDelete') && <ModalTodoDelete onClose={close} />}
+      {is('taskEdit') && <ModalTaskEdit onClose={close} />}
+      {is('taskDelete') && (
+        <ConfirmModal
+          onClose={close}
+          title="해당 할 일 목록을 삭제하시겠습니까?"
+          confirmText="삭제"
+          toastMessage="삭제 되었습니다."
+        />
+      )}
     </div>
   );
 }

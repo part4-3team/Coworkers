@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export type TaskProps = {
   status: '시작 전' | '진행 중' | '완료';
 };
@@ -28,7 +30,8 @@ export type ModalKey =
   | 'memberDetail'
   | 'memberDelete'
   | 'taskAdd'
-  | 'todoDelete'
+  | 'taskEdit'
+  | 'taskDelete'
   | 'teamDelete'
   | 'teamLeave';
 
@@ -36,4 +39,18 @@ export type ModalMembersProps = {
   onClose: () => void;
   onPrimaryButtonClick?: () => void;
   member?: MemberChipsProps | null; // ✅ null 추가
+};
+export type ModalTaskProps = {
+  onClose: () => void;
+  onPrimaryButtonClick?: () => void;
+};
+
+export type ConfirmModalProps = {
+  title?: string;
+  description?: string;
+  confirmText: string;
+  toastMessage: string;
+  onClose: () => void;
+  onConfirm?: () => void;
+  children?: ReactNode;
 };
