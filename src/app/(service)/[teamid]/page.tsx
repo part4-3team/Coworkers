@@ -21,7 +21,7 @@ export default function TaskDetailPage({
   }
 
   return (
-    <div className="flex gap-4 flex-wrap md:gap-8 md:px-6 md:py-18 xl:w-full xl:py-30 xl:max-w-7xl xl:px-20">
+    <div className="flex gap-4 flex-wrap pb-30 md:gap-8 md:px-6 md:pt-18 xl:w-full xl:py-30 xl:max-w-7xl xl:px-20">
       <TeamProgress />
       <div className="flex w-full xl:border-t xl:border-background-tertiary xl:pt-8 xl:gap-6">
         <TeamTaskList />
