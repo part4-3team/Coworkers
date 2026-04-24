@@ -44,6 +44,7 @@ export default function Toast({ toast, onRemove }: ToastProps) {
       </div>
       {toast.actionLabel && (
         <button
+          data-toast-action="true"
           type="button"
           onClick={handleAction}
           className="ml-4 shrink-0 rounded-lg bg-background-primary px-3 py-1.5 text-sm font-medium text-brand-primary hover:bg-background-secondary"
