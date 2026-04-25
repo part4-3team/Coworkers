@@ -40,8 +40,20 @@ export default function SelectDropdown<T extends string>({
             isOpen && 'rotate-180',
           )}
         >
-          <Image src={icDownArrowSmall} alt="" className="block md:hidden" />
-          <Image src={icDownArrowLarge} alt="" className="hidden md:block" />
+          <Image
+            src={icDownArrowSmall}
+            alt=""
+            width={20}
+            height={20}
+            className="block md:hidden"
+          />
+          <Image
+            src={icDownArrowLarge}
+            alt=""
+            width={24}
+            height={24}
+            className="hidden md:block"
+          />
         </span>
       </button>
       {isOpen && (

@@ -34,7 +34,7 @@ export type LandingScrollRevealProps = {
 export type LandingFeatureCopyProps = {
   className?: string;
   description: string;
-  icon: StaticImageData;
+  icon: string;
   iconClassName?: string;
   isInverse?: boolean;
   revealDirection?: LandingRevealDirection;

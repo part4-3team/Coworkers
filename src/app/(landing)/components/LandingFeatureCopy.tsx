@@ -29,6 +29,8 @@ export default function LandingFeatureCopy({
       <Image
         src={icon}
         alt=""
+        width={48}
+        height={48}
         className={cn('mb-4 h-12 w-12', iconClassName)}
       />
       <h2 className="whitespace-pre-line text-base font-bold leading-tight md:text-2xl lg:text-4xl">

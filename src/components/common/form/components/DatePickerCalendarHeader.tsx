@@ -22,8 +22,8 @@ export default function DatePickerCalendarHeader({
           aria-hidden="true"
           className="block size-4 bg-text-primary"
           style={{
-            WebkitMask: `url(${icChevronLeftSmall.src}) center / contain no-repeat`,
-            mask: `url(${icChevronLeftSmall.src}) center / contain no-repeat`,
+            WebkitMask: `url(${icChevronLeftSmall}) center / contain no-repeat`,
+            mask: `url(${icChevronLeftSmall}) center / contain no-repeat`,
           }}
         />
       </button>
@@ -43,8 +43,8 @@ export default function DatePickerCalendarHeader({
           aria-hidden="true"
           className="block size-4 bg-text-primary"
           style={{
-            WebkitMask: `url(${icChevronRightSmall.src}) center / contain no-repeat`,
-            mask: `url(${icChevronRightSmall.src}) center / contain no-repeat`,
+            WebkitMask: `url(${icChevronRightSmall}) center / contain no-repeat`,
+            mask: `url(${icChevronRightSmall}) center / contain no-repeat`,
           }}
         />
       </button>

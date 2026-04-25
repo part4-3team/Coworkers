@@ -36,7 +36,7 @@ export default function Toast({ toast, onRemove }: ToastProps) {
     >
       <div className="flex items-center gap-2">
         <span className="hidden md:block">
-          <Image src={icAlertCircleWhiteLarge} alt="" />
+          <Image src={icAlertCircleWhiteLarge} alt="" width={24} height={24} />
         </span>
         <p className="text-sm font-medium text-text-inverse md:text-base">
           {toast.message}
