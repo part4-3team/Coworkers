@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { MemberChipsProps, ModalKey } from '../types';
+import { MemberChipsProps, ModalKey } from '@/app/(service)/[teamid]/types';
 
 export function useModalState() {
   const [openModal, setOpenModal] = useState<ModalKey | null>(null);

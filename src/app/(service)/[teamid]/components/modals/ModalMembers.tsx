@@ -1,8 +1,7 @@
+import { TeamMemberListContent } from '@/app/(service)/[teamid]/components/TeamMemberList';
 import { MOCK_MEMBERS } from '@/app/(service)/[teamid]/constants';
 import { ModalMembersProps } from '@/app/(service)/[teamid]/types';
 import Modal from '@/components/common/modal';
-
-import { TeamMemberListContent } from '../TeamMemberList';
 
 // 멤버 리스트
 export function ModalMembers({

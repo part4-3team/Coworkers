@@ -4,10 +4,10 @@
 'use client';
 import { use } from 'react';
 
-import NoGroups from './components/NoGroups';
-import TeamMemberList from './components/TeamMemberList';
-import TeamProgress from './components/TeamProgress';
-import TeamTaskList from './components/TeamTaskList';
+import NoGroups from '@/app/(service)/[teamid]/components/NoGroups';
+import TeamMemberList from '@/app/(service)/[teamid]/components/TeamMemberList';
+import TeamProgress from '@/app/(service)/[teamid]/components/TeamProgress';
+import TeamTaskList from '@/app/(service)/[teamid]/components/TeamTaskList';
 
 export default function TaskDetailPage({
   params,

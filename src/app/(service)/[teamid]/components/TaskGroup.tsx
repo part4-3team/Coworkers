@@ -1,11 +1,10 @@
 import Image from 'next/image';
 
+import { ModalTaskAdd } from '@/app/(service)/[teamid]/components/modals/ModalTaskAddEdit';
+import TaskItem from '@/app/(service)/[teamid]/components/TaskItem';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { TaskProps } from '@/app/(service)/[teamid]/types';
 import { icPlusSub } from '@/assets/index';
-
-import { ModalTaskAdd } from './modals/ModalTaskAddEdit';
-import TaskItem from './TaskItem';
 
 export default function TaskGroup({ status }: TaskProps) {
   const { open, close, is } = useModalState();
