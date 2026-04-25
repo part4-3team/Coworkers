@@ -2,15 +2,20 @@
  * 채용 / 홍보 페이지를 구성하는 파일입니다.
  */
 
+import BoardBestList from '@/app/(service)/boards/components/BoardBestList';
+import BoardHeader from '@/app/(service)/boards/components/BoardHeader';
+import { MOCK_BEST_POSTS } from '@/app/(service)/boards/constants';
+import type { Post } from '@/app/(service)/boards/types';
+
 export default function BoardsPage() {
+  /** 목업 데이터 */
+  const bestPosts = MOCK_BEST_POSTS as unknown as Post[];
+
   return (
-    <section className="px-4 py-8 md:px-6 md:py-10">
-      <h1 className="text-xl font-bold text-text-primary md:text-2xl">
-        채용 / 홍보
-      </h1>
-      <h2 className="mt-4 text-base font-medium text-text-default md:text-lg">
-        채용 및 홍보 게시글 목록을 확인할 수 있어요.
-      </h2>
-    </section>
+    <main className="bg-white min-h-full w-full">
+      <BoardHeader />
+
+      <BoardBestList bestPosts={bestPosts} />
+    </main>
   );
 }
