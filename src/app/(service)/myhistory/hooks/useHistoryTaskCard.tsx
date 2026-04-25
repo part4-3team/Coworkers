@@ -27,7 +27,6 @@ export default function useHistoryTaskCard({ task }: UseHistoryTaskCardParams) {
       content: (
         <TaskDetailPanelContent
           assigneeName={MY_HISTORY_DETAIL_ASSIGNEE}
-          commentCount={task.commentCount}
           comments={MY_HISTORY_DETAIL_COMMENTS}
           description={MY_HISTORY_DETAIL_DESCRIPTION}
           frequency={task.frequency}

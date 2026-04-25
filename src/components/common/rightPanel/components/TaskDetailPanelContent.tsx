@@ -18,7 +18,6 @@ import { useToast } from '@/components/common/toast';
 
 type TaskDetailPanelContentProps = {
   assigneeName: string;
-  commentCount: number;
   comments: readonly RightPanelComment[];
   description: string;
   frequency: string;
@@ -28,7 +27,6 @@ type TaskDetailPanelContentProps = {
 
 export default function TaskDetailPanelContent({
   assigneeName,
-  commentCount,
   comments,
   description: initialDescription,
   frequency,
@@ -38,21 +36,19 @@ export default function TaskDetailPanelContent({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { showToast } = useToast();
   const {
-    activeCommentActionId,
     comments: editableComments,
     description,
     draftCommentContent,
     draftDescription,
     draftTitle,
+    handleDeleteComment,
     handleDiscardUnsavedChanges,
-    handleCloseCommentAction,
     editingCommentId,
     handleCancelCommentEdit,
     handleStartCommentEdit,
     handleStartTaskEdit,
     handleSubmitCommentEdit,
     handleSubmitTaskEdit,
-    handleToggleCommentAction,
     hasUnsavedChanges,
     isTaskEditing,
     setDraftCommentContent,
@@ -104,21 +100,19 @@ export default function TaskDetailPanelContent({
         </div>
 
         <TaskDetailPanelBody
-          activeCommentActionId={activeCommentActionId}
-          commentCount={commentCount}
+          commentCount={editableComments.length}
           comments={editableComments}
           description={description}
           draftCommentContent={draftCommentContent}
           draftDescription={draftDescription}
           editingCommentId={editingCommentId}
           isTaskEditing={isTaskEditing}
-          onCancelCommentAction={handleCloseCommentAction}
           onCancelCommentEdit={handleCancelCommentEdit}
           onChangeDraftCommentContent={setDraftCommentContent}
           onChangeDraftDescription={setDraftDescription}
+          onDeleteComment={handleDeleteComment}
           onStartCommentEdit={handleStartCommentEdit}
           onSubmitCommentEdit={handleSubmitCommentEdit}
-          onToggleCommentAction={handleToggleCommentAction}
         />
       </div>
 

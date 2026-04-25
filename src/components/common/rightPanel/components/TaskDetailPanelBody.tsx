@@ -3,7 +3,6 @@ import TaskDetailCommentsSection from '@/components/common/rightPanel/components
 import type { RightPanelComment } from '@/components/common/rightPanel/types';
 
 type TaskDetailPanelBodyProps = {
-  activeCommentActionId: string | null;
   commentCount: number;
   comments: readonly RightPanelComment[];
   description: string;
@@ -11,17 +10,15 @@ type TaskDetailPanelBodyProps = {
   draftDescription: string;
   editingCommentId: string | null;
   isTaskEditing: boolean;
-  onCancelCommentAction: () => void;
   onCancelCommentEdit: () => void;
   onChangeDraftCommentContent: (value: string) => void;
   onChangeDraftDescription: (value: string) => void;
+  onDeleteComment: (commentId: string) => void;
   onStartCommentEdit: (comment: RightPanelComment) => void;
   onSubmitCommentEdit: () => void;
-  onToggleCommentAction: (commentId: string) => void;
 };
 
 export default function TaskDetailPanelBody({
-  activeCommentActionId,
   commentCount,
   comments,
   description,
@@ -29,13 +26,12 @@ export default function TaskDetailPanelBody({
   draftDescription,
   editingCommentId,
   isTaskEditing,
-  onCancelCommentAction,
   onCancelCommentEdit,
   onChangeDraftCommentContent,
   onChangeDraftDescription,
+  onDeleteComment,
   onStartCommentEdit,
   onSubmitCommentEdit,
-  onToggleCommentAction,
 }: TaskDetailPanelBodyProps) {
   return (
     <div className="mt-6 border-t border-background-tertiary pt-6 md:mt-7 md:pt-7">
@@ -55,17 +51,15 @@ export default function TaskDetailPanelBody({
       )}
 
       <TaskDetailCommentsSection
-        activeCommentActionId={activeCommentActionId}
         commentCount={commentCount}
         comments={comments}
         draftCommentContent={draftCommentContent}
         editingCommentId={editingCommentId}
-        onCancelCommentAction={onCancelCommentAction}
         onCancelCommentEdit={onCancelCommentEdit}
         onChangeDraftCommentContent={onChangeDraftCommentContent}
+        onDeleteComment={onDeleteComment}
         onStartCommentEdit={onStartCommentEdit}
         onSubmitCommentEdit={onSubmitCommentEdit}
-        onToggleCommentAction={onToggleCommentAction}
       />
     </div>
   );
