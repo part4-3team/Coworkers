@@ -10,7 +10,7 @@ export default function MemberChip({
   members: MemberChipsProps[];
 }) {
   return (
-    <div className="border-background-tertiary border rounded-lg flex gap-2 h-8 px-2 justify-center items-center pl-3 ">
+    <div className="border-background-tertiary border rounded-lg flex gap-2 h-8 pr-2 pl-3 justify-center items-center  ">
       <div className="flex flex-row ">
         {members.map((member) => (
           <Image

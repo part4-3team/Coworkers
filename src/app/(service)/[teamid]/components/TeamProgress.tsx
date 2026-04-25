@@ -10,7 +10,9 @@ import { MOCK_MEMBERS } from '../constants';
 import { useModalState } from '../hooks/useModalState';
 
 import MemberChip from './MemberChip';
-import { ConfirmModal, ModalMembers, ModalMembersInvite } from './modals';
+import { ConfirmModal } from './modals/ConfirmModal';
+import { ModalMembersInvite } from './modals/ModalMemberInvite';
+import { ModalMembers } from './modals/ModalMembers';
 
 export default function TeamProgress() {
   const router = useRouter();

@@ -15,7 +15,7 @@ export default function NoGroup() {
           className="w-46 md:w-[320px] xl:w-101"
         />
         <p className="text-center font-medium text-sm text-text-default">
-          아직 소속됨 팀이 없습니다.
+          아직 소속된 팀이 없습니다.
           <br />
           팀을 생성하거나 팀에 참여해보세요.
         </p>

@@ -5,7 +5,7 @@ import { icPlusSub } from '@/assets/index';
 import { useModalState } from '../hooks/useModalState';
 import { TaskProps } from '../types';
 
-import { ModalTaskAdd } from './modals';
+import { ModalTaskAdd } from './modals/ModalTaskAddEdit';
 import TaskItem from './TaskItem';
 
 export default function TaskGroup({ status }: TaskProps) {

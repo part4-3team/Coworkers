@@ -12,7 +12,8 @@ import { cn } from '@/utils/cn';
 
 import { useModalState } from '../hooks/useModalState';
 
-import { ConfirmModal, ModalTaskEdit } from './modals';
+import { ConfirmModal } from './modals/ConfirmModal';
+import { ModalTaskEdit } from './modals/ModalTaskAddEdit';
 
 export default function TaskItem({ title, status }: TaskItemProps) {
   const [todos, setTodos] = useState(TODOS);
@@ -54,7 +55,7 @@ export default function TaskItem({ title, status }: TaskItemProps) {
       <div
         className={cn(
           'bg-background-inverse p-6 pr-3 rounded-2xl border border-border-secondary flex flex-col gap-4',
-          status === '완료' && 'pl-6 pr-3 py-3.5 h-13.5',
+          status === '완료' && 'pl-6 pr-3 py-3.5',
         )}
       >
         <div className="flex gap-3 items-center justify-center">

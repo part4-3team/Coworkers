@@ -17,7 +17,7 @@ export default function MemberCard({
           width={userImage ? 32 : 24}
           height={userImage ? 32 : 24}
           alt={`${name}'s profile photo`}
-          className="w-full h-fit object-cover"
+          className="w-full h-full object-cover"
         />
       </div>
       <div className="flex-1">
