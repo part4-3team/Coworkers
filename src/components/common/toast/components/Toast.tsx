@@ -30,13 +30,13 @@ export default function Toast({ toast, onRemove }: ToastProps) {
       role="status"
       aria-live="polite"
       className={cn(
-        'flex w-85.75 items-center justify-between rounded-xl px-4 py-3 md:w-125 md:px-5 md:py-4 lg:w-217',
+        'flex h-[49px] w-85.75 items-center justify-between rounded-xl px-4 md:h-[57px] md:w-125 md:px-5 lg:h-12 lg:w-217',
         isSuccess ? 'bg-brand-primary' : 'bg-status-danger',
       )}
     >
       <div className="flex items-center gap-2">
         <span className="hidden md:block">
-          <Image src={icAlertCircleWhiteLarge} alt="" />
+          <Image src={icAlertCircleWhiteLarge} alt="" width={24} height={24} />
         </span>
         <p className="text-sm font-medium text-text-inverse md:text-base">
           {toast.message}
@@ -47,7 +47,10 @@ export default function Toast({ toast, onRemove }: ToastProps) {
           data-toast-action="true"
           type="button"
           onClick={handleAction}
-          className="ml-4 shrink-0 rounded-lg bg-background-primary px-3 py-1.5 text-sm font-medium text-brand-primary hover:bg-background-secondary"
+          className={cn(
+            'ml-4 h-[33px] shrink-0 rounded-lg bg-background-primary px-3 text-sm font-medium hover:bg-background-secondary',
+            toast.actionTextClassName ?? 'text-brand-primary',
+          )}
         >
           {toast.actionLabel}
         </button>

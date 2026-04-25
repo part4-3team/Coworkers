@@ -4,8 +4,8 @@
 
 import Image from 'next/image';
 
-import icCheckboxCheckedLarge from '@/assets/icons/ic_checkbox_checked_large.svg';
-import icCheckboxLarge from '@/assets/icons/ic_checkbox_large.svg';
+import icCheckboxCheckedLarge from '@/assets/icons/ic_checkbox_checked_large.svg?url';
+import icCheckboxLarge from '@/assets/icons/ic_checkbox_large.svg?url';
 
 type TodoCheckUncheckProps = {
   label: string;
@@ -31,6 +31,8 @@ export default function TodoCheckUncheck({
         src={checked ? icCheckboxCheckedLarge : icCheckboxLarge}
         alt=""
         aria-hidden="true"
+        width={16}
+        height={16}
         className="h-3 w-3 shrink-0 md:h-4 md:w-4"
       />
 

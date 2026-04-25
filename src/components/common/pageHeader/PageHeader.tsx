@@ -43,8 +43,8 @@ export default function PageHeader({
                   className="block size-5 bg-interaction-inactive md:size-6"
                   aria-hidden="true"
                   style={{
-                    WebkitMask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
-                    mask: `url(${icSettingsLarge.src}) center / contain no-repeat`,
+                    WebkitMask: `url(${icSettingsLarge}) center / contain no-repeat`,
+                    mask: `url(${icSettingsLarge}) center / contain no-repeat`,
                   }}
                 />
               </>

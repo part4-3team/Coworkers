@@ -20,7 +20,13 @@ export default function LandingHeroSection() {
           className="flex shrink-0 flex-col items-start gap-16 pl-6 md:pl-12 lg:ml-32 lg:pl-0 xl:ml-40"
         >
           <div className="flex flex-col items-start gap-4">
-            <Image src={imgLogoSymbolLarge} alt="" className="h-auto w-16" />
+            <Image
+              src={imgLogoSymbolLarge}
+              alt=""
+              width={35}
+              height={24}
+              className="h-auto w-16"
+            />
             <p className="text-sm font-medium text-interaction-inactive lg:text-xl">
               함께 만들어가는 To do list
             </p>
