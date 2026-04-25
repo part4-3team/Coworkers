@@ -38,7 +38,8 @@ export type ModalKey =
 export type ModalMembersProps = {
   onClose: () => void;
   onPrimaryButtonClick?: () => void;
-  member?: MemberChipsProps | null; // ✅ null 추가
+  member?: MemberChipsProps | null;
+  onMemberClick?: (member: MemberChipsProps) => void;
 };
 export type ModalTaskProps = {
   onClose: () => void;
@@ -53,4 +54,9 @@ export type ConfirmModalProps = {
   onClose: () => void;
   onConfirm?: () => void;
   children?: ReactNode;
+};
+
+export type TeamMemberListContentProps = {
+  members: MemberChipsProps[];
+  onMemberClick: (member: MemberChipsProps) => void;
 };

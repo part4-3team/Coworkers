@@ -1,9 +1,8 @@
 import Image from 'next/image';
 
+import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
+import { TaskProps } from '@/app/(service)/[teamid]/types';
 import { icPlusSub } from '@/assets/index';
-
-import { useModalState } from '../hooks/useModalState';
-import { TaskProps } from '../types';
 
 import { ModalTaskAdd } from './modals/ModalTaskAddEdit';
 import TaskItem from './TaskItem';

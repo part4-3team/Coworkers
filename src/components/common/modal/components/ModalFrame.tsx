@@ -44,7 +44,7 @@ export default function ModalFrame({
   return (
     <div
       className="fixed top-0 left-0 right-0 bottom-0 flex 
-      justify-center items-end-safe md:justify-center md:items-center md:px-4 bg-black/60 z-9999"
+      justify-center items-end-safe md:justify-center md:items-center md:px-4 bg-black/60"
       onClick={onClose}
     >
       <div

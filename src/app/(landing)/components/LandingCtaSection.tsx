@@ -5,7 +5,7 @@
 import Link from 'next/link';
 
 import LandingScrollReveal from '@/app/(landing)/components/LandingScrollReveal';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/constants/ROUTES';
 
 export default function LandingCtaSection() {
   return (

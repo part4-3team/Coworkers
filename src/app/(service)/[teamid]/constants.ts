@@ -42,3 +42,5 @@ export const TODOS = [
     status: false,
   },
 ];
+
+export const STATUS = ['시작 전', '진행 중', '완료'] as const;

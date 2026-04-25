@@ -1,7 +1,6 @@
+import { ConfirmModalProps } from '@/app/(service)/[teamid]/types';
 import Modal from '@/components/common/modal';
 import { useToast } from '@/components/common/toast';
-
-import { ConfirmModalProps } from '../../types';
 
 export const ConfirmModal = ({
   title,

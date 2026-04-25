@@ -1,13 +1,15 @@
-import { MOCK_MEMBERS } from '../constants';
-import { useModalState } from '../hooks/useModalState';
-import { MemberChipsProps } from '../types';
-
-import MemberCard from './MemberCard';
-import { ModalMemberDetail } from './modals/ModalMemberDetails';
-import { ModalMembersInvite } from './modals/ModalMemberInvite';
+import MemberCard from '@/app/(service)/[teamid]/components/MemberCard';
+import { ModalMemberDetail } from '@/app/(service)/[teamid]/components/modals/ModalMemberDetails';
+import { ModalMembersInvite } from '@/app/(service)/[teamid]/components/modals/ModalMemberInvite';
+import { MOCK_MEMBERS } from '@/app/(service)/[teamid]/constants';
+import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
+import {
+  MemberChipsProps,
+  TeamMemberListContentProps,
+} from '@/app/(service)/[teamid]/types';
 
 export default function TeamMemberList() {
-  const { open, close, is } = useModalState();
+  const { open, close, is, openMemberDetail, selectedMember } = useModalState();
 
   return (
     <section className="hidden xl:flex w-60 bg-background-inverse mt-11 px-5 py-6 rounded-2xl border border-border-secondary shrink-0 flex-col gap-4 h-fit min-h-28">
@@ -27,22 +29,30 @@ export default function TeamMemberList() {
           초대하기 +
         </button>
       </div>
-      <TeamMemberListContent members={MOCK_MEMBERS.members} />
+      <TeamMemberListContent
+        members={MOCK_MEMBERS.members}
+        onMemberClick={(member) => {
+          close(); // memberInvite 닫기
+          openMemberDetail(member); // memberDetail 열기
+        }}
+      />
       {/** 우선 목데이터로 유저 리스트만들어둔 상태
        * Todo : 유저 데이터 불러오면 목데이터 삭제 후 데이터 연결할 예정
        */}
 
       {is('memberInvite') && <ModalMembersInvite onClose={close} />}
+
+      {is('memberDetail') && (
+        <ModalMemberDetail onClose={close} member={selectedMember} />
+      )}
     </section>
   );
 }
 
 export function TeamMemberListContent({
   members,
-}: {
-  members: MemberChipsProps[];
-}) {
-  const { is, openMemberDetail, selectedMember, close } = useModalState();
+  onMemberClick,
+}: TeamMemberListContentProps) {
   return (
     <div className="flex flex-col gap-4.5">
       {members.map((item: MemberChipsProps) => (
@@ -51,13 +61,9 @@ export function TeamMemberListContent({
           userImage={item.userImage}
           name={item.userName}
           email={item.userEmail}
-          onClick={() => openMemberDetail(item)}
+          onClick={() => onMemberClick(item)}
         />
       ))}
-      {/* 멤버 선택시 선택한 멤버 Detail 모달 발생 */}
-      {is('memberDetail') && (
-        <ModalMemberDetail onClose={close} member={selectedMember} />
-      )}
     </div>
   );
 }

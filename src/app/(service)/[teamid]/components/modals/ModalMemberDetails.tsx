@@ -1,9 +1,8 @@
 import Image from 'next/image';
 
+import { ModalMembersProps } from '@/app/(service)/[teamid]/types';
 import Modal from '@/components/common/modal';
 import { useToast } from '@/components/common/toast';
-
-import { ModalMembersProps } from '../../types';
 
 // 멤버 개인 정보
 export function ModalMemberDetail({

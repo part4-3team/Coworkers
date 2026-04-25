@@ -3,16 +3,15 @@ import { useParams, useRouter } from 'next/navigation';
 
 import ProgressBar from '@ramonak/react-progress-bar';
 
+import MemberChip from '@/app/(service)/[teamid]/components/MemberChip';
+import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/ConfirmModal';
+import { ModalMemberDetail } from '@/app/(service)/[teamid]/components/modals/ModalMemberDetails';
+import { ModalMembersInvite } from '@/app/(service)/[teamid]/components/modals/ModalMemberInvite';
+import { ModalMembers } from '@/app/(service)/[teamid]/components/modals/ModalMembers';
+import { MOCK_MEMBERS } from '@/app/(service)/[teamid]/constants';
+import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { icSettingsLarge } from '@/assets/index';
 import { ListDropdown } from '@/components/common/dropdown';
-
-import { MOCK_MEMBERS } from '../constants';
-import { useModalState } from '../hooks/useModalState';
-
-import MemberChip from './MemberChip';
-import { ConfirmModal } from './modals/ConfirmModal';
-import { ModalMembersInvite } from './modals/ModalMemberInvite';
-import { ModalMembers } from './modals/ModalMembers';
 
 export default function TeamProgress() {
   const router = useRouter();
@@ -21,10 +20,10 @@ export default function TeamProgress() {
   const settingButton = (
     <Image src={icSettingsLarge} width="24" height="24" alt="설정 아이콘" />
   );
-  const { open, close, is } = useModalState();
+  const { open, close, is, openMemberDetail, selectedMember } = useModalState();
 
   // 현재 유저 상태가 나뉘어 있지 않아 임시로 구성함
-  const MasterItems = [
+  const masterItems = [
     { label: '수정하기', onClick: () => router.push(`/${params.teamid}/edit`) },
     { label: '삭제하기', onClick: () => open('teamDelete') },
   ];
@@ -43,7 +42,7 @@ export default function TeamProgress() {
           <button onClick={() => open('memberList')}>
             <MemberChip members={MOCK_MEMBERS.members} />
           </button>
-          <ListDropdown trigger={settingButton} items={MasterItems} />
+          <ListDropdown trigger={settingButton} items={masterItems} />
         </div>
       </div>
       <div className="flex flex-col gap-3 md:gap-4">
@@ -98,7 +97,18 @@ export default function TeamProgress() {
         </div>
       </div>
       {/* 각 레이어 불러오기 */}
-      {is('memberList') && <ModalMembers onClose={close} />}
+      {is('memberList') && (
+        <ModalMembers
+          onClose={close}
+          onMemberClick={(member) => {
+            close();
+            openMemberDetail(member);
+          }}
+        />
+      )}
+      {is('memberDetail') && (
+        <ModalMemberDetail onClose={close} member={selectedMember} /> // ✅
+      )}
       {is('memberInvite') && <ModalMembersInvite onClose={close} />}
       {is('teamDelete') && (
         <ConfirmModal

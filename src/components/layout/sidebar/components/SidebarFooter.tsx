@@ -12,7 +12,7 @@ import { icUserLarge } from '@/assets';
 import { getLayoutAuthState } from '@/components/layout/constants';
 import useSidebar from '@/components/layout/sidebar/hooks/useSidebar';
 import type { SidebarFooterProps } from '@/components/layout/sidebar/types';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
 
 export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {

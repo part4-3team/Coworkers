@@ -1,9 +1,8 @@
 // 할일 추가
 
+import { ModalTaskProps } from '@/app/(service)/[teamid]/types';
 import { Input } from '@/components/common/form';
 import Modal from '@/components/common/modal';
-
-import { ModalTaskProps } from '../../types';
 
 export function ModalTaskAdd({
   onClose,

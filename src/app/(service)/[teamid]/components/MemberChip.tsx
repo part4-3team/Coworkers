@@ -1,8 +1,7 @@
 import Image from 'next/image';
 
+import { MemberChipsProps } from '@/app/(service)/[teamid]/types';
 import { icUserXlarge } from '@/assets/index';
-
-import { MemberChipsProps } from '../types';
 
 export default function MemberChip({
   members,

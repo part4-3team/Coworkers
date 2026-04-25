@@ -1,13 +1,14 @@
+import { MOCK_MEMBERS } from '@/app/(service)/[teamid]/constants';
+import { ModalMembersProps } from '@/app/(service)/[teamid]/types';
 import Modal from '@/components/common/modal';
 
-import { MOCK_MEMBERS } from '../../constants';
-import { ModalMembersProps } from '../../types';
 import { TeamMemberListContent } from '../TeamMemberList';
 
 // 멤버 리스트
 export function ModalMembers({
   onClose,
   onPrimaryButtonClick,
+  onMemberClick,
 }: ModalMembersProps) {
   return (
     <Modal
@@ -20,7 +21,10 @@ export function ModalMembers({
       primaryButtonText="초대하기"
       onPrimaryButtonClick={onPrimaryButtonClick ?? onClose}
     >
-      <TeamMemberListContent members={MOCK_MEMBERS.members} />
+      <TeamMemberListContent
+        members={MOCK_MEMBERS.members}
+        onMemberClick={onMemberClick ?? (() => {})}
+      />
     </Modal>
   );
 }

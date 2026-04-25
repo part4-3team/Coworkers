@@ -1,7 +1,6 @@
 // task/TeamTaskList.tsx
-import TaskGroup from './TaskGroup';
-
-const STATUS = ['시작 전', '진행 중', '완료'] as const;
+import TaskGroup from '@/app/(service)/[teamid]/components/TaskGroup';
+import { STATUS } from '@/app/(service)/[teamid]/constants';
 
 export default function TeamTaskList() {
   return (

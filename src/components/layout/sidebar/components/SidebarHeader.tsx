@@ -12,7 +12,7 @@ import {
   imgLogoSymbolLarge,
 } from '@/assets';
 import type { SidebarHeaderProps } from '@/components/layout/sidebar/types';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
 
 export default function SidebarHeader({
