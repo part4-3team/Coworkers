@@ -1,6 +1,5 @@
 /**
  * 프로필 이미지를 표시하는 기본 아바타 컴포넌트입니다.
- * 기본 프레임은 사이드바 푸터(40×40, 내부 24×24, rounded-lg)와 동일합니다.
  * 이미지가 없으면 기본 유저 아이콘을 표시합니다.
  */
 
@@ -26,59 +25,23 @@ export default function Avatar({
 }: AvatarProps) {
   const isSidebarFrame = size === 40;
 
-  if (isSidebarFrame) {
-    return (
-      <span
-        className={cn(
-          'flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-background-tertiary',
-          className,
-        )}
-      >
-        {src ? (
-          <Image
-            src={src}
-            alt={alt}
-            width={24}
-            height={24}
-            className="size-6 object-cover"
-          />
-        ) : (
-          <Image
-            src={icUserLarge}
-            alt={alt}
-            width={24}
-            height={24}
-            className="size-6 object-cover"
-          />
-        )}
-      </span>
-    );
-  }
-
   return (
     <span
       className={cn(
-        'flex size-6 shrink-0 overflow-hidden rounded-lg bg-background-secondary',
+        'flex shrink-0 overflow-hidden rounded-lg',
+        isSidebarFrame
+          ? 'size-10 items-center justify-center bg-background-tertiary'
+          : 'size-6 bg-background-secondary',
         className,
       )}
     >
-      {src ? (
-        <Image
-          src={src}
-          alt={alt}
-          width={24}
-          height={24}
-          className="size-6 object-cover"
-        />
-      ) : (
-        <Image
-          src={icUserLarge}
-          alt={alt}
-          width={24}
-          height={24}
-          className="size-6 object-cover"
-        />
-      )}
+      <Image
+        src={src || icUserLarge}
+        alt={alt}
+        width={24}
+        height={24}
+        className="size-6 object-cover"
+      />
     </span>
   );
 }
