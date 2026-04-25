@@ -8,12 +8,14 @@ export type ToastItem = {
   type: ToastType;
   actionLabel?: string;
   onAction?: () => void;
+  actionTextClassName?: string;
 };
 
 export type ToastContextValue = {
   showToast: (
     message: string,
     type: ToastType,
-    action?: { label: string; onClick: () => void },
+    action?: { label: string; onClick: () => void; textClassName?: string },
   ) => void;
+  removeToast: (id: string) => void;
 };
