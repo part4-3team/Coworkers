@@ -1,0 +1,71 @@
+'use client';
+
+import Image from 'next/image';
+
+import { icMoreVerticalSmall } from '@/assets';
+import { ListDropdown } from '@/components/common/dropdown';
+import { TitleInput } from '@/components/common/form';
+
+type TaskDetailPanelHeaderProps = {
+  draftTitle: string;
+  isEditing: boolean;
+  onChangeDraftTitle: (value: string) => void;
+  onDelete: () => void;
+  onStartEdit: () => void;
+  title: string;
+};
+
+export default function TaskDetailPanelHeader({
+  draftTitle,
+  isEditing,
+  onChangeDraftTitle,
+  onDelete,
+  onStartEdit,
+  title,
+}: TaskDetailPanelHeaderProps) {
+  if (isEditing) {
+    return (
+      <TitleInput
+        value={draftTitle}
+        placeholder="제목을 입력해주세요."
+        onChange={(event) => {
+          onChangeDraftTitle(event.target.value);
+        }}
+      />
+    );
+  }
+
+  return (
+    <div className="flex items-start justify-between gap-4">
+      <h2 className="text-xl font-bold text-text-primary md:text-2xl">
+        {title}
+      </h2>
+
+      <ListDropdown
+        className="shrink-0"
+        items={[
+          { label: '수정하기', onClick: onStartEdit },
+          { label: '삭제하기', onClick: onDelete },
+        ]}
+        menuClassName="mt-1 w-30 overflow-hidden rounded-lg border border-background-tertiary py-0 md:w-30"
+        trigger={
+          <>
+            <span className="sr-only">{`${title} 더보기`}</span>
+            <span
+              className="flex size-6 items-center justify-center"
+              aria-hidden="true"
+            >
+              <Image
+                src={icMoreVerticalSmall}
+                alt=""
+                width={20}
+                height={20}
+                className="size-5"
+              />
+            </span>
+          </>
+        }
+      />
+    </div>
+  );
+}

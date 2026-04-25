@@ -10,11 +10,13 @@ import { usePathname } from 'next/navigation';
 
 import { icUserLarge } from '@/assets';
 import { getLayoutAuthState } from '@/components/layout/constants';
+import useSidebar from '@/components/layout/sidebar/hooks/useSidebar';
 import type { SidebarFooterProps } from '@/components/layout/sidebar/types';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/cn';
 
 export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
+  const { handleSidebarInteraction } = useSidebar();
   const pathname = usePathname();
   const layoutAuthState = getLayoutAuthState(pathname);
   const href = layoutAuthState.isAuthenticated ? ROUTES.MY_PAGE : ROUTES.LOGIN;
@@ -37,6 +39,7 @@ export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
             ? '계정 설정으로 이동'
             : '로그인 페이지로 이동'
         }
+        onClick={handleSidebarInteraction}
       >
         {layoutAuthState.isAuthenticated ? (
           <>

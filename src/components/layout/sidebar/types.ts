@@ -42,10 +42,12 @@ export type SidebarNavItemProps = SidebarExpandedProps & {
   isMobileDrawer?: boolean;
   isOriginalIconColor?: boolean;
   label: string;
+  onClick?: () => void;
   variant?: SidebarNavItemVariant;
 };
 
 export type UseSidebarReturn = {
+  handleSidebarInteraction: () => void;
   handleToggleSidebar: () => void;
   isExpanded: boolean;
 };
