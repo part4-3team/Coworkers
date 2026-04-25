@@ -98,6 +98,7 @@ type ButtonProps = {
 - `next/image` 사용 시 Next.js 16 기준으로 deprecated 된 `priority` prop은 사용하지 않는다.
 - 이미지 우선 로딩이 필요할 경우 `preload`, `loading="eager"`, `fetchPriority="high"` 중 상황에 맞는 한 가지 방식을 우선 검토한다.
 - 작은 로고, 아이콘, 일반 UI 이미지는 불필요하게 high priority 로딩을 지정하지 않는다.
+- SVG 자산을 `next/image`로 사용할 때는 `width`, `height`를 함께 명시한다.
 
 ### 8. API와 폼
 
