@@ -38,7 +38,7 @@ export default function TaskListColumnDropdown({
         aria-expanded={isOpen}
         aria-label="할 일 목록 선택"
         className={cn(
-          'box-border flex h-11 w-[180px] max-w-full min-w-0 flex-none flex-row items-center gap-2 rounded-xl border border-background-tertiary',
+          'box-border flex h-11 w-45 max-w-full min-w-0 flex-none flex-row items-center gap-2 rounded-xl border border-background-tertiary',
           'bg-background-primary py-0 pl-4 pr-3 text-left text-sm font-medium text-text-primary',
           'md:w-60 md:max-w-none md:shrink-0',
         )}

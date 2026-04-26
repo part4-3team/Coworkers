@@ -6,3 +6,13 @@ export type TaskListColumnItem = {
   completed: number;
   total: number;
 };
+
+export type TaskListBoardTask = {
+  id: string;
+  title: string;
+  checked: boolean;
+  commentCount: number;
+  dueDateLabel: string;
+  repeatLabel: string;
+  sortOrder: number;
+};

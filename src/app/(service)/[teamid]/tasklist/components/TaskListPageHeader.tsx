@@ -23,8 +23,8 @@ export default function TaskListPageHeader({
     <header
       className={cn(
         'flex min-w-0 items-center bg-transparent p-0',
-        'h-5 w-full max-w-[98px] gap-1',
-        'md:h-7 md:w-[136px] md:max-w-[136px] md:shrink-0',
+        'h-5 w-full max-w-24.5 gap-1',
+        'md:h-7 md:w-34 md:max-w-34 md:shrink-0',
         'lg:h-16 lg:w-full lg:max-w-none lg:gap-0 lg:overflow-hidden lg:rounded-xl lg:border lg:border-background-tertiary lg:bg-background-primary lg:shadow-[0_15px_50px_-12px_rgba(0,0,0,0.05)]',
         className,
       )}

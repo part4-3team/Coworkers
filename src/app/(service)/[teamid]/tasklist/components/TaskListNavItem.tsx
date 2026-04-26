@@ -1,6 +1,5 @@
 /**
  * 할 일 목록 컬럼의 한 행(제목·진행 배지·더보기 메뉴)입니다.
- * 브레이크포인트는 new.md 기준, 모바일 퍼스트입니다.
  * 케밥 메뉴는 lg 이상에서만 표시합니다.
  */
 
@@ -29,7 +28,7 @@ export default function TaskListNavItem({
     <li className="list-none">
       <article
         className={cn(
-          'flex h-[55px] w-full min-w-0 max-w-full items-center gap-3 rounded-xl border bg-background-primary py-0 pl-4 pr-3 transition-colors md:pl-5 lg:max-w-67.5',
+          'flex h-13.75 w-full min-w-0 max-w-full items-center gap-3 rounded-xl border bg-background-primary py-0 pl-4 pr-3 transition-colors md:pl-5 lg:max-w-67.5',
           isActive
             ? 'border-brand-primary shadow-sm ring-1 ring-brand-primary/20'
             : 'border-background-tertiary hover:border-background-tertiary hover:bg-background-secondary',

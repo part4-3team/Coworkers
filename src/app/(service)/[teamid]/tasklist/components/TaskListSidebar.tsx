@@ -42,16 +42,16 @@ function AddTaskListPlusIcon({ className }: { className?: string }) {
 }
 
 const addButtonDesktop = cn(
-  'mx-auto mt-10 inline-flex h-10 w-[143px] shrink-0 items-center justify-center',
+  'mx-auto mt-10 inline-flex h-10 w-35.75 shrink-0 items-center justify-center',
   'rounded-[40px] border border-solid border-brand-primary bg-background-inverse',
-  'px-0 text-sm font-medium leading-[17px] text-brand-primary',
+  'px-0 text-sm font-medium leading-4.25 text-brand-primary',
   'transition-colors hover:bg-brand-secondary',
 );
 
 const addButtonCompact = cn(
   'inline-flex h-10 w-28 shrink-0 flex-row items-center justify-center',
   'rounded-[40px] border border-solid border-brand-primary bg-background-inverse',
-  'py-3.5 pl-4 pr-5 text-sm font-medium leading-[17px] text-brand-primary',
+  'py-3.5 pl-4 pr-5 text-sm font-medium leading-4.25 text-brand-primary',
   'shadow-[0_15px_50px_-12px_rgba(0,0,0,0.05)]',
   'transition-colors hover:bg-brand-secondary',
 );
