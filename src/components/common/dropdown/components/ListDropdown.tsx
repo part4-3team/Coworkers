@@ -31,7 +31,7 @@ export default function ListDropdown({
       {isOpen && (
         <ul
           className={cn(
-            'absolute right-0 z-10 mt-2 w-30 rounded-xl bg-background-primary py-0 shadow-lg md:w-33.75',
+            'absolute right-0 z-10 mt-2 w-30 overflow-hidden rounded-xl bg-background-primary py-0 shadow-lg md:w-33.75',
             menuClassName,
           )}
           role="menu"
