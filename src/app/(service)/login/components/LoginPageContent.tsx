@@ -4,7 +4,7 @@
 
 'use client';
 
-import LoginForm from './LoginForm';
+import LoginForm from '@/app/(service)/login/components/LoginForm';
 
 export default function LoginPageContent() {
   return (
