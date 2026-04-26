@@ -17,10 +17,14 @@ export default function ListDropdown({
   const { isOpen, toggle, close, containerRef } = useDropdown();
 
   return (
-    <div ref={containerRef} className={cn('relative inline-block', className)}>
+    <div
+      ref={containerRef}
+      className={cn('relative inline-flex items-center', className)}
+    >
       <div
         role="button"
         tabIndex={0}
+        className="inline-flex items-center"
         aria-haspopup="menu"
         aria-expanded={isOpen}
         onClick={toggle}
