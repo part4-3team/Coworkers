@@ -1,7 +1,7 @@
 /**
  * 할 일 리스트 메인 콘텐츠 영역입니다.
- * 첫 번째 자식(팀 헤더 카드)과 두 번째 자식(본문 행) 사이 간격은 피그마 기준 60px입니다.
- * (팀 카드 top 120 + height 64 = 184, 할 일 영역 시작 y 244 → 244 − 184 = 60)
+ * 브레이크포인트는 new.md 기준(sm/md/lg/xl/2xl), 모바일 퍼스트입니다.
+ * lg 이상: 팀 카드와 본문 행 사이 간격 피그마 60px(gap-15).
  */
 
 import type { ReactNode } from 'react';
@@ -20,7 +20,7 @@ export default function TaskListContentArea({
   return (
     <div
       className={cn(
-        'relative mx-auto flex w-full max-w-[1120px] min-h-[880px] flex-col gap-[60px]',
+        'relative mx-auto flex w-full min-h-0 flex-col gap-4 md:gap-6 lg:max-w-[1120px] lg:min-h-[880px] lg:gap-15',
         className,
       )}
       aria-label="할 일 리스트 콘텐츠"
