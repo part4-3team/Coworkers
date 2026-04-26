@@ -3,14 +3,8 @@
  */
 
 import Avatar from '@/components/common/avatar/components/Avatar';
+import type { UserProfileProps } from '@/components/common/avatar/types';
 import { cn } from '@/utils/cn';
-
-type UserProfileProps = {
-  src?: string;
-  name: string;
-  description?: string;
-  className?: string;
-};
 
 export default function UserProfile({
   src,

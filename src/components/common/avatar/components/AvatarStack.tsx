@@ -5,19 +5,14 @@
 
 import Image from 'next/image';
 
-import type { AvatarMember } from '@/components/common/avatar/types';
+import type { AvatarStackProps } from '@/components/common/avatar/types';
 import { cn } from '@/utils/cn';
-
-type AvatarStackProps = {
-  members: AvatarMember[];
-  className?: string;
-};
 
 export default function AvatarStack({ members, className }: AvatarStackProps) {
   return (
     <div
       className={cn(
-        'flex h-7 w-[75px] flex-row items-center gap-1.5 rounded-lg border border-background-tertiary bg-background-primary py-1 pr-2 pl-1 md:h-8 md:w-[87px]',
+        'flex h-7 w-18.75 flex-row items-center gap-1.5 rounded-lg border border-background-tertiary bg-background-primary py-1 pr-2 pl-1 md:h-8 md:w-21.75',
         className,
       )}
     >

@@ -1,25 +1,20 @@
 /**
  * 프로필 이미지를 표시하는 기본 아바타 컴포넌트입니다.
  * 이미지가 없으면 기본 유저 아이콘을 표시합니다.
+ * `alt`는 가능하면 호출부에서 사용자 이름 등을 넘기고, 생략 시 짧은 기본 문구로 대체합니다.
  */
 
 import Image from 'next/image';
 
 import { icUserLarge } from '@/assets';
-import type { AvatarFrameSize } from '@/components/common/avatar/types';
+import type { AvatarProps } from '@/components/common/avatar/types';
 import { cn } from '@/utils/cn';
 
-type AvatarProps = {
-  src?: string;
-  alt?: string;
-  /** 기본 40(사이드바와 동일). 24는 한 칸 전체를 이미지가 채우는 컴팩트 크기 */
-  size?: AvatarFrameSize;
-  className?: string;
-};
+const DEFAULT_AVATAR_ALT = '프로필 이미지';
 
 export default function Avatar({
   src,
-  alt = '',
+  alt,
   size = 40,
   className,
 }: AvatarProps) {
@@ -37,7 +32,7 @@ export default function Avatar({
     >
       <Image
         src={src || icUserLarge}
-        alt={alt}
+        alt={alt ?? DEFAULT_AVATAR_ALT}
         width={24}
         height={24}
         className="size-6 object-cover"

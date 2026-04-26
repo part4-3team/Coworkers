@@ -8,3 +8,24 @@ export type AvatarMember = {
   userName: string;
   userImage: string;
 };
+
+export type AvatarProps = {
+  src?: string;
+  /** 생략 시 스크린리더용 기본 문구 사용. 가능하면 사용자 이름 등을 넘기는 것을 권장합니다. */
+  alt?: string;
+  /** 기본 40(사이드바와 동일). 24는 한 칸 전체를 이미지가 채우는 컴팩트 크기 */
+  size?: AvatarFrameSize;
+  className?: string;
+};
+
+export type AvatarStackProps = {
+  members: AvatarMember[];
+  className?: string;
+};
+
+export type UserProfileProps = {
+  src?: string;
+  name: string;
+  description?: string;
+  className?: string;
+};
