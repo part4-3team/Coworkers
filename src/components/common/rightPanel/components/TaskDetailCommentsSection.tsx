@@ -1,18 +1,6 @@
 import TaskDetailCommentInput from '@/components/common/rightPanel/components/TaskDetailCommentInput';
 import TaskDetailCommentItem from '@/components/common/rightPanel/components/TaskDetailCommentItem';
-import type { RightPanelComment } from '@/components/common/rightPanel/types';
-
-type TaskDetailCommentsSectionProps = {
-  commentCount: number;
-  comments: readonly RightPanelComment[];
-  draftCommentContent: string;
-  editingCommentId: string | null;
-  onCancelCommentEdit: () => void;
-  onChangeDraftCommentContent: (value: string) => void;
-  onDeleteComment: (commentId: string) => void;
-  onStartCommentEdit: (comment: RightPanelComment) => void;
-  onSubmitCommentEdit: () => void;
-};
+import type { TaskDetailCommentsSectionProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailCommentsSection({
   commentCount,

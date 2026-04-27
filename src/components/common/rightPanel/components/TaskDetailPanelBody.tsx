@@ -1,22 +1,6 @@
 import { ContentTextarea } from '@/components/common/form';
 import TaskDetailCommentsSection from '@/components/common/rightPanel/components/TaskDetailCommentsSection';
-import type { RightPanelComment } from '@/components/common/rightPanel/types';
-
-type TaskDetailPanelBodyProps = {
-  commentCount: number;
-  comments: readonly RightPanelComment[];
-  description: string;
-  draftCommentContent: string;
-  draftDescription: string;
-  editingCommentId: string | null;
-  isTaskEditing: boolean;
-  onCancelCommentEdit: () => void;
-  onChangeDraftCommentContent: (value: string) => void;
-  onChangeDraftDescription: (value: string) => void;
-  onDeleteComment: (commentId: string) => void;
-  onStartCommentEdit: (comment: RightPanelComment) => void;
-  onSubmitCommentEdit: () => void;
-};
+import type { TaskDetailPanelBodyProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailPanelBody({
   commentCount,

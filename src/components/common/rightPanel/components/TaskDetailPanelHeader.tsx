@@ -5,15 +5,7 @@ import Image from 'next/image';
 import { icMoreVerticalSmall } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import { TitleInput } from '@/components/common/form';
-
-type TaskDetailPanelHeaderProps = {
-  draftTitle: string;
-  isEditing: boolean;
-  onChangeDraftTitle: (value: string) => void;
-  onDelete: () => void;
-  onStartEdit: () => void;
-  title: string;
-};
+import type { TaskDetailPanelHeaderProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailPanelHeader({
   draftTitle,

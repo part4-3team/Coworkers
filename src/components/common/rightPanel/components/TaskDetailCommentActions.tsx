@@ -1,8 +1,4 @@
-type TaskDetailCommentActionsProps = {
-  onCancel: () => void;
-  onPrimaryAction: () => void;
-  primaryLabel: string;
-};
+import type { TaskDetailCommentActionsProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailCommentActions({
   onCancel,

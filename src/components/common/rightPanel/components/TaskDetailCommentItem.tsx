@@ -9,18 +9,7 @@ import Image from 'next/image';
 import { icMoreVerticalSmall, icUserLarge } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import TaskDetailCommentActions from '@/components/common/rightPanel/components/TaskDetailCommentActions';
-import type { RightPanelComment } from '@/components/common/rightPanel/types';
-
-type TaskDetailCommentItemProps = {
-  comment: RightPanelComment;
-  draftContent: string;
-  isEditing: boolean;
-  onCancelEdit: () => void;
-  onChangeDraftContent: (value: string) => void;
-  onDelete: () => void;
-  onStartEdit: () => void;
-  onSubmitEdit: () => void;
-};
+import type { TaskDetailCommentItemProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailCommentItem({
   comment,
