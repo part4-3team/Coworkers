@@ -16,6 +16,7 @@ export default function SidebarNavItem({
   isMobileDrawer = false,
   isOriginalIconColor = false,
   label,
+  onClick,
   variant = 'team',
 }: SidebarNavItemProps) {
   const isMenuVariant = variant === 'team' || variant === 'board';
@@ -34,17 +35,25 @@ export default function SidebarNavItem({
       ? isActive
         ? 'bg-brand-secondary text-brand-primary'
         : 'text-text-primary'
-      : variant === 'addTeam'
-        ? 'justify-center border border-brand-primary text-brand-primary hover:bg-brand-secondary'
-        : 'text-text-primary';
+      : variant === 'board'
+        ? isActive
+          ? 'bg-brand-secondary text-brand-primary'
+          : 'text-text-primary'
+        : variant === 'addTeam'
+          ? 'justify-center border border-brand-primary text-brand-primary hover:bg-brand-secondary'
+          : 'text-text-primary';
   const iconColorClass =
     variant === 'team'
       ? isActive
         ? 'bg-brand-primary'
         : 'bg-text-disabled'
-      : variant === 'addTeam'
-        ? 'bg-brand-primary'
-        : 'bg-text-disabled';
+      : variant === 'board'
+        ? isActive
+          ? 'bg-brand-primary'
+          : 'bg-text-disabled'
+        : variant === 'addTeam'
+          ? 'bg-brand-primary'
+          : 'bg-text-disabled';
 
   const linkElement = (
     <Link
@@ -56,6 +65,7 @@ export default function SidebarNavItem({
         linkToneClass,
       )}
       aria-current={isActive ? 'page' : undefined}
+      onClick={onClick}
     >
       {isOriginalIconColor ? (
         <Image src={icon} alt="" width={20} height={20} className="shrink-0" />
@@ -64,8 +74,8 @@ export default function SidebarNavItem({
           aria-hidden="true"
           className={cn('block size-5 shrink-0', iconColorClass)}
           style={{
-            WebkitMask: `url(${icon.src}) center / contain no-repeat`,
-            mask: `url(${icon.src}) center / contain no-repeat`,
+            WebkitMask: `url(${icon}) center / contain no-repeat`,
+            mask: `url(${icon}) center / contain no-repeat`,
           }}
         />
       )}

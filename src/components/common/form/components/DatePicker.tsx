@@ -6,19 +6,41 @@
 
 import { ko } from 'date-fns/locale';
 import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
+import DatePickerCalendarHeader from '@/components/common/form/components/DatePickerCalendarHeader';
 import type { DatePickerProps } from '@/components/common/form/types';
+import { renderDatePickerWeekDay } from '@/components/common/form/utils/renderDatePickerWeekDay';
 import { cn } from '@/utils/cn';
 
 export default function DatePicker({
   selected,
   onChange,
+  isInline = false,
+  maxDate,
+  minDate,
   placeholder,
   errorMessage,
   className,
 }: DatePickerProps) {
   const hasError = Boolean(errorMessage);
+
+  if (isInline) {
+    return (
+      <div className={cn('coworkers-date-picker', className)}>
+        <ReactDatePicker
+          inline
+          calendarStartDay={0}
+          locale={ko}
+          maxDate={maxDate}
+          minDate={minDate}
+          selected={selected}
+          onChange={onChange}
+          renderCustomHeader={DatePickerCalendarHeader}
+          renderCustomDayName={renderDatePickerWeekDay}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="flex w-full flex-col gap-2">

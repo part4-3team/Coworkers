@@ -4,21 +4,12 @@
 
 import type { ReactNode } from 'react';
 
-import Header from '@/components/layout/header';
-import Sidebar from '@/components/layout/sidebar';
+import ServiceLayoutClient from '@/components/layout/components/ServiceLayoutClient';
 
 export default function ServiceLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
-  return (
-    <div className="flex min-h-dvh flex-col bg-background-secondary">
-      <Header />
-      <div className="flex min-h-0 flex-1 bg-background-secondary">
-        <Sidebar />
-        <main className="min-w-0 flex-1 md:pt-0">{children}</main>
-      </div>
-    </div>
-  );
+  return <ServiceLayoutClient>{children}</ServiceLayoutClient>;
 }

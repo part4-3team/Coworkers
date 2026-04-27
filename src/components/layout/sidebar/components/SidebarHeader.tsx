@@ -34,6 +34,7 @@ export default function SidebarHeader({
             width={144}
             height={24}
             loading="eager"
+            fetchPriority="high"
           />
         ) : (
           <Image
@@ -41,6 +42,8 @@ export default function SidebarHeader({
             alt="Coworkers"
             width={35}
             height={24}
+            loading="eager"
+            fetchPriority="high"
           />
         )}
       </Link>

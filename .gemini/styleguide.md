@@ -67,12 +67,14 @@ type ButtonProps = {
 
 ### 5. 네이밍
 
+- 일반 디렉토리명은 camelCase를 사용한다. 예: `pageHeader`, `rightPanel`
 - App Router 라우트 세그먼트는 임의로 변경하지 않는다. 변경이 필요하면 팀원과 먼저 상의한다.
 - 컴포넌트 `.tsx` 파일은 PascalCase를 사용한다.
 - App Router 특수 파일은 `page.tsx`, `layout.tsx`, `route.ts`를 사용한다.
 - 훅, 유틸, API, 일반 모듈 파일은 camelCase를 사용한다.
 - 상수 파일은 UPPER_SNAKE_CASE를 사용한다.
-- 아이콘은 `ic_` + snake_case를 사용한다.
+- 아이콘 파일명은 `ic_` + snake_case를 사용한다.
+- `src/assets/index.ts`의 아이콘 export 이름은 camelCase를 사용한다.
 - 이미지는 `img_` + snake_case를 사용한다.
 - 로고는 `img_logo_` + snake_case를 사용한다.
 
@@ -84,7 +86,7 @@ type ButtonProps = {
 - prop 이벤트는 `on + 동사` 형식을 사용한다.
 - Boolean 값은 `is`, `has` 접두사를 사용한다.
 - 상수는 `UPPER_SNAKE_CASE`를 사용한다.
-- 컴포넌트나 모듈 파일이 100줄을 초과하면 역할 단위로 파일을 분리한다.
+- 컴포넌트나 모듈 파일이 130줄을 초과하면 역할 단위로 파일을 분리한다.
 - import 구문, 타입 선언은 줄 수 계산에서 제외한다.
 
 ### 7. 접근성
@@ -96,6 +98,7 @@ type ButtonProps = {
 - `next/image` 사용 시 Next.js 16 기준으로 deprecated 된 `priority` prop은 사용하지 않는다.
 - 이미지 우선 로딩이 필요할 경우 `preload`, `loading="eager"`, `fetchPriority="high"` 중 상황에 맞는 한 가지 방식을 우선 검토한다.
 - 작은 로고, 아이콘, 일반 UI 이미지는 불필요하게 high priority 로딩을 지정하지 않는다.
+- SVG 자산을 `next/image`로 사용할 때는 `width`, `height`를 함께 명시한다.
 
 ### 8. API와 폼
 
