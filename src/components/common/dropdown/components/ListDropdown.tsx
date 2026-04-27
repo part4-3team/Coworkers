@@ -1,5 +1,6 @@
 /**
  * 화살표 없이 리스트 항목만 띄워주는 메뉴형 드롭다운 컴포넌트입니다.
+ * 메뉴는 트리거 오른쪽과 맞추고 아래로 열립니다(`right-0 top-full`).
  */
 
 'use client';
@@ -32,7 +33,7 @@ export default function ListDropdown({
       {isOpen && (
         <ul
           className={cn(
-            'absolute right-0 z-10 mt-2 flex w-30 flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
+            'absolute right-0 top-full z-10 mt-2 flex w-30 flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
             menuClassName,
           )}
           role="menu"

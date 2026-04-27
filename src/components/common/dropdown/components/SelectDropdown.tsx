@@ -60,7 +60,7 @@ export default function SelectDropdown<T extends string>({
         <ul
           role="listbox"
           className={cn(
-            'absolute left-0 z-10 mt-2 flex w-full flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
+            'absolute left-0 top-full z-10 mt-2 flex w-full flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
             menuClassName,
           )}
         >
