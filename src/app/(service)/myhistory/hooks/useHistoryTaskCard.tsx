@@ -26,6 +26,7 @@ export default function useHistoryTaskCard({ task }: UseHistoryTaskCardParams) {
     openRightPanel({
       content: (
         <TaskDetailPanelContent
+          key={task.id}
           assigneeName={MY_HISTORY_DETAIL_ASSIGNEE}
           comments={MY_HISTORY_DETAIL_COMMENTS}
           description={MY_HISTORY_DETAIL_DESCRIPTION}
