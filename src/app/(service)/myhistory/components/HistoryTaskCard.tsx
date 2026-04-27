@@ -32,7 +32,7 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
   } = useHistoryTaskCard({ task });
 
   return (
-    <article className="relative flex items-center rounded-lg bg-background-secondary px-3.5 py-3">
+    <article className="relative flex items-start rounded-lg bg-background-secondary px-3.5 py-3">
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
           <TodoCheckUncheck label={task.title} checked />

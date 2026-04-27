@@ -19,7 +19,7 @@ export default function PageHeader({
   return (
     <div
       className={cn(
-        'flex items-center 2xl:h-16 2xl:rounded-xl 2xl:bg-background-inverse 2xl:px-6 2xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]',
+        'flex items-center 2xl:h-16 2xl:rounded-xl 2xl:border 2xl:border-text-disabled 2xl:bg-background-inverse 2xl:px-6 2xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]',
         className,
       )}
     >

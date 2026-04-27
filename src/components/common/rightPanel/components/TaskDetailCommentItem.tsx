@@ -34,7 +34,7 @@ export default function TaskDetailCommentItem({
               {comment.author}
             </p>
 
-            <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-end">
+            <div className="mt-3 flex flex-col gap-3">
               <textarea
                 value={draftContent}
                 placeholder="내용을 입력하세요."
@@ -45,7 +45,7 @@ export default function TaskDetailCommentItem({
               />
 
               <TaskDetailCommentActions
-                primaryLabel="등록하기"
+                primaryLabel="수정하기"
                 onCancel={onCancelEdit}
                 onPrimaryAction={onSubmitEdit}
               />
@@ -100,7 +100,7 @@ export default function TaskDetailCommentItem({
             />
           </div>
 
-          <div className="mt-2 text-sm font-medium text-text-default">
+          <div className="mt-2 text-sm font-medium text-interaction-inactive">
             {comment.meta}
           </div>
         </div>
