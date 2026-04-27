@@ -13,6 +13,7 @@ export default function ListDropdown({
   items,
   className,
   menuClassName,
+  itemTextAlign = 'center',
 }: ListDropdownProps) {
   const { isOpen, toggle, close, containerRef } = useDropdown();
 
@@ -31,17 +32,20 @@ export default function ListDropdown({
       {isOpen && (
         <ul
           className={cn(
-            'absolute right-0 z-10 mt-2 w-30 overflow-hidden rounded-xl bg-background-primary py-0 shadow-lg md:w-33.75',
+            'absolute right-0 z-10 mt-2 flex w-30 flex-col overflow-hidden rounded-xl border border-background-tertiary bg-background-primary p-0',
             menuClassName,
           )}
           role="menu"
         >
           {items.map((item) => (
-            <li key={item.label} role="none">
+            <li key={item.label} role="none" className="w-full">
               <button
                 type="button"
                 role="menuitem"
-                className="w-full whitespace-nowrap px-6 py-3 text-center text-sm text-text-primary hover:bg-background-secondary"
+                className={cn(
+                  'w-full whitespace-nowrap px-6 py-3 text-sm text-text-primary hover:bg-background-secondary',
+                  itemTextAlign === 'start' ? 'text-start' : 'text-center',
+                )}
                 onClick={() => {
                   item.onClick();
                   close();
