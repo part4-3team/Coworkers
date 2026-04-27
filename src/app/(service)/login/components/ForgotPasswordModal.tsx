@@ -37,14 +37,14 @@ export default function ForgotPasswordModal({
     <Modal
       hasCloseButton
       title="비밀번호를 잊으셨나요?"
-      description="가입한 이메일을 입력하시면 비밀번호 재설정 링크를 보내드립니다."
+      description={`가입한 이메일을 입력하시면\n 비밀번호 재설정 링크를 보내드립니다.`}
       lineButtonText="닫기"
       primaryButtonText="링크 보내기"
       onClose={onClose}
       onLineButtonClick={onClose}
       onPrimaryButtonClick={onClose}
     >
-      <div className="mt-4 w-80">
+      <div className="mt-4 w-full text-left">
         <AuthInput
           label="이메일"
           type="text"

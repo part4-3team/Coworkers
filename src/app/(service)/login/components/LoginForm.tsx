@@ -29,7 +29,7 @@ export default function LoginForm() {
   } = useLoginForm();
 
   return (
-    <section className="mx-auto h-180 w-full max-w-lg rounded-2xl bg-background-inverse px-6 py-8 shadow-sm md:px-8 md:py-10">
+    <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-6 py-8 shadow-md md:px-8 md:py-10">
       {/* 로고 */}
       <div className="mb-8 flex justify-center md:mb-10">
         <Image
@@ -47,7 +47,7 @@ export default function LoginForm() {
       </h1>
 
       {/* 폼 */}
-      <form className="flex flex-col gap-5 px-11">
+      <form className="flex flex-col gap-5 md:px-6">
         <AuthInput
           label={LOGIN_TEXT.emailLabel}
           type="text"
@@ -95,14 +95,14 @@ export default function LoginForm() {
       </p>
 
       {/* OR */}
-      <div className="mx-auto mt-10 flex w-full max-w-md items-center gap-4 px-11">
+      <div className="mx-auto mt-10 flex w-full max-w-md items-center gap-4 md:px-6">
         <div className="h-px flex-1 bg-background-tertiary" />
         <span className="text-xs text-text-secondary md:text-sm">OR</span>
         <div className="h-px flex-1 bg-background-tertiary" />
       </div>
 
       {/* 간편 로그인 */}
-      <div className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between px-11">
+      <div className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6">
         <span className="text-sm text-text-secondary">간편 로그인하기</span>
         <Image
           src={icKakaotalk}
