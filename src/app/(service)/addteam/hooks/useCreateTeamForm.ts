@@ -3,6 +3,7 @@ import { useState } from 'react';
 export function useCreateTeamForm() {
   const [teamName, setTeamName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [file, setFile] = useState<File | null>(null);
 
   const validateTeamName = (value: string) => {
     if (!value.trim()) {
@@ -17,9 +18,6 @@ export function useCreateTeamForm() {
       return '8자 이내로 작성해 주세요.';
     }
 
-    // TODO: API 연결 후 중복 검사 추가
-    // return '이미 존재하는 이름입니다.';
-
     return '';
   };
 
@@ -29,10 +27,8 @@ export function useCreateTeamForm() {
     setErrorMessage(validateTeamName(value));
   };
 
-  const handleBlurTeamName = () => {
-    if (!teamName.trim()) {
-      setErrorMessage('');
-    }
+  const handleChangeFile = (newFile: File | null) => {
+    setFile(newFile);
   };
 
   const isDisabled = !teamName.trim() || Boolean(errorMessage);
@@ -42,7 +38,8 @@ export function useCreateTeamForm() {
 
     if (isDisabled) return;
 
-    console.log('팀 생성:', teamName);
+    // TODO: API 연결
+    console.log('팀 생성:', teamName, file);
   };
 
   return {
@@ -50,7 +47,7 @@ export function useCreateTeamForm() {
     errorMessage,
     isDisabled,
     handleChangeTeamName,
-    handleBlurTeamName,
+    handleChangeFile,
     handleSubmit,
   };
 }
