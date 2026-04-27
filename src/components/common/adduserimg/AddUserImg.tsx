@@ -52,8 +52,9 @@ export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {
             <Image
               src={icUserLarge}
               alt="프로필 기본 이미지"
-              width="40"
-              height="40"
+              width="64"
+              height="64"
+              className="w-10 h-10 md:w-16 md:h-16"
             />
           )}
 

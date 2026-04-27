@@ -44,11 +44,11 @@ export default function ModalFrame({
   return (
     <div
       className="fixed top-0 left-0 right-0 bottom-0 flex 
-      justify-center items-end-safe md:justify-center md:items-center md:px-4 bg-black/60 z-9999"
+      justify-center items-end-safe md:justify-center md:items-center md:px-4 bg-black/60"
       onClick={onClose}
     >
       <div
-        className="w-full bg-white rounded-tl-xl rounded-tr-xl  p-6 pt-10 min-w-80 relative text-center flex flex-col gap-4 items-center md:max-w-sm md:rounded-br-xl md:rounded-bl-xl"
+        className="w-full bg-white rounded-tl-xl rounded-tr-xl p-10 min-w-80 relative text-center flex flex-col gap-4 items-center md:max-w-sm md:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
         {hasCloseButton && (
@@ -83,9 +83,9 @@ export default function ModalFrame({
         {subDescription && (
           <p className="text-sm text-gray-400">{subDescription}</p>
         )}
-        {children && <div>{children}</div>}
+        {children && <div className="w-full">{children}</div>}
         <div
-          className={`flex gap-2 mt-2 w-full ${isButtonAlign ? 'flex-col px-4' : 'flex-row px-0'} max-w-80`}
+          className={`flex gap-2 mt-2 w-full ${isButtonAlign ? 'flex-col px-4' : 'flex-row px-0'} max-w-90`}
         >
           {lineButtonText && (
             <button
