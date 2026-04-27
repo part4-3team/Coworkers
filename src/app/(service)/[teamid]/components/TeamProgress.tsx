@@ -1,25 +1,23 @@
-import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
-
-import ProgressBar from '@ramonak/react-progress-bar';
 
 import MemberChip from '@/app/(service)/[teamid]/components/MemberChip';
 import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/ConfirmModal';
 import { ModalMemberDetail } from '@/app/(service)/[teamid]/components/modals/ModalMemberDetails';
 import { ModalMembersInvite } from '@/app/(service)/[teamid]/components/modals/ModalMemberInvite';
 import { ModalMembers } from '@/app/(service)/[teamid]/components/modals/ModalMembers';
-import { MOCK_MEMBERS } from '@/app/(service)/[teamid]/constants';
+import {
+  MOCK_MEMBERS,
+  SETTING_BUTTON,
+} from '@/app/(service)/[teamid]/constants';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
-import { icSettingsLarge } from '@/assets/index';
 import { ListDropdown } from '@/components/common/dropdown';
+
+import TeamProgressBar from './TeamProgressBar';
 
 export default function TeamProgress() {
   const router = useRouter();
   const params = useParams();
 
-  const settingButton = (
-    <Image src={icSettingsLarge} width="24" height="24" alt="설정 아이콘" />
-  );
   const { open, close, is, openMemberDetail, selectedMember } = useModalState();
 
   // 현재 유저 상태가 나뉘어 있지 않아 임시로 구성함
@@ -42,11 +40,11 @@ export default function TeamProgress() {
           <button onClick={() => open('memberList')}>
             <MemberChip members={MOCK_MEMBERS.members} />
           </button>
-          <ListDropdown trigger={settingButton} items={masterItems} />
+          <ListDropdown trigger={SETTING_BUTTON} items={masterItems} />
         </div>
       </div>
       <div className="flex flex-col gap-3 md:gap-4">
-        <div className="flex justify-between">
+        <div className="flex justify-between xl:pr-10">
           <div>
             <p className="text-xs font-medium text-interaction-inactive md:text-sm">
               오늘의 진행 상황
@@ -77,19 +75,11 @@ export default function TeamProgress() {
         </div>
         <div className="flex gap-4">
           <div className="w-full h-5 md:h-7">
-            <ProgressBar
-              completed="25"
-              bgColor="var(--color-brand-primary)"
-              baseBgColor="var(--color-background-secondary)"
-              height="100%"
-              labelSize="0px"
-              animateOnRender
-              transitionDuration="1s"
-            ></ProgressBar>
+            <TeamProgressBar />
           </div>
           <div className="hidden xl:block">
             <ListDropdown
-              trigger={settingButton}
+              trigger={SETTING_BUTTON}
               items={memberItems}
               className=""
             />
@@ -107,7 +97,7 @@ export default function TeamProgress() {
         />
       )}
       {is('memberDetail') && (
-        <ModalMemberDetail onClose={close} member={selectedMember} /> // ✅
+        <ModalMemberDetail onClose={close} member={selectedMember} />
       )}
       {is('memberInvite') && <ModalMembersInvite onClose={close} />}
       {is('teamDelete') && (

@@ -1,3 +1,7 @@
+import Image from 'next/image';
+
+import { icSettingsLarge } from '@/assets/index';
+
 export const MOCK_MEMBERS = {
   members: [
     {
@@ -44,3 +48,7 @@ export const TODOS = [
 ];
 
 export const STATUS = ['시작 전', '진행 중', '완료'] as const;
+
+export const SETTING_BUTTON = (
+  <Image src={icSettingsLarge} width="24" height="24" alt="설정 아이콘" />
+);

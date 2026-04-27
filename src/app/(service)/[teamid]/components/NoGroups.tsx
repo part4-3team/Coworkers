@@ -12,7 +12,7 @@ export default function NoGroup() {
           width="404"
           height="264"
           alt=""
-          className="w-46 md:w-[320px] xl:w-101"
+          className="w-46 md:w-80 xl:w-101"
         />
         <p className="text-center font-medium text-sm text-text-default">
           아직 소속된 팀이 없습니다.
