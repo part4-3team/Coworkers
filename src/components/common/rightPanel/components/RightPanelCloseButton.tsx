@@ -3,10 +3,7 @@
 import Image from 'next/image';
 
 import { icCloseLarge } from '@/assets';
-
-type RightPanelCloseButtonProps = {
-  onClose: () => void;
-};
+import type { RightPanelCloseButtonProps } from '@/components/common/rightPanel/types';
 
 export default function RightPanelCloseButton({
   onClose,
