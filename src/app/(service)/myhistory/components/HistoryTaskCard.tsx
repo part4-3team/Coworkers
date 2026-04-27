@@ -67,7 +67,6 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
           { label: '수정하기', onClick: handleEdit },
           { label: '삭제하기', onClick: handleOpenDeleteModal },
         ]}
-        menuClassName="mt-1 w-30 overflow-hidden rounded-lg border border-background-tertiary py-0 md:w-30"
         trigger={
           <>
             <span className="sr-only">{`${task.title} 더보기`}</span>

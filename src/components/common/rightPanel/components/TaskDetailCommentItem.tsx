@@ -80,7 +80,6 @@ export default function TaskDetailCommentItem({
                 { label: '수정하기', onClick: onStartEdit },
                 { label: '삭제하기', onClick: onDelete },
               ]}
-              menuClassName="mt-1 w-30 overflow-hidden rounded-lg border border-background-tertiary py-0 md:w-30"
               trigger={
                 <>
                   <span className="sr-only">{`${comment.author} 댓글 더보기`}</span>
