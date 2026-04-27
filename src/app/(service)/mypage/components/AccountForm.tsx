@@ -1,32 +1,44 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
+import PasswordModal from '@/app/(service)/mypage/components/PasswordModal';
 import AddUserImg from '@/components/common/adduserimg/AddUserImg';
 import { Input } from '@/components/common/form';
 import { useToast } from '@/components/common/toast';
 
-import PasswordModal from './PasswordModal';
-
 export default function AccountForm() {
   const [initialName] = useState('송현');
+  // 이것도 데이터 불러오면서 수정할 예정입니다
   const [name, setName] = useState(initialName);
   const [isDirty, setIsDirty] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
-  const { showToast } = useToast();
+  const { showToast, removeToast } = useToast();
+  const toastIdRef = useRef<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setName(newValue);
 
     const changed = newValue !== initialName;
+
     if (changed && !isDirty) {
-      showToast('저장하지 않은 변경사항이 있어요!', 'success', {
-        label: '변경사항 취소하기',
-        onClick: () => {},
-      });
+      toastIdRef.current = showToast(
+        '저장하지 않은 변경사항이 있어요!',
+        'error',
+        {
+          label: '변경사항 취소하기',
+          onClick: () => {
+            setName(initialName);
+            setIsDirty(false);
+          },
+        },
+      );
       setIsDirty(true);
     }
-    if (!changed && isDirty) setIsDirty(false);
+    if (!changed && isDirty) {
+      if (toastIdRef.current) removeToast(toastIdRef.current);
+      setIsDirty(false);
+    }
   };
 
   return (
