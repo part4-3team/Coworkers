@@ -27,6 +27,7 @@ export default function AccountForm() {
         'error',
         {
           label: '변경사항 취소하기',
+          textClassName: 'text-status-danger',
           onClick: () => {
             setName(initialName);
             setIsDirty(false);
@@ -43,7 +44,7 @@ export default function AccountForm() {
 
   return (
     <>
-      <form action="" className="flex gap-6 flex-col">
+      <form id="accountForm" className="flex gap-6 flex-col">
         <AddUserImg />
         <div className="flex flex-col gap-3">
           <label
@@ -52,7 +53,7 @@ export default function AccountForm() {
           >
             이름
           </label>
-          <Input name="userName" value={name} onChange={handleChange} />
+          <Input id="userName" value={name} onChange={handleChange} />
         </div>
         <div className="flex flex-col gap-2">
           <label
@@ -61,21 +62,26 @@ export default function AccountForm() {
           >
             이메일
           </label>
-          <Input name="userEmail" value="ziy1027@naver.com" disabled />
+          <Input id="userEmail" value="ziy1027@naver.com" disabled />
         </div>
         <div className="flex flex-col gap-2 relative">
           <label
-            htmlFor="userName"
+            htmlFor="userPassword"
             className="text-text-primary text-sm font-medium "
           >
             비밀번호
           </label>
           <div className="relative">
-            <Input name="password" type="password" value="password" disabled />
+            <Input
+              id="userPassword"
+              type="password"
+              value="password"
+              disabled
+            />
             <button
               type="button"
               onClick={() => setIsPasswordModalOpen(true)}
-              className="bg-brand-primary text-text-inverse rounded-lg padding h-8 w-18.5 absolute right-2 top-[50%] -translate-y-1/2"
+              className="bg-brand-primary text-text-inverse rounded-lg h-8 w-18.5 absolute right-2 top-[50%] -translate-y-1/2"
             >
               변경하기
             </button>

@@ -6,11 +6,10 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
+import AccountForm from '@/app/(service)/mypage/components/AccountForm';
+import WithdrawModal from '@/app/(service)/mypage/components/WithdrawModal';
 import { icLogout } from '@/assets/index';
 import { PrimaryButton } from '@/components/common/button';
-
-import AccountForm from './components/AccountForm';
-import WithdrawModal from './components/WithdrawModal';
 
 export default function MyPage() {
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
@@ -35,7 +34,9 @@ export default function MyPage() {
           </button>
 
           <div className="flex justify-center items-center pt-10 w-70 m-auto">
-            <PrimaryButton>저장하기</PrimaryButton>
+            <PrimaryButton form="accountForm" type="submit">
+              저장하기
+            </PrimaryButton>
           </div>
           {/* 소셜 회원 확인 후 노출 될 문구 */}
           <div className="flex justify-center items-center px-6 pt-10">
