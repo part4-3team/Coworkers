@@ -37,7 +37,7 @@ export default function TodoCheckUncheck({
       />
 
       <span
-        className={`text-xs leading-none md:text-sm ${
+        className={`text-xs leading-none truncate w-full md:text-sm ${
           checked
             ? 'text-interaction-inactive line-through'
             : 'text-text-primary'

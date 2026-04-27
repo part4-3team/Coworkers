@@ -13,9 +13,6 @@ export default function useTaskDetailPanel({
   initialDescription,
   initialTitle,
 }: UseTaskDetailPanelParams) {
-  const [activeCommentActionId, setActiveCommentActionId] = useState<
-    string | null
-  >(null);
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
   const [comments, setComments] = useState<RightPanelComment[]>(() => [
@@ -30,7 +27,6 @@ export default function useTaskDetailPanel({
   const handleStartTaskEdit = () => {
     setDraftTitle(title);
     setDraftDescription(description);
-    setActiveCommentActionId(null);
     setEditingCommentId(null);
     setDraftCommentContent('');
     setIsTaskEditing(true);
@@ -50,24 +46,22 @@ export default function useTaskDetailPanel({
 
   const handleStartCommentEdit = (comment: RightPanelComment) => {
     setIsTaskEditing(false);
-    setActiveCommentActionId(comment.id);
     setEditingCommentId(comment.id);
     setDraftCommentContent(comment.content);
   };
 
-  const handleToggleCommentAction = (commentId: string) => {
-    setIsTaskEditing(false);
+  const handleDeleteComment = (commentId: string) => {
+    setComments((prev) => prev.filter((comment) => comment.id !== commentId));
+
+    if (editingCommentId !== commentId) {
+      return;
+    }
+
     setEditingCommentId(null);
     setDraftCommentContent('');
-    setActiveCommentActionId((prev) => (prev === commentId ? null : commentId));
-  };
-
-  const handleCloseCommentAction = () => {
-    setActiveCommentActionId(null);
   };
 
   const handleCancelCommentEdit = () => {
-    setActiveCommentActionId(null);
     setEditingCommentId(null);
     setDraftCommentContent('');
   };
@@ -89,7 +83,6 @@ export default function useTaskDetailPanel({
         };
       }),
     );
-    setActiveCommentActionId(null);
     setEditingCommentId(null);
     setDraftCommentContent('');
   };
@@ -117,14 +110,13 @@ export default function useTaskDetailPanel({
   };
 
   return {
-    activeCommentActionId,
     comments,
     description,
     draftCommentContent,
     draftDescription,
     draftTitle,
+    handleDeleteComment,
     handleDiscardUnsavedChanges,
-    handleCloseCommentAction,
     editingCommentId,
     handleCancelCommentEdit,
     handleCancelTaskEdit,
@@ -132,7 +124,6 @@ export default function useTaskDetailPanel({
     handleStartTaskEdit,
     handleSubmitCommentEdit,
     handleSubmitTaskEdit,
-    handleToggleCommentAction,
     hasUnsavedChanges,
     isTaskEditing,
     setDraftCommentContent,

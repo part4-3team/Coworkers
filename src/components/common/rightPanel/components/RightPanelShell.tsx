@@ -1,13 +1,8 @@
 'use client';
 
 import RightPanelCloseButton from '@/components/common/rightPanel/components/RightPanelCloseButton';
-import type { RightPanelContent } from '@/components/common/rightPanel/types';
+import type { RightPanelShellProps } from '@/components/common/rightPanel/types';
 import { cn } from '@/utils/cn';
-
-type RightPanelShellProps = RightPanelContent & {
-  className?: string;
-  onClose: () => void;
-};
 
 export default function RightPanelShell({
   body,

@@ -36,7 +36,6 @@ export default function useDragScroll(): UseDragScrollReturn {
     hasDraggedRef.current = false;
     startXRef.current = event.clientX;
     startScrollLeftRef.current = containerRef.current.scrollLeft;
-    event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {

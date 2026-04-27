@@ -5,11 +5,15 @@ export type ListDropdownItem = {
   onClick: () => void;
 };
 
+/** 메뉴 항목 라벨 정렬. 기본 center(수정·삭제 등). start는 긴 문구·반복 설정 등 왼쪽 정렬에 사용 */
+export type ListDropdownItemTextAlign = 'center' | 'start';
+
 export type ListDropdownProps = {
   trigger: React.ReactNode;
   items: ListDropdownItem[];
   className?: string;
   menuClassName?: string;
+  itemTextAlign?: ListDropdownItemTextAlign;
 };
 
 export type SelectDropdownItem<T extends string> = {

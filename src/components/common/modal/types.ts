@@ -8,7 +8,7 @@ export type ModalFrameProps = {
   subTitle?: string;
   description?: string;
   subDescription?: string;
-  onClose?: () => void;
+  onClose: () => void;
   lineButtonText?: string;
   onLineButtonClick?: () => void;
   primaryButtonText?: string;
