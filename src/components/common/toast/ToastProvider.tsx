@@ -52,6 +52,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           removeToast(id);
         }, TOAST_DURATION);
       }
+
+      return id;
     },
     [removeToast],
   );

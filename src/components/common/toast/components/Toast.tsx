@@ -49,7 +49,8 @@ export default function Toast({ toast, onRemove }: ToastProps) {
           onClick={handleAction}
           className={cn(
             'ml-4 h-[33px] shrink-0 rounded-lg bg-background-primary px-3 text-sm font-medium hover:bg-background-secondary',
-            toast.actionTextClassName ?? 'text-brand-primary',
+            toast.actionTextClassName ??
+              (isSuccess ? 'text-brand-primary' : 'text-status-danger'),
           )}
         >
           {toast.actionLabel}
