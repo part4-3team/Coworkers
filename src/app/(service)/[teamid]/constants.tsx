@@ -1,12 +1,12 @@
 import Image from 'next/image';
 
-import { icSettingsLarge } from '@/assets/index';
+import { icMoreVerticalGray, icSettingsLarge } from '@/assets/index';
 
 export const MOCK_MEMBERS = {
   members: [
     {
       role: 'ADMIN',
-      userImage: '/testImage/1.jpg',
+      userImage: '',
       userEmail: 'admin@test.com',
       userName: '김석진',
       groupId: 4002,
@@ -22,7 +22,7 @@ export const MOCK_MEMBERS = {
     },
     {
       role: 'MEMBER',
-      userImage: '/testImage/3.jpg',
+      userImage: '',
       userEmail: 'user2@test.com',
       userName: '이영희',
       groupId: 4002,
@@ -51,4 +51,8 @@ export const STATUS = ['시작 전', '진행 중', '완료'] as const;
 
 export const SETTING_BUTTON = (
   <Image src={icSettingsLarge} width="24" height="24" alt="설정 아이콘" />
+);
+
+export const DROPDOWN_BUTTON = (
+  <Image src={icMoreVerticalGray} alt="드롭다운 버튼" width="24" height="24" />
 );

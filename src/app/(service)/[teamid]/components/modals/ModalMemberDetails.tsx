@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { ModalMembersProps } from '@/app/(service)/[teamid]/types';
+import { icUserXlarge } from '@/assets/index';
 import Modal from '@/components/common/modal';
 import { useToast } from '@/components/common/toast';
 
@@ -44,9 +45,9 @@ export function ModalMemberDetail({
       isButtonAlign={true}
     >
       <div className="flex flex-col justify-center items-center">
-        <div className="rounded-xl mb-4 w-10 h-10 overflow-hidden">
+        <div className="rounded-xl mb-4 w-10 h-10 overflow-hidden  bg-background-tertiary">
           <Image
-            src={member.userImage}
+            src={member.userImage || icUserXlarge}
             alt={`${member.userName} 프로필 이미지`}
             width={40}
             height={40}

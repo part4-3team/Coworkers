@@ -1,13 +1,10 @@
 import { useState } from 'react';
 
-import Image from 'next/image';
-
 import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/ConfirmModal';
 import { ModalTaskEdit } from '@/app/(service)/[teamid]/components/modals/ModalTaskAddEdit';
-import { TODOS } from '@/app/(service)/[teamid]/constants';
+import { DROPDOWN_BUTTON, TODOS } from '@/app/(service)/[teamid]/constants';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { TaskItemProps } from '@/app/(service)/[teamid]/types';
-import { icMoreVerticalGray } from '@/assets/index';
 import { Badge } from '@/components/common/badge';
 import { ListDropdown } from '@/components/common/dropdown';
 import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
@@ -16,15 +13,6 @@ import { cn } from '@/utils/cn';
 export default function TaskItem({ title, status }: TaskItemProps) {
   const [todos, setTodos] = useState(TODOS);
   const { open, close, is } = useModalState();
-
-  const dropdownButton = (
-    <Image
-      src={icMoreVerticalGray}
-      alt="드롭다운 버튼"
-      width="24"
-      height="24"
-    />
-  );
 
   const DropdownItems = [
     {
@@ -64,7 +52,7 @@ export default function TaskItem({ title, status }: TaskItemProps) {
             <Badge completed={3} total={5} />
           </div>
           <div className="w-6 h-6 shrink-0">
-            <ListDropdown trigger={dropdownButton} items={DropdownItems} />
+            <ListDropdown trigger={DROPDOWN_BUTTON} items={DropdownItems} />
           </div>
         </div>
         {status !== '완료' && (
