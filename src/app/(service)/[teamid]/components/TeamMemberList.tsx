@@ -55,7 +55,7 @@ export function TeamMemberListContent({
   onMemberClick,
 }: TeamMemberListContentProps) {
   return (
-    <div className="flex flex-col gap-4.5">
+    <div className="flex flex-col gap-4.5 mb-3">
       {members.map((item: MemberChipsProps) => (
         <MemberCard
           key={item.userEmail}

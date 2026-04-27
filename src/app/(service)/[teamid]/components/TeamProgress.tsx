@@ -31,7 +31,7 @@ export default function TeamProgress() {
   // TODO: 추후에 유저 상태 나뉘면 유저에 따라 드롭다운 구분할 예정
 
   return (
-    <section className="w-full bg-background-inverse p-6 flex flex-col gap-5 md:rounded-[20px]">
+    <section className="w-full bg-background-inverse p-6 gap-5 shadow-[0_4px_10px_rgba(49,84,153,0.06)] md:rounded-[20px] xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]">
       <div className="flex gap-3 items-center">
         <h2 className="text-text-primary font-bold text-xl md:text-2xl">
           경영관리팀
