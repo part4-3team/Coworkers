@@ -32,13 +32,13 @@ export default function ListDropdown({
       {isOpen && (
         <ul
           className={cn(
-            'absolute right-0 z-10 mt-2 flex w-30 flex-col overflow-hidden rounded-xl border border-background-tertiary bg-background-primary p-0',
+            'absolute right-0 z-10 mt-2 flex w-30 flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
             menuClassName,
           )}
           role="menu"
         >
-          {items.map((item) => (
-            <li key={item.label} role="none" className="w-full">
+          {items.map((item, index) => (
+            <li key={`${index}-${item.label}`} role="none" className="w-full">
               <button
                 type="button"
                 role="menuitem"

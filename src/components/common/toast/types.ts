@@ -16,6 +16,6 @@ export type ToastContextValue = {
     message: string,
     type: ToastType,
     action?: { label: string; onClick: () => void; textClassName?: string },
-  ) => string;
+  ) => void;
   removeToast: (id: string) => void;
 };
