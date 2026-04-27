@@ -6,12 +6,8 @@
 
 import { useState } from 'react';
 
-import { MY_HISTORY_FILTERS } from '@/app/(service)/myhistory/constants';
-
 export default function useHistoryFilters() {
-  const [activeFilterId, setActiveFilterId] = useState<string | null>(
-    MY_HISTORY_FILTERS[0].id,
-  );
+  const [activeFilterId, setActiveFilterId] = useState<string | null>(null);
 
   const handleSelectFilter = (filterId: string) => {
     setActiveFilterId((prev) => (prev === filterId ? null : filterId));

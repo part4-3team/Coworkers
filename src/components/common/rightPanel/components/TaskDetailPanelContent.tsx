@@ -13,22 +13,11 @@ import TaskDetailPanelHeader from '@/components/common/rightPanel/components/Tas
 import TaskDetailPanelMeta from '@/components/common/rightPanel/components/TaskDetailPanelMeta';
 import useTaskDetailPanel from '@/components/common/rightPanel/hooks/useTaskDetailPanel';
 import useUnsavedChangesToastGuard from '@/components/common/rightPanel/hooks/useUnsavedChangesToastGuard';
-import type { RightPanelComment } from '@/components/common/rightPanel/types';
+import type { TaskDetailPanelContentProps } from '@/components/common/rightPanel/types';
 import { useToast } from '@/components/common/toast';
-
-type TaskDetailPanelContentProps = {
-  assigneeName: string;
-  commentCount: number;
-  comments: readonly RightPanelComment[];
-  description: string;
-  frequency: string;
-  startedAt: string;
-  title: string;
-};
 
 export default function TaskDetailPanelContent({
   assigneeName,
-  commentCount,
   comments,
   description: initialDescription,
   frequency,
@@ -38,21 +27,19 @@ export default function TaskDetailPanelContent({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { showToast } = useToast();
   const {
-    activeCommentActionId,
     comments: editableComments,
     description,
     draftCommentContent,
     draftDescription,
     draftTitle,
+    handleDeleteComment,
     handleDiscardUnsavedChanges,
-    handleCloseCommentAction,
     editingCommentId,
     handleCancelCommentEdit,
     handleStartCommentEdit,
     handleStartTaskEdit,
     handleSubmitCommentEdit,
     handleSubmitTaskEdit,
-    handleToggleCommentAction,
     hasUnsavedChanges,
     isTaskEditing,
     setDraftCommentContent,
@@ -104,21 +91,19 @@ export default function TaskDetailPanelContent({
         </div>
 
         <TaskDetailPanelBody
-          activeCommentActionId={activeCommentActionId}
-          commentCount={commentCount}
+          commentCount={editableComments.length}
           comments={editableComments}
           description={description}
           draftCommentContent={draftCommentContent}
           draftDescription={draftDescription}
           editingCommentId={editingCommentId}
           isTaskEditing={isTaskEditing}
-          onCancelCommentAction={handleCloseCommentAction}
           onCancelCommentEdit={handleCancelCommentEdit}
           onChangeDraftCommentContent={setDraftCommentContent}
           onChangeDraftDescription={setDraftDescription}
+          onDeleteComment={handleDeleteComment}
           onStartCommentEdit={handleStartCommentEdit}
           onSubmitCommentEdit={handleSubmitCommentEdit}
-          onToggleCommentAction={handleToggleCommentAction}
         />
       </div>
 

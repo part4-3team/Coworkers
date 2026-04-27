@@ -7,34 +7,19 @@
 import Image from 'next/image';
 
 import { icMoreVerticalSmall, icUserLarge } from '@/assets';
+import { ListDropdown } from '@/components/common/dropdown';
 import TaskDetailCommentActions from '@/components/common/rightPanel/components/TaskDetailCommentActions';
-import type { RightPanelComment } from '@/components/common/rightPanel/types';
-import { cn } from '@/utils/cn';
-
-type TaskDetailCommentItemProps = {
-  comment: RightPanelComment;
-  draftContent: string;
-  isActionOpen: boolean;
-  isEditing: boolean;
-  onCancelAction: () => void;
-  onCancelEdit: () => void;
-  onChangeDraftContent: (value: string) => void;
-  onStartEdit: () => void;
-  onSubmitEdit: () => void;
-  onToggleAction: () => void;
-};
+import type { TaskDetailCommentItemProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailCommentItem({
   comment,
   draftContent,
-  isActionOpen,
   isEditing,
-  onCancelAction,
   onCancelEdit,
   onChangeDraftContent,
+  onDelete,
   onStartEdit,
   onSubmitEdit,
-  onToggleAction,
 }: TaskDetailCommentItemProps) {
   if (isEditing) {
     return (
@@ -49,7 +34,7 @@ export default function TaskDetailCommentItem({
               {comment.author}
             </p>
 
-            <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-end">
+            <div className="mt-3 flex flex-col gap-3">
               <textarea
                 value={draftContent}
                 placeholder="내용을 입력하세요."
@@ -60,7 +45,7 @@ export default function TaskDetailCommentItem({
               />
 
               <TaskDetailCommentActions
-                primaryLabel="등록하기"
+                primaryLabel="수정하기"
                 onCancel={onCancelEdit}
                 onPrimaryAction={onSubmitEdit}
               />
@@ -89,32 +74,34 @@ export default function TaskDetailCommentItem({
               </p>
             </div>
 
-            <button
-              type="button"
-              aria-label={`${comment.author} 댓글 더보기`}
-              aria-expanded={isActionOpen}
-              className="flex size-6 shrink-0 items-center justify-center"
-              onClick={onToggleAction}
-            >
-              <Image src={icMoreVerticalSmall} alt="" width={20} height={20} />
-            </button>
+            <ListDropdown
+              className="shrink-0"
+              items={[
+                { label: '수정하기', onClick: onStartEdit },
+                { label: '삭제하기', onClick: onDelete },
+              ]}
+              trigger={
+                <>
+                  <span className="sr-only">{`${comment.author} 댓글 더보기`}</span>
+                  <span
+                    className="flex size-6 items-center justify-center"
+                    aria-hidden="true"
+                  >
+                    <Image
+                      src={icMoreVerticalSmall}
+                      alt=""
+                      width={20}
+                      height={20}
+                      className="size-5"
+                    />
+                  </span>
+                </>
+              }
+            />
           </div>
 
-          <div
-            className={cn(
-              'mt-2 text-sm font-medium text-text-default',
-              isActionOpen && 'flex items-center justify-end gap-3',
-            )}
-          >
-            {isActionOpen ? (
-              <TaskDetailCommentActions
-                primaryLabel="수정하기"
-                onCancel={onCancelAction}
-                onPrimaryAction={onStartEdit}
-              />
-            ) : (
-              comment.meta
-            )}
+          <div className="mt-2 text-sm font-medium text-interaction-inactive">
+            {comment.meta}
           </div>
         </div>
       </div>

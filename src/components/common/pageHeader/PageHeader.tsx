@@ -35,7 +35,6 @@ export default function PageHeader({
               { label: '수정하기', onClick: handleActionClick },
               { label: '삭제하기', onClick: handleActionClick },
             ]}
-            menuClassName="mt-2 w-30 overflow-hidden rounded-lg border border-background-tertiary py-0 md:w-30"
             trigger={
               <>
                 <span className="sr-only">{`${title} 설정 메뉴 열기`}</span>

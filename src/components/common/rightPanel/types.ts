@@ -22,3 +22,86 @@ export type RightPanelProps = RightPanelContent & {
   isVisible: boolean;
   onClose: () => void;
 };
+
+export type RightPanelShellProps = RightPanelContent & {
+  className?: string;
+  onClose: () => void;
+};
+
+export type RightPanelCloseButtonProps = {
+  onClose: () => void;
+};
+
+export type TaskDetailPanelBodyProps = {
+  commentCount: number;
+  comments: readonly RightPanelComment[];
+  description: string;
+  draftCommentContent: string;
+  draftDescription: string;
+  editingCommentId: string | null;
+  isTaskEditing: boolean;
+  onCancelCommentEdit: () => void;
+  onChangeDraftCommentContent: (value: string) => void;
+  onChangeDraftDescription: (value: string) => void;
+  onDeleteComment: (commentId: string) => void;
+  onStartCommentEdit: (comment: RightPanelComment) => void;
+  onSubmitCommentEdit: () => void;
+};
+
+export type TaskDetailPanelContentProps = {
+  assigneeName: string;
+  comments: readonly RightPanelComment[];
+  description: string;
+  frequency: string;
+  startedAt: string;
+  title: string;
+};
+
+export type TaskDetailPanelFooterProps = {
+  isEditing: boolean;
+  onSubmitEdit: () => void;
+};
+
+export type TaskDetailPanelHeaderProps = {
+  draftTitle: string;
+  isEditing: boolean;
+  onChangeDraftTitle: (value: string) => void;
+  onDelete: () => void;
+  onStartEdit: () => void;
+  title: string;
+};
+
+export type TaskDetailPanelMetaProps = {
+  assigneeName: string;
+  frequency: string;
+  startedAt: string;
+};
+
+export type TaskDetailCommentsSectionProps = {
+  commentCount: number;
+  comments: readonly RightPanelComment[];
+  draftCommentContent: string;
+  editingCommentId: string | null;
+  onCancelCommentEdit: () => void;
+  onChangeDraftCommentContent: (value: string) => void;
+  onDeleteComment: (commentId: string) => void;
+  onStartCommentEdit: (comment: RightPanelComment) => void;
+  onSubmitCommentEdit: () => void;
+};
+
+export type TaskDetailCommentItemProps = {
+  comment: RightPanelComment;
+  draftContent: string;
+  isEditing: boolean;
+  onCancelEdit: () => void;
+  onChangeDraftContent: (value: string) => void;
+  onDelete: () => void;
+  onStartEdit: () => void;
+  onSubmitEdit: () => void;
+};
+
+export type TaskDetailCommentActionsProps = {
+  onCancel: () => void;
+  onPrimaryAction: () => void;
+  primaryLabel: string;
+};

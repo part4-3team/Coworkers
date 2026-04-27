@@ -3,11 +3,7 @@
 import Image from 'next/image';
 
 import { icCheckInverse } from '@/assets';
-
-type TaskDetailPanelFooterProps = {
-  isEditing: boolean;
-  onSubmitEdit: () => void;
-};
+import type { TaskDetailPanelFooterProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailPanelFooter({
   isEditing,

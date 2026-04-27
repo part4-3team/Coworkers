@@ -5,15 +5,7 @@ import Image from 'next/image';
 import { icMoreVerticalSmall } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import { TitleInput } from '@/components/common/form';
-
-type TaskDetailPanelHeaderProps = {
-  draftTitle: string;
-  isEditing: boolean;
-  onChangeDraftTitle: (value: string) => void;
-  onDelete: () => void;
-  onStartEdit: () => void;
-  title: string;
-};
+import type { TaskDetailPanelHeaderProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailPanelHeader({
   draftTitle,
@@ -47,7 +39,6 @@ export default function TaskDetailPanelHeader({
           { label: '수정하기', onClick: onStartEdit },
           { label: '삭제하기', onClick: onDelete },
         ]}
-        menuClassName="mt-1 w-30 overflow-hidden rounded-lg border border-background-tertiary py-0 md:w-30"
         trigger={
           <>
             <span className="sr-only">{`${title} 더보기`}</span>
