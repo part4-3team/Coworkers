@@ -41,6 +41,7 @@ export default function HistoryFilterTabs({
           <li key={filter.id}>
             <button
               type="button"
+              data-allow-unsaved="true"
               onClick={() => onSelectFilter(filter.id)}
               className={cn(
                 'flex h-8.25 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border px-3 text-sm font-medium md:h-10.75 md:px-4 md:text-base',
