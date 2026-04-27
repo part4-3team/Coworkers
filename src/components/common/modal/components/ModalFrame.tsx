@@ -44,11 +44,11 @@ export default function ModalFrame({
   return (
     <div
       className="fixed top-0 left-0 right-0 bottom-0 flex 
-      justify-center items-end-safe md:justify-center md:items-center md:px-4 bg-black/60"
+      justify-center items-end-safe md:justify-center md:items-center md:px-4 bg-black/60 z-999"
       onClick={onClose}
     >
       <div
-        className="w-full bg-white rounded-tl-xl rounded-tr-xl p-10 min-w-80 relative text-center flex flex-col gap-4 items-center md:max-w-sm md:rounded-3xl"
+        className="w-full bg-white rounded-tl-xl rounded-tr-xl p-10 min-w-80 relative text-center md:max-w-sm md:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
         {hasCloseButton && (
@@ -62,15 +62,17 @@ export default function ModalFrame({
           </button>
         )}
         {hasIcon && (
-          <Image
-            src={icAlertCircleLarge}
-            alt="느낌표 아이콘"
-            width="24"
-            height="24"
-          />
+          <div className="flex justify-center items-center mb-4">
+            <Image
+              src={icAlertCircleLarge}
+              alt="느낌표 아이콘"
+              width="24"
+              height="24"
+            />
+          </div>
         )}
         {title && (
-          <div className="flex gap-1 items-center justify-center">
+          <div className="flex gap-1 items-center justify-center mb-2">
             <p className="text-xl font-bold">{title}</p>
             {subTitle && (
               <p className="text-base text-text-default">{subTitle}</p>
@@ -83,9 +85,9 @@ export default function ModalFrame({
         {subDescription && (
           <p className="text-sm text-gray-400">{subDescription}</p>
         )}
-        {children && <div className="w-full">{children}</div>}
+        {children && <div className="w-full mt-4">{children}</div>}
         <div
-          className={`flex gap-2 mt-2 w-full ${isButtonAlign ? 'flex-col px-4' : 'flex-row px-0'} max-w-90`}
+          className={`flex gap-2 mt-6 w-full mx-auto ${isButtonAlign ? 'flex-col px-4' : 'flex-row px-0'} max-w-90`}
         >
           {lineButtonText && (
             <button
