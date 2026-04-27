@@ -38,10 +38,10 @@ export default function useUnsavedChangesToastGuard({
         return;
       }
 
-      isUnsavedToastVisibleRef.current = true;
       showToast('저장하지 않은 변경사항이 있어요!', 'error', {
         label: '변경사항 취소',
         onClick: onDiscardChanges,
+        textClassName: 'text-status-danger', // 추가
       });
 
       toastTimeoutRef.current = window.setTimeout(() => {
