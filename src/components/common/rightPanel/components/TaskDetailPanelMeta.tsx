@@ -7,12 +7,7 @@
 import Image from 'next/image';
 
 import { icCalendarSmall, icRepeatSmall, icUserLarge } from '@/assets';
-
-type TaskDetailPanelMetaProps = {
-  assigneeName: string;
-  frequency: string;
-  startedAt: string;
-};
+import type { TaskDetailPanelMetaProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailPanelMeta({
   assigneeName,
