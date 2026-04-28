@@ -11,28 +11,21 @@ import { AuthInput } from '@/components/common/form';
 
 export default function SignupForm() {
   const {
-    name,
-    email,
-    password,
-    passwordConfirm,
-    nameError,
+    emailField,
     emailError,
+    isDisabled,
+    nicknameField,
+    nicknameError,
+    passwordConfirmationField,
+    passwordConfirmationError,
+    passwordField,
     passwordError,
-    passwordConfirmError,
-    handleChangeName,
-    handleChangeEmail,
-    handleChangePassword,
-    handleChangePasswordConfirm,
-    handleBlurName,
-    handleBlurEmail,
-    handleBlurPassword,
-    handleBlurPasswordConfirm,
-    isValid,
+    serverError,
+    handleSubmit,
   } = useSignupForm();
 
   return (
     <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-6 py-8 shadow-md md:px-8 md:py-10">
-      {/* 로고 */}
       <div className="mb-8 flex justify-center md:mb-10">
         <Image
           src={imgLogoFullLarge}
@@ -43,59 +36,57 @@ export default function SignupForm() {
         />
       </div>
 
-      {/* 타이틀 */}
       <h1 className="mb-6 text-center text-base font-semibold text-text-primary md:mb-8 md:text-lg">
         {SIGNUP_TEXT.title}
       </h1>
 
-      {/* 폼 */}
-      <form className="flex flex-col gap-5 md:px-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5 md:px-6">
         <AuthInput
-          label={SIGNUP_TEXT.nameLabel}
-          type="text"
-          value={name}
-          onChange={(e) => handleChangeName(e.target.value)}
-          onBlur={handleBlurName}
-          errorMessage={nameError}
-          placeholder={SIGNUP_TEXT.namePlaceholder}
+          label={SIGNUP_TEXT.nicknameLabel}
+          placeholder={SIGNUP_TEXT.nicknamePlaceholder}
+          errorMessage={nicknameError}
+          {...nicknameField}
         />
 
         <AuthInput
           label={SIGNUP_TEXT.emailLabel}
-          type="text"
-          value={email}
-          onChange={(e) => handleChangeEmail(e.target.value)}
-          onBlur={handleBlurEmail}
-          errorMessage={emailError}
+          type="email"
           placeholder={SIGNUP_TEXT.emailPlaceholder}
+          errorMessage={emailError}
+          {...emailField}
         />
 
         <AuthInput
           label={SIGNUP_TEXT.passwordLabel}
           type="password"
-          value={password}
-          onChange={(e) => handleChangePassword(e.target.value)}
-          onBlur={handleBlurPassword}
-          errorMessage={passwordError}
           placeholder={SIGNUP_TEXT.passwordPlaceholder}
+          errorMessage={passwordError}
+          {...passwordField}
         />
 
         <AuthInput
-          label={SIGNUP_TEXT.passwordConfirmLabel}
+          label={SIGNUP_TEXT.passwordConfirmationLabel}
           type="password"
-          value={passwordConfirm}
-          onChange={(e) => handleChangePasswordConfirm(e.target.value)}
-          onBlur={handleBlurPasswordConfirm}
-          errorMessage={passwordConfirmError}
-          placeholder={SIGNUP_TEXT.passwordConfirmPlaceholder}
+          placeholder={SIGNUP_TEXT.passwordConfirmationPlaceholder}
+          errorMessage={passwordConfirmationError}
+          {...passwordConfirmationField}
         />
 
-        <PrimaryButton type="submit" disabled={!isValid}>
+        {serverError && (
+          <p className="text-center text-xs font-medium text-status-danger md:text-sm">
+            {serverError}
+          </p>
+        )}
+
+        <PrimaryButton
+          type="submit"
+          disabled={isDisabled}
+          className="max-w-none"
+        >
           {SIGNUP_TEXT.signupButton}
         </PrimaryButton>
       </form>
 
-      {/* 로그인 */}
       <p className="mt-6 text-center text-xs text-text-secondary md:text-sm">
         {SIGNUP_TEXT.loginGuide}
         <Link
@@ -106,17 +97,17 @@ export default function SignupForm() {
         </Link>
       </p>
 
-      {/* OR */}
       <div className="mx-auto mt-10 flex w-full max-w-md items-center gap-4 md:px-6">
         <div className="h-px flex-1 bg-background-tertiary" />
-        <span className="text-xs text-text-secondary md:text-sm">OR</span>
+        <span className="text-xs text-text-secondary md:text-sm">
+          {SIGNUP_TEXT.divider}
+        </span>
         <div className="h-px flex-1 bg-background-tertiary" />
       </div>
 
-      {/* 간편 회원가입 */}
       <div className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6">
         <span className="text-sm text-text-secondary">
-          {SIGNUP_TEXT.kakaoSignup}
+          {SIGNUP_TEXT.kakaoSignUp}
         </span>
         <Image
           src={icKakaotalk}

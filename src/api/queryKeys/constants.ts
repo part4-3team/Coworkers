@@ -3,9 +3,9 @@
  */
 
 export const QUERY_KEY_RESOURCES = {
+  ARTICLES: 'articles',
+  ARTICLE_COMMENTS: 'articleComments',
   AUTH: 'auth',
-  BOARDS: 'boards',
-  BOARD_COMMENTS: 'boardComments',
   COMMENTS: 'comments',
   COMPLETED_TASKS: 'completedTasks',
   GROUPS: 'groups',
