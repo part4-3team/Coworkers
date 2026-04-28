@@ -29,7 +29,7 @@ export default function LoginForm() {
   } = useLoginForm();
 
   return (
-    <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-6 py-8 shadow-md md:px-8 md:py-10">
+    <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-5.25 py-9.25 md:px-8 md:py-12.5">
       {/* 로고 */}
       <div className="mb-8 flex justify-center md:mb-10">
         <Image
@@ -37,7 +37,7 @@ export default function LoginForm() {
           alt="Coworkers 로고"
           width={210}
           height={35}
-          className="h-auto w-52"
+          className="h-auto w-46 md:w-52"
         />
       </div>
 

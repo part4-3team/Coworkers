@@ -8,7 +8,7 @@ import LoginForm from '@/app/(service)/login/components/LoginForm';
 
 export default function LoginPageContent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background-secondary px-5 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-background-secondary px-4 py-10">
       <LoginForm />
     </div>
   );
