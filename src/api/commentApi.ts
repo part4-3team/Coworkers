@@ -1,5 +1,5 @@
 /**
- * 할 일 상세 댓글과 채용 / 홍보 게시글 댓글 관련 API를 정의하는 파일입니다.
+ * Swagger `Comment`, `ArticleComment` 도메인 API를 정의하는 파일입니다.
  */
 
 import { apiClient, teamEndpoint } from '@/api/apiClient';
@@ -19,11 +19,11 @@ function createTaskCommentPath(taskId: QueryKeyId, commentId: QueryKeyId) {
   return `${createTaskCommentsPath(taskId)}/${commentId}`;
 }
 
-function createBoardCommentsPath(articleId: QueryKeyId) {
+function createArticleCommentsPath(articleId: QueryKeyId) {
   return `${API_PATH_SEGMENTS.ARTICLES}/${articleId}${API_PATH_SEGMENTS.COMMENTS}`;
 }
 
-function createBoardCommentPath(commentId: QueryKeyId) {
+function createArticleCommentPath(commentId: QueryKeyId) {
   return `${API_PATH_SEGMENTS.COMMENTS}/${commentId}`;
 }
 
@@ -81,27 +81,27 @@ export async function deleteTaskComment(
   );
 }
 
-export async function getBoardComments(
+export async function getArticleComments(
   teamId: string,
   articleId: QueryKeyId,
   params: CursorPaginationQueryParams,
 ) {
   const endpoint = `${teamEndpoint(
-    createBoardCommentsPath(articleId),
+    createArticleCommentsPath(articleId),
     teamId,
   )}${buildQueryString(params)}`;
 
   return apiClient<unknown>(endpoint);
 }
 
-export async function createBoardComment(
+export async function createArticleComment(
   teamId: string,
   articleId: QueryKeyId,
   body: CommentBody,
   token?: string,
 ) {
   return apiClient<unknown>(
-    teamEndpoint(createBoardCommentsPath(articleId), teamId),
+    teamEndpoint(createArticleCommentsPath(articleId), teamId),
     {
       body: JSON.stringify(body),
       method: HTTP_METHODS.POST,
@@ -110,14 +110,14 @@ export async function createBoardComment(
   );
 }
 
-export async function updateBoardComment(
+export async function updateArticleComment(
   teamId: string,
   commentId: QueryKeyId,
   body: CommentBody,
   token?: string,
 ) {
   return apiClient<unknown>(
-    teamEndpoint(createBoardCommentPath(commentId), teamId),
+    teamEndpoint(createArticleCommentPath(commentId), teamId),
     {
       body: JSON.stringify(body),
       method: HTTP_METHODS.PATCH,
@@ -126,13 +126,13 @@ export async function updateBoardComment(
   );
 }
 
-export async function deleteBoardComment(
+export async function deleteArticleComment(
   teamId: string,
   commentId: QueryKeyId,
   token?: string,
 ) {
   return apiClient<unknown>(
-    teamEndpoint(createBoardCommentPath(commentId), teamId),
+    teamEndpoint(createArticleCommentPath(commentId), teamId),
     {
       method: HTTP_METHODS.DELETE,
       token,
