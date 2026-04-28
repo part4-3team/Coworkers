@@ -1,515 +1,692 @@
-# React Query 사용 가이드
+# React Query 사용 설명서
 
-이 문서는 현재 프로젝트에 정리된 `queryKeys`, `queryOptions`, `hooks`를 팀원이 같은 방식으로 사용하기 위한 기준 문서입니다.
+이 문서는 React Query를 처음 쓰는 팀원도 바로 따라올 수 있게,
+지금 프로젝트에서 **어떤 파일을 어디에 쓰는지**를 쉽게 설명한 안내서입니다.
 
-## 1. 기본 원칙
+어렵게 생각하지 말고, 먼저 이 한 줄만 기억하면 됩니다.
 
-- 같은 요청은 같은 `queryKey`를 사용합니다.
-- `useQuery`는 가능하면 페이지/컴포넌트에서 바로 쓰지 않고 도메인 훅으로 감쌉니다.
-- 공통화 포인트는 `useQuery` 자체가 아니라 아래 4개입니다.
-  - `queryKeys`
-  - `api 함수`
-  - `queryOptions`
-  - `도메인 훅`
-- `list`와 `infiniteList`는 반드시 분리합니다.
-- invalidate할 때는 문자열 하드코딩 대신 `queryKeys`를 사용합니다.
+> **화면에서는 보통 `src/hooks`만 쓰면 되고, 캐시를 다시 받아와야 할 때만 `queryKeys`를 같이 보면 됩니다.**
 
-## 2. 폴더 역할
+페이지 기능별로 “어느 API / 훅을 보면 되는지”를 빠르게 찾고 싶다면
+[page-feature-navigation.md](./page-feature-navigation.md)를 같이 보면 됩니다.
 
-### `src/api/queryKeys`
+---
 
-쿼리 키만 정의합니다.
+## 1. 전체 구조를 먼저 아주 짧게 보면
 
-- 리소스 단위 키
-- detail / list / infiniteList 구분
-- 팀 스코프가 필요한 경우 `teamId` 포함
-- query param은 정규화해서 같은 요청이 같은 키가 되도록 유지
-
-예시:
-
-```ts
-queryKeys.board.detail(teamId, articleId);
-queryKeys.board.list(teamId, { page: 1, pageSize: 10, orderBy: 'recent' });
-queryKeys.task.list(teamId, { taskListId, date: '2026-04-21' });
+```text
+src/
+├─ api/
+│  ├─ *Api.ts
+│  ├─ queryKeys/
+│  ├─ queryOptions/
+│  └─ ...
+└─ hooks/
+   ├─ useArticle.ts
+   ├─ useArticleComment.ts
+   ├─ useTask.ts
+   └─ ...
 ```
 
-### `src/api/*Api.ts`
+이걸 아주 쉽게 풀면:
 
-실제 fetch 함수만 둡니다.
+- `api/*Api.ts`: 서버에 요청 보내는 곳
+- `api/queryKeys`: 캐시 이름표 만드는 곳
+- `api/queryOptions`: React Query 기본 세팅 모아두는 곳
+- `hooks`: 화면에서 진짜 쓰는 곳
 
-- endpoint 조합
-- query string 조합
-- `apiClient` 호출
-- 캐시 키나 React Query 로직은 넣지 않음
+---
 
-### `src/api/queryOptions`
+## 2. 가장 먼저 이해하면 좋은 4가지
 
-`useQuery`, `useInfiniteQuery`에 들어갈 옵션을 만듭니다.
+React Query 구조는 아래 4개로 나뉩니다.
 
-- `queryKey`
-- `queryFn`
-- `placeholderData`
-- `staleTime`
-- 기본 규칙을 유지하되, 호출부에서 추가 `options`를 덧붙일 수 있게 열어둡니다.
+### 1) API 함수
 
-예시:
-
-```ts
-export const boardQueryOptions = {
-  detail: <TData = BoardDetailData>(
-    teamId: string,
-    articleId: QueryKeyId,
-    options?: QueryOptionsOverrides<BoardDetailData, TData>,
-  ) =>
-    createQueryOptions<BoardDetailData, TData>({
-      options,
-      queryFn: () => getBoardDetail(teamId, articleId),
-      queryKey: queryKeys.board.detail(teamId, articleId),
-    }),
-};
-```
-
-즉, `queryOptions`는 규칙을 강제하는 닫힌 객체가 아니라 기본값을 제공하는 레이어로 보고, 실제 화면에서 `enabled`, `select`, `staleTime` 등을 유연하게 추가할 수 있어야 합니다.
-
-### `src/hooks`
-
-여러 화면에서 재사용되는 서버 상태 훅을 둡니다.
-
-- `useBoard`
-- `useBoardComment`
-- `useTeam`
-- `useTaskList`
-- `useTask`
-- `useRecurring`
-- `useImage`
-- `useUser`
-- `useAuth`
-
-페이지 전용 상태 훅은 각 라우트 폴더 아래 `hooks/`를 사용합니다.
-
-예시:
-
-- 공통 도메인 훅: `src/hooks/useBoard.ts`
-- 페이지 전용 훅: `src/app/(landing)/hooks/useScrollReveal.ts`
-
-## 3. 훅 분리 기준
-
-현재 프로젝트는 아래 3가지를 같이 봐서 훅 파일을 나누는 것이 가장 자연스럽습니다.
-
-- Swagger 태그 경계
-- 현재 라우트/화면 경계
-- invalidate 범위
-
-즉, `queryKey`는 세밀하게 가져가더라도 훅 파일은 화면에서 함께 움직이는 데이터 덩어리 기준으로 묶습니다.
-
-### 3-1. 훅 파일을 나누는 기준
-
-- 같은 `teamId` 범위를 쓰더라도 invalidate 범위가 다르면 훅 파일을 분리합니다.
-- 같은 화면에서 자주 함께 쓰이더라도 페이지 로컬 UI 상태는 전역 훅으로 올리지 않습니다.
-- `useCommonQuery`, `useBaseQuery`처럼 모든 쿼리를 한 번 더 감싸는 공통 훅은 만들지 않습니다.
-- `queryKeys`는 리소스 기준, `hooks`는 사용자 행동 기준으로 보는 것이 좋습니다.
-
-### 3-2. 왜 지금 구조에서 더 쪼개야 하는가
-
-현재 `queryKeys`는 이미 아래처럼 리소스가 분리되어 있습니다.
-
-- `auth`
-- `user`
-- `team`
-- `taskList`
-- `task`
-- `recurring`
-- `comment`
-- `board`
-- `boardComment`
-
-반면 `src/hooks`는 아직 `useAuth`, `useTeam`, `useTask`, `useBoard` 중심이라 `user`, `taskList`, `recurring`, `boardComment` 책임이 비어 있습니다.
-
-이 상태에서 `useTask.ts`나 `useAuth.ts` 하나에 계속 넣기 시작하면 아래 문제가 생깁니다.
-
-- 파일이 너무 빨리 커짐
-- mutation 이후 invalidate 범위를 읽기 어려워짐
-- 같은 도메인인데 화면마다 다른 이름으로 훅이 생김
-- `myhistory`, `mypage`처럼 `User` 도메인 화면이 `Auth` 훅에 섞여 들어감
-
-## 4. 현재 프로젝트 기준 추천 훅 구조
-
-아래 구조가 지금의 Swagger 태그, 라우트, 기획 화면을 같이 봤을 때 가장 무난합니다.
-
-### 4-1. 공통 도메인 훅 파일
-
-| 파일 | 책임 | 추천 export |
-| --- | --- | --- |
-| `src/hooks/useAuth.ts` | 로그인/회원가입/OAuth/토큰 갱신 | `useSignInMutation`, `useSignUpMutation`, `useRefreshTokenMutation`, `useSignInWithOauthMutation` |
-| `src/hooks/useImage.ts` | 프로필/팀 이미지 업로드 | `useUploadImageMutation` |
-| `src/hooks/useUser.ts` | 내 정보, 내 그룹/멤버십, 마이페이지, 마이히스토리 | `useMeQuery`, `useMyGroupsQuery`, `useMyMembershipsQuery`, `useCompletedTasksQuery`, `useUpdateMeMutation`, `useUpdatePasswordMutation`, `useSendResetPasswordEmailMutation`, `useResetPasswordMutation`, `useDeleteMeMutation` |
-| `src/hooks/useTeam.ts` | 그룹(프론트 팀) 상세, 멤버, 초대, 팀 수정 | `useTeamDetailQuery`, `useCreateTeamMutation`, `useUpdateTeamMutation`, `useDeleteTeamMutation`, `useTeamMembersQuery`, `useInviteMemberMutation`, `useRemoveMemberMutation`, `useInvitationTokenQuery`, `useAcceptInvitationMutation`, `useTeamTasksByDateQuery` |
-| `src/hooks/useTaskList.ts` | 컬럼 단위 할 일 목록 조회/생성/수정/삭제/순서 변경 | `useTaskList`, `useCreateTaskList`, `useUpdateTaskList`, `useDeleteTaskList`, `useUpdateTaskListOrder` |
-| `src/hooks/useTask.ts` | 할 일 조회/수정/삭제/정렬과 할 일 댓글 | `useTasksQuery`, `useTaskDetailQuery`, `useCreateTaskMutation`, `useUpdateTaskMutation`, `useDeleteTaskMutation`, `useUpdateTaskOrderMutation`, `useTaskCommentsQuery`, `useCreateTaskCommentMutation`, `useUpdateTaskCommentMutation`, `useDeleteTaskCommentMutation` |
-| `src/hooks/useRecurring.ts` | 반복 일정 생성/수정/삭제 | `useCreateRecurringMutation`, `useUpdateRecurringMutation`, `useDeleteRecurringMutation` |
-| `src/hooks/useBoard.ts` | 게시글 목록/상세/작성/수정/삭제/좋아요 | `useBoardListQuery`, `useBoardDetailQuery`, `useCreateBoardMutation`, `useUpdateBoardMutation`, `useDeleteBoardMutation`, `useLikeBoardMutation`, `useUnlikeBoardMutation` |
-| `src/hooks/useBoardComment.ts` | 게시글 댓글 목록/작성/수정/삭제 | `useBoardCommentsQuery`, `useCreateBoardCommentMutation`, `useUpdateBoardCommentMutation`, `useDeleteBoardCommentMutation` |
-
-### 4-2. 바로 파일로 만들지 않아도 되는 도메인
-
-아래 도메인은 재사용이 더 생길 때 분리해도 충분합니다.
-
-| 파일 | 판단 |
-| --- | --- |
-| `src/hooks/useOauthApp.ts` | 팀 설정 화면이 붙을 때 `useTeam`에서 분리할지 결정해도 늦지 않음 |
-
-### 4-3. 라우트 전용 훅으로 남겨야 하는 것
-
-이런 훅은 `src/hooks`가 아니라 각 라우트 폴더 아래 `hooks/`에 둡니다.
-
-- 필터 탭 선택 상태
-- 모달 열림/닫힘 상태
-- 드래그 UI 상태
-- 화면 전용 pagination UI 상태
-- 폼 임시값/정렬 토글
+서버에 진짜 요청을 보내는 함수입니다.
 
 예:
 
-- `src/app/(landing)/hooks/useScrollReveal.ts`
-- 각 서비스 라우트 화면 안의 `hooks/` 폴더
+- [articleApi.ts](../src/api/articleApi.ts)
+- [commentApi.ts](../src/api/commentApi.ts)
 
-## 5. 화면 기준으로 보면 어떻게 연결되는가
+쉽게 말하면:
 
-현재 라우트 기준으로 보면 연결은 아래처럼 보는 게 가장 자연스럽습니다.
+- `getArticleList()`는 게시글 목록을 가져오고
+- `createArticleComment()`는 게시글 댓글을 생성합니다.
 
-| 화면 | 주로 쓰는 훅 |
-| --- | --- |
-| `login`, `signup`, `oauth` | `useAuth` |
-| `mypage`, `myhistory` | `useUser`, `useImage` |
-| `addteam`, `jointeam`, `[teamid]/edit` | `useTeam`, `useImage` |
-| `[teamid]/tasklist` | `useTaskList`, `useTask`, `useRecurring` |
-| `boards`, `boards/[articleId]` | `useBoard`, `useBoardComment` |
+여기에는 React Query 코드가 없습니다.  
+그냥 fetch만 담당합니다.
 
-이렇게 잡아두면 화면에서 훅 이름만 봐도 어느 캐시를 건드리는지 읽히고, mutation 이후 invalidate 방향도 예측하기 쉬워집니다.
+---
 
-## 6. mutation-only 도메인은 `queryOptions`를 생략할 수 있습니다.
+### 2) query key
 
-지금 프로젝트에서는 `auth`, `image`처럼 조회보다 `useMutation`이 중심인 도메인이 있습니다.
+React Query가 캐시를 저장할 때 쓰는 이름표입니다.
 
-이 경우에는 억지로 `queryOptions` 파일을 만들기보다 아래처럼 정리하는 편이 더 자연스럽습니다.
-
-1. `queryKeys`
-2. `api 함수`
-3. `도메인 mutation 훅`
-
-즉, `queryOptions`는 `useQuery`, `useInfiniteQuery`가 실제로 필요한 도메인에 우선 적용합니다.
-
-## 7. query / mutation options 확장 규칙
-
-현재 프로젝트는 공통 규칙은 `factory`에서 유지하되, 사용하는 쪽에서 옵션을 덧붙일 수 있는 구조를 기본으로 합니다.
-
-### 7-1. query 확장 방식
-
-공통 훅은 `options`를 받아서 그대로 `queryOptions`에 전달합니다.
+예:
 
 ```ts
-export function useBoardListQuery<TData = BoardListData>({
-  options,
-  params,
-  teamId,
-}: UseBoardListParams<TData>) {
-  return useQuery(boardQueryOptions.list<TData>(teamId, params, options));
-}
+queryKeys.article.list(teamId, { page: 1, pageSize: 10 });
+queryKeys.article.detail(teamId, articleId);
+queryKeys.articleComment.list(teamId, articleId, { limit: 10 });
 ```
 
-화면에서는 이렇게 추가 옵션을 줄 수 있습니다.
+쉽게 말하면:
+
+- “이건 게시글 목록 캐시”
+- “이건 게시글 상세 캐시”
+- “이건 이 게시글의 댓글 캐시”
+
+를 React Query가 구분할 수 있게 붙이는 이름입니다.
+
+---
+
+### 3) query options
+
+`queryKey`와 `queryFn`을 묶어둔 기본 세팅입니다.
+
+예:
+
+- [articleQueryOptions.ts](../src/api/queryOptions/articleQueryOptions.ts)
+- [commentQueryOptions.ts](../src/api/queryOptions/commentQueryOptions.ts)
+
+쉽게 말하면:
+
+- “이 요청은 어떤 key를 쓰고”
+- “어떤 API 함수를 호출하고”
+- “기본 캐시 시간은 얼마나 주는지”
+
+를 미리 정리해둔 파일입니다.
+
+---
+
+### 4) hook
+
+우리가 화면에서 실제로 사용하는 최종 입구입니다.
+
+예:
+
+- [useArticle.ts](../src/hooks/useArticle.ts)
+- [useArticleComment.ts](../src/hooks/useArticleComment.ts)
+
+화면에서는 대부분 이것만 쓰면 됩니다.
+
+예:
 
 ```ts
-const boardListQuery = useBoardListQuery({
+const articleListQuery = useArticleListQuery({
   teamId,
-  params: {
-    page: 1,
-    pageSize: 10,
-    orderBy: 'recent',
-  },
-  options: {
-    enabled: !!teamId,
-    staleTime: 1000 * 60,
-    select: (data) => data.list,
-  },
 });
 ```
 
-### 7-2. mutation 확장 방식
+이 한 줄 안에서 내부적으로:
 
-mutation 훅은 기본 invalidate 규칙은 내부에서 유지하고, 호출부에서 `onSuccess`, `onError`, `onSettled` 등을 추가할 수 있게 합니다.
+- `queryKey`도 연결되고
+- API 함수도 호출되고
+- React Query 옵션도 붙습니다.
+
+---
+
+## 3. 실제로는 어떤 순서로 연결되는가
+
+예를 들어 “게시글 목록 조회”는 아래 순서로 이어집니다.
+
+### 1단계. API 함수
+
+[articleApi.ts](../src/api/articleApi.ts) 안의:
 
 ```ts
-export function useSignInMutation(
-  options?: MutationOptionsOverrides<SignInData, SignInVariables>,
-) {
-  const queryClient = useQueryClient();
-  const handleSuccess = options?.onSuccess;
-
-  return useMutation(
-    createMutationOptions({
-      mutationFn: ({ body, teamId }: SignInVariables) => signIn(teamId, body),
-      options: {
-        ...options,
-        onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
-            queryClient.invalidateQueries({ queryKey: queryKeys.user.groups() }),
-          ]);
-          await handleSuccess?.(data, variables, onMutateResult, context);
-        },
-      },
-    }),
-  );
-}
+getArticleList(teamId, params)
 ```
 
-이 구조의 장점은 아래와 같습니다.
+### 2단계. query key
 
-- 공통 invalidate 규칙이 빠지지 않음
-- 화면마다 필요한 콜백을 추가할 수 있음
-- 훅을 새로 복제하지 않고도 확장 가능
-
-## 8. 현재 기준 추천 사용 순서
-
-새로운 조회가 필요하면 아래 순서로 작업합니다.
-
-1. `src/api/queryKeys`에 키 추가
-2. `src/api/*Api.ts`에 fetch 함수 추가
-3. `src/api/queryOptions/*`에 options 추가
-4. `src/hooks/*`에 도메인 훅 추가
-5. 페이지/컴포넌트에서는 도메인 훅 사용
-
-## 9. 현재 완성된 예시: Board
-
-현재 board는 실제 사용 예시로 볼 수 있습니다.
-
-### 8-1. query key
-
-파일:
-- `src/api/queryKeys/board.ts`
-
-예시:
+[article.ts](../src/api/queryKeys/article.ts) 안의:
 
 ```ts
-queryKeys.board.all(teamId);
-queryKeys.board.lists(teamId);
-queryKeys.board.list(teamId, {
+queryKeys.article.list(teamId, params)
+```
+
+### 3단계. query options
+
+[articleQueryOptions.ts](../src/api/queryOptions/articleQueryOptions.ts) 안의:
+
+```ts
+articleQueryOptions.list(teamId, params, options)
+```
+
+### 4단계. hook
+
+[useArticle.ts](../src/hooks/useArticle.ts) 안의:
+
+```ts
+useArticleListQuery({ teamId, params, options })
+```
+
+### 5단계. 화면에서 사용
+
+```ts
+const articleListQuery = useArticleListQuery({
+  teamId,
+});
+```
+
+즉, 팀원이 화면에서 볼 때는 **마지막 hook만 알면** 됩니다.
+
+---
+
+## 4. 지금 프로젝트에서는 어떤 이름으로 검색하면 되는가
+
+여기 한 번 헷갈릴 수 있어요.
+
+화면 경로는 `/boards`인데,  
+Swagger 기준 이름은 `Article`입니다.
+
+그래서 데이터 계층은 아래처럼 읽으면 됩니다.
+
+| 화면에서 보이는 이름 | 실제 React Query 이름 |
+| --- | --- |
+| 게시판 / 채용 / 홍보 | `article` |
+| 게시글 댓글 | `articleComment` |
+| 할 일 댓글 | `comment` |
+| 팀 | `team` |
+
+즉:
+
+- 라우트는 `/boards`
+- query key는 `queryKeys.article`
+- hook은 `useArticle...`
+
+이렇게 연결된다고 생각하면 됩니다.
+
+---
+
+## 5. 팀원이 가장 자주 쓰게 될 hook
+
+### 게시글 목록
+
+```ts
+const articleListQuery = useArticleListQuery({
+  teamId,
+});
+```
+
+이 hook은 기본적으로 아래 값을 자동으로 넣습니다.
+
+```ts
+{
   page: 1,
   pageSize: 10,
   orderBy: 'recent',
-  keyword: '공지',
-});
-queryKeys.board.detail(teamId, articleId);
-queryKeys.board.like(teamId, articleId);
-```
-
-### 8-2. api 함수
-
-파일:
-- `src/api/boardApi.ts`
-
-예시:
-
-```ts
-export async function getBoardList(
-  teamId: string,
-  params?: BoardListQueryParams,
-) {
-  const endpoint = `${teamEndpoint('/articles', teamId)}${buildQueryString(
-    params,
-  )}`;
-
-  return apiClient<unknown>(endpoint);
 }
 ```
 
-### 8-3. query options
+그래서 단순 목록 화면이면 params를 안 줘도 됩니다.
 
-파일:
-- `src/api/queryOptions/boardQueryOptions.ts`
+---
 
-예시:
-
-```ts
-export const boardQueryOptions = {
-  list: (teamId: string, params?: BoardListQueryParams) =>
-    createListQueryOptions({
-      queryFn: () => getBoardList(teamId, params),
-      queryKey: queryKeys.board.list(teamId, params),
-    }),
-};
-```
-
-### 8-4. hook
-
-파일:
-- `src/hooks/useBoard.ts`
-
-예시:
+### 게시글 상세
 
 ```ts
-export function useBoardListQuery<TData = BoardListData>({
-  options,
-  params,
+const articleDetailQuery = useArticleDetailQuery({
   teamId,
-}: UseBoardListParams<TData>) {
-  return useQuery(boardQueryOptions.list<TData>(teamId, params, options));
-}
-```
-
-### 8-5. 화면에서 사용
-
-```tsx
-'use client';
-
-import { useBoardListQuery } from '@/hooks/useBoard';
-
-type BoardPageProps = {
-  teamId: string;
-};
-
-export default function BoardPage({ teamId }: BoardPageProps) {
-  const { data, isLoading, isError } = useBoardListQuery({
-    teamId,
-    params: {
-      page: 1,
-      pageSize: 10,
-      orderBy: 'recent',
-    },
-    options: {
-      enabled: !!teamId,
-      staleTime: 1000 * 60,
-    },
-  });
-
-  if (isLoading) {
-    return <div>불러오는 중...</div>;
-  }
-
-  if (isError) {
-    return <div>목록을 불러오지 못했습니다.</div>;
-  }
-
-  return <div>{JSON.stringify(data)}</div>;
-}
-```
-
-## 10. invalidate 예시
-
-mutation 이후에는 관련 범위만 invalidate합니다.
-
-```ts
-import { useQueryClient } from '@tanstack/react-query';
-
-import { queryKeys } from '@/api/queryKeys';
-
-const queryClient = useQueryClient();
-
-await queryClient.invalidateQueries({
-  queryKey: queryKeys.board.lists(teamId),
-});
-
-await queryClient.invalidateQueries({
-  queryKey: queryKeys.board.detail(teamId, articleId),
+  articleId,
 });
 ```
 
-목록만 다시 불러올지, 상세도 같이 다시 불러올지는 mutation 영향 범위에 따라 정합니다.
+---
 
-## 11. 새 도메인 추가 예시
-
-예를 들어 task list 조회를 추가할 때는 아래 순서로 맞춥니다.
-
-### 10-1. query key
+### 게시글 댓글 목록
 
 ```ts
-queryKeys.taskList.list(teamId, {
-  groupId,
-  date: '2026-04-21',
-});
-```
-
-### 10-2. api 함수
-
-```ts
-export async function getTaskLists(
-  teamId: string,
-  params?: TaskListQueryParams,
-) {
-  const endpoint = `${teamEndpoint('/task-lists', teamId)}${buildQueryString(
-    params,
-  )}`;
-
-  return apiClient<unknown>(endpoint);
-}
-```
-
-### 10-3. query options
-
-```ts
-export const taskQueryOptions = {
-  taskLists: <TData = TaskListResponse>(
-    teamId: string,
-    params?: TaskListQueryParams,
-    options?: QueryOptionsOverrides<TaskListResponse, TData>,
-  ) =>
-    createListQueryOptions<TaskListResponse, TData>({
-      options,
-      queryFn: () => getTaskLists(teamId, params),
-      queryKey: queryKeys.taskList.list(teamId, params),
-    }),
-};
-```
-
-## 12. 지금 기준 최종 판단
-
-현재 프로젝트에서는 아래처럼 정리하는 것이 가장 좋습니다.
-
-- `Auth`와 `User`는 분리합니다.
-- `TaskList`, `Task`, `Recurring`는 분리합니다.
-- `Board`와 `BoardComment`는 분리합니다.
-- 서버 상태 훅은 `src/hooks` 루트에 둡니다.
-- `Image`는 mutation 훅으로 유지하고, `OauthApp`은 실제 사용 시점에 분리합니다.
-- 페이지 전용 UI 상태는 전역 훅으로 올리지 않습니다.
-
-즉, 지금 `board`를 기준 구현으로 삼되, 다음 순서는 아래가 좋습니다.
-
-1. `useUser.ts`
-2. `useTeam.ts`
-3. `useTaskList.ts`
-4. `useTask.ts`
-5. `useRecurring.ts`
-6. `useBoardComment.ts`
-7. 마지막에 `useAuth.ts` mutation 정리
-
-이 순서가 좋은 이유는 현재 기획 화면 기준으로 `myhistory/mypage`와 `tasklist` 화면이 가장 먼저 실제 데이터를 많이 쓰게 될 가능성이 높기 때문입니다.
-
-### 11-4. hook
-
-```ts
-export function useTaskLists({
+const articleCommentsQuery = useArticleCommentsQuery({
   teamId,
-  params,
-  options,
-}: UseTaskListsParams) {
-  return useQuery(taskQueryOptions.taskLists(teamId, params, options));
+  articleId,
+});
+```
+
+이 hook은 기본적으로:
+
+```ts
+{
+  limit: 10,
 }
 ```
 
-## 13. 팀 규칙
+을 자동으로 넣어줍니다.
 
-- `queryKey`는 항상 `queryKeys`를 통해 생성합니다.
-- `queryFn`은 `api` 함수만 호출합니다.
-- `useQuery`는 되도록 `src/hooks`의 도메인 훅에서만 직접 씁니다.
-- `queryOptions`와 `mutation`은 기본 규칙을 유지하되, 호출부에서 `options`를 덧붙일 수 있게 열어둡니다.
-- mutation 훅은 기본 invalidate 이후에 사용자 정의 `onSuccess`가 실행되도록 유지합니다.
-- 페이지 전용 상태는 전역 hooks가 아니라 라우트 폴더 아래 `hooks/`로 둡니다.
-- 아직 API가 없는 도메인은 `queryOptions`와 `hook` 자리를 먼저 만들 수 있지만, 실제 fetch 함수가 없으면 가짜 요청은 넣지 않습니다.
+---
 
-## 14. 현재 상태 정리
+### 할 일 댓글 목록
 
-- 실제 패턴이 연결된 도메인: `auth`, `board`, `boardComment`, `comment`, `image`, `recurring`, `task`, `taskList`, `team`, `user`
-- 키만 먼저 정리된 도메인: `oauthApp`
+```ts
+const taskCommentsQuery = useTaskCommentsQuery({
+  teamId,
+  taskId,
+});
+```
 
-새 기능을 붙일 때는 `board`를 기준 예시로 보면 됩니다.
+---
+
+### 내 정보
+
+```ts
+const meQuery = useMeQuery();
+```
+
+---
+
+### 내가 속한 팀 목록
+
+```ts
+const myGroupsQuery = useMyGroupsQuery();
+```
+
+---
+
+## 6. `options`는 언제 쓰는가
+
+기본 hook만 써도 되지만, 화면마다 조금 더 제어하고 싶을 때 `options`를 씁니다.
+
+예:
+
+```ts
+const articleDetailQuery = useArticleDetailQuery({
+  teamId,
+  articleId,
+  options: {
+    enabled: !!articleId,
+  },
+});
+```
+
+여기서 `enabled`는:
+
+> articleId가 있을 때만 요청 보내기
+
+라는 뜻입니다.
+
+또는 `select`를 써서 응답 일부만 꺼낼 수도 있습니다.
+
+```ts
+const articleListQuery = useArticleListQuery({
+  teamId,
+  options: {
+    select: (data) => data,
+  },
+});
+```
+
+즉,
+
+- `params`는 서버에 보낼 값
+- `options`는 React Query 동작 설정
+
+이라고 생각하면 됩니다.
+
+---
+
+## 7. `all`, `lists`, `detail`은 뭐고 언제 쓰는가
+
+이 부분이 초반에 제일 헷갈릴 수 있는데,  
+생각보다 단순합니다.
+
+### `detail`
+
+상세 1개를 가리킵니다.
+
+```ts
+queryKeys.article.detail(teamId, articleId);
+```
+
+의미:
+
+> 이 게시글 한 개의 상세 캐시
+
+---
+
+### `list`
+
+목록 1개를 가리킵니다.
+
+```ts
+queryKeys.article.list(teamId, {
+  page: 1,
+  pageSize: 10,
+});
+```
+
+의미:
+
+> 이 조건으로 조회한 게시글 목록 캐시
+
+---
+
+### `lists`
+
+목록 계열 전체를 가리킵니다.
+
+```ts
+queryKeys.article.lists(teamId);
+```
+
+의미:
+
+> 이 팀의 게시글 목록 캐시들을 묶어서 가리킴
+
+주로 이런 때 씁니다.
+
+- 게시글 생성 후 목록 새로고침
+- 게시글 삭제 후 목록 새로고침
+
+---
+
+### `all`
+
+해당 도메인 전체를 가리킵니다.
+
+```ts
+queryKeys.article.all(teamId);
+queryKeys.articleComment.all(teamId);
+```
+
+의미:
+
+> 이 팀의 게시글 관련 캐시 전체  
+> 또는 이 팀의 게시글 댓글 관련 캐시 전체
+
+네가 물어본 `all`은 **추가되어 있습니다.**
+
+예를 들면:
+
+- `queryKeys.article.all(teamId)`
+- `queryKeys.articleComment.all(teamId)`
+- `queryKeys.comment.all(teamId)`
+
+이렇게 들어가 있어요.
+
+---
+
+### 중간 범위 key
+
+이건 이번에 같이 보강한 포인트입니다.
+
+#### 게시글 댓글
+
+```ts
+queryKeys.articleComment.article(teamId, articleId);
+```
+
+의미:
+
+> 이 게시글에 달린 댓글 캐시 전체
+
+즉 `list`, `infiniteList`를 한 번에 잡고 싶을 때 편합니다.
+
+#### 할 일 댓글
+
+```ts
+queryKeys.comment.task(teamId, taskId);
+```
+
+의미:
+
+> 이 할 일에 달린 댓글 캐시 전체
+
+---
+
+## 8. 왜 `commentApi.ts`에 댓글이 두 종류 같이 들어 있는가
+
+현재 [commentApi.ts](../src/api/commentApi.ts)에는 댓글이 두 종류 들어 있습니다.
+
+### 할 일 댓글
+
+- Swagger `Comment`
+
+### 게시글 댓글
+
+- Swagger `ArticleComment`
+
+이걸 지금 굳이 파일 두 개로 나누지 않은 이유는:
+
+- 둘 다 CRUD 패턴이 비슷하고
+- 지금 구현량이 아주 크지 않고
+- 한 파일에서 비교하며 보는 편이 더 쉽기 때문입니다.
+
+즉 지금은:
+
+- 할 일 댓글도 [commentApi.ts](../src/api/commentApi.ts)
+- 게시글 댓글도 [commentApi.ts](../src/api/commentApi.ts)
+
+를 보면 됩니다.
+
+---
+
+## 9. `queryOptions/constants.ts`는 왜 만들었는가
+
+[constants.ts](../src/api/queryOptions/constants.ts)는
+여러 query options에서 공통으로 쓰는 기본 캐시 옵션 모음입니다.
+
+예:
+
+- `DETAIL_STALE_TIME`
+- `LIST_STALE_TIME`
+- `COMMENT_LIST_STALE_TIME`
+- `USER_ME_STALE_TIME`
+
+왜 필요하냐면,
+매 파일마다 `30초`, `5분` 같은 값을 흩어 쓰면 나중에 수정하기 어렵기 때문입니다.
+
+그래서 지금 기준은
+
+- 상세는 이 정도
+- 목록은 이 정도
+- 댓글 목록은 이 정도
+
+같은 기본 규칙을 한 곳에 두고 재사용하는 구조입니다.
+
+---
+
+## 10. invalidate는 언제 쓰는가
+
+`invalidateQueries`는
+
+> “이 캐시는 오래됐을 수 있으니 다시 받아와”
+
+라고 React Query에게 알려주는 동작입니다.
+
+예를 들어 게시글 댓글을 수정하면:
+
+- 댓글 목록도 다시 받아와야 하고
+- 게시글 상세에 있는 댓글 수 같은 정보도 다시 받아와야 할 수 있습니다.
+
+그래서 현재 훅 내부는 이런 식으로 되어 있습니다.
+
+```ts
+queryClient.invalidateQueries({
+  queryKey: queryKeys.articleComment.article(teamId, articleId),
+});
+
+queryClient.invalidateQueries({
+  queryKey: queryKeys.article.detail(teamId, articleId),
+});
+```
+
+이 의미는:
+
+1. 이 게시글의 댓글 관련 캐시를 다시 받아오고
+2. 이 게시글 상세 캐시도 다시 받아온다
+
+입니다.
+
+---
+
+## 11. 왜 화면에서는 hook만 쓰면 편한가
+
+예를 들어 댓글 생성 버튼을 눌렀다고 해볼게요.
+
+화면에서 우리가 할 일은 보통 이것뿐입니다.
+
+```ts
+const createArticleCommentMutation = useCreateArticleCommentMutation();
+```
+
+그리고 실제 클릭 시:
+
+```ts
+createArticleCommentMutation.mutate({
+  teamId,
+  articleId,
+  body: {
+    content: commentText,
+  },
+});
+```
+
+그러면 hook 내부에서:
+
+- API 요청 보내고
+- 성공하면
+- 관련 query invalidate까지 해줍니다.
+
+그래서 팀원 입장에서는
+
+> “mutation 성공 후 어떤 목록을 다시 받아야 하지?”
+
+를 매번 다시 고민하지 않아도 됩니다.
+
+---
+
+## 12. 새 API를 붙일 때 순서
+
+새 기능을 붙일 때는 아래 순서대로 가면 됩니다.
+
+### 1단계. Swagger 먼저 보기
+
+예:
+
+- `Article`
+- `ArticleComment`
+- `Comment`
+- `Group`
+
+여기서 태그 이름을 먼저 봅니다.
+
+---
+
+### 2단계. API 함수 만들기
+
+예:
+
+- 게시글이면 [articleApi.ts](../src/api/articleApi.ts)
+- 댓글이면 [commentApi.ts](../src/api/commentApi.ts)
+
+여기는 fetch만 만듭니다.
+
+---
+
+### 3단계. query key 만들기
+
+예:
+
+- [article.ts](../src/api/queryKeys/article.ts)
+- [team.ts](../src/api/queryKeys/team.ts)
+
+이때 같이 판단합니다.
+
+- `detail` 필요한가?
+- `list` 필요한가?
+- `all` 필요한가?
+- 중간 범위 key 필요한가?
+
+---
+
+### 4단계. query options 만들기
+
+예:
+
+- [articleQueryOptions.ts](../src/api/queryOptions/articleQueryOptions.ts)
+- [commentQueryOptions.ts](../src/api/queryOptions/commentQueryOptions.ts)
+
+---
+
+### 5단계. hook 만들기
+
+예:
+
+- [useArticle.ts](../src/hooks/useArticle.ts)
+- [useArticleComment.ts](../src/hooks/useArticleComment.ts)
+
+여기서 화면에서 바로 쓸 수 있는 형태로 감쌉니다.
+
+---
+
+## 13. 어디까지 공통 훅으로 빼야 하는가
+
+### `src/hooks`에 두는 것
+
+여러 화면에서 재사용될 서버 상태
+
+예:
+
+- 게시글 목록
+- 게시글 상세
+- 게시글 댓글
+- 내 정보
+- 팀 상세
+
+### 각 페이지 폴더 `hooks/`에 두는 것
+
+화면 전용 UI 상태
+
+예:
+
+- 모달 열림/닫힘
+- 탭 선택 상태
+- 드래그 상태
+- 임시 입력값
+
+즉,
+
+- 서버에서 받아오는 값 = 공통 훅
+- 화면에서만 쓰는 UI 상태 = 라우트 훅
+
+이라고 보면 됩니다.
+
+---
+
+## 14. 초보 기준으로 제일 쉽게 기억하는 방법
+
+처음엔 정말 이것만 기억해도 괜찮습니다.
+
+### 조회하고 싶다
+
+→ `src/hooks`에서 `useSomethingQuery`를 찾는다
+
+### 생성/수정/삭제하고 싶다
+
+→ `src/hooks`에서 `useSomethingMutation`을 찾는다
+
+### 캐시를 다시 받아와야 할 것 같다
+
+→ `queryKeys`를 본다
+
+### 새 API를 붙여야 한다
+
+→ `api 함수 -> queryKeys -> queryOptions -> hook` 순서로 만든다
+
+---
+
+## 15. 마지막 체크리스트
+
+작업 전에 아래만 보면 실수가 많이 줄어듭니다.
+
+- Swagger 태그 이름으로 도메인 이름을 잡았는가?
+- 화면에서는 hook만 써도 되는 구조인가?
+- `all`, `lists`, 중간 범위 key가 필요한지 생각했는가?
+- mutation 후 어떤 캐시를 invalidate해야 하는지 정했는가?
+- 팀원이 다음에 봐도 이름만 검색해서 찾을 수 있는가?
+
+이 기준만 지키면 React Query가 훨씬 덜 무섭고,  
+팀원끼리 코드를 이어붙일 때도 훨씬 편해집니다.

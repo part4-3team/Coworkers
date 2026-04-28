@@ -5,6 +5,7 @@
 import { getTeamDetail, getTeamTasksByDate } from '@/api/groupApi';
 import type { TeamScopedDateQueryParams } from '@/api/queryKeys';
 import { queryKeys } from '@/api/queryKeys';
+import { QUERY_OPTION_DEFAULTS } from '@/api/queryOptions/constants';
 import {
   createListQueryOptions,
   createQueryOptions,
@@ -23,6 +24,7 @@ export const teamQueryOptions = {
       options,
       queryFn: () => getTeamDetail(teamId),
       queryKey: queryKeys.team.detail(teamId),
+      staleTime: QUERY_OPTION_DEFAULTS.DETAIL_STALE_TIME,
     }),
   tasksByDate: <TData = TeamTasksByDateData>(
     teamId: string,
@@ -33,5 +35,6 @@ export const teamQueryOptions = {
       options,
       queryFn: () => getTeamTasksByDate(teamId, params),
       queryKey: queryKeys.team.tasksByDate(teamId, params),
+      staleTime: QUERY_OPTION_DEFAULTS.LIST_STALE_TIME,
     }),
 } as const;

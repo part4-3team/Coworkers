@@ -20,7 +20,7 @@ export default function CreateTeamPage() {
 
   return (
     <div className="flex h-full items-center justify-center px-4 py-24 md:px-14">
-      <div className="w-full max-w-xl rounded-[20px] bg-background-primary px-6 pb-15 pt-10">
+      <div className="w-full max-w-xl rounded-[20px] bg-background-primary p-[44px]">
         <h2 className="mb-8 text-xl font-bold text-text-primary">
           팀 생성하기
         </h2>
@@ -28,7 +28,7 @@ export default function CreateTeamPage() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <AddUserImg onChangeFile={handleChangeFile} />
 
-          <div className="mb-10 flex flex-col gap-2">
+          <div className="mb-[40px] flex flex-col gap-2">
             <label
               htmlFor="teamName"
               className="text-sm font-medium text-text-primary"
@@ -51,7 +51,7 @@ export default function CreateTeamPage() {
           <button
             type="submit"
             disabled={isDisabled}
-            className="mb-5 h-12 w-full rounded-xl bg-brand-primary text-base text-text-inverse hover:bg-interaction-hover disabled:cursor-not-allowed disabled:opacity-40"
+            className="mb-5 h-12 w-full rounded-xl bg-brand-primary text-base text-text-inverse hover:bg-interaction-hover disabled:bg-text-disabled disabled:cursor-not-allowed"
           >
             생성하기
           </button>

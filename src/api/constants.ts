@@ -14,6 +14,7 @@ export const API_PATH_SEGMENTS = {
   COMMENTS: '/comments',
   GROUPS: '/groups',
   IMAGES: '/images',
+  LIKE: '/like',
   RECURRING: '/recurring',
   TASK_LISTS: '/task-lists',
   TASKS: '/tasks',

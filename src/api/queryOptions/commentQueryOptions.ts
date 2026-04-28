@@ -1,10 +1,11 @@
 /**
- * 할 일 댓글과 채용 / 홍보 게시글 댓글 query options를 정의하는 파일입니다.
+ * Swagger `Comment`, `ArticleComment` 도메인 query options를 정의합니다.
  */
 
-import { getBoardComments, getTaskComments } from '@/api/commentApi';
+import { getArticleComments, getTaskComments } from '@/api/commentApi';
 import type { CursorPaginationQueryParams, QueryKeyId } from '@/api/queryKeys';
 import { queryKeys } from '@/api/queryKeys';
+import { QUERY_OPTION_DEFAULTS } from '@/api/queryOptions/constants';
 import {
   createListQueryOptions,
   createQueryOptions,
@@ -12,7 +13,7 @@ import {
 } from '@/api/queryOptions/factory';
 
 type TaskCommentsData = Awaited<ReturnType<typeof getTaskComments>>;
-type BoardCommentsData = Awaited<ReturnType<typeof getBoardComments>>;
+type ArticleCommentsData = Awaited<ReturnType<typeof getArticleComments>>;
 
 export const commentQueryOptions = {
   taskComments: <TData = TaskCommentsData>(
@@ -23,20 +24,22 @@ export const commentQueryOptions = {
     createQueryOptions<TaskCommentsData, TData>({
       options,
       queryFn: () => getTaskComments(teamId, taskId),
-      queryKey: queryKeys.comment.list(teamId, taskId),
+      queryKey: queryKeys.comment.task(teamId, taskId),
+      staleTime: QUERY_OPTION_DEFAULTS.COMMENT_LIST_STALE_TIME,
     }),
 } as const;
 
-export const boardCommentQueryOptions = {
-  list: <TData = BoardCommentsData>(
+export const articleCommentQueryOptions = {
+  list: <TData = ArticleCommentsData>(
     teamId: string,
     articleId: QueryKeyId,
     params: CursorPaginationQueryParams,
-    options?: QueryOptionsOverrides<BoardCommentsData, TData>,
+    options?: QueryOptionsOverrides<ArticleCommentsData, TData>,
   ) =>
-    createListQueryOptions<BoardCommentsData, TData>({
+    createListQueryOptions<ArticleCommentsData, TData>({
       options,
-      queryFn: () => getBoardComments(teamId, articleId, params),
-      queryKey: queryKeys.boardComment.list(teamId, articleId, params),
+      queryFn: () => getArticleComments(teamId, articleId, params),
+      queryKey: queryKeys.articleComment.list(teamId, articleId, params),
+      staleTime: QUERY_OPTION_DEFAULTS.COMMENT_LIST_STALE_TIME,
     }),
 } as const;

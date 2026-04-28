@@ -8,6 +8,7 @@ import type {
   TeamScopedDateQueryParams,
 } from '@/api/queryKeys';
 import { queryKeys } from '@/api/queryKeys';
+import { QUERY_OPTION_DEFAULTS } from '@/api/queryOptions/constants';
 import {
   createListQueryOptions,
   createQueryOptions,
@@ -30,6 +31,7 @@ export const taskQueryOptions = {
       options,
       queryFn: () => getTaskDetail(teamId, taskListId, taskId),
       queryKey: queryKeys.task.detail(teamId, taskId, taskListId),
+      staleTime: QUERY_OPTION_DEFAULTS.DETAIL_STALE_TIME,
     }),
   list: <TData = TasksData>(
     teamId: string,
@@ -40,6 +42,7 @@ export const taskQueryOptions = {
       options,
       queryFn: () => getTasks(teamId, params),
       queryKey: queryKeys.task.list(teamId, params),
+      staleTime: QUERY_OPTION_DEFAULTS.LIST_STALE_TIME,
     }),
   taskListDetail: <TData = TaskListDetailData>(
     teamId: string,
@@ -51,5 +54,6 @@ export const taskQueryOptions = {
       options,
       queryFn: () => getTaskListDetail(teamId, taskListId, params),
       queryKey: queryKeys.taskList.detail(teamId, taskListId, params),
+      staleTime: QUERY_OPTION_DEFAULTS.TASK_LIST_DETAIL_STALE_TIME,
     }),
 } as const;
