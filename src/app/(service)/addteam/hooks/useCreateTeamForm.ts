@@ -1,53 +1,63 @@
-import { useState } from 'react';
+'use client';
+
+/**
+ * 팀 생성하기 폼 상태와 제출 로직을 관리하는 훅입니다.
+ */
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { useToast } from '@/components/common/toast';
+
+const createTeamFormSchema = z.object({
+  teamImage: z.custom<File | null>().optional(),
+  teamName: z
+    .string()
+    .trim()
+    .min(1, '팀 이름을 입력해주세요.')
+    .refine(
+      (value) => !/[^a-zA-Z0-9가-힣\s]/.test(value),
+      '특수기호가 포함된 이름은 사용할 수 없습니다.',
+    )
+    .refine((value) => value.length <= 8, '8자 이내로 작성해 주세요.'),
+});
+
+type CreateTeamFormValues = z.infer<typeof createTeamFormSchema>;
 
 export function useCreateTeamForm() {
-  const [teamName, setTeamName] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [file, setFile] = useState<File | null>(null);
-
-  const validateTeamName = (value: string) => {
-    if (!value.trim()) {
-      return '';
-    }
-
-    if (/[^a-zA-Z0-9가-힣\s]/.test(value)) {
-      return '특수기호가 포함된 이름은 사용할 수 없습니다.';
-    }
-
-    if (value.length > 8) {
-      return '8자 이내로 작성해 주세요.';
-    }
-
-    return '';
-  };
-
-  const handleChangeTeamName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setTeamName(value);
-    setErrorMessage(validateTeamName(value));
-  };
+  const { showToast } = useToast();
+  const {
+    formState: { errors, isValid },
+    handleSubmit,
+    register,
+    setValue,
+  } = useForm<CreateTeamFormValues>({
+    defaultValues: {
+      teamImage: null,
+      teamName: '',
+    },
+    mode: 'onChange',
+    resolver: zodResolver(createTeamFormSchema),
+  });
 
   const handleChangeFile = (newFile: File | null) => {
-    setFile(newFile);
+    setValue('teamImage', newFile, {
+      shouldDirty: true,
+    });
   };
 
-  const isDisabled = !teamName.trim() || Boolean(errorMessage);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (isDisabled) return;
-
+  const handleSubmitForm = handleSubmit((values) => {
     // TODO: API 연결
-    console.log('팀 생성:', teamName, file);
-  };
+    console.log('팀 생성:', values.teamName, values.teamImage);
+    showToast('팀이 생성되었습니다.', 'success');
+  });
 
   return {
-    teamName,
-    errorMessage,
-    isDisabled,
-    handleChangeTeamName,
+    errorMessage: errors.teamName?.message,
     handleChangeFile,
-    handleSubmit,
+    handleSubmit: handleSubmitForm,
+    isDisabled: !isValid,
+    teamNameField: register('teamName'),
   };
 }

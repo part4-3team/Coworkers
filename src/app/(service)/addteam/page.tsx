@@ -8,20 +8,20 @@ import { useCreateTeamForm } from '@/app/(service)/addteam/hooks/useCreateTeamFo
 import AddUserImg from '@/components/common/adduserimg/AddUserImg';
 import { PrimaryButton } from '@/components/common/button';
 import { Input } from '@/components/common/form';
+import { cn } from '@/utils/cn';
 
 export default function CreateTeamPage() {
   const {
-    teamName,
     errorMessage,
     isDisabled,
-    handleChangeTeamName,
     handleChangeFile,
     handleSubmit,
+    teamNameField,
   } = useCreateTeamForm();
 
   return (
     <div className="flex h-full items-center justify-center px-4 py-24 md:px-14">
-      <div className="w-full max-w-xl rounded-[20px] bg-background-primary p-[44px]">
+      <div className="w-full max-w-xl rounded-[20px] bg-background-primary p-11">
         <h2 className="mb-8 text-xl font-bold text-text-primary">
           팀 생성하기
         </h2>
@@ -29,7 +29,7 @@ export default function CreateTeamPage() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <AddUserImg onChangeFile={handleChangeFile} />
 
-          <div className="mb-[40px] flex flex-col gap-2">
+          <div className="mb-10 flex flex-col gap-3">
             <label
               htmlFor="teamName"
               className="text-sm font-medium text-text-primary"
@@ -39,13 +39,19 @@ export default function CreateTeamPage() {
 
             <Input
               id="teamName"
-              value={teamName}
-              onChange={handleChangeTeamName}
               placeholder="팀 이름을 입력해주세요."
+              aria-invalid={Boolean(errorMessage)}
+              className={cn(
+                errorMessage &&
+                  'border-status-danger focus:border-status-danger',
+              )}
+              {...teamNameField}
             />
 
             {errorMessage && (
-              <p className="text-xs text-status-danger">{errorMessage}</p>
+              <p className="text-xs font-medium text-status-danger">
+                {errorMessage}
+              </p>
             )}
           </div>
 
