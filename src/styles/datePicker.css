@@ -73,7 +73,7 @@
   display: flex;
   width: 248px;
   flex-direction: column;
-  gap: 0;
+  gap: 4px;
   margin: 4px auto 16px;
 }
 
@@ -93,7 +93,9 @@
   align-items: center;
   justify-content: center;
   margin: 0;
+  border: 2px solid transparent;
   border-radius: 8px;
+  background-clip: padding-box;
   color: var(--color-text-primary);
   font-size: 14px;
   font-weight: 400;
