@@ -17,7 +17,6 @@ export function useJoinTeamForm() {
     if (isDisabled) return;
 
     // TODO: 참여 API 연결
-    console.log('팀 참여:', teamLink);
   };
 
   return {
