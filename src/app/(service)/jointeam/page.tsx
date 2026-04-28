@@ -7,9 +7,10 @@
 import { useJoinTeamForm } from '@/app/(service)/jointeam/hooks/useJoinTeamForm';
 import { PrimaryButton } from '@/components/common/button';
 import { Input } from '@/components/common/form';
+import { cn } from '@/utils/cn';
 
 export default function JoinTeamPage() {
-  const { teamLink, isDisabled, handleChangeTeamLink, handleSubmit } =
+  const { errorMessage, isDisabled, teamLinkField, handleSubmit } =
     useJoinTeamForm();
 
   return (
@@ -23,17 +24,27 @@ export default function JoinTeamPage() {
           <div className="mb-10 flex flex-col">
             <label
               htmlFor="teamLink"
-              className="text-sm font-medium text-text-primary"
+              className="text-sm font-medium text-text-primary mb-3"
             >
               팀 링크
             </label>
 
             <Input
               id="teamLink"
-              value={teamLink}
-              onChange={handleChangeTeamLink}
               placeholder="팀 링크를 입력해주세요."
+              aria-invalid={Boolean(errorMessage)}
+              className={cn(
+                errorMessage &&
+                  'border-status-danger focus:border-status-danger',
+              )}
+              {...teamLinkField}
             />
+
+            {errorMessage && (
+              <p className="mt-2 text-xs font-medium text-status-danger">
+                {errorMessage}
+              </p>
+            )}
           </div>
 
           <PrimaryButton

@@ -1,28 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+/**
+ * 팀 참여하기 폼 상태와 제출 로직을 관리하는 훅입니다.
+ */
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const joinTeamFormSchema = z.object({
+  teamLink: z.string().trim().min(1, '팀 링크를 입력해주세요.'),
+});
+
+type JoinTeamFormValues = z.infer<typeof joinTeamFormSchema>;
 
 export function useJoinTeamForm() {
-  const [teamLink, setTeamLink] = useState('');
+  const {
+    formState: { errors, isValid },
+    handleSubmit,
+    register,
+  } = useForm<JoinTeamFormValues>({
+    defaultValues: {
+      teamLink: '',
+    },
+    mode: 'onChange',
+    resolver: zodResolver(joinTeamFormSchema),
+  });
 
-  const handleChangeTeamLink = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTeamLink(e.target.value);
-  };
-
-  const isDisabled = !teamLink.trim();
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (isDisabled) return;
-
+  const handleSubmitForm = handleSubmit(() => {
     // TODO: 참여 API 연결
-  };
+  });
 
   return {
-    teamLink,
-    isDisabled,
-    handleChangeTeamLink,
-    handleSubmit,
+    errorMessage: errors.teamLink?.message,
+    handleSubmit: handleSubmitForm,
+    isDisabled: !isValid,
+    teamLinkField: register('teamLink'),
   };
 }
