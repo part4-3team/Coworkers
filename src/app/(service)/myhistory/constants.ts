@@ -12,16 +12,51 @@ import type { RightPanelComment } from '@/components/common/rightPanel/types';
 
 const DEFAULT_TASK = {
   commentCount: 3,
-  dueDate: '2024년 7월 29일',
   frequency: '매일 반복',
   title: '법인 설립 안내 드리기',
 } as const;
 
-const createTasks = (prefix: string, count: number): MyHistoryTask[] =>
+const TODAY = new Date();
+
+function formatDateKey(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function createRelativeDateKey(monthOffset: number, day: number) {
+  return formatDateKey(
+    new Date(TODAY.getFullYear(), TODAY.getMonth() + monthOffset, day),
+  );
+}
+
+function formatTaskDueDate(dateKey: string) {
+  const [year, month, day] = dateKey.split('-').map(Number);
+
+  return `${year}년 ${month}월 ${day}일`;
+}
+
+const createTasks = (
+  prefix: string,
+  count: number,
+  dateKey: string,
+): MyHistoryTask[] =>
   Array.from({ length: count }, (_, index) => ({
     ...DEFAULT_TASK,
+    dueDate: formatTaskDueDate(dateKey),
     id: `${prefix}-${index + 1}`,
   }));
+
+const createGroup = (
+  dateKey: string,
+  prefix: string,
+  title: string,
+  teamName: string,
+  taskCount: number,
+) => ({
+  id: prefix,
+  tasks: createTasks(prefix, taskCount, dateKey),
+  teamName,
+  title,
+});
 
 const createSummaryDetails = (
   prefix: string,
@@ -153,39 +188,156 @@ export const MY_HISTORY_SUMMARY_ITEMS = [
 
 export const MY_HISTORY_SECTIONS = [
   {
-    date: '2025년 5월 21일 (목)',
+    date: createRelativeDateKey(0, 10),
     groups: [
-      {
-        id: 'may-21-company-registration',
-        tasks: createTasks('may-21-company-registration', 3),
-        teamName: '경영관리팀',
-        title: '법인 등기',
-      },
-      {
-        id: 'may-21-change-registration',
-        tasks: createTasks('may-21-change-registration', 2),
-        teamName: '프로덕트팀',
-        title: '변경 등기',
-      },
+      createGroup(
+        createRelativeDateKey(0, 10),
+        'current-company-registration-10',
+        '법인 등기',
+        '경영관리팀',
+        3,
+      ),
+      createGroup(
+        createRelativeDateKey(0, 10),
+        'current-change-registration-10',
+        '변경 등기',
+        '프로덕트팀',
+        2,
+      ),
     ],
-    id: 'may-21',
+    id: 'current-10',
   },
   {
-    date: '2025년 5월 22일 (금)',
+    date: createRelativeDateKey(0, 12),
     groups: [
-      {
-        id: 'may-22-company-registration',
-        tasks: createTasks('may-22-company-registration', 3),
-        teamName: '경영관리팀',
-        title: '법인 등기',
-      },
-      {
-        id: 'may-22-change-registration',
-        tasks: createTasks('may-22-change-registration', 2),
-        teamName: '프로덕트팀',
-        title: '변경 등기',
-      },
+      createGroup(
+        createRelativeDateKey(0, 12),
+        'current-company-registration-12',
+        '법인 설립',
+        '경영관리팀',
+        2,
+      ),
+      createGroup(
+        createRelativeDateKey(0, 12),
+        'current-doc-review-12',
+        '서류 검토',
+        '마케팅팀',
+        1,
+      ),
     ],
-    id: 'may-22',
+    id: 'current-12',
+  },
+  {
+    date: createRelativeDateKey(0, 15),
+    groups: [
+      createGroup(
+        createRelativeDateKey(0, 15),
+        'current-company-registration-15',
+        '법인 등기',
+        '경영관리팀',
+        3,
+      ),
+      createGroup(
+        createRelativeDateKey(0, 15),
+        'current-content-review-15',
+        '콘텐츠 검수',
+        '콘텐츠팀',
+        2,
+      ),
+    ],
+    id: 'current-15',
+  },
+  {
+    date: createRelativeDateKey(0, 21),
+    groups: [
+      createGroup(
+        createRelativeDateKey(0, 21),
+        'current-meeting-summary-21',
+        '미팅 정리',
+        '사업 개발팀',
+        2,
+      ),
+      createGroup(
+        createRelativeDateKey(0, 21),
+        'current-finance-review-21',
+        '비용 검토',
+        '재무 회계팀',
+        2,
+      ),
+    ],
+    id: 'current-21',
+  },
+  {
+    date: createRelativeDateKey(1, 2),
+    groups: [
+      createGroup(
+        createRelativeDateKey(1, 2),
+        'next-service-guide-02',
+        '서비스 안내',
+        '경영관리팀',
+        2,
+      ),
+      createGroup(
+        createRelativeDateKey(1, 2),
+        'next-feature-design-02',
+        '기능 설계',
+        '프로덕트팀',
+        2,
+      ),
+    ],
+    id: 'next-02',
+  },
+  {
+    date: createRelativeDateKey(1, 8),
+    groups: [
+      createGroup(
+        createRelativeDateKey(1, 8),
+        'next-campaign-report-08',
+        '캠페인 정리',
+        '마케팅팀',
+        3,
+      ),
+    ],
+    id: 'next-08',
+  },
+  {
+    date: createRelativeDateKey(1, 15),
+    groups: [
+      createGroup(
+        createRelativeDateKey(1, 15),
+        'next-banner-design-15',
+        '배너 디자인',
+        '디자인 팀',
+        2,
+      ),
+      createGroup(
+        createRelativeDateKey(1, 15),
+        'next-operation-policy-15',
+        '운영 정책',
+        '운영 지원팀',
+        2,
+      ),
+    ],
+    id: 'next-15',
+  },
+  {
+    date: createRelativeDateKey(1, 22),
+    groups: [
+      createGroup(
+        createRelativeDateKey(1, 22),
+        'next-contract-review-22',
+        '계약 검토',
+        '사업 개발팀',
+        3,
+      ),
+      createGroup(
+        createRelativeDateKey(1, 22),
+        'next-account-closing-22',
+        '회계 마감',
+        '재무 회계팀',
+        2,
+      ),
+    ],
+    id: 'next-22',
   },
 ] as const satisfies readonly MyHistoryDateSection[];

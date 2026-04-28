@@ -8,25 +8,22 @@ import Image from 'next/image';
 
 import HistoryCalendarPopover from '@/app/(service)/myhistory/components/HistoryCalendarPopover';
 import useHistoryCalendarPopover from '@/app/(service)/myhistory/hooks/useHistoryCalendarPopover';
-import {
-  formatHistoryMonth,
-  getMonthStartDate,
-} from '@/app/(service)/myhistory/utils/formatHistoryDate';
+import useHistoryMonthNavigator from '@/app/(service)/myhistory/hooks/useHistoryMonthNavigator';
+import type { HistoryMonthNavigatorProps } from '@/app/(service)/myhistory/types';
 import {
   icCalendarCircleLarge,
   icChevronLeftCircle,
   icChevronRightCircle,
 } from '@/assets';
 
-type HistoryMonthNavigatorProps = {
-  onSelectDate: (date: Date) => void;
-  selectedDate: Date;
-};
-
 export default function HistoryMonthNavigator({
-  onSelectDate,
-  selectedDate,
+  onApplyRange,
+  onMoveMonth,
+  selectedRange,
+  title,
 }: HistoryMonthNavigatorProps) {
+  const titleParts = title.split(' - ');
+  const isRangeTitle = titleParts.length === 2;
   const {
     calendarButtonRef,
     calendarRef,
@@ -34,17 +31,20 @@ export default function HistoryMonthNavigator({
     isCalendarOpen,
     toggleCalendar,
   } = useHistoryCalendarPopover();
-
-  const handleDateChange = (date: Date | null) => {
-    if (!date) return;
-
-    onSelectDate(date);
-    closeCalendar();
-  };
-
-  const handleMoveMonth = (monthOffset: number) => {
-    onSelectDate(getMonthStartDate(selectedDate, monthOffset));
-  };
+  const {
+    draftRange,
+    handleMoveMonth,
+    handleRangeChange,
+    handleToggleCalendar,
+    rangeMonthLimit,
+  } = useHistoryMonthNavigator({
+    closeCalendar,
+    isCalendarOpen,
+    onApplyRange,
+    onMoveMonth,
+    selectedRange,
+    toggleCalendar,
+  });
 
   return (
     <div className="relative flex items-center justify-center">
@@ -58,8 +58,16 @@ export default function HistoryMonthNavigator({
           <Image src={icChevronLeftCircle} alt="" width={24} height={24} />
         </button>
 
-        <p className="text-lg font-bold text-text-primary md:text-xl">
-          {formatHistoryMonth(selectedDate)}
+        <p className="text-center text-lg leading-tight font-bold text-text-primary md:text-xl md:leading-normal">
+          {isRangeTitle ? (
+            <>
+              <span className="block md:inline">{titleParts[0]}</span>
+              <span className="hidden md:inline">{' - '}</span>
+              <span className="block md:inline">{titleParts[1]}</span>
+            </>
+          ) : (
+            title
+          )}
         </p>
 
         <button
@@ -79,7 +87,7 @@ export default function HistoryMonthNavigator({
         aria-haspopup="dialog"
         aria-expanded={isCalendarOpen}
         className="absolute right-0 flex size-10 items-center justify-center rounded-lg"
-        onClick={toggleCalendar}
+        onClick={handleToggleCalendar}
       >
         <Image src={icCalendarCircleLarge} alt="" width={32} height={32} />
       </button>
@@ -87,8 +95,12 @@ export default function HistoryMonthNavigator({
       {isCalendarOpen && (
         <HistoryCalendarPopover
           calendarRef={calendarRef}
-          onSelectDate={handleDateChange}
-          selectedDate={selectedDate}
+          endDate={draftRange.endDate}
+          maxDate={rangeMonthLimit.maxDate}
+          minDate={rangeMonthLimit.minDate}
+          onSelectRange={handleRangeChange}
+          openToDate={draftRange.startDate ?? selectedRange.startDate}
+          startDate={draftRange.startDate}
         />
       )}
     </div>

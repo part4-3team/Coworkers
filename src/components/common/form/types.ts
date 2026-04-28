@@ -29,14 +29,30 @@ export type CommentInputProps = {
   onSubmit?: (value: string) => void;
 };
 
-export type DatePickerProps = {
+type DatePickerCommonProps = {
   id?: string;
-  selected: Date | null;
-  onChange: (date: Date | null) => void;
   isInline?: boolean;
   maxDate?: Date;
   minDate?: Date;
+  openToDate?: Date;
   placeholder?: string;
   errorMessage?: string;
   className?: string;
 };
+
+export type DatePickerRangeValue = [Date | null, Date | null];
+
+type SingleDatePickerProps = DatePickerCommonProps & {
+  onChange: (date: Date | null) => void;
+  selected: Date | null;
+  selectsRange?: false;
+};
+
+type RangeDatePickerProps = DatePickerCommonProps & {
+  endDate: Date | null;
+  onChange: (date: DatePickerRangeValue) => void;
+  selectsRange: true;
+  startDate: Date | null;
+};
+
+export type DatePickerProps = SingleDatePickerProps | RangeDatePickerProps;

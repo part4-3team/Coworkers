@@ -1,13 +1,18 @@
 import { EMPTY_HISTORY_FILTER_ID } from '@/app/(service)/myhistory/constants';
-import type { MyHistoryDateSection } from '@/app/(service)/myhistory/types';
+import type {
+  MyHistoryDateRange,
+  MyHistoryDateSection,
+  MyHistoryDisplayDateSection,
+} from '@/app/(service)/myhistory/types';
 import {
-  addDays,
   formatHistoryDate,
+  isDateWithinHistoryRange,
+  parseHistoryDateKey,
 } from '@/app/(service)/myhistory/utils/formatHistoryDate';
 
 export function hasHistoryTasks(
   activeFilterId: string | null,
-  sections: readonly MyHistoryDateSection[],
+  sections: readonly MyHistoryDisplayDateSection[],
 ) {
   if (activeFilterId === EMPTY_HISTORY_FILTER_ID) return false;
 
@@ -16,12 +21,29 @@ export function hasHistoryTasks(
   );
 }
 
-export function getDatedHistorySections(
+export function getHistorySectionsInRange(
   sections: readonly MyHistoryDateSection[],
-  selectedDate: Date,
+  range: MyHistoryDateRange,
 ) {
-  return sections.map((section, index) => ({
-    ...section,
-    date: formatHistoryDate(addDays(selectedDate, index)),
-  }));
+  return sections
+    .map((section) => {
+      const parsedDate = parseHistoryDateKey(section.date);
+
+      return {
+        ...section,
+        dateLabel: formatHistoryDate(parsedDate),
+        parsedDate,
+      };
+    })
+    .filter((section) => isDateWithinHistoryRange(section.parsedDate, range))
+    .sort((firstSection, secondSection) => {
+      return (
+        firstSection.parsedDate.getTime() - secondSection.parsedDate.getTime()
+      );
+    })
+    .map((section) => ({
+      dateLabel: section.dateLabel,
+      groups: section.groups,
+      id: section.id,
+    }));
 }
