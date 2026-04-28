@@ -10,6 +10,7 @@ import HistoryCalendarPopover from '@/app/(service)/myhistory/components/History
 import useHistoryCalendarPopover from '@/app/(service)/myhistory/hooks/useHistoryCalendarPopover';
 import useHistoryMonthNavigator from '@/app/(service)/myhistory/hooks/useHistoryMonthNavigator';
 import type { HistoryMonthNavigatorProps } from '@/app/(service)/myhistory/types';
+import { getHistoryRangeTitleParts } from '@/app/(service)/myhistory/utils/formatHistoryDate';
 import {
   icCalendarCircleLarge,
   icChevronLeftCircle,
@@ -22,7 +23,7 @@ export default function HistoryMonthNavigator({
   selectedRange,
   title,
 }: HistoryMonthNavigatorProps) {
-  const titleParts = title.split(' - ');
+  const titleParts = getHistoryRangeTitleParts(selectedRange);
   const isRangeTitle = titleParts.length === 2;
   const {
     calendarButtonRef,

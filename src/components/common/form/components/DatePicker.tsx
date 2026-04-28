@@ -15,133 +15,165 @@ import type {
 import { renderDatePickerWeekDay } from '@/components/common/form/utils/renderDatePickerWeekDay';
 import { cn } from '@/utils/cn';
 
-export default function DatePicker({
-  onChange,
-  isInline = false,
+function renderSingleInlineDatePicker({
+  className,
   maxDate,
   minDate,
+  onChange,
   openToDate,
-  placeholder,
-  errorMessage,
-  className,
-  ...datePickerProps
-}: DatePickerProps) {
-  const hasError = Boolean(errorMessage);
-  const isRangePicker = datePickerProps.selectsRange === true;
-
-  if (isInline) {
-    if (isRangePicker) {
-      return (
-        <div className={cn('coworkers-date-picker', className)}>
-          <ReactDatePicker
-            inline
-            calendarStartDay={0}
-            locale={ko}
-            maxDate={maxDate}
-            minDate={minDate}
-            openToDate={openToDate}
-            selectsRange
-            startDate={datePickerProps.startDate}
-            endDate={datePickerProps.endDate}
-            onChange={(date) =>
-              (onChange as (date: DatePickerRangeValue) => void)(
-                date as DatePickerRangeValue,
-              )
-            }
-            renderCustomHeader={DatePickerCalendarHeader}
-            renderCustomDayName={renderDatePickerWeekDay}
-          />
-        </div>
-      );
-    }
-
-    return (
-      <div className={cn('coworkers-date-picker', className)}>
-        <ReactDatePicker
-          inline
-          calendarStartDay={0}
-          locale={ko}
-          maxDate={maxDate}
-          minDate={minDate}
-          openToDate={openToDate}
-          selected={datePickerProps.selected}
-          onChange={(date: Date | null) =>
-            (onChange as (date: Date | null) => void)(date)
-          }
-          renderCustomHeader={DatePickerCalendarHeader}
-          renderCustomDayName={renderDatePickerWeekDay}
-        />
-      </div>
-    );
-  }
-
-  if (isRangePicker) {
-    return (
-      <div className="flex w-full flex-col gap-2">
-        <ReactDatePicker
-          startDate={datePickerProps.startDate}
-          endDate={datePickerProps.endDate}
-          onChange={(date) =>
-            (onChange as (date: DatePickerRangeValue) => void)(
-              date as DatePickerRangeValue,
-            )
-          }
-          locale={ko}
-          maxDate={maxDate}
-          minDate={minDate}
-          openToDate={openToDate}
-          selectsRange
-          dateFormat="yyyy-MM-dd"
-          placeholderText={placeholder ?? '날짜 선택'}
-          showPopperArrow={false}
-          className={cn(
-            'h-11 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
-            'md:h-12 md:text-base',
-            'placeholder:text-text-default',
-            'focus:border-brand-primary',
-            hasError && 'border-status-danger focus:border-status-danger',
-            className,
-          )}
-        />
-
-        {hasError && (
-          <p className="text-xs font-medium text-status-danger md:text-sm">
-            {errorMessage}
-          </p>
-        )}
-      </div>
-    );
-  }
-
+  selected,
+}: Extract<DatePickerProps, { selectsRange?: false }>) {
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className={cn('coworkers-date-picker', className)}>
       <ReactDatePicker
-        selected={datePickerProps.selected}
-        onChange={(date: Date | null) =>
-          (onChange as (date: Date | null) => void)(date)
-        }
+        inline
+        calendarStartDay={0}
         locale={ko}
         maxDate={maxDate}
         minDate={minDate}
         openToDate={openToDate}
-        dateFormat="yyyy-MM-dd"
-        placeholderText={placeholder ?? '날짜 선택'}
-        showPopperArrow={false}
-        className={cn(
-          'h-11 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
-          'md:h-12 md:text-base',
-          'placeholder:text-text-default',
-          'focus:border-brand-primary',
-          hasError && 'border-status-danger focus:border-status-danger',
-          className,
-        )}
+        selected={selected}
+        onChange={onChange}
+        renderCustomHeader={DatePickerCalendarHeader}
+        renderCustomDayName={renderDatePickerWeekDay}
       />
+    </div>
+  );
+}
 
-      {hasError && (
+function renderRangeInlineDatePicker({
+  className,
+  endDate,
+  maxDate,
+  minDate,
+  onChange,
+  openToDate,
+  startDate,
+}: Extract<DatePickerProps, { selectsRange: true }>) {
+  const handleChange = (date: DatePickerRangeValue | Date | null) => {
+    if (!Array.isArray(date)) return;
+
+    onChange(date);
+  };
+
+  return (
+    <div className={cn('coworkers-date-picker', className)}>
+      <ReactDatePicker
+        inline
+        calendarStartDay={0}
+        locale={ko}
+        maxDate={maxDate}
+        minDate={minDate}
+        openToDate={openToDate}
+        selectsRange
+        startDate={startDate}
+        endDate={endDate}
+        onChange={handleChange}
+        renderCustomHeader={DatePickerCalendarHeader}
+        renderCustomDayName={renderDatePickerWeekDay}
+      />
+    </div>
+  );
+}
+
+function renderDatePickerField(
+  inputProps: {
+    className?: string;
+    errorMessage?: string;
+    placeholder?: string;
+  },
+  children: React.ReactNode,
+) {
+  return (
+    <div className="flex w-full flex-col gap-2">
+      {children}
+
+      {inputProps.errorMessage && (
         <p className="text-xs font-medium text-status-danger md:text-sm">
-          {errorMessage}
+          {inputProps.errorMessage}
         </p>
       )}
     </div>
   );
+}
+
+function renderSingleFieldDatePicker(
+  props: Extract<DatePickerProps, { selectsRange?: false }>,
+) {
+  const hasError = Boolean(props.errorMessage);
+
+  return renderDatePickerField(
+    props,
+    <ReactDatePicker
+      selected={props.selected}
+      onChange={props.onChange}
+      locale={ko}
+      maxDate={props.maxDate}
+      minDate={props.minDate}
+      openToDate={props.openToDate}
+      dateFormat="yyyy-MM-dd"
+      placeholderText={props.placeholder ?? '날짜 선택'}
+      showPopperArrow={false}
+      className={cn(
+        'h-11 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
+        'md:h-12 md:text-base',
+        'placeholder:text-text-default',
+        'focus:border-brand-primary',
+        hasError && 'border-status-danger focus:border-status-danger',
+        props.className,
+      )}
+    />,
+  );
+}
+
+function renderRangeFieldDatePicker(
+  props: Extract<DatePickerProps, { selectsRange: true }>,
+) {
+  const hasError = Boolean(props.errorMessage);
+  const handleChange = (date: DatePickerRangeValue | Date | null) => {
+    if (!Array.isArray(date)) return;
+
+    props.onChange(date);
+  };
+
+  return renderDatePickerField(
+    props,
+    <ReactDatePicker
+      startDate={props.startDate}
+      endDate={props.endDate}
+      onChange={handleChange}
+      locale={ko}
+      maxDate={props.maxDate}
+      minDate={props.minDate}
+      openToDate={props.openToDate}
+      selectsRange
+      dateFormat="yyyy-MM-dd"
+      placeholderText={props.placeholder ?? '날짜 선택'}
+      showPopperArrow={false}
+      className={cn(
+        'h-11 w-full rounded-xl border border-background-tertiary bg-background-primary px-4 text-sm text-text-primary outline-none',
+        'md:h-12 md:text-base',
+        'placeholder:text-text-default',
+        'focus:border-brand-primary',
+        hasError && 'border-status-danger focus:border-status-danger',
+        props.className,
+      )}
+    />,
+  );
+}
+
+export default function DatePicker(props: DatePickerProps) {
+  if (props.isInline) {
+    if (props.selectsRange) {
+      return renderRangeInlineDatePicker(props);
+    }
+
+    return renderSingleInlineDatePicker(props);
+  }
+
+  if (props.selectsRange) {
+    return renderRangeFieldDatePicker(props);
+  }
+
+  return renderSingleFieldDatePicker(props);
 }

@@ -84,12 +84,19 @@ function isFullHistoryMonthRange(range: MyHistoryDateRange) {
   );
 }
 
-export function formatHistoryRangeTitle(range: MyHistoryDateRange) {
+export function getHistoryRangeTitleParts(range: MyHistoryDateRange) {
   if (range.mode === 'month' || isFullHistoryMonthRange(range)) {
-    return formatHistoryMonth(range.startDate);
+    return [formatHistoryMonth(range.startDate)] as const;
   }
 
-  return `${formatHistoryShortDate(range.startDate)} - ${formatHistoryShortDate(range.endDate)}`;
+  return [
+    formatHistoryShortDate(range.startDate),
+    formatHistoryShortDate(range.endDate),
+  ] as const;
+}
+
+export function formatHistoryRangeTitle(range: MyHistoryDateRange) {
+  return getHistoryRangeTitleParts(range).join(' - ');
 }
 
 export function isSameHistoryMonth(firstDate: Date, secondDate: Date) {

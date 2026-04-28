@@ -23,15 +23,18 @@ export default function useHistoryMonthNavigator({
     endDate: selectedRange.endDate,
     startDate: selectedRange.startDate,
   });
+  const isSelectingEndDate = Boolean(
+    draftRange.startDate && !draftRange.endDate,
+  );
 
   const rangeMonthLimit = useMemo(() => {
-    if (!draftRange.startDate || draftRange.endDate) return {};
+    if (!draftRange.startDate || !isSelectingEndDate) return {};
 
     return {
       maxDate: getMonthEndDate(draftRange.startDate),
       minDate: getMonthStartDate(draftRange.startDate),
     };
-  }, [draftRange.endDate, draftRange.startDate]);
+  }, [draftRange.startDate, isSelectingEndDate]);
 
   const handleRangeChange = (nextRange: DatePickerRangeValue) => {
     const [nextStartDate, nextEndDate] = nextRange;
