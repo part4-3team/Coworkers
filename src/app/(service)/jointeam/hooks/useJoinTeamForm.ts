@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useToast } from '@/components/common/toast';
+
 const joinTeamFormSchema = z.object({
   teamLink: z.string().trim().min(1, '팀 링크를 입력해주세요.'),
 });
@@ -15,6 +17,7 @@ const joinTeamFormSchema = z.object({
 type JoinTeamFormValues = z.infer<typeof joinTeamFormSchema>;
 
 export function useJoinTeamForm() {
+  const { showToast } = useToast();
   const {
     formState: { errors, isValid },
     handleSubmit,
@@ -29,6 +32,7 @@ export function useJoinTeamForm() {
 
   const handleSubmitForm = handleSubmit(() => {
     // TODO: 참여 API 연결
+    showToast('팀 참여가 완료되었습니다.', 'success');
   });
 
   return {
