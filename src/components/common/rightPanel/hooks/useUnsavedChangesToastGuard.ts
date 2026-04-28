@@ -42,6 +42,7 @@ export default function useUnsavedChangesToastGuard({
       showToast('저장하지 않은 변경사항이 있어요!', 'error', {
         label: '변경사항 취소',
         onClick: onDiscardChanges,
+        textClassName: 'text-status-danger',
       });
 
       toastTimeoutRef.current = window.setTimeout(() => {
