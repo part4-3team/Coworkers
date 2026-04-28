@@ -8,7 +8,7 @@
 > **화면에서는 보통 `src/hooks`만 쓰면 되고, 캐시를 다시 받아와야 할 때만 `queryKeys`를 같이 보면 됩니다.**
 
 페이지 기능별로 “어느 API / 훅을 보면 되는지”를 빠르게 찾고 싶다면
-[page-feature-navigation.md](/Users/kwonsaerom/Desktop/coworkers/docs/page-feature-navigation.md)를 같이 보면 됩니다.
+[page-feature-navigation.md](./page-feature-navigation.md)를 같이 보면 됩니다.
 
 ---
 
@@ -47,8 +47,8 @@ React Query 구조는 아래 4개로 나뉩니다.
 
 예:
 
-- [articleApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/articleApi.ts)
-- [commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)
+- [articleApi.ts](../src/api/articleApi.ts)
+- [commentApi.ts](../src/api/commentApi.ts)
 
 쉽게 말하면:
 
@@ -88,8 +88,8 @@ queryKeys.articleComment.list(teamId, articleId, { limit: 10 });
 
 예:
 
-- [articleQueryOptions.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryOptions/articleQueryOptions.ts)
-- [commentQueryOptions.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryOptions/commentQueryOptions.ts)
+- [articleQueryOptions.ts](../src/api/queryOptions/articleQueryOptions.ts)
+- [commentQueryOptions.ts](../src/api/queryOptions/commentQueryOptions.ts)
 
 쉽게 말하면:
 
@@ -107,8 +107,8 @@ queryKeys.articleComment.list(teamId, articleId, { limit: 10 });
 
 예:
 
-- [useArticle.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticle.ts)
-- [useArticleComment.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticleComment.ts)
+- [useArticle.ts](../src/hooks/useArticle.ts)
+- [useArticleComment.ts](../src/hooks/useArticleComment.ts)
 
 화면에서는 대부분 이것만 쓰면 됩니다.
 
@@ -134,7 +134,7 @@ const articleListQuery = useArticleListQuery({
 
 ### 1단계. API 함수
 
-[articleApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/articleApi.ts) 안의:
+[articleApi.ts](../src/api/articleApi.ts) 안의:
 
 ```ts
 getArticleList(teamId, params)
@@ -142,7 +142,7 @@ getArticleList(teamId, params)
 
 ### 2단계. query key
 
-[article.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryKeys/article.ts) 안의:
+[article.ts](../src/api/queryKeys/article.ts) 안의:
 
 ```ts
 queryKeys.article.list(teamId, params)
@@ -150,7 +150,7 @@ queryKeys.article.list(teamId, params)
 
 ### 3단계. query options
 
-[articleQueryOptions.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryOptions/articleQueryOptions.ts) 안의:
+[articleQueryOptions.ts](../src/api/queryOptions/articleQueryOptions.ts) 안의:
 
 ```ts
 articleQueryOptions.list(teamId, params, options)
@@ -158,7 +158,7 @@ articleQueryOptions.list(teamId, params, options)
 
 ### 4단계. hook
 
-[useArticle.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticle.ts) 안의:
+[useArticle.ts](../src/hooks/useArticle.ts) 안의:
 
 ```ts
 useArticleListQuery({ teamId, params, options })
@@ -438,7 +438,7 @@ queryKeys.comment.task(teamId, taskId);
 
 ## 8. 왜 `commentApi.ts`에 댓글이 두 종류 같이 들어 있는가
 
-현재 [commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)에는 댓글이 두 종류 들어 있습니다.
+현재 [commentApi.ts](../src/api/commentApi.ts)에는 댓글이 두 종류 들어 있습니다.
 
 ### 할 일 댓글
 
@@ -456,8 +456,8 @@ queryKeys.comment.task(teamId, taskId);
 
 즉 지금은:
 
-- 할 일 댓글도 [commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)
-- 게시글 댓글도 [commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)
+- 할 일 댓글도 [commentApi.ts](../src/api/commentApi.ts)
+- 게시글 댓글도 [commentApi.ts](../src/api/commentApi.ts)
 
 를 보면 됩니다.
 
@@ -465,7 +465,7 @@ queryKeys.comment.task(teamId, taskId);
 
 ## 9. `queryOptions/constants.ts`는 왜 만들었는가
 
-[constants.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryOptions/constants.ts)는
+[constants.ts](../src/api/queryOptions/constants.ts)는
 여러 query options에서 공통으로 쓰는 기본 캐시 옵션 모음입니다.
 
 예:
@@ -579,8 +579,8 @@ createArticleCommentMutation.mutate({
 
 예:
 
-- 게시글이면 [articleApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/articleApi.ts)
-- 댓글이면 [commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)
+- 게시글이면 [articleApi.ts](../src/api/articleApi.ts)
+- 댓글이면 [commentApi.ts](../src/api/commentApi.ts)
 
 여기는 fetch만 만듭니다.
 
@@ -590,8 +590,8 @@ createArticleCommentMutation.mutate({
 
 예:
 
-- [article.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryKeys/article.ts)
-- [team.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryKeys/team.ts)
+- [article.ts](../src/api/queryKeys/article.ts)
+- [team.ts](../src/api/queryKeys/team.ts)
 
 이때 같이 판단합니다.
 
@@ -606,8 +606,8 @@ createArticleCommentMutation.mutate({
 
 예:
 
-- [articleQueryOptions.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryOptions/articleQueryOptions.ts)
-- [commentQueryOptions.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/queryOptions/commentQueryOptions.ts)
+- [articleQueryOptions.ts](../src/api/queryOptions/articleQueryOptions.ts)
+- [commentQueryOptions.ts](../src/api/queryOptions/commentQueryOptions.ts)
 
 ---
 
@@ -615,8 +615,8 @@ createArticleCommentMutation.mutate({
 
 예:
 
-- [useArticle.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticle.ts)
-- [useArticleComment.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticleComment.ts)
+- [useArticle.ts](../src/hooks/useArticle.ts)
+- [useArticleComment.ts](../src/hooks/useArticleComment.ts)
 
 여기서 화면에서 바로 쓸 수 있는 형태로 감쌉니다.
 

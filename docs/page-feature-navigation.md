@@ -7,7 +7,7 @@
 를 가장 빠르게 찾기 위한 네비게이션입니다.
 
 공통 설명이 필요하면
-[react-query-guide.md](/Users/kwonsaerom/Desktop/coworkers/docs/react-query-guide.md)를 먼저 보고,
+[react-query-guide.md](./react-query-guide.md)를 먼저 보고,
 지금 문서는 **페이지나 기능 기준으로 바로 찾아가는 지도**라고 생각하면 됩니다.
 
 ---
@@ -19,15 +19,15 @@
 **로그인 / 회원가입**
 
 - 라우트: `/login`, `/signup`
-- API: [authApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/authApi.ts)
-- 훅: [useAuth.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useAuth.ts)
+- API: [authApi.ts](../src/api/authApi.ts)
+- 훅: [useAuth.ts](../src/hooks/useAuth.ts)
 - 먼저 찾을 export: `useSignInMutation`, `useSignUpMutation`
 
 **OAuth 로그인**
 
 - 라우트: `/oauth/signup/[provider]`
-- API: [authApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/authApi.ts)
-- 훅: [useAuth.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useAuth.ts)
+- API: [authApi.ts](../src/api/authApi.ts)
+- 훅: [useAuth.ts](../src/hooks/useAuth.ts)
 - 먼저 찾을 export: `useSignInWithOauthMutation`, `useRefreshTokenMutation`
 
 ---
@@ -37,15 +37,15 @@
 **내 정보 / 프로필**
 
 - 라우트: `/mypage`
-- API: [userApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/userApi.ts), [imageApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/imageApi.ts)
-- 훅: [useUser.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useUser.ts), [useImage.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useImage.ts)
+- API: [userApi.ts](../src/api/userApi.ts), [imageApi.ts](../src/api/imageApi.ts)
+- 훅: [useUser.ts](../src/hooks/useUser.ts), [useImage.ts](../src/hooks/useImage.ts)
 - 먼저 찾을 export: `useMeQuery`, `useUploadImageMutation`
 
 **마이 히스토리**
 
 - 라우트: `/myhistory`
-- API: [userApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/userApi.ts)
-- 훅: [useUser.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useUser.ts)
+- API: [userApi.ts](../src/api/userApi.ts)
+- 훅: [useUser.ts](../src/hooks/useUser.ts)
 - 먼저 찾을 export: `useCompletedTasksQuery`
 
 ---
@@ -55,29 +55,29 @@
 **팀 메인 / 오늘 할 일**
 
 - 라우트: `/{teamid}`
-- API: [groupApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/groupApi.ts)
-- 훅: [useTeam.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useTeam.ts)
+- API: [groupApi.ts](../src/api/groupApi.ts)
+- 훅: [useTeam.ts](../src/hooks/useTeam.ts)
 - 먼저 찾을 export: `useTeamDetailQuery`, `useTeamTasksByDateQuery`
 
 **할 일 목록(컬럼)**
 
 - 라우트: `/{teamid}/tasklist`
-- API: [taskApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/taskApi.ts)
-- 훅: [useTaskList.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useTaskList.ts)
+- API: [taskApi.ts](../src/api/taskApi.ts)
+- 훅: [useTaskList.ts](../src/hooks/useTaskList.ts)
 - 먼저 찾을 export: `useTaskListDetailQuery`
 
 **할 일 상세 / 오른쪽 패널**
 
 - 위치: `/{teamid}/tasklist` 내부 상세
-- API: [taskApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/taskApi.ts)
-- 훅: [useTask.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useTask.ts)
+- API: [taskApi.ts](../src/api/taskApi.ts)
+- 훅: [useTask.ts](../src/hooks/useTask.ts)
 - 먼저 찾을 export: `useTaskDetailQuery`
 
 **할 일 댓글**
 
 - 위치: 오른쪽 패널 댓글
-- API: [commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)
-- 훅: [useTask.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useTask.ts)
+- API: [commentApi.ts](../src/api/commentApi.ts)
+- 훅: [useTask.ts](../src/hooks/useTask.ts)
 - 먼저 찾을 export:
   - `useTaskCommentsQuery`
   - `useCreateTaskCommentMutation`
@@ -87,8 +87,8 @@
 **반복 일정**
 
 - 라우트: `/{teamid}/tasklist`
-- API: [taskApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/taskApi.ts)
-- 훅: [useRecurring.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useRecurring.ts)
+- API: [taskApi.ts](../src/api/taskApi.ts)
+- 훅: [useRecurring.ts](../src/hooks/useRecurring.ts)
 - 먼저 찾을 export:
   - `useCreateRecurringMutation`
   - `useUpdateRecurringMutation`
@@ -101,22 +101,22 @@
 **게시글 목록**
 
 - 라우트: `/boards`
-- API: [articleApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/articleApi.ts)
-- 훅: [useArticle.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticle.ts)
+- API: [articleApi.ts](../src/api/articleApi.ts)
+- 훅: [useArticle.ts](../src/hooks/useArticle.ts)
 - 먼저 찾을 export: `useArticleListQuery`
 
 **게시글 상세**
 
 - 라우트: `/boards/[articleId]`
-- API: [articleApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/articleApi.ts)
-- 훅: [useArticle.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticle.ts)
+- API: [articleApi.ts](../src/api/articleApi.ts)
+- 훅: [useArticle.ts](../src/hooks/useArticle.ts)
 - 먼저 찾을 export: `useArticleDetailQuery`
 
 **게시글 작성 / 수정 / 삭제 / 좋아요**
 
 - 라우트: `/boards`, `/boards/[articleId]`
-- API: [articleApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/articleApi.ts)
-- 훅: [useArticle.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticle.ts)
+- API: [articleApi.ts](../src/api/articleApi.ts)
+- 훅: [useArticle.ts](../src/hooks/useArticle.ts)
 - 먼저 찾을 export:
   - `useCreateArticleMutation`
   - `useUpdateArticleMutation`
@@ -127,8 +127,8 @@
 **게시글 댓글**
 
 - 라우트: `/boards/[articleId]`
-- API: [commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)
-- 훅: [useArticleComment.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticleComment.ts)
+- API: [commentApi.ts](../src/api/commentApi.ts)
+- 훅: [useArticleComment.ts](../src/hooks/useArticleComment.ts)
 - 먼저 찾을 export:
   - `useArticleCommentsQuery`
   - `useCreateArticleCommentMutation`
@@ -150,7 +150,7 @@
 
 ### API 파일
 
-[commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)
+[commentApi.ts](../src/api/commentApi.ts)
 
 여기서 할 일 댓글 관련 함수:
 
@@ -161,7 +161,7 @@
 
 ### hook 파일
 
-[useTask.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useTask.ts)
+[useTask.ts](../src/hooks/useTask.ts)
 
 여기서 바로 쓰는 훅:
 
@@ -212,7 +212,7 @@ createTaskCommentMutation.mutate({
 
 ### API 파일
 
-[commentApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/commentApi.ts)
+[commentApi.ts](../src/api/commentApi.ts)
 
 여기서 게시글 댓글 관련 함수:
 
@@ -223,7 +223,7 @@ createTaskCommentMutation.mutate({
 
 ### hook 파일
 
-[useArticleComment.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticleComment.ts)
+[useArticleComment.ts](../src/hooks/useArticleComment.ts)
 
 여기서 바로 쓰는 훅:
 
@@ -256,7 +256,7 @@ const articleCommentsQuery = useArticleCommentsQuery({
 
 ### API 파일
 
-[articleApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/articleApi.ts)
+[articleApi.ts](../src/api/articleApi.ts)
 
 들어 있는 함수:
 
@@ -270,7 +270,7 @@ const articleCommentsQuery = useArticleCommentsQuery({
 
 ### hook 파일
 
-[useArticle.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useArticle.ts)
+[useArticle.ts](../src/hooks/useArticle.ts)
 
 들어 있는 훅:
 
@@ -302,7 +302,7 @@ const articleCommentsQuery = useArticleCommentsQuery({
 
 ### API 파일
 
-[groupApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/groupApi.ts)
+[groupApi.ts](../src/api/groupApi.ts)
 
 함수:
 
@@ -311,7 +311,7 @@ const articleCommentsQuery = useArticleCommentsQuery({
 
 ### hook 파일
 
-[useTeam.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useTeam.ts)
+[useTeam.ts](../src/hooks/useTeam.ts)
 
 훅:
 
@@ -324,8 +324,8 @@ const articleCommentsQuery = useArticleCommentsQuery({
 
 ### 내 정보나 프로필 수정
 
-- API: [userApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/userApi.ts)
-- hook: [useUser.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useUser.ts)
+- API: [userApi.ts](../src/api/userApi.ts)
+- hook: [useUser.ts](../src/hooks/useUser.ts)
 
 자주 쓰는 것:
 
@@ -335,8 +335,8 @@ const articleCommentsQuery = useArticleCommentsQuery({
 
 ### 완료한 할 일 이력
 
-- API: [userApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/userApi.ts)
-- hook: [useUser.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useUser.ts)
+- API: [userApi.ts](../src/api/userApi.ts)
+- hook: [useUser.ts](../src/hooks/useUser.ts)
 
 자주 쓰는 것:
 
@@ -344,8 +344,8 @@ const articleCommentsQuery = useArticleCommentsQuery({
 
 ### 이미지 업로드
 
-- API: [imageApi.ts](/Users/kwonsaerom/Desktop/coworkers/src/api/imageApi.ts)
-- hook: [useImage.ts](/Users/kwonsaerom/Desktop/coworkers/src/hooks/useImage.ts)
+- API: [imageApi.ts](../src/api/imageApi.ts)
+- hook: [useImage.ts](../src/hooks/useImage.ts)
 
 자주 쓰는 것:
 
