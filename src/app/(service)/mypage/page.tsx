@@ -36,7 +36,7 @@ export default function MyPage() {
               회원 탈퇴하기
             </button>
           </div>
-          <div className="flex justify-center items-center pt-10 w-70 m-auto">
+          <div className="flex justify-center items-center pt-10 m-w-70 m-auto w-full">
             <PrimaryButton form="accountForm" type="submit" disabled={!isDirty}>
               변경하기
             </PrimaryButton>
