@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { accountSchema } from '@/app/(service)/signup/schemas/accountSchema';
+import { accountSchema } from '@/app/(service)/mypage/schemas/accountSchema';
 
 export type AccountFormProps = {
   isDirty: boolean;
