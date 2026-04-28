@@ -1,6 +1,6 @@
 /**
  * 모바일·태블릿(lg 미만)에서 할 일 목록 컬럼을 선택하는 드롭다운입니다.
- * 모바일: 180×44. md+: 240×44(card/todo-dropdown). pl-16 pr-12, border tertiary, radius 12.
+ * 모바일: 180×44. md+: 트리거 240×44, 펼침 목록 행은 체크(선택 시)·제목 / 배지를 gap-15(60px)로 양끝 정렬.
  */
 
 'use client';
@@ -8,7 +8,7 @@
 import Image from 'next/image';
 
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
-import { icDownArrowLarge, icDownArrowSmall } from '@/assets';
+import { icCheck, icDownArrowLarge, icDownArrowSmall } from '@/assets';
 import { Badge } from '@/components/common/badge';
 import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
 import { cn } from '@/utils/cn';
@@ -28,6 +28,10 @@ export default function TaskListColumnDropdown({
 }: TaskListColumnDropdownProps) {
   const { isOpen, toggle, close, containerRef } = useDropdown();
   const active = items.find((item) => item.id === activeId) ?? items[0];
+
+  if (items.length === 0) {
+    return null;
+  }
 
   return (
     <div ref={containerRef} className={cn('relative min-w-0', className)}>
@@ -90,7 +94,8 @@ export default function TaskListColumnDropdown({
                   role="option"
                   aria-selected={isSelected}
                   className={cn(
-                    'flex w-full min-w-0 items-center gap-2 px-3 py-3 text-left text-sm font-medium text-text-primary md:px-4',
+                    'flex w-full min-w-0 items-center gap-2 px-3 py-3 text-left text-sm font-medium text-text-primary',
+                    'md:items-center md:justify-between md:gap-15 md:px-4 md:py-2',
                     'hover:bg-background-secondary',
                     isSelected && 'bg-brand-secondary text-brand-primary',
                   )}
@@ -99,14 +104,23 @@ export default function TaskListColumnDropdown({
                     close();
                   }}
                 >
-                  <div className="flex min-w-0 w-full flex-1 items-center gap-2">
+                  <span className="flex min-w-0 flex-1 items-center gap-2 md:min-w-0">
+                    {isSelected ? (
+                      <Image
+                        src={icCheck}
+                        alt=""
+                        width={16}
+                        height={16}
+                        className="hidden shrink-0 md:block"
+                      />
+                    ) : null}
                     <span className="min-w-0 truncate">{item.title}</span>
-                    <Badge
-                      completed={item.completed}
-                      total={item.total}
-                      className="shrink-0 items-center gap-1 leading-none"
-                    />
-                  </div>
+                  </span>
+                  <Badge
+                    completed={item.completed}
+                    total={item.total}
+                    className="shrink-0 items-center gap-1 leading-none"
+                  />
                 </button>
               </li>
             );

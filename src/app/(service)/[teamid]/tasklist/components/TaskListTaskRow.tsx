@@ -20,11 +20,13 @@ import { cn } from '@/utils/cn';
 type TaskListTaskRowProps = {
   task: TaskListBoardTask;
   onToggleChecked: (id: string, checked: boolean) => void;
+  onRequestDelete: (task: TaskListBoardTask) => void;
 };
 
 export default function TaskListTaskRow({
   task,
   onToggleChecked,
+  onRequestDelete,
 }: TaskListTaskRowProps) {
   return (
     <article
@@ -80,7 +82,7 @@ export default function TaskListTaskRow({
             {
               label: '삭제하기',
               onClick: () => {
-                // TODO: 할 일 삭제
+                onRequestDelete(task);
               },
             },
           ]}

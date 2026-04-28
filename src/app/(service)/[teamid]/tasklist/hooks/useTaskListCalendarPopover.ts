@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function useTaskListCalendarPopover() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const calendarButtonRef = useRef<HTMLButtonElement>(null);
+  const calendarButtonRef = useRef<HTMLDivElement | null>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

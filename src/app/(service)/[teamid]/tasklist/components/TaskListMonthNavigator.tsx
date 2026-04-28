@@ -70,17 +70,18 @@ export default function TaskListMonthNavigator({
         <Image src={icChevronRightCircle} alt="" width={24} height={24} />
       </button>
 
-      <button
-        ref={calendarButtonRef}
-        type="button"
-        aria-label="날짜 선택"
-        aria-haspopup="dialog"
-        aria-expanded={isCalendarOpen}
-        className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
-        onClick={toggleCalendar}
-      >
-        <Image src={icCalendarCircleLarge} alt="" width={24} height={24} />
-      </button>
+      <div ref={calendarButtonRef} className="inline-flex shrink-0">
+        <button
+          type="button"
+          aria-label="날짜 선택"
+          aria-haspopup="dialog"
+          aria-expanded={isCalendarOpen}
+          className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
+          onClick={toggleCalendar}
+        >
+          <Image src={icCalendarCircleLarge} alt="" width={24} height={24} />
+        </button>
+      </div>
 
       {isCalendarOpen ? (
         <TaskListCalendarPopover

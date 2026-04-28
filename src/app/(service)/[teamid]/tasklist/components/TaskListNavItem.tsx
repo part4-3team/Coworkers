@@ -17,12 +17,14 @@ type TaskListNavItemProps = {
   item: TaskListColumnItem;
   isActive: boolean;
   onSelect: () => void;
+  onRequestDelete: (item: TaskListColumnItem) => void;
 };
 
 export default function TaskListNavItem({
   item,
   isActive,
   onSelect,
+  onRequestDelete,
 }: TaskListNavItemProps) {
   return (
     <li className="list-none">
@@ -70,7 +72,9 @@ export default function TaskListNavItem({
               },
               {
                 label: '삭제',
-                onClick: () => {},
+                onClick: () => {
+                  onRequestDelete(item);
+                },
               },
             ]}
             className="hidden shrink-0 lg:inline-flex"
