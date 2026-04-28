@@ -12,6 +12,7 @@
  * - onLineButtonClick (() => void): 라인 버튼 클릭 핸들러
  * - primaryButtonText (string): 파란 버튼 텍스트
  * - onPrimaryButtonClick (() => void): 파란 버튼 클릭 핸들러
+ * - isPrimaryButtonDisabled 파란버튼 비활성화
  * - subButtonText (string): 빨간 버튼 텍스트
  * - onSubButtonClick (() => void): 빨간 버튼 클릭 핸들러
  * - isButtonAlign (boolean): 버튼 정렬 (true: 세로 1열, false: 가로 2열)
@@ -36,6 +37,7 @@ export default function ModalFrame({
   onLineButtonClick,
   primaryButtonText,
   onPrimaryButtonClick,
+  isPrimaryButtonDisabled,
   subButtonText,
   onSubButtonClick,
   isButtonAlign,
@@ -105,6 +107,7 @@ export default function ModalFrame({
               type="button"
               className="bg-brand-primary rounded-xl px-4 py-2.75 w-full text-white font-medium hover:enabled:bg-interaction-hover disabled:bg-interaction-inactive"
               onClick={onPrimaryButtonClick}
+              disabled={isPrimaryButtonDisabled}
             >
               {primaryButtonText}
             </button>

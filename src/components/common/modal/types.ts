@@ -13,6 +13,7 @@ export type ModalFrameProps = {
   onLineButtonClick?: () => void;
   primaryButtonText?: string;
   onPrimaryButtonClick?: () => void;
+  isPrimaryButtonDisabled?: boolean;
   subButtonText?: string;
   onSubButtonClick?: () => void;
   isButtonAlign?: boolean;
