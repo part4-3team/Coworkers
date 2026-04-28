@@ -1,12 +1,20 @@
 'use client';
 
 import Modal from '@/components/common/modal';
+import { useToast } from '@/components/common/toast';
 
 type Props = {
   onClose: () => void;
 };
 
 export default function WithdrawModal({ onClose }: Props) {
+  const { showToast } = useToast();
+
+  const handleWithdraw = () => {
+    onClose();
+    showToast('회원 탈퇴가 완료되었습니다.', 'error');
+  };
+
   return (
     <Modal
       onClose={onClose}
@@ -17,7 +25,7 @@ export default function WithdrawModal({ onClose }: Props) {
       lineButtonText="닫기"
       onLineButtonClick={onClose}
       subButtonText="회원 탈퇴"
-      onSubButtonClick={() => {}}
+      onSubButtonClick={handleWithdraw}
     />
   );
 }
