@@ -58,6 +58,7 @@ export default function AccountForm({
             비밀번호
           </label>
           <button
+            id="userPassword"
             type="button"
             onClick={() => setIsPasswordModalOpen(true)}
             className="bg-text-inverse text-brand-primary border border-brand-primary text-sm font-semibold rounded-lg h-8  w-fit px-2 hover:bg-brand-secondary"
