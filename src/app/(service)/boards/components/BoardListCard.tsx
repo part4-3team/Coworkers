@@ -1,0 +1,64 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
+import type { Post } from '@/app/(service)/boards/types';
+import { getLikeCount } from '@/app/(service)/boards/utils/boardUtils';
+import { icHeartSmall } from '@/assets';
+import { ROUTES } from '@/constants/ROUTES';
+
+export default function BoardListCard({ post }: { post: Post }) {
+  const likeCount = getLikeCount(post.likeCount);
+
+  return (
+    <Link
+      href={ROUTES.BOARD_DETAIL(post.id.toString())}
+      className="mt-5 rounded-lg border border-border-secondary px-4 py-4 h-35 md:h-39 md:px-6 md:py-5 block"
+    >
+      <div className="h-20 flex items-center justify-between gap-4 md:h-22">
+        <div className="flex-1 min-w-0 md:w-90">
+          <span className="text-text-primary text-base font-bold line-clamp-1 leading-4.75 md:text-lg md:leading-5.25">
+            {post.title}
+          </span>
+          <p className="text-text-default text-sm font-normal leading-4.25 mt-2 line-clamp-2 md:leading-5">
+            {post.content}
+          </p>
+        </div>
+        {post.image && (
+          <div className="shrink-0 rounded-lg overflow-hidden w-20 h-20 md:w-22 md:h-22">
+            <Image
+              src={post.image}
+              alt={`${post.title} 게시글 이미지`}
+              width={80}
+              height={80}
+              className="object-cover object-center w-full h-full md:w-22 md:h-22"
+            />
+          </div>
+        )}
+      </div>
+      <div className="flex items-center justify-between gap-2 mt-3 min-w-0">
+        <div className="flex min-w-0 flex-1 items-center">
+          <span className="text-text-primary text-xs font-medium leading-4 min-w-0 truncate md:text-sm">
+            {post.writer.nickname}
+          </span>
+          <span className="text-text-primary text-xs font-medium leading-4 shrink-0 px-2 md:text-sm">
+            |
+          </span>
+          <span className="text-interaction-inactive text-xs font-medium leading-4 shrink-0 md:text-sm">
+            {post.createdAt}
+          </span>
+        </div>
+        <div className="flex shrink-0 items-center gap-1">
+          <Image
+            src={icHeartSmall}
+            alt="좋아요 모양 아이콘"
+            width={16}
+            height={16}
+          />
+          <span className="text-interaction-inactive text-xs font-medium leading-4 md:text-sm">
+            {likeCount}
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}

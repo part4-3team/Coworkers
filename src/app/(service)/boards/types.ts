@@ -22,7 +22,23 @@ export type PostListResponse = {
   list: Post[];
 };
 
+export type BoardBestListProps = {
+  boardBestPosts: Post[];
+  hasBoardPosts: boolean;
+};
+
+export type BoardListProps = {
+  boardPosts: Post[];
+  isSearchMode: boolean;
+  keyword?: string;
+};
+
 export type OrderBy = (typeof BOARD_ORDER_BY)[keyof typeof BOARD_ORDER_BY];
 
 export type BoardDeviceType =
   (typeof BOARD_DEVICE_TYPE)[keyof typeof BOARD_DEVICE_TYPE];
+
+export type BestPagination = {
+  currentPage: number;
+  totalPages: number;
+};

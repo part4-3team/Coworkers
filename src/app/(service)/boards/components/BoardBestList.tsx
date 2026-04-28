@@ -5,16 +5,26 @@ import { useState } from 'react';
 import BoardBestCard from '@/app/(service)/boards/components/BoardBestCard';
 import BoardBestPagination from '@/app/(service)/boards/components/BoardBestPagination';
 import { BOARD_DEVICE_TYPE_LIMIT } from '@/app/(service)/boards/constants';
-import type { Post } from '@/app/(service)/boards/types';
+import useBoardBestMemo from '@/app/(service)/boards/hooks/useBoardBestMemo';
+import type { BoardBestListProps } from '@/app/(service)/boards/types';
+import {
+  getCurrentPosts,
+  getTotalPages,
+} from '@/app/(service)/boards/utils/boardUtils';
 import useDeviceType from '@/hooks/useDeviceType';
 
-export default function BoardBestList({ bestPosts }: { bestPosts: Post[] }) {
+export default function BoardBestList({
+  boardBestPosts,
+  hasBoardPosts,
+}: BoardBestListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const deviceType = useDeviceType();
-  const currentPosts = bestPosts.slice(
-    (currentPage - 1) * BOARD_DEVICE_TYPE_LIMIT[deviceType],
-    currentPage * BOARD_DEVICE_TYPE_LIMIT[deviceType],
-  );
+  const pageSize = BOARD_DEVICE_TYPE_LIMIT[deviceType];
+
+  const { emptyMessage } = useBoardBestMemo({ boardBestPosts, hasBoardPosts });
+
+  const totalPages = getTotalPages(boardBestPosts, pageSize);
+  const currentPosts = getCurrentPosts(boardBestPosts, pageSize, currentPage);
 
   return (
     <section
@@ -26,14 +36,29 @@ export default function BoardBestList({ bestPosts }: { bestPosts: Post[] }) {
         <span className="shrink-0 block text-text-primary text-lg font-bold leading-5.25 md:text-xl">
           베스트 게시글
         </span>
-        <div className="grid grid-cols-1 gap-3 mt-5 md:grid-cols-2 xl:grid-cols-3 xl:mt-6.25">
-          {currentPosts.map((post) => (
-            <BoardBestCard key={post.id} post={post} />
-          ))}
-        </div>
-        <div>
-          <BoardBestPagination />
-        </div>
+
+        {emptyMessage ? (
+          <div className="px-2 py-8 text-center md:py-10" role="status">
+            <p className="text-text-default text-sm leading-5 md:text-base">
+              {emptyMessage}
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 gap-3 mt-5 md:grid-cols-2 xl:grid-cols-3 xl:mt-6.25">
+              {currentPosts.map((post) => (
+                <BoardBestCard key={post.id} post={post} />
+              ))}
+            </div>
+            {totalPages > 0 ? (
+              <BoardBestPagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            ) : null}
+          </>
+        )}
       </div>
     </section>
   );

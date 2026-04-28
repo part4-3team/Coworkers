@@ -1,4 +1,4 @@
-import BoardSearch from './BoardSearch';
+import BoardSearch from '@/app/(service)/boards/components/BoardSearch';
 
 export default function BoardHeader() {
   return (

@@ -22,6 +22,16 @@ const nextConfig: NextConfig = {
       ],
     },
   },
+  /* TODO: 게시글 목업 데이터 없어지면 삭제 */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
