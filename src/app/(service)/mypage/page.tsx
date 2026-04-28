@@ -14,11 +14,13 @@ import { PrimaryButton } from '@/components/common/button';
 export default function MyPage() {
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
+  const [isDirty, setIsDirty] = useState(false);
+
   return (
     <div className="w-full h-full min-h-dvh flex justify-center items-center gap-4 flex-wrap px-4 py-6 md:px-16 md:py-10">
       <div className="bg-background-inverse px-5.5 pt-12 pb-16 rounded-[20px] flex flex-col gap-8 w-full md:px-11 md:pt-16  xl:max-w-235 xl:px-14">
         <h2 className="text-text-primary text-[20px] font-bold">계정 설정</h2>
-        <AccountForm />
+        <AccountForm isDirty={isDirty} onDirtyChange={setIsDirty} />
         <div className="mt-1">
           <div className="flex justify-end">
             <button
@@ -35,7 +37,7 @@ export default function MyPage() {
             </button>
           </div>
           <div className="flex justify-center items-center pt-10 w-70 m-auto">
-            <PrimaryButton form="accountForm" type="submit">
+            <PrimaryButton form="accountForm" type="submit" disabled={!isDirty}>
               변경하기
             </PrimaryButton>
           </div>

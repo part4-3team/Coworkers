@@ -6,11 +6,18 @@ import AddUserImg from '@/components/common/adduserimg/AddUserImg';
 import { Input } from '@/components/common/form';
 import { useToast } from '@/components/common/toast';
 
-export default function AccountForm() {
+type AccountFormProps = {
+  isDirty: boolean;
+  onDirtyChange: (isDirty: boolean) => void;
+};
+
+export default function AccountForm({
+  isDirty,
+  onDirtyChange,
+}: AccountFormProps) {
   const [initialName] = useState('송현');
   // 이것도 데이터 불러오면서 수정할 예정입니다
   const [name, setName] = useState(initialName);
-  const [isDirty, setIsDirty] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const { showToast, removeToast } = useToast();
   const toastIdRef = useRef<string | null>(null);
@@ -30,15 +37,15 @@ export default function AccountForm() {
           textClassName: 'text-status-danger',
           onClick: () => {
             setName(initialName);
-            setIsDirty(false);
+            onDirtyChange(false);
           },
         },
       );
-      setIsDirty(true);
+      onDirtyChange(true);
     }
     if (!changed && isDirty) {
       if (toastIdRef.current) removeToast(toastIdRef.current);
-      setIsDirty(false);
+      onDirtyChange(false);
     }
   };
 
