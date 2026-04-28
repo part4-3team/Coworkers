@@ -20,7 +20,7 @@ export default function JoinTeamPage() {
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col">
-          <div className="mb-[40px] flex flex-col">
+          <div className="mb-10 flex flex-col">
             <label
               htmlFor="teamLink"
               className="text-sm font-medium text-text-primary"
