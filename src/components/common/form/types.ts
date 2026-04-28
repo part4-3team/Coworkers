@@ -42,13 +42,13 @@ type DatePickerCommonProps = {
 
 export type DatePickerRangeValue = [Date | null, Date | null];
 
-type SingleDatePickerProps = DatePickerCommonProps & {
+export type SingleDatePickerProps = DatePickerCommonProps & {
   onChange: (date: Date | null) => void;
   selected: Date | null;
   selectsRange?: false;
 };
 
-type RangeDatePickerProps = DatePickerCommonProps & {
+export type RangeDatePickerProps = DatePickerCommonProps & {
   endDate: Date | null;
   onChange: (date: DatePickerRangeValue) => void;
   selectsRange: true;
