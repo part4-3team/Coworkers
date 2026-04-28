@@ -6,7 +6,10 @@
 
 import Image from 'next/image';
 
-import type { TaskListBoardTask } from '@/app/(service)/[teamid]/tasklist/types';
+import type {
+  TaskListBoardTask,
+  TaskListTaskDetailOpenMode,
+} from '@/app/(service)/[teamid]/tasklist/types';
 import {
   icCalendarSmall,
   icComment,
@@ -19,29 +22,46 @@ import { cn } from '@/utils/cn';
 
 type TaskListTaskRowProps = {
   task: TaskListBoardTask;
+  onOpenDetail: (
+    task: TaskListBoardTask,
+    mode: TaskListTaskDetailOpenMode,
+  ) => void;
   onToggleChecked: (id: string, checked: boolean) => void;
   onRequestDelete: (task: TaskListBoardTask) => void;
 };
 
 export default function TaskListTaskRow({
   task,
+  onOpenDetail,
   onToggleChecked,
   onRequestDelete,
 }: TaskListTaskRowProps) {
+  const handleRowDoubleClick = (event: React.MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.closest('[data-task-detail-ignore]')) {
+      return;
+    }
+
+    onOpenDetail(task, 'view');
+  };
+
   return (
     <article
       className={cn(
         'relative flex items-start rounded-xl border border-background-tertiary bg-background-primary px-3 py-3 sm:px-4',
         task.checked && 'bg-background-secondary',
       )}
+      onDoubleClick={handleRowDoubleClick}
     >
       <div className="min-w-0 flex-1 pr-10 sm:pr-11">
         <div className="flex min-w-0 items-center gap-2">
-          <TodoCheckUncheck
-            label={task.title}
-            checked={task.checked}
-            onChange={(checked) => onToggleChecked(task.id, checked)}
-          />
+          <span data-task-detail-ignore>
+            <TodoCheckUncheck
+              label={task.title}
+              checked={task.checked}
+              onChange={(checked) => onToggleChecked(task.id, checked)}
+            />
+          </span>
           <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base">
             <Image
               src={icComment}
@@ -69,14 +89,17 @@ export default function TaskListTaskRow({
         </div>
       </div>
 
-      <div className="absolute right-3 top-3 z-10 sm:right-4 sm:top-3">
+      <div
+        className="absolute right-3 top-3 z-10 sm:right-4 sm:top-3"
+        data-task-detail-ignore
+      >
         <ListDropdown
           className="shrink-0"
           items={[
             {
               label: '수정하기',
               onClick: () => {
-                // TODO: 할 일 수정
+                onOpenDetail(task, 'edit');
               },
             },
             {

@@ -47,7 +47,7 @@ export default function TaskListNavItem({
             {item.title}
           </h2>
         </button>
-        <div className="flex shrink-0 items-center gap-1.5 [&_img]:block">
+        <div className="flex shrink-0 items-center gap-1.5">
           <Badge
             completed={item.completed}
             total={item.total}

@@ -22,7 +22,7 @@ export default function TaskListRepeatWeekdayPicker({
   return (
     <div
       className={cn(
-        'mx-auto grid w-full max-w-full grid-cols-7 gap-2 md:max-w-[336px]',
+        'mx-auto grid w-full max-w-full grid-cols-7 gap-2 md:max-w-84',
         className,
       )}
       role="group"

@@ -38,7 +38,7 @@ const REPEAT_ITEMS: TaskListSelectDropdownItem<RepeatValue>[] = [
 
 /** 메인 제목·폼 소제목 공통 (요소 종류와 관계없이 동일 렌더링) */
 const modalHeadingTypo = cn(
-  'm-0 block text-[16px] font-medium leading-[19px] tracking-normal text-[#1E293B]',
+  'm-0 block text-base font-medium leading-[19px] tracking-normal text-[#1E293B]',
 );
 
 const dateTimeTriggerClass = cn(
@@ -47,7 +47,7 @@ const dateTimeTriggerClass = cn(
 );
 
 /** 모바일: 필드 전체 너비. md+: 피그마 고정 너비 */
-const repeatTriggerLayoutClass = 'block w-full md:w-[200px] md:min-w-[200px]';
+const repeatTriggerLayoutClass = 'block w-full md:w-50 md:min-w-50';
 
 type TaskListCreateTaskModalProps = {
   onClose: () => void;
@@ -150,8 +150,8 @@ export default function TaskListCreateTaskModal({
         <div
           className={cn(
             'relative flex max-h-[min(92dvh,calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)))] min-h-0 w-full flex-col overflow-x-hidden overflow-y-auto rounded-t-2xl bg-white p-5 text-center shadow-[0_-8px_30px_rgba(0,0,0,0.08)]',
-            'md:max-h-none md:max-w-[384px] md:overflow-visible md:rounded-3xl md:p-6 md:shadow-none',
-            isCalendarOpen ? 'md:min-h-[930px]' : 'md:min-h-[664px]',
+            'md:max-h-none md:max-w-96 md:overflow-visible md:rounded-3xl md:p-6 md:shadow-none',
+            isCalendarOpen ? 'md:min-h-[930px]' : 'md:min-h-166',
           )}
           onClick={(e) => e.stopPropagation()}
         >
@@ -164,7 +164,7 @@ export default function TaskListCreateTaskModal({
             <Image src={icCloseMedium} alt="모달 닫기" width={24} height={24} />
           </button>
 
-          <div className="mx-auto flex w-full max-w-[280px] flex-col items-center gap-3 px-1 md:max-w-none md:w-[227px] md:gap-4 md:px-0">
+          <div className="mx-auto flex w-full max-w-70 flex-col items-center gap-3 px-1 md:max-w-none md:w-[227px] md:gap-4 md:px-0">
             <p className={cn(modalHeadingTypo, 'text-center')}>할 일 만들기</p>
             <p className="text-center text-sm font-medium leading-[17px] text-[#64748B]">
               할 일은 실제로 행동 가능한 작업 중심으로
@@ -201,10 +201,10 @@ export default function TaskListCreateTaskModal({
                 role="group"
                 aria-labelledby={`${formId}-datetime-heading`}
               >
-                <div className="flex w-full min-w-0 flex-row items-stretch gap-2 md:w-[336px] md:max-w-[336px]">
+                <div className="flex w-full min-w-0 flex-row items-stretch gap-2 md:w-84 md:max-w-84">
                   <div
                     ref={calendarButtonRef}
-                    className="min-w-0 flex-1 md:w-[204px] md:min-w-[204px] md:flex-none md:shrink-0"
+                    className="min-w-0 flex-1 md:w-51 md:min-w-51 md:flex-none md:shrink-0"
                   >
                     <button
                       type="button"
@@ -224,7 +224,7 @@ export default function TaskListCreateTaskModal({
                   </div>
                   <div
                     ref={timePopoverContainerRef}
-                    className="relative w-[32%] min-w-[6.75rem] max-w-[124px] shrink-0 md:w-[124px] md:min-w-[124px] md:max-w-none md:shrink-0"
+                    className="relative w-[32%] min-w-27 max-w-31 shrink-0 md:w-31 md:min-w-31 md:max-w-none md:shrink-0"
                   >
                     <button
                       type="button"
@@ -336,7 +336,7 @@ export default function TaskListCreateTaskModal({
                         setMonthDay(clampMonthDay(v));
                       }}
                       onBlur={() => setMonthDay((d) => clampMonthDay(d))}
-                      className="max-w-[120px]"
+                      className="max-w-30"
                       aria-label="매월 반복할 날짜 1~31"
                     />
                   </div>

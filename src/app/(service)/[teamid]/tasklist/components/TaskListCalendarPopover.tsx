@@ -29,8 +29,8 @@ export default function TaskListCalendarPopover({
       className={cn(
         variant === 'inlineExpand'
           ? [
-              'box-border h-[258px] w-[336px] max-w-full shrink-0 overflow-hidden rounded-xl border border-brand-primary bg-background-primary shadow-lg',
-              '[&_.coworkers-date-picker]:!w-[336px] [&_.react-datepicker]:!m-0 [&_.react-datepicker]:!h-full [&_.react-datepicker]:!min-h-0 [&_.react-datepicker]:!w-[336px] [&_.react-datepicker]:!max-w-full [&_.react-datepicker]:!border-0 [&_.react-datepicker]:!rounded-none',
+              'box-border h-[258px] w-84 max-w-full shrink-0 overflow-hidden rounded-xl border border-brand-primary bg-background-primary shadow-lg',
+              '[&_.coworkers-date-picker]:!w-84 [&_.react-datepicker]:!m-0 [&_.react-datepicker]:!h-full [&_.react-datepicker]:!min-h-0 [&_.react-datepicker]:!w-84 [&_.react-datepicker]:!max-w-full [&_.react-datepicker]:!border-0 [&_.react-datepicker]:!rounded-none',
             ]
           : 'absolute top-12 right-0 z-20',
       )}

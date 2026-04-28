@@ -7,6 +7,13 @@ export type TaskListColumnItem = {
   total: number;
 };
 
+export type TaskListTaskComment = {
+  id: string;
+  author: string;
+  content: string;
+  meta: string;
+};
+
 export type TaskListBoardTask = {
   id: string;
   title: string;
@@ -15,4 +22,16 @@ export type TaskListBoardTask = {
   dueDateLabel: string;
   repeatLabel: string;
   sortOrder: number;
+  assigneeName: string;
+  description: string;
+  startedAtLabel: string;
+  comments: TaskListTaskComment[];
+};
+
+export type TaskListTaskDetailOpenMode = 'view' | 'edit';
+
+export type TaskListTaskDetailApplyPatch = {
+  title: string;
+  description: string;
+  comments: TaskListTaskComment[];
 };
