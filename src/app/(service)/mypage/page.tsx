@@ -15,27 +15,28 @@ export default function MyPage() {
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
   return (
-    <div className="flex gap-4 flex-wrap px-4 py-20 md:px-16 md:py-18 xl:w-full xl:py-30 xl:max-w-7xl xl:px-20">
-      <div className="bg-background-inverse px-5.5 pt-12 pb-16 rounded-[20px] flex flex-col gap-8 w-full xl:max-w-235">
+    <div className="w-full h-full min-h-dvh flex justify-center items-center gap-4 flex-wrap px-4 py-6 md:px-16 md:py-10">
+      <div className="bg-background-inverse px-5.5 pt-12 pb-16 rounded-[20px] flex flex-col gap-8 w-full md:px-11 md:pt-16  xl:max-w-235 xl:px-14">
         <h2 className="text-text-primary text-[20px] font-bold">계정 설정</h2>
         <AccountForm />
         <div className="mt-1">
-          <button
-            onClick={() => setIsWithdrawModalOpen(true)}
-            className="flex gap-2 text-status-danger font-medium text-sm"
-          >
-            <Image
-              src={icLogout}
-              width={15.75}
-              height={12}
-              alt="회원 탈퇴 아이콘"
-            />
-            회원 탈퇴하기
-          </button>
-
+          <div className="flex justify-end">
+            <button
+              onClick={() => setIsWithdrawModalOpen(true)}
+              className="flex gap-2 text-status-danger font-medium text-base"
+            >
+              <Image
+                src={icLogout}
+                width={15.75}
+                height={12}
+                alt="회원 탈퇴 아이콘"
+              />
+              회원 탈퇴하기
+            </button>
+          </div>
           <div className="flex justify-center items-center pt-10 w-70 m-auto">
             <PrimaryButton form="accountForm" type="submit">
-              저장하기
+              변경하기
             </PrimaryButton>
           </div>
           {/* 소셜 회원 확인 후 노출 될 문구 */}

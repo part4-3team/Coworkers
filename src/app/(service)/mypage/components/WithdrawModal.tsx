@@ -9,6 +9,7 @@ type Props = {
 export default function WithdrawModal({ onClose }: Props) {
   return (
     <Modal
+      onClose={onClose}
       hasIcon={true}
       title="회원 탈퇴를 진행하시겠어요?"
       hasCloseButton={false}

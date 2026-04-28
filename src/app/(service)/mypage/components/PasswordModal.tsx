@@ -2,20 +2,29 @@
 
 import { Input } from '@/components/common/form';
 import Modal from '@/components/common/modal';
+import { useToast } from '@/components/common/toast';
 
 type Props = {
   onClose: () => void;
 };
 
 export default function PasswordModal({ onClose }: Props) {
+  const { showToast } = useToast();
+
+  const handleConfirm = () => {
+    showToast('비밀번호가 변경되었습니다.', 'success');
+
+    onClose();
+  };
   return (
     <Modal
+      onClose={onClose}
       title="비밀번호 변경하기"
       hasCloseButton={false}
       lineButtonText="닫기"
       onLineButtonClick={onClose}
       primaryButtonText="변경하기"
-      onPrimaryButtonClick={() => {}}
+      onPrimaryButtonClick={handleConfirm}
     >
       <form className="text-left flex flex-col gap-6 min-w-70">
         <div className="flex flex-col gap-2 relative">

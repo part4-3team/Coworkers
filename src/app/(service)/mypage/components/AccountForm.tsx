@@ -64,28 +64,20 @@ export default function AccountForm() {
           </label>
           <Input id="userEmail" value="ziy1027@naver.com" disabled />
         </div>
-        <div className="flex flex-col gap-2 relative">
+        <div className="flex flex-row gap-4 items-center">
           <label
             htmlFor="userPassword"
-            className="text-text-primary text-sm font-medium "
+            className="text-text-primary text-sm font-medium w-fit"
           >
             비밀번호
           </label>
-          <div className="relative">
-            <Input
-              id="userPassword"
-              type="password"
-              value="password"
-              disabled
-            />
-            <button
-              type="button"
-              onClick={() => setIsPasswordModalOpen(true)}
-              className="bg-brand-primary text-text-inverse rounded-lg h-8 w-18.5 absolute right-2 top-[50%] -translate-y-1/2"
-            >
-              변경하기
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsPasswordModalOpen(true)}
+            className="bg-text-inverse text-brand-primary border border-brand-primary text-sm font-semibold rounded-lg h-8  w-fit px-2 hover:bg-brand-secondary"
+          >
+            비밀번호 변경하기
+          </button>
         </div>
       </form>
       {isPasswordModalOpen && (
