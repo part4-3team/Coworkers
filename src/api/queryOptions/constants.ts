@@ -1,0 +1,15 @@
+/**
+ * 프로젝트 전역에서 공통으로 재사용하는 React Query 기본 옵션 상수입니다.
+ */
+
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+
+export const QUERY_OPTION_DEFAULTS = {
+  COMMENT_LIST_STALE_TIME: 10 * SECOND,
+  DETAIL_STALE_TIME: 30 * SECOND,
+  LIST_STALE_TIME: 30 * SECOND,
+  TASK_LIST_DETAIL_STALE_TIME: 30 * SECOND,
+  USER_LIST_STALE_TIME: 30 * SECOND,
+  USER_ME_STALE_TIME: 5 * MINUTE,
+} as const;

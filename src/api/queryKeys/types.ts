@@ -40,7 +40,7 @@ export type CompletedTaskHistoryQueryParams = CursorPaginationQueryParams &
     teamId?: string;
   };
 
-export type BoardListQueryParams = OffsetPaginationQueryParams &
+export type ArticleListQueryParams = OffsetPaginationQueryParams &
   CursorPaginationQueryParams & {
     keyword?: string;
     orderBy?: string;

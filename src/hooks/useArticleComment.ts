@@ -1,5 +1,5 @@
 /**
- * 게시글 댓글 목록과 댓글 CRUD를 담당하는 훅 파일입니다.
+ * Swagger `ArticleComment` 도메인 댓글 목록 조회와 CRUD를 담당하는 훅 파일입니다.
  */
 
 'use client';
@@ -7,73 +7,89 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
-  createBoardComment,
-  deleteBoardComment,
-  getBoardComments,
-  updateBoardComment,
+  createArticleComment,
+  deleteArticleComment,
+  getArticleComments,
+  updateArticleComment,
 } from '@/api/commentApi';
 import type { CursorPaginationQueryParams, QueryKeyId } from '@/api/queryKeys';
 import { queryKeys } from '@/api/queryKeys';
-import { boardCommentQueryOptions } from '@/api/queryOptions';
+import { articleCommentQueryOptions } from '@/api/queryOptions';
 import {
   createMutationOptions,
   type MutationOptionsOverrides,
   type QueryOptionsOverrides,
 } from '@/api/queryOptions/factory';
 
-type BoardCommentsData = Awaited<ReturnType<typeof getBoardComments>>;
-type CreateBoardCommentData = Awaited<ReturnType<typeof createBoardComment>>;
-type UpdateBoardCommentData = Awaited<ReturnType<typeof updateBoardComment>>;
-type DeleteBoardCommentData = Awaited<ReturnType<typeof deleteBoardComment>>;
+type ArticleCommentsData = Awaited<ReturnType<typeof getArticleComments>>;
+type CreateArticleCommentData = Awaited<
+  ReturnType<typeof createArticleComment>
+>;
+type UpdateArticleCommentData = Awaited<
+  ReturnType<typeof updateArticleComment>
+>;
+type DeleteArticleCommentData = Awaited<
+  ReturnType<typeof deleteArticleComment>
+>;
 
-type UseBoardCommentsParams<TData = BoardCommentsData> = {
+const DEFAULT_ARTICLE_COMMENT_QUERY_PARAMS = {
+  limit: 10,
+} satisfies CursorPaginationQueryParams;
+
+type UseArticleCommentsParams<TData = ArticleCommentsData> = {
   articleId: QueryKeyId;
-  options?: QueryOptionsOverrides<BoardCommentsData, TData>;
-  params: CursorPaginationQueryParams;
+  options?: QueryOptionsOverrides<ArticleCommentsData, TData>;
+  params?: CursorPaginationQueryParams;
   teamId: string;
 };
 
-type CreateBoardCommentVariables = {
+type CreateArticleCommentVariables = {
   articleId: QueryKeyId;
-  body: {
-    content: string;
-  };
+  body: Parameters<typeof createArticleComment>[2];
   teamId: string;
   token?: string;
 };
 
-type UpdateBoardCommentVariables = {
+type UpdateArticleCommentVariables = {
   articleId: QueryKeyId;
-  body: {
-    content: string;
-  };
+  body: Parameters<typeof updateArticleComment>[2];
   commentId: QueryKeyId;
   teamId: string;
   token?: string;
 };
 
-type DeleteBoardCommentVariables = {
+type DeleteArticleCommentVariables = {
   articleId: QueryKeyId;
   commentId: QueryKeyId;
   teamId: string;
   token?: string;
 };
 
-export function useBoardCommentsQuery<TData = BoardCommentsData>({
+export function useArticleCommentsQuery<TData = ArticleCommentsData>({
   articleId,
   options,
   params,
   teamId,
-}: UseBoardCommentsParams<TData>) {
+}: UseArticleCommentsParams<TData>) {
+  const effectiveParams = {
+    ...DEFAULT_ARTICLE_COMMENT_QUERY_PARAMS,
+    ...params,
+  };
+
   return useQuery(
-    boardCommentQueryOptions.list<TData>(teamId, articleId, params, options),
+    articleCommentQueryOptions.list<TData>(
+      teamId,
+      articleId,
+      effectiveParams,
+      options,
+    ),
   );
 }
 
-export function useCreateBoardCommentMutation(
+export function useCreateArticleCommentMutation(
   options?: MutationOptionsOverrides<
-    CreateBoardCommentData,
-    CreateBoardCommentVariables
+    CreateArticleCommentData,
+    CreateArticleCommentVariables
   >,
 ) {
   const queryClient = useQueryClient();
@@ -86,20 +102,20 @@ export function useCreateBoardCommentMutation(
         body,
         teamId,
         token,
-      }: CreateBoardCommentVariables) =>
-        createBoardComment(teamId, articleId, body, token),
+      }: CreateArticleCommentVariables) =>
+        createArticleComment(teamId, articleId, body, token),
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
           await Promise.all([
             queryClient.invalidateQueries({
-              queryKey: queryKeys.boardComment.list(
+              queryKey: queryKeys.articleComment.article(
                 variables.teamId,
                 variables.articleId,
               ),
             }),
             queryClient.invalidateQueries({
-              queryKey: queryKeys.board.detail(
+              queryKey: queryKeys.article.detail(
                 variables.teamId,
                 variables.articleId,
               ),
@@ -112,10 +128,10 @@ export function useCreateBoardCommentMutation(
   );
 }
 
-export function useUpdateBoardCommentMutation(
+export function useUpdateArticleCommentMutation(
   options?: MutationOptionsOverrides<
-    UpdateBoardCommentData,
-    UpdateBoardCommentVariables
+    UpdateArticleCommentData,
+    UpdateArticleCommentVariables
   >,
 ) {
   const queryClient = useQueryClient();
@@ -128,20 +144,20 @@ export function useUpdateBoardCommentMutation(
         commentId,
         teamId,
         token,
-      }: UpdateBoardCommentVariables) =>
-        updateBoardComment(teamId, commentId, body, token),
+      }: UpdateArticleCommentVariables) =>
+        updateArticleComment(teamId, commentId, body, token),
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
           await Promise.all([
             queryClient.invalidateQueries({
-              queryKey: queryKeys.boardComment.list(
+              queryKey: queryKeys.articleComment.article(
                 variables.teamId,
                 variables.articleId,
               ),
             }),
             queryClient.invalidateQueries({
-              queryKey: queryKeys.board.detail(
+              queryKey: queryKeys.article.detail(
                 variables.teamId,
                 variables.articleId,
               ),
@@ -154,10 +170,10 @@ export function useUpdateBoardCommentMutation(
   );
 }
 
-export function useDeleteBoardCommentMutation(
+export function useDeleteArticleCommentMutation(
   options?: MutationOptionsOverrides<
-    DeleteBoardCommentData,
-    DeleteBoardCommentVariables
+    DeleteArticleCommentData,
+    DeleteArticleCommentVariables
   >,
 ) {
   const queryClient = useQueryClient();
@@ -165,20 +181,24 @@ export function useDeleteBoardCommentMutation(
 
   return useMutation(
     createMutationOptions({
-      mutationFn: ({ commentId, teamId, token }: DeleteBoardCommentVariables) =>
-        deleteBoardComment(teamId, commentId, token),
+      mutationFn: ({
+        commentId,
+        teamId,
+        token,
+      }: DeleteArticleCommentVariables) =>
+        deleteArticleComment(teamId, commentId, token),
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
           await Promise.all([
             queryClient.invalidateQueries({
-              queryKey: queryKeys.boardComment.list(
+              queryKey: queryKeys.articleComment.article(
                 variables.teamId,
                 variables.articleId,
               ),
             }),
             queryClient.invalidateQueries({
-              queryKey: queryKeys.board.detail(
+              queryKey: queryKeys.article.detail(
                 variables.teamId,
                 variables.articleId,
               ),

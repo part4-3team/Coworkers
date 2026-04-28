@@ -1,12 +1,16 @@
 /**
- * 프로젝트 전역에서 재사용할 TanStack Query 키 모음입니다.
+ * Swagger 도메인 기준으로 재사용하는 TanStack Query 키 모음입니다.
  *
- * 현재 프론트 용어 기준:
+ * 용어 매핑:
  * - `team`은 Swagger의 Group 리소스를 의미합니다.
- * - `board`는 Swagger의 Article 리소스를 의미합니다.
+ * - `article`은 채용 / 홍보 게시글을 의미합니다.
+ * - `articleComment`는 게시글 댓글을 의미합니다.
  */
 
-import { boardCommentQueryKeys, boardQueryKeys } from '@/api/queryKeys/board';
+import {
+  articleCommentQueryKeys,
+  articleQueryKeys,
+} from '@/api/queryKeys/article';
 import {
   authQueryKeys,
   imageQueryKeys,
@@ -22,9 +26,9 @@ import {
 } from '@/api/queryKeys/team';
 
 export const queryKeys = {
+  article: articleQueryKeys,
+  articleComment: articleCommentQueryKeys,
   auth: authQueryKeys,
-  board: boardQueryKeys,
-  boardComment: boardCommentQueryKeys,
   comment: commentQueryKeys,
   image: imageQueryKeys,
   oauthApp: oauthAppQueryKeys,
@@ -36,9 +40,9 @@ export const queryKeys = {
 } as const;
 
 export {
+  articleCommentQueryKeys,
+  articleQueryKeys,
   authQueryKeys,
-  boardCommentQueryKeys,
-  boardQueryKeys,
   commentQueryKeys,
   imageQueryKeys,
   oauthAppQueryKeys,
@@ -50,7 +54,7 @@ export {
 };
 
 export type {
-  BoardListQueryParams,
+  ArticleListQueryParams,
   CompletedTaskHistoryQueryParams,
   CursorPaginationQueryParams,
   DateRangeQueryParams,

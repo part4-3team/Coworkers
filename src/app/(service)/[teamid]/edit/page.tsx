@@ -7,7 +7,7 @@ import { Input } from '@/components/common/form';
 export default function EditTeamPage() {
   return (
     <div className="px-4 py-25 md:px-14 md:flex md:justify-around md:items-center h-full">
-      <div className="bg-background-primary px-6 pt-10 pb-15 rounded-[20px] w-full max-w-xl">
+      <div className="bg-background-primary px-6 pt-10 pb-15 rounded-[20px] w-full max-w-xl md:px-11">
         <h2 className="text-text-primary font-bold text-xl mb-8">
           팀 이름 변경하기
         </h2>
