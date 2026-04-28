@@ -6,6 +6,7 @@
 
 import { useCreateTeamForm } from '@/app/(service)/addteam/hooks/useCreateTeamForm';
 import AddUserImg from '@/components/common/adduserimg/AddUserImg';
+import { PrimaryButton } from '@/components/common/button';
 import { Input } from '@/components/common/form';
 
 export default function CreateTeamPage() {
@@ -48,13 +49,13 @@ export default function CreateTeamPage() {
             )}
           </div>
 
-          <button
+          <PrimaryButton
             type="submit"
             disabled={isDisabled}
-            className="mb-5 h-12 w-full rounded-xl bg-brand-primary text-base text-text-inverse hover:bg-interaction-hover disabled:bg-text-disabled disabled:cursor-not-allowed"
+            className="mb-5 max-w-none"
           >
             생성하기
-          </button>
+          </PrimaryButton>
         </form>
 
         <p className="text-center text-xs font-normal text-text-default">
