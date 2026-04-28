@@ -5,6 +5,7 @@
  */
 
 import { useJoinTeamForm } from '@/app/(service)/jointeam/hooks/useJoinTeamForm';
+import { PrimaryButton } from '@/components/common/button';
 import { Input } from '@/components/common/form';
 
 export default function JoinTeamPage() {
@@ -35,13 +36,13 @@ export default function JoinTeamPage() {
             />
           </div>
 
-          <button
+          <PrimaryButton
             type="submit"
             disabled={isDisabled}
-            className="mb-5 h-12 w-full rounded-xl bg-brand-primary text-base text-text-inverse hover:bg-interaction-hover disabled:bg-text-disabled disabled:cursor-not-allowed"
+            className="mb-5 max-w-none"
           >
             참여하기
-          </button>
+          </PrimaryButton>
         </form>
 
         <p className="text-center text-xs font-normal text-text-default">
