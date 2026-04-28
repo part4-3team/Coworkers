@@ -61,11 +61,12 @@ export default function HistoryMonthNavigator({
 
         <p className="text-center text-lg leading-tight font-bold text-text-primary md:text-xl md:leading-normal">
           {isRangeTitle ? (
-            <>
-              <span className="block md:inline">{titleParts[0]}</span>
-              <span className="hidden md:inline">{' - '}</span>
-              <span className="block md:inline">{titleParts[1]}</span>
-            </>
+            <span className="flex flex-col items-center gap-0 leading-none md:inline-flex md:flex-row md:gap-0 md:leading-normal">
+              <span>{titleParts[0]}</span>
+              <span className="block md:hidden">-</span>
+              <span className="hidden px-1 md:inline">{' - '}</span>
+              <span>{titleParts[1]}</span>
+            </span>
           ) : (
             title
           )}

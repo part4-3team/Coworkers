@@ -89,6 +89,10 @@ export function getHistoryRangeTitleParts(range: MyHistoryDateRange) {
     return [formatHistoryMonth(range.startDate)] as const;
   }
 
+  if (range.startDate.getTime() === range.endDate.getTime()) {
+    return [formatHistoryShortDate(range.startDate)] as const;
+  }
+
   return [
     formatHistoryShortDate(range.startDate),
     formatHistoryShortDate(range.endDate),
