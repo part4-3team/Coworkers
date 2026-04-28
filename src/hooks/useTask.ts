@@ -126,7 +126,7 @@ export function useCreateTaskCommentMutation(
         onSuccess: async (data, variables, onMutateResult, context) => {
           await Promise.all([
             queryClient.invalidateQueries({
-              queryKey: queryKeys.comment.list(
+              queryKey: queryKeys.comment.task(
                 variables.teamId,
                 variables.taskId,
               ),
@@ -166,7 +166,7 @@ export function useUpdateTaskCommentMutation(
         onSuccess: async (data, variables, onMutateResult, context) => {
           await Promise.all([
             queryClient.invalidateQueries({
-              queryKey: queryKeys.comment.list(
+              queryKey: queryKeys.comment.task(
                 variables.teamId,
                 variables.taskId,
               ),
@@ -205,7 +205,7 @@ export function useDeleteTaskCommentMutation(
         onSuccess: async (data, variables, onMutateResult, context) => {
           await Promise.all([
             queryClient.invalidateQueries({
-              queryKey: queryKeys.comment.list(
+              queryKey: queryKeys.comment.task(
                 variables.teamId,
                 variables.taskId,
               ),

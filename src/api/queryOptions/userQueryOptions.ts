@@ -7,6 +7,7 @@ import type {
   QueryParams,
 } from '@/api/queryKeys';
 import { queryKeys } from '@/api/queryKeys';
+import { QUERY_OPTION_DEFAULTS } from '@/api/queryOptions/constants';
 import {
   createListQueryOptions,
   createQueryOptions,
@@ -33,6 +34,7 @@ export const userQueryOptions = {
       options,
       queryFn: () => getCompletedTasks(params),
       queryKey: queryKeys.user.completedTasks(params),
+      staleTime: QUERY_OPTION_DEFAULTS.USER_LIST_STALE_TIME,
     }),
   groups: <TData = MyGroupsData>(
     params?: QueryParams,
@@ -42,12 +44,14 @@ export const userQueryOptions = {
       options,
       queryFn: () => getMyGroups(params),
       queryKey: queryKeys.user.groups(params),
+      staleTime: QUERY_OPTION_DEFAULTS.USER_LIST_STALE_TIME,
     }),
   me: <TData = MeData>(options?: QueryOptionsOverrides<MeData, TData>) =>
     createQueryOptions<MeData, TData>({
       options,
       queryFn: getMe,
       queryKey: queryKeys.user.me(),
+      staleTime: QUERY_OPTION_DEFAULTS.USER_ME_STALE_TIME,
     }),
   memberships: <TData = MyMembershipsData>(
     params?: QueryParams,
@@ -57,5 +61,6 @@ export const userQueryOptions = {
       options,
       queryFn: () => getMyMemberships(params),
       queryKey: queryKeys.user.memberships(params),
+      staleTime: QUERY_OPTION_DEFAULTS.USER_LIST_STALE_TIME,
     }),
 } as const;

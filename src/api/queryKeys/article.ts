@@ -1,5 +1,5 @@
 /**
- * 채용 / 홍보 게시글(백엔드 Article)과 게시글 댓글 쿼리 키를 정의합니다.
+ * Swagger `Article`, `ArticleComment` 도메인 기준 쿼리 키를 정의합니다.
  */
 
 import {
@@ -12,46 +12,52 @@ import {
   withQueryParams,
 } from '@/api/queryKeys/factory';
 import type {
-  BoardListQueryParams,
+  ArticleListQueryParams,
   CursorPaginationQueryParams,
   QueryKeyId,
 } from '@/api/queryKeys/types';
 
-export const boardQueryKeys = {
+export const articleQueryKeys = {
   all: (teamId: string) =>
-    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.BOARDS).all,
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.ARTICLES).all,
   detail: (teamId: string, articleId: QueryKeyId) =>
-    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.BOARDS).detail(
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.ARTICLES).detail(
       articleId,
     ),
-  infiniteList: (teamId: string, params?: BoardListQueryParams) =>
+  infiniteList: (teamId: string, params?: ArticleListQueryParams) =>
     createTeamResourceQueryKeys(
       teamId,
-      QUERY_KEY_RESOURCES.BOARDS,
+      QUERY_KEY_RESOURCES.ARTICLES,
     ).infiniteList(params),
   like: (teamId: string, articleId: QueryKeyId) =>
     createTeamScopeQueryKey(
       teamId,
-      QUERY_KEY_RESOURCES.BOARDS,
+      QUERY_KEY_RESOURCES.ARTICLES,
       QUERY_KEY_SEGMENTS.DETAIL,
       articleId,
       QUERY_KEY_SEGMENTS.LIKE,
     ),
-  list: (teamId: string, params?: BoardListQueryParams) =>
-    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.BOARDS).list(
+  list: (teamId: string, params?: ArticleListQueryParams) =>
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.ARTICLES).list(
       params,
     ),
   lists: (teamId: string) =>
-    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.BOARDS).lists(),
+    createTeamResourceQueryKeys(teamId, QUERY_KEY_RESOURCES.ARTICLES).lists(),
 } as const;
 
-export const boardCommentQueryKeys = {
+export const articleCommentQueryKeys = {
   all: (teamId: string) =>
-    createTeamScopeQueryKey(teamId, QUERY_KEY_RESOURCES.BOARD_COMMENTS),
+    createTeamScopeQueryKey(teamId, QUERY_KEY_RESOURCES.ARTICLE_COMMENTS),
+  article: (teamId: string, articleId: QueryKeyId) =>
+    createTeamScopeQueryKey(
+      teamId,
+      QUERY_KEY_RESOURCES.ARTICLE_COMMENTS,
+      articleId,
+    ),
   detail: (teamId: string, commentId: QueryKeyId) =>
     createTeamScopeQueryKey(
       teamId,
-      QUERY_KEY_RESOURCES.BOARD_COMMENTS,
+      QUERY_KEY_RESOURCES.ARTICLE_COMMENTS,
       QUERY_KEY_SEGMENTS.DETAIL,
       commentId,
     ),
@@ -63,9 +69,9 @@ export const boardCommentQueryKeys = {
     withQueryParams(
       createTeamScopeQueryKey(
         teamId,
-        QUERY_KEY_RESOURCES.BOARD_COMMENTS,
-        QUERY_KEY_SEGMENTS.INFINITE_LIST,
+        QUERY_KEY_RESOURCES.ARTICLE_COMMENTS,
         articleId,
+        QUERY_KEY_SEGMENTS.INFINITE_LIST,
       ),
       params,
     ),
@@ -77,9 +83,9 @@ export const boardCommentQueryKeys = {
     withQueryParams(
       createTeamScopeQueryKey(
         teamId,
-        QUERY_KEY_RESOURCES.BOARD_COMMENTS,
-        QUERY_KEY_SEGMENTS.LIST,
+        QUERY_KEY_RESOURCES.ARTICLE_COMMENTS,
         articleId,
+        QUERY_KEY_SEGMENTS.LIST,
       ),
       params,
     ),
