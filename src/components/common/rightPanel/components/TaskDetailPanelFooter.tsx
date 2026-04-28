@@ -25,7 +25,7 @@ export default function TaskDetailPanelFooter({
             height={16}
             className="size-4"
           />
-          등록하기
+          수정하기
         </button>
       ) : (
         <button
