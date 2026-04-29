@@ -25,10 +25,7 @@ export function ModalMemberDetail({
 
   const handleDelete = async () => {
     try {
-      // TODO: 멤버 삭제 API 호출 로직 구현
-      showToast('멤버가 삭제되었습니다.', 'error');
       onPrimaryButtonClick?.();
-      onClose();
     } catch (err) {
       console.error('삭제 실패:', err);
     }
@@ -54,10 +51,10 @@ export function ModalMemberDetail({
             className="w-full h-full object-cover"
           />
         </div>
-        <p className="text-sm text-text-primary font-semibold mb-1">
+        <p className="text-base text-text-primary font-semibold mb-1">
           {member?.userName}
         </p>
-        <p className="text-xs text-text-secondary font-normal">
+        <p className="text-sm text-text-secondary font-normal">
           {member?.userEmail}
         </p>
       </div>

@@ -1,4 +1,5 @@
 import MemberCard from '@/app/(service)/[teamid]/components/MemberCard';
+import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/ConfirmModal';
 import { ModalMemberDetail } from '@/app/(service)/[teamid]/components/modals/ModalMemberDetails';
 import { ModalMembersInvite } from '@/app/(service)/[teamid]/components/modals/ModalMemberInvite';
 import { MOCK_MEMBERS } from '@/app/(service)/[teamid]/constants';
@@ -37,14 +38,24 @@ export default function TeamMemberList() {
           openMemberDetail(member); // memberDetail 열기
         }}
       />
-      {/** 우선 목데이터로 유저 리스트만들어둔 상태
-       * Todo : 유저 데이터 불러오면 목데이터 삭제 후 데이터 연결할 예정
-       */}
 
       {is('memberInvite') && <ModalMembersInvite onClose={close} />}
 
       {is('memberDetail') && (
-        <ModalMemberDetail onClose={close} member={selectedMember} />
+        <ModalMemberDetail
+          onClose={close}
+          member={selectedMember}
+          onPrimaryButtonClick={() => open('memberDelete')}
+        />
+      )}
+
+      {is('memberDelete') && (
+        <ConfirmModal
+          onClose={close}
+          title="해당 멤버를 삭제하시겠습니까?"
+          confirmText="삭제"
+          toastMessage="삭제 되었습니다."
+        />
       )}
     </section>
   );

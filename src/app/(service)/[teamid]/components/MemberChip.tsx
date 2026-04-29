@@ -22,7 +22,7 @@ export default function MemberChip({
           />
         ))}
       </div>
-      <p className="text-text-default text-xs font-medium">{members.length}</p>
+      <p className="text-text-default text-sm font-medium">{members.length}</p>
     </div>
   );
 }

@@ -60,3 +60,16 @@ export type TeamMemberListContentProps = {
   members: MemberChipsProps[];
   onMemberClick: (member: MemberChipsProps) => void;
 };
+
+export type TeamProgressStatsProps = {
+  today: number;
+  done: number;
+};
+
+export type TeamProgressModalProps = {
+  is: (key: ModalKey) => boolean;
+  close: () => void;
+  open: (key: ModalKey) => void;
+  selectedMember: MemberChipsProps | null;
+  openMemberDetail: (member: MemberChipsProps) => void;
+};
