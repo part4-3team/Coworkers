@@ -8,7 +8,7 @@
 
 import Image from 'next/image';
 
-import { icAlertCircleWhiteLarge } from '@/assets';
+import { icAlertCircleWhiteLarge, icCloseMedium } from '@/assets';
 import type { ToastItem } from '@/components/common/toast/types';
 import { cn } from '@/utils/cn';
 
@@ -19,6 +19,7 @@ type ToastProps = {
 
 export default function Toast({ toast, onRemove }: ToastProps) {
   const isSuccess = toast.type === 'success';
+  const shouldShowCloseButton = !toast.hideCloseButton;
 
   const handleAction = () => {
     onRemove(toast.id);
@@ -34,27 +35,47 @@ export default function Toast({ toast, onRemove }: ToastProps) {
         isSuccess ? 'bg-brand-primary' : 'bg-status-danger',
       )}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex min-w-0 items-center gap-2">
         <span className="hidden md:block">
           <Image src={icAlertCircleWhiteLarge} alt="" width={24} height={24} />
         </span>
-        <p className="text-sm font-medium text-text-inverse md:text-base">
+        <p className="truncate text-sm font-medium text-text-inverse md:text-base">
           {toast.message}
         </p>
       </div>
-      {toast.actionLabel && (
-        <button
-          data-toast-action="true"
-          type="button"
-          onClick={handleAction}
-          className={cn(
-            'ml-4 h-8.25 shrink-0 rounded-lg bg-background-primary px-3 text-sm font-medium hover:bg-background-secondary',
-            toast.actionTextClassName ?? 'text-brand-primary',
-          )}
-        >
-          {toast.actionLabel}
-        </button>
-      )}
+      <div className="ml-4 flex shrink-0 items-center gap-2">
+        {toast.actionLabel && (
+          <button
+            data-toast-action="true"
+            type="button"
+            onClick={handleAction}
+            className={cn(
+              'h-8.25 rounded-lg bg-background-primary px-3 text-sm font-medium hover:bg-background-secondary',
+              toast.actionTextClassName ?? 'text-brand-primary',
+            )}
+          >
+            {toast.actionLabel}
+          </button>
+        )}
+
+        {shouldShowCloseButton && (
+          <button
+            type="button"
+            onClick={() => onRemove(toast.id)}
+            aria-label="토스트 닫기"
+            className="flex size-8 items-center justify-center"
+          >
+            <span
+              aria-hidden="true"
+              className="block size-5 bg-text-inverse"
+              style={{
+                WebkitMask: `url(${icCloseMedium}) center / contain no-repeat`,
+                mask: `url(${icCloseMedium}) center / contain no-repeat`,
+              }}
+            />
+          </button>
+        )}
+      </div>
     </div>
   );
 }

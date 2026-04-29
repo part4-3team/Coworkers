@@ -49,6 +49,7 @@ export function useAccountForm({
         '저장하지 않은 변경사항이 있어요!',
         'error',
         {
+          hideCloseButton: true,
           label: '변경사항 취소하기',
           textClassName: 'text-status-danger',
           onClick: () => {

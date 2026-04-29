@@ -14,6 +14,7 @@ import {
 
 import Toast from '@/components/common/toast/components/Toast';
 import type {
+  ToastAction,
   ToastContextValue,
   ToastItem,
   ToastType,
@@ -30,11 +31,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const showToast = useCallback(
-    (
-      message: string,
-      type: ToastType,
-      action?: { label: string; onClick: () => void; textClassName?: string },
-    ) => {
+    (message: string, type: ToastType, action?: ToastAction) => {
       const id = crypto.randomUUID();
       const newToast: ToastItem = {
         id,
@@ -43,6 +40,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         actionLabel: action?.label,
         onAction: action?.onClick,
         actionTextClassName: action?.textClassName,
+        hideCloseButton: action?.hideCloseButton,
       };
 
       setToasts((prev) => [...prev, newToast]);
@@ -68,7 +66,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     <ToastContext.Provider value={contextValue}>
       {children}
       {hasToasts && (
-        <div className="fixed bottom-16 left-1/2 z-50 flex -translate-x-1/2 flex-col gap-2 md:bottom-28">
+        <div className="fixed bottom-16 left-1/2 z-50 flex -translate-x-1/2 flex-col gap-2 md:bottom-28 lg:bottom-17.5 lg:left-auto lg:right-8 lg:translate-x-0 lg:items-end">
           {toasts.map((toast) => (
             <Toast key={toast.id} toast={toast} onRemove={removeToast} />
           ))}
