@@ -13,6 +13,7 @@ import type {
   RangeDatePickerProps,
   SingleDatePickerProps,
 } from '@/components/common/form/types';
+import { normalizeDatePickerRangeValue } from '@/components/common/form/utils/normalizeDatePickerRangeValue';
 import { renderDatePickerWeekDay } from '@/components/common/form/utils/renderDatePickerWeekDay';
 import { cn } from '@/utils/cn';
 
@@ -52,9 +53,11 @@ export function RangeInlineDatePicker({
   startDate,
 }: RangeDatePickerProps) {
   const handleChange = (date: Date | DatePickerRangeValue | null) => {
-    if (!Array.isArray(date)) return;
+    const normalizedDate = normalizeDatePickerRangeValue(date);
 
-    onChange(date);
+    if (!normalizedDate) return;
+
+    onChange(normalizedDate);
   };
 
   return (

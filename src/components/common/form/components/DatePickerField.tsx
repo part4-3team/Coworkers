@@ -9,18 +9,24 @@ import type { ReactNode } from 'react';
 type DatePickerFieldProps = {
   children: ReactNode;
   errorMessage?: string;
+  errorMessageId?: string;
 };
 
 export default function DatePickerField({
   children,
   errorMessage,
+  errorMessageId,
 }: DatePickerFieldProps) {
   return (
     <div className="flex w-full flex-col gap-2">
       {children}
 
       {errorMessage && (
-        <p className="text-xs font-medium text-status-danger md:text-sm">
+        <p
+          id={errorMessageId}
+          aria-live="polite"
+          className="text-xs font-medium text-status-danger md:text-sm"
+        >
           {errorMessage}
         </p>
       )}
