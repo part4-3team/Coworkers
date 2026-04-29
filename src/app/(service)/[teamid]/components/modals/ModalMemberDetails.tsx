@@ -1,6 +1,5 @@
 import Image from 'next/image';
 
-import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { ModalMembersProps } from '@/app/(service)/[teamid]/types';
 import { icUserXlarge } from '@/assets/index';
 import Modal from '@/components/common/modal';
@@ -13,7 +12,6 @@ export function ModalMemberDetail({
   member,
 }: ModalMembersProps) {
   const { showToast } = useToast();
-  const { open, close, is } = useModalState();
 
   const handleCopyEmail = async () => {
     try {
@@ -27,8 +25,6 @@ export function ModalMemberDetail({
 
   const handleDelete = async () => {
     try {
-      open('memberDelete');
-      onClose();
       onPrimaryButtonClick?.();
     } catch (err) {
       console.error('삭제 실패:', err);

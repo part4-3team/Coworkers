@@ -9,6 +9,7 @@ import {
   TeamMemberListContentProps,
 } from '@/app/(service)/[teamid]/types';
 import { icUserXlarge } from '@/assets/index';
+
 export default function TeamMemberList() {
   const { open, close, is, openMemberDetail, selectedMember } = useModalState();
 
@@ -44,9 +45,7 @@ export default function TeamMemberList() {
         <ModalMemberDetail
           onClose={close}
           member={selectedMember}
-          onPrimaryButtonClick={() => {
-            open('memberDelete');
-          }}
+          onPrimaryButtonClick={() => open('memberDelete')}
         />
       )}
 

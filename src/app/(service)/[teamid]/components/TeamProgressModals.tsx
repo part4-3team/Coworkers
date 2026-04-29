@@ -2,8 +2,7 @@ import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/Confirm
 import { ModalMemberDetail } from '@/app/(service)/[teamid]/components/modals/ModalMemberDetails';
 import { ModalMembersInvite } from '@/app/(service)/[teamid]/components/modals/ModalMemberInvite';
 import { ModalMembers } from '@/app/(service)/[teamid]/components/modals/ModalMembers';
-
-import { TeamProgressModalProps } from '../types';
+import { TeamProgressModalProps } from '@/app/(service)/[teamid]/types';
 
 export function TeamProgressModals({
   is,
@@ -28,9 +27,7 @@ export function TeamProgressModals({
         <ModalMemberDetail
           onClose={close}
           member={selectedMember}
-          onPrimaryButtonClick={() => {
-            open('memberDelete');
-          }}
+          onPrimaryButtonClick={() => open('memberDelete')}
         />
       )}
       {is('memberInvite') && <ModalMembersInvite onClose={close} />}

@@ -1,16 +1,15 @@
 import { useParams, useRouter } from 'next/navigation';
 
 import MemberChip from '@/app/(service)/[teamid]/components/MemberChip';
+import TeamProgressBar from '@/app/(service)/[teamid]/components/TeamProgressBar';
+import { TeamProgressModals } from '@/app/(service)/[teamid]/components/TeamProgressModals';
+import { TeamProgressStats } from '@/app/(service)/[teamid]/components/TeamProgressState';
 import {
   MOCK_MEMBERS,
   SETTING_BUTTON,
 } from '@/app/(service)/[teamid]/constants';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { ListDropdown } from '@/components/common/dropdown';
-
-import TeamProgressBar from './TeamProgressBar';
-import { TeamProgressModals } from './TeamProgressModal';
-import { TeamProgressStats } from './TeamProgressState';
 
 export default function TeamProgress() {
   const router = useRouter();
@@ -30,7 +29,7 @@ export default function TeamProgress() {
 
   return (
     <section className="w-full bg-background-inverse p-6 shadow-[0_4px_10px_rgba(49,84,153,0.06)] md:rounded-[20px] xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]">
-      <div className="flex gap-3 items-center">
+      <div className="flex gap-3 items-center mb-6">
         <h1 className="text-text-primary font-bold text-xl md:text-2xl">
           경영관리팀
         </h1>

@@ -11,13 +11,13 @@ export default function MemberCard({
 }: MemberCardProps) {
   return (
     <div className="flex gap-3 items-center cursor-default">
-      <div className="overflow-hidden w-10 h-10 rounded-xl bg-background-tertiary">
+      <div className="overflow-hidden w-9 h-9 rounded-xl bg-background-tertiary">
         <Image
           src={userImage || icUserXlarge}
-          width={userImage ? 32 : 24}
-          height={userImage ? 32 : 24}
+          width={36}
+          height={36}
           alt={`${name}'s profile photo`}
-          className="w-full h-full object-cover"
+          className={userImage ? 'w-full h-full object-cover' : 'w-6 h-6'}
         />
       </div>
       <div className="flex-1">
