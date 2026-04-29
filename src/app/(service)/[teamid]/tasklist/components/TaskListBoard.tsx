@@ -12,6 +12,10 @@ import TaskListTaskRow from '@/app/(service)/[teamid]/tasklist/components/TaskLi
 import TaskListWeekStrip from '@/app/(service)/[teamid]/tasklist/components/TaskListWeekStrip';
 import { TASK_LIST_DETAIL_CURRENT_USER_NAME } from '@/app/(service)/[teamid]/tasklist/constants';
 import { useTaskListBoard } from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListBoard';
+import {
+  TASK_LIST_BOARD_CARD_SHELL_CLASS,
+  TASK_LIST_BOARD_COLUMN_TITLE_CLASS,
+} from '@/app/(service)/[teamid]/tasklist/taskListBoardConstants';
 import type { TaskListBoardProps } from '@/app/(service)/[teamid]/tasklist/types';
 import { cn } from '@/utils/cn';
 
@@ -39,10 +43,7 @@ export default function TaskListBoard({
 
   return (
     <section
-      className={cn(
-        'flex w-full min-w-0 flex-1 flex-col rounded-[20px] border border-background-tertiary bg-background-primary px-4 py-6 shadow-[0_15px_50px_-12px_rgba(0,0,0,0.05)] sm:px-5 sm:py-8 md:px-8 md:py-10',
-        className,
-      )}
+      className={cn(TASK_LIST_BOARD_CARD_SHELL_CLASS, className)}
       aria-label={isTaskListEmpty ? '할 일 보드' : `${columnTitle} 할 일 보드`}
     >
       <header className="flex min-w-0 flex-row items-center gap-2 sm:gap-6">
@@ -51,9 +52,7 @@ export default function TaskListBoard({
             할 일을 입력해주세요..
           </h2>
         ) : (
-          <h2 className="min-w-0 flex-1 truncate text-[15px] font-bold leading-[21px] text-text-primary sm:text-xl sm:leading-normal md:text-2xl md:leading-normal">
-            {columnTitle}
-          </h2>
+          <h2 className={TASK_LIST_BOARD_COLUMN_TITLE_CLASS}>{columnTitle}</h2>
         )}
         <div className="shrink-0">
           <TaskListMonthNavigator

@@ -1,34 +1,20 @@
 'use client';
 
-import type { RefObject } from 'react';
-
 import TaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/components/TaskListCalendarPopover';
 import {
   CREATE_TASK_MODAL_COLUMN_CLASS,
+  DATE_TIME_TIME_COLUMN_CLASS,
+  DATE_TIME_TIME_POPOVER_CLASS,
   DATE_TIME_TRIGGER_ACTIVE_CLASS,
   DATE_TIME_TRIGGER_CLASS,
   MODAL_HEADING_TYPO,
 } from '@/app/(service)/[teamid]/tasklist/createTaskModalConstants';
+import type { TaskListCreateTaskModalDateTimeSectionProps } from '@/app/(service)/[teamid]/tasklist/types';
 import {
   formatFullKoreanDate,
   formatKoreanMeridiemTime,
 } from '@/app/(service)/[teamid]/tasklist/utils/boardDate';
 import { cn } from '@/utils/cn';
-
-type TaskListCreateTaskModalDateTimeSectionProps = {
-  calendarButtonRef: RefObject<HTMLDivElement | null>;
-  calendarRef: RefObject<HTMLDivElement | null>;
-  formId: string;
-  isCalendarOpen: boolean;
-  isTimePopoverOpen: boolean;
-  onDateChange: (date: Date | null) => void;
-  onOpenDateCalendar: () => void;
-  onOpenTime: () => void;
-  selectedDate: Date;
-  startTime: string;
-  timePopoverContainerRef: RefObject<HTMLDivElement | null>;
-  onStartTimeChange: (value: string) => void;
-};
 
 export default function TaskListCreateTaskModalDateTimeSection({
   calendarButtonRef,
@@ -83,7 +69,7 @@ export default function TaskListCreateTaskModalDateTimeSection({
             </div>
             <div
               ref={timePopoverContainerRef}
-              className="relative z-10 w-[124px] shrink-0"
+              className={DATE_TIME_TIME_COLUMN_CLASS}
             >
               <button
                 type="button"
@@ -101,7 +87,7 @@ export default function TaskListCreateTaskModalDateTimeSection({
               </button>
               {isTimePopoverOpen ? (
                 <div
-                  className="absolute top-full right-0 z-30 mt-1 w-full min-w-[124px] max-w-[200px] rounded-xl border border-brand-primary bg-background-primary p-3 shadow-lg"
+                  className={DATE_TIME_TIME_POPOVER_CLASS}
                   role="dialog"
                   aria-label="시간 선택"
                 >

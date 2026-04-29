@@ -4,14 +4,8 @@
  * lg 이상: 팀 카드와 본문 행 사이 간격 피그마 60px(gap-15).
  */
 
-import type { ReactNode } from 'react';
-
+import type { TaskListContentAreaProps } from '@/app/(service)/[teamid]/tasklist/types';
 import { cn } from '@/utils/cn';
-
-type TaskListContentAreaProps = {
-  children: ReactNode;
-  className?: string;
-};
 
 export default function TaskListContentArea({
   children,
@@ -23,7 +17,6 @@ export default function TaskListContentArea({
         'relative mx-auto flex w-full min-h-0 flex-col gap-4 md:gap-6 lg:mx-0 lg:max-w-280 lg:min-h-220 lg:gap-15',
         className,
       )}
-      aria-label="할 일 리스트 콘텐츠"
     >
       {children}
     </div>

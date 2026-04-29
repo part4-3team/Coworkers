@@ -68,9 +68,16 @@ export const DATE_TIME_TRIGGER_ACTIVE_CLASS =
  */
 export const CREATE_TASK_MODAL_COLUMN_CLASS = 'w-full min-w-0 max-w-full';
 
-/** 반복 드롭다운 트리거 폭 ≈110px */
+/** 시간 트리거 열 — 피그마 고정 폭 124px */
+export const DATE_TIME_TIME_COLUMN_CLASS = 'relative z-10 w-[124px] shrink-0';
+
+/** 시간 선택 오버레이 — 트리거와 동일 최소 폭, 최대 200px */
+export const DATE_TIME_TIME_POPOVER_CLASS =
+  'absolute top-full right-0 z-30 mt-1 w-full min-w-[124px] max-w-[200px] rounded-xl border border-brand-primary bg-background-primary p-3 shadow-lg';
+
+/** 반복 드롭다운 트리거 — '반복 안함' 한 줄 표시(110px → 124px) */
 export const REPEAT_TRIGGER_LAYOUT_CLASS =
-  'block w-[110px] max-w-full shrink-0';
+  'block w-[124px] max-w-full shrink-0';
 
 /** 반복 트리거 — 피그마 select 14 / leading 17, 패딩 px-3.5 py-2.5 */
 export const REPEAT_DROPDOWN_BUTTON_CLASS = cn(

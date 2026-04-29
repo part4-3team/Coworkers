@@ -91,7 +91,6 @@ export default function TaskListSidebar({
           )}
           <button
             type="button"
-            aria-label="할 일 목록 추가"
             className={TASK_LIST_ADD_LIST_BUTTON_MOBILE}
             onClick={onAddListClick}
           >
@@ -126,7 +125,6 @@ export default function TaskListSidebar({
         </ul>
         <button
           type="button"
-          aria-label="할 일 목록 추가"
           className={TASK_LIST_ADD_LIST_BUTTON_DESKTOP}
           onClick={onAddListClick}
         >

@@ -1,5 +1,7 @@
 /** 할 일 리스트 라우트에서 사용하는 타입 정의입니다. */
 
+import type { ReactNode, RefObject } from 'react';
+
 export type TaskListColumnItem = {
   id: string;
   title: string;
@@ -56,6 +58,38 @@ export type TaskListBoardProps = {
 export type TaskListCreateTaskModalProps = {
   onClose: () => void;
   onSubmit?: () => void;
+};
+
+export type TaskListCalendarVariant =
+  | 'anchored'
+  | 'inlineExpand'
+  | 'modalOverlay';
+
+export type TaskListCalendarPopoverProps = {
+  calendarRef: RefObject<HTMLDivElement | null>;
+  onSelectDate: (date: Date | null) => void;
+  selectedDate: Date;
+  variant?: TaskListCalendarVariant;
+};
+
+export type TaskListContentAreaProps = {
+  children: ReactNode;
+  className?: string;
+};
+
+export type TaskListCreateTaskModalDateTimeSectionProps = {
+  calendarButtonRef: RefObject<HTMLDivElement | null>;
+  calendarRef: RefObject<HTMLDivElement | null>;
+  formId: string;
+  isCalendarOpen: boolean;
+  isTimePopoverOpen: boolean;
+  onDateChange: (date: Date | null) => void;
+  onOpenDateCalendar: () => void;
+  onOpenTime: () => void;
+  selectedDate: Date;
+  startTime: string;
+  timePopoverContainerRef: RefObject<HTMLDivElement | null>;
+  onStartTimeChange: (value: string) => void;
 };
 
 export type TaskListSidebarProps = {
