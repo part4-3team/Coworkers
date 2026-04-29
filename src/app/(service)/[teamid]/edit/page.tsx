@@ -21,7 +21,7 @@ export default function EditTeamPage() {
             >
               팀 이름
             </label>
-            <Input id="teamName" value="기존 팀이름 가져오기" />
+            <Input id="teamName" defaultValue="기존 팀이름 가져오기" />
           </div>
         </form>
         <button className="text-base text-text-inverse bg-brand-primary w-full h-12 rounded-xl mb-5 hover:bg-interaction-hover">

@@ -32,7 +32,8 @@ export default function SignupForm() {
           alt="Coworkers 로고"
           width={210}
           height={35}
-          className="h-auto w-46 md:w-52"
+          className="h-auto w-52"
+          style={{ height: 'auto' }}
         />
       </div>
 

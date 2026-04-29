@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { icGnbMenu, icUserLarge, imgLogoSymbolLarge } from '@/assets';
+import ProfileMenuDropdown from '@/components/layout/components/ProfileMenuDropdown';
 import { getLayoutAuthState } from '@/components/layout/constants';
 import MobileSidebarDrawer from '@/components/layout/header/components/MobileSidebarDrawer';
 import useMobileSidebar from '@/components/layout/header/hooks/useMobileSidebar';
@@ -51,24 +52,29 @@ export default function Header() {
               width={35}
               height={24}
               className="h-6 w-auto"
+              style={{ width: 'auto' }}
             />
           </Link>
         </div>
 
         {layoutAuthState.isAuthenticated ? (
-          <Link
-            href={ROUTES.MY_PAGE}
-            aria-label="계정 설정으로 이동"
-            className="ml-auto flex size-7 shrink-0 items-center justify-center rounded-full bg-border-secondary"
-          >
-            <Image
-              src={icUserLarge}
-              alt=""
-              width={24}
-              height={24}
-              className="size-6"
-            />
-          </Link>
+          <ProfileMenuDropdown
+            className="ml-auto"
+            trigger={
+              <span
+                aria-label="프로필 메뉴 열기"
+                className="flex size-7 shrink-0 items-center justify-center rounded-full bg-border-secondary"
+              >
+                <Image
+                  src={icUserLarge}
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="size-6"
+                />
+              </span>
+            }
+          />
         ) : (
           <Link
             href={ROUTES.LOGIN}

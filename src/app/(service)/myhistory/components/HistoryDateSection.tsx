@@ -3,11 +3,7 @@
  */
 
 import HistoryTaskGroup from '@/app/(service)/myhistory/components/HistoryTaskGroup';
-import type { MyHistoryDateSection } from '@/app/(service)/myhistory/types';
-
-type HistoryDateSectionProps = {
-  section: MyHistoryDateSection;
-};
+import type { HistoryDateSectionProps } from '@/app/(service)/myhistory/types';
 
 export default function HistoryDateSection({
   section,
@@ -17,7 +13,7 @@ export default function HistoryDateSection({
       <div className="flex items-center gap-8">
         <div className="h-px flex-1 bg-background-tertiary" />
         <h2 className="shrink-0 text-sm font-medium text-text-default md:text-base">
-          {section.date}
+          {section.dateLabel}
         </h2>
         <div className="h-px flex-1 bg-background-tertiary" />
       </div>

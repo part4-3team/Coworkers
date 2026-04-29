@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { icUserLarge } from '@/assets';
+import ProfileMenuDropdown from '@/components/layout/components/ProfileMenuDropdown';
 import { getLayoutAuthState } from '@/components/layout/constants';
 import useSidebar from '@/components/layout/sidebar/hooks/useSidebar';
 import type { SidebarFooterProps } from '@/components/layout/sidebar/types';
@@ -28,52 +29,63 @@ export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
         isExpanded ? 'mx-4' : 'mx-3',
       )}
     >
-      <Link
-        href={href}
-        className={cn(
-          'flex min-h-12 items-center overflow-hidden font-medium text-text-primary',
-          isExpanded ? 'justify-start gap-3' : 'justify-center',
-        )}
-        aria-label={
-          layoutAuthState.isAuthenticated
-            ? '계정 설정으로 이동'
-            : '로그인 페이지로 이동'
-        }
-        onClick={handleSidebarInteraction}
-      >
-        {layoutAuthState.isAuthenticated ? (
-          <>
-            <span className="flex shrink-0 size-10 items-center justify-center rounded-lg bg-background-tertiary">
-              <Image src={icUserLarge} alt="" width={24} height={24} />
-            </span>
-            {isExpanded ? (
-              <span className="animate-fadeIn [animation-delay:150ms] [animation-fill-mode:both] flex min-w-0 flex-col">
-                <span className="truncate text-base font-semibold text-text-primary">
+      {layoutAuthState.isAuthenticated ? (
+        <ProfileMenuDropdown
+          className="w-full"
+          menuClassName="bottom-full left-0 right-auto top-auto mb-2 mt-0"
+          onNavigate={handleSidebarInteraction}
+          trigger={
+            <div
+              className={cn(
+                'flex min-h-12 w-full items-center overflow-hidden font-medium text-text-primary',
+                isExpanded ? 'justify-start gap-3' : 'justify-center',
+              )}
+              aria-label="프로필 메뉴 열기"
+            >
+              <span className="flex shrink-0 size-10 items-center justify-center rounded-lg bg-background-tertiary">
+                <Image src={icUserLarge} alt="" width={24} height={24} />
+              </span>
+              {isExpanded ? (
+                <span className="animate-fadeIn [animation-delay:150ms] [animation-fill-mode:both] flex min-w-0 flex-col">
+                  <span className="truncate text-base font-semibold text-text-primary">
+                    {layoutAuthState.currentUser.name}
+                  </span>
+                  <span className="truncate text-sm font-medium text-text-default">
+                    {layoutAuthState.currentUser.teamName}
+                  </span>
+                </span>
+              ) : (
+                <span className="sr-only">
                   {layoutAuthState.currentUser.name}
                 </span>
-                <span className="truncate text-sm font-medium text-text-default">
-                  {layoutAuthState.currentUser.teamName}
-                </span>
+              )}
+            </div>
+          }
+        />
+      ) : (
+        <Link
+          href={href}
+          className={cn(
+            'flex min-h-12 items-center overflow-hidden font-medium text-text-primary',
+            isExpanded ? 'justify-start gap-3' : 'justify-center',
+          )}
+          aria-label="로그인 페이지로 이동"
+          onClick={handleSidebarInteraction}
+        >
+          {isExpanded ? (
+            <>
+              <span className="flex shrink-0 size-10 items-center justify-center rounded-lg bg-background-tertiary">
+                <Image src={icUserLarge} alt="" width={24} height={24} />
               </span>
-            ) : (
-              <span className="sr-only">
-                {layoutAuthState.currentUser.name}
+              <span className="animate-fadeIn [animation-delay:150ms] [animation-fill-mode:both] whitespace-nowrap text-base">
+                로그인
               </span>
-            )}
-          </>
-        ) : isExpanded ? (
-          <>
-            <span className="flex shrink-0 size-10 items-center justify-center rounded-lg bg-background-tertiary">
-              <Image src={icUserLarge} alt="" width={24} height={24} />
-            </span>
-            <span className="animate-fadeIn [animation-delay:150ms] [animation-fill-mode:both] whitespace-nowrap text-base">
-              로그인
-            </span>
-          </>
-        ) : (
-          <span className="text-base">로그인</span>
-        )}
-      </Link>
+            </>
+          ) : (
+            <span className="text-base">로그인</span>
+          )}
+        </Link>
+      )}
     </div>
   );
 }

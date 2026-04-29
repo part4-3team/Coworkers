@@ -12,6 +12,7 @@ export type ListDropdownProps = {
   trigger: React.ReactNode;
   items: ListDropdownItem[];
   className?: string;
+  itemClassName?: string;
   menuClassName?: string;
   itemTextAlign?: ListDropdownItemTextAlign;
 };
