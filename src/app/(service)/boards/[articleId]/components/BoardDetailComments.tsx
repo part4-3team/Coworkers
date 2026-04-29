@@ -77,7 +77,7 @@ export default function BoardDetailComments({
         </div>
       ) : (
         <div className="pt-5 border-t border-background-tertiary mt-7 md:mt-9">
-          <p className="text-xs font-normal text-text-default text-center py-12.5 md:text-sm md:py-20 lg:py-12.5">
+          <p className="text-sm font-normal text-text-default text-center py-12.5 md:py-20 lg:py-12.5">
             아직 작성된 댓글이 없습니다.
           </p>
         </div>

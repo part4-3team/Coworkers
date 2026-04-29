@@ -7,9 +7,9 @@ import Link from 'next/link';
 import {
   IcIndentLeftLarge,
   IcIndentRightLarge,
-  ImgLogoFullLarge,
   ImgLogoSymbolLarge,
 } from '@/assets';
+import FullLogo from '@/components/common/logo/FullLogo';
 import type { SidebarHeaderProps } from '@/components/layout/sidebar/types';
 import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
@@ -27,12 +27,7 @@ export default function SidebarHeader({
     >
       <Link href={ROUTES.HOME} aria-label="랜딩 페이지로 이동">
         {isExpanded ? (
-          <ImgLogoFullLarge
-            width={144}
-            height={24}
-            role="img"
-            aria-label="Coworkers"
-          />
+          <FullLogo size="sidebar" />
         ) : (
           <ImgLogoSymbolLarge
             width={35}

@@ -17,7 +17,7 @@ export default function LandingCtaSection() {
         <h2 className="text-base font-bold leading-tight text-brand-primary md:text-2xl lg:text-4xl">
           지금 바로 시작해보세요.
         </h2>
-        <p className="mt-3 whitespace-pre-line text-xs text-interaction-inactive md:text-sm lg:text-base">
+        <p className="mt-3 whitespace-pre-line text-sm text-interaction-inactive lg:text-base">
           팀원 모두와 같은 방향, 같은 속도로 나아가는 가장 쉬운 방법
         </p>
         <Link

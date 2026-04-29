@@ -1,9 +1,13 @@
 'use client';
 
 import useBoardWrite from '@/app/(service)/boards/hooks/useBoardWrite';
-import { IcPlusBoard, IcStarRed } from '@/assets';
+import { IcStarRed } from '@/assets';
 import Button from '@/components/common/button/components/Button';
-import { ContentTextarea, TitleInput } from '@/components/common/form';
+import {
+  ContentTextarea,
+  ImageUploadField,
+  TitleInput,
+} from '@/components/common/form';
 import { cn } from '@/utils/cn';
 
 export default function PostCreateForm() {
@@ -12,6 +16,7 @@ export default function PostCreateForm() {
     isLoading,
     handleTitleChange,
     handleContentChange,
+    handleImageChange,
     handleSubmit,
   } = useBoardWrite();
 
@@ -70,18 +75,13 @@ export default function PostCreateForm() {
               <span className="block text-text-primary text-sm font-bold md:text-base">
                 이미지
               </span>
-              <button
-                type="button"
-                className="mt-2 w-20 h-20 border border-background-tertiary rounded-xl flex justify-center items-center md:mt-3 md:w-30 md:h-30"
-              >
-                <IcPlusBoard
-                  width={20}
-                  height={20}
-                  className="w-5 h-5 fill-background-tertiary flex justify-center items-center md:w-7.5 md:h-7.5"
-                  role="img"
-                  aria-label="게시글 이미지 추가"
-                />
-              </button>
+              <ImageUploadField
+                variant="post"
+                src={formData.image || null}
+                previewAlt="게시글 이미지"
+                buttonAriaLabel="게시글 이미지 추가"
+                onChangeFile={handleImageChange}
+              />
             </div>
             <div className="mt-12 md:mt-14.25">
               <Button

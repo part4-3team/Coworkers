@@ -45,10 +45,7 @@ export default function ContentTextarea({
       </div>
 
       {hasError && (
-        <p
-          id={errorId}
-          className="text-xs font-medium text-status-danger md:text-sm"
-        >
+        <p id={errorId} className="text-sm font-medium text-status-danger">
           {errorMessage}
         </p>
       )}

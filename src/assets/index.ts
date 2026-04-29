@@ -2,8 +2,6 @@
  * 프로젝트에서 사용하는 정적 에셋을 일괄 export하는 파일입니다.
  */
 
-export { default as ImgLogoFullLarge } from '@/assets/logos/img_logo_full_large.svg';
-export { default as ImgLogoFullSmall } from '@/assets/logos/img_logo_full_small.svg';
 export { default as ImgLogoSymbolLarge } from '@/assets/logos/img_logo_symbol_large.svg';
 export { default as ImgLogoTextLarge } from '@/assets/logos/img_logo_text_large.svg';
 export { default as ImgLogoTextSmall } from '@/assets/logos/img_logo_text_small.svg';

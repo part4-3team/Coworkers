@@ -54,7 +54,7 @@ export default function BoardListCard({ post }: { post: Post }) {
             role="img"
             aria-label="좋아요 모양 아이콘"
           />
-          <span className="text-interaction-inactive text-xs font-medium leading-4 md:text-sm">
+          <span className="text-interaction-inactive text-sm font-medium leading-4">
             {likeCount}
           </span>
         </div>

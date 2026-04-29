@@ -18,12 +18,20 @@ export default function useBoardWrite(initialData?: {
     content: initialData?.content || '',
     image: initialData?.image || '',
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToast();
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setFormData((prev) => ({ ...prev, title: e.target.value }));
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setFormData((prev) => ({ ...prev, content: e.target.value }));
+  const handleImageChange = (file: File | null) => {
+    setImageFile(file);
+
+    if (!file) {
+      setFormData((prev) => ({ ...prev, image: '' }));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +43,7 @@ export default function useBoardWrite(initialData?: {
 
     try {
       setIsLoading(true);
+      console.log('게시글 이미지 파일:', imageFile);
       showToast('게시글이 성공적으로 등록되었습니다.', 'success');
       router.push(ROUTES.BOARDS);
     } catch {
@@ -46,9 +55,11 @@ export default function useBoardWrite(initialData?: {
 
   return {
     formData,
+    imageFile,
     isLoading,
     handleTitleChange,
     handleContentChange,
+    handleImageChange,
     handleSubmit,
   };
 }

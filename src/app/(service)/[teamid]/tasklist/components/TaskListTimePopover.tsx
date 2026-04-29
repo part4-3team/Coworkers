@@ -43,7 +43,7 @@ export default function TaskListTimePopover({
       aria-label="시간 선택"
     >
       <div className="flex flex-col gap-2">
-        <p className="text-xs font-medium text-text-secondary">시</p>
+        <p className="text-sm font-medium text-text-secondary">시</p>
         <div className={DATE_TIME_TIME_POPOVER_COLUMN_CLASS}>
           {TIME_PICKER_HOURS.map((optionHour) => (
             <button
@@ -63,7 +63,7 @@ export default function TaskListTimePopover({
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="text-xs font-medium text-text-secondary">분</p>
+        <p className="text-sm font-medium text-text-secondary">분</p>
         <div className={DATE_TIME_TIME_POPOVER_COLUMN_CLASS}>
           {TIME_PICKER_MINUTES.map((optionMinute) => (
             <button

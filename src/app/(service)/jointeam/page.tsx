@@ -42,7 +42,7 @@ export default function JoinTeamPage() {
             />
 
             {errorMessage && (
-              <p className="mt-2 text-xs font-medium text-status-danger">
+              <p className="mt-2 text-sm font-medium text-status-danger">
                 {errorMessage}
               </p>
             )}

@@ -51,13 +51,13 @@ export default function BoardBestCard({ post }: { post: Post }) {
       </div>
       <div className="flex items-center justify-between gap-2 mt-3 lg:mt-4.25 min-w-0">
         <div className="flex min-w-0 flex-1 items-center">
-          <span className="text-text-primary text-xs font-medium leading-4 min-w-0 truncate lg:text-sm lg:leading-4.25">
+          <span className="text-text-primary text-sm font-medium leading-4 min-w-0 truncate lg:leading-4.25">
             {post.writer.nickname}
           </span>
-          <span className="text-text-primary text-xs font-medium leading-4 shrink-0 px-2 lg:text-sm lg:leading-4.25">
+          <span className="text-text-primary text-sm font-medium leading-4 shrink-0 px-2 lg:leading-4.25">
             |
           </span>
-          <span className="text-interaction-inactive text-xs font-medium leading-4 shrink-0 lg:text-sm lg:leading-4.25">
+          <span className="text-interaction-inactive text-sm font-medium leading-4 shrink-0 lg:leading-4.25">
             {post.createdAt}
           </span>
         </div>
@@ -68,7 +68,7 @@ export default function BoardBestCard({ post }: { post: Post }) {
             role="img"
             aria-label="좋아요 모양 아이콘"
           />
-          <span className="text-interaction-inactive text-xs font-medium leading-4 lg:text-sm lg:leading-4.25">
+          <span className="text-interaction-inactive text-sm font-medium leading-4 lg:leading-4.25">
             {likeCount}
           </span>
         </div>

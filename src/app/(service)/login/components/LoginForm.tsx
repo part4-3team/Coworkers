@@ -7,9 +7,10 @@ import Link from 'next/link';
 import ForgotPasswordModal from '@/app/(service)/login/components/ForgotPasswordModal';
 import { LOGIN_LINKS, LOGIN_TEXT } from '@/app/(service)/login/constants';
 import useLoginForm from '@/app/(service)/login/hooks/useLoginForm';
-import { IcKakaotalk, ImgLogoFullLarge } from '@/assets';
+import { IcKakaotalk } from '@/assets';
 import { PrimaryButton } from '@/components/common/button';
 import { AuthInput } from '@/components/common/form';
+import FullLogo from '@/components/common/logo/FullLogo';
 import { ROUTES } from '@/constants/ROUTES';
 
 export default function LoginForm() {
@@ -31,13 +32,9 @@ export default function LoginForm() {
       {/* 로고 */}
       <h1 className="mb-8 flex justify-center md:mb-10">
         <Link href={ROUTES.HOME} aria-label="Coworkers 홈으로 이동">
-          <ImgLogoFullLarge
-            width={210}
-            height={35}
-            className="h-auto w-52"
-            style={{ height: 'auto' }}
-            role="img"
-            aria-label="Coworkers 로고"
+          <FullLogo
+            size="auth"
+            className="origin-center scale-90 md:scale-100"
           />
         </Link>
       </h1>
@@ -66,7 +63,7 @@ export default function LoginForm() {
         />
 
         {serverError && (
-          <p className="text-center text-xs font-medium text-status-danger md:text-sm">
+          <p className="text-center text-sm font-medium text-status-danger">
             {serverError}
           </p>
         )}
@@ -75,7 +72,7 @@ export default function LoginForm() {
           <button
             type="button"
             onClick={() => setIsForgotPasswordModalOpen(true)}
-            className="text-xs font-medium text-brand-primary underline md:text-sm"
+            className="text-sm font-medium text-brand-primary underline"
           >
             {LOGIN_TEXT.forgotPassword}
           </button>
@@ -87,7 +84,7 @@ export default function LoginForm() {
       </form>
 
       {/* 회원가입 */}
-      <p className="mt-6 text-center text-xs text-text-secondary md:text-sm">
+      <p className="mt-6 text-center text-sm text-text-secondary">
         아직 계정이 없으신가요?
         <Link
           href={LOGIN_LINKS.signup}
@@ -100,7 +97,7 @@ export default function LoginForm() {
       {/* OR */}
       <div className="mx-auto mt-10 flex w-full max-w-md items-center gap-4 md:px-6">
         <div className="h-px flex-1 bg-background-tertiary" />
-        <span className="text-xs text-text-secondary md:text-sm">OR</span>
+        <span className="text-sm text-text-secondary">OR</span>
         <div className="h-px flex-1 bg-background-tertiary" />
       </div>
 

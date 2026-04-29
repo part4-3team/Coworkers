@@ -4,3 +4,4 @@ export { default as TitleInput } from '@/components/common/form/components/Title
 export { default as ContentTextarea } from '@/components/common/form/components/ContentTextarea';
 export { default as CommentInput } from '@/components/common/form/components/CommentInput';
 export { default as DatePicker } from '@/components/common/form/components/DatePicker';
+export { default as ImageUploadField } from '@/components/common/form/components/ImageUploadField';

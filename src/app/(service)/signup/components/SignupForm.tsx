@@ -4,9 +4,10 @@ import Link from 'next/link';
 
 import { SIGNUP_LINKS, SIGNUP_TEXT } from '@/app/(service)/signup/constants';
 import useSignupForm from '@/app/(service)/signup/hooks/useSignupForm';
-import { IcKakaotalk, ImgLogoFullLarge } from '@/assets';
+import { IcKakaotalk } from '@/assets';
 import { PrimaryButton } from '@/components/common/button';
 import { AuthInput } from '@/components/common/form';
+import FullLogo from '@/components/common/logo/FullLogo';
 import { ROUTES } from '@/constants/ROUTES';
 
 export default function SignupForm() {
@@ -28,13 +29,9 @@ export default function SignupForm() {
     <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-5.25 py-9.25 md:px-8 md:py-12.5">
       <h1 className="mb-8 flex justify-center md:mb-10">
         <Link href={ROUTES.HOME} aria-label="Coworkers 홈으로 이동">
-          <ImgLogoFullLarge
-            width={210}
-            height={35}
-            className="h-auto w-52"
-            style={{ height: 'auto' }}
-            role="img"
-            aria-label="Coworkers 로고"
+          <FullLogo
+            size="auth"
+            className="origin-center scale-90 md:scale-100"
           />
         </Link>
       </h1>
@@ -76,7 +73,7 @@ export default function SignupForm() {
         />
 
         {serverError && (
-          <p className="text-center text-xs font-medium text-status-danger md:text-sm">
+          <p className="text-center text-sm font-medium text-status-danger">
             {serverError}
           </p>
         )}
@@ -90,7 +87,7 @@ export default function SignupForm() {
         </PrimaryButton>
       </form>
 
-      <p className="mt-6 text-center text-xs text-text-secondary md:text-sm">
+      <p className="mt-6 text-center text-sm text-text-secondary">
         {SIGNUP_TEXT.loginGuide}
         <Link
           href={SIGNUP_LINKS.login}
@@ -102,7 +99,7 @@ export default function SignupForm() {
 
       <div className="mx-auto mt-10 flex w-full max-w-md items-center gap-4 md:px-6">
         <div className="h-px flex-1 bg-background-tertiary" />
-        <span className="text-xs text-text-secondary md:text-sm">
+        <span className="text-sm text-text-secondary">
           {SIGNUP_TEXT.divider}
         </span>
         <div className="h-px flex-1 bg-background-tertiary" />

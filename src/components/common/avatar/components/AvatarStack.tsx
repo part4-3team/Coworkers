@@ -29,7 +29,7 @@ export default function AvatarStack({ members, className }: AvatarStackProps) {
           />
         ))}
       </div>
-      <p className="shrink-0 text-xs font-medium text-text-default md:text-[13px]">
+      <p className="shrink-0 text-sm font-medium text-text-default">
         {members.length}
       </p>
     </div>

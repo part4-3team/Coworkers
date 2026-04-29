@@ -1,12 +1,14 @@
 'use client';
 
-import Image from 'next/image';
-
 import useBoardWrite from '@/app/(service)/boards/hooks/useBoardWrite';
 import { Post } from '@/app/(service)/boards/types';
-import { IcCloseLarge, IcPlusBoard, IcStarRed } from '@/assets';
+import { IcStarRed } from '@/assets';
 import Button from '@/components/common/button/components/Button';
-import { ContentTextarea, TitleInput } from '@/components/common/form';
+import {
+  ContentTextarea,
+  ImageUploadField,
+  TitleInput,
+} from '@/components/common/form';
 import { cn } from '@/utils/cn';
 
 export default function BoardDetailEditForm({
@@ -19,13 +21,13 @@ export default function BoardDetailEditForm({
     isLoading,
     handleTitleChange,
     handleContentChange,
+    handleImageChange,
     handleSubmit,
   } = useBoardWrite({
     title: boardDetail.title,
     content: boardDetail.content,
     image: boardDetail.image,
   });
-  const hasImage = !!boardDetail.image;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -78,47 +80,13 @@ export default function BoardDetailEditForm({
             <span className="block text-text-primary text-sm font-bold md:text-base">
               이미지
             </span>
-            <div className="flex gap-3">
-              {hasImage && (
-                <div className="relative">
-                  <div className="mt-2 w-20 h-20 rounded-xl flex justify-center items-center overflow-hidden md:mt-3 md:w-30 md:h-30">
-                    <Image
-                      src={boardDetail.image as string}
-                      alt="게시글 이미지"
-                      width={80}
-                      height={80}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    className="absolute top-1 -right-2 w-6 h-6 z-10 bg-background-primary rounded-full 
-                    border border-border-secondary flex justify-center items-center cursor-pointer"
-                  >
-                    <IcCloseLarge
-                      width={18}
-                      height={18}
-                      className="w-4.5 h-4.5 fill-icon-primary"
-                      role="img"
-                      aria-label="게시글 이미지 삭제"
-                    />
-                  </button>
-                </div>
-              )}
-              <button
-                type="button"
-                className="mt-2 w-20 h-20 border border-background-tertiary rounded-xl flex justify-center items-center md:mt-3 md:w-30 md:h-30"
-                disabled={hasImage}
-              >
-                <IcPlusBoard
-                  width={20}
-                  height={20}
-                  className="w-5 h-5 fill-background-tertiary flex justify-center items-center md:w-7.5 md:h-7.5"
-                  role="img"
-                  aria-label="게시글 이미지 추가"
-                />
-              </button>
-            </div>
+            <ImageUploadField
+              variant="post"
+              src={formData.image || null}
+              previewAlt="게시글 이미지"
+              buttonAriaLabel="게시글 이미지 추가"
+              onChangeFile={handleImageChange}
+            />
           </div>
           <div className="mt-12 md:mt-14.25">
             <Button

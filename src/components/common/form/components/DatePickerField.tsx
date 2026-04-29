@@ -25,7 +25,7 @@ export default function DatePickerField({
         <p
           id={errorMessageId}
           aria-live="polite"
-          className="text-xs font-medium text-status-danger md:text-sm"
+          className="text-sm font-medium text-status-danger"
         >
           {errorMessage}
         </p>

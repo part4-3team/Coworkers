@@ -149,7 +149,7 @@ export default function TaskListWeekStrip({
               )}
               onClick={() => handleSelectDay(day)}
             >
-              <span className="text-xs font-medium opacity-90">{label}</span>
+              <span className="text-sm font-medium opacity-90">{label}</span>
               <span className="text-base font-semibold tabular-nums sm:text-lg">
                 {day.getDate()}
               </span>

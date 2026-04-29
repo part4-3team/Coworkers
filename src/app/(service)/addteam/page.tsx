@@ -52,7 +52,7 @@ export default function CreateTeamPage() {
             />
 
             {errorMessage && (
-              <p className="text-xs font-medium text-status-danger">
+              <p className="text-sm font-medium text-status-danger">
                 {errorMessage}
               </p>
             )}

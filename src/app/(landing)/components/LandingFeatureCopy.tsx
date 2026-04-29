@@ -37,7 +37,7 @@ export default function LandingFeatureCopy({
       </h2>
       <p
         className={cn(
-          'mt-4.5 whitespace-pre-line text-xs md:text-sm lg:text-base',
+          'mt-4.5 whitespace-pre-line text-sm lg:text-base',
           isInverse ? 'text-background-tertiary' : 'text-interaction-inactive',
         )}
       >

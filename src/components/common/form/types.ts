@@ -42,6 +42,17 @@ type DatePickerCommonProps = {
 
 export type DatePickerRangeValue = [Date | null, Date | null];
 
+export type ImageUploadFieldVariant = 'post' | 'profile';
+
+export type ImageUploadFieldProps = {
+  buttonAriaLabel: string;
+  disabled?: boolean;
+  onChangeFile?: (file: File | null) => void;
+  previewAlt: string;
+  src?: string | null;
+  variant: ImageUploadFieldVariant;
+};
+
 export type SingleDatePickerProps = DatePickerCommonProps & {
   onChange: (date: Date | null) => void;
   selected: Date | null;
