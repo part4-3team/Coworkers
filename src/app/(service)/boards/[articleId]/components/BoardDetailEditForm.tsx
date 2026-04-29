@@ -4,8 +4,7 @@ import Image from 'next/image';
 
 import useBoardWrite from '@/app/(service)/boards/hooks/useBoardWrite';
 import { Post } from '@/app/(service)/boards/types';
-import { icCloseLarge } from '@/assets';
-import icPlusLarge from '@/assets/icons/ic_plus_large.svg?url';
+import { icCloseLarge, icPlusBoard, icStarRed } from '@/assets';
 import Button from '@/components/common/button/components/Button';
 import { ContentTextarea, TitleInput } from '@/components/common/form';
 import { cn } from '@/utils/cn';
@@ -31,14 +30,17 @@ export default function BoardDetailEditForm({
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <span className="block text-text-primary text-xl font-bold leading-6">
+        <h2 className="text-text-primary text-xl font-bold leading-6">
           게시글 수정
-        </span>
+        </h2>
         <div className="mt-8 md:mt-10">
           <div>
-            <span className="block text-text-primary text-sm font-bold md:text-base">
-              제목
-            </span>
+            <div className="flex items-center gap-1 md:gap-1.5">
+              <span className="block text-text-primary text-sm font-bold md:text-base">
+                제목
+              </span>
+              <Image src={icStarRed} alt="필수 입력" width={8} height={8} />
+            </div>
             <TitleInput
               id="title"
               placeholder="제목을 입력해주세요."
@@ -48,9 +50,12 @@ export default function BoardDetailEditForm({
             />
           </div>
           <div className="mt-6 md:mt-8">
-            <span className="block text-text-primary text-sm font-bold md:text-base">
-              내용
-            </span>
+            <div className="flex items-center gap-1 md:gap-1.5">
+              <span className="block text-text-primary text-sm font-bold md:text-base">
+                내용
+              </span>
+              <Image src={icStarRed} alt="필수 입력" width={8} height={8} />
+            </div>
             <ContentTextarea
               id="content"
               placeholder="내용을 입력하세요"
@@ -96,7 +101,7 @@ export default function BoardDetailEditForm({
                 disabled={hasImage}
               >
                 <Image
-                  src={icPlusLarge}
+                  src={icPlusBoard}
                   alt="게시글 이미지 추가"
                   width={20}
                   height={20}

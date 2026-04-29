@@ -10,14 +10,12 @@ export default function BoardBestPagination({
   setCurrentPage,
 }: BestPagination & { setCurrentPage: (page: number) => void }) {
   const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    const prevPage = currentPage <= 1 ? totalPages : currentPage - 1;
+    setCurrentPage(prevPage);
   };
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    const nextPage = currentPage >= totalPages ? 1 : currentPage + 1;
+    setCurrentPage(nextPage);
   };
   return (
     <div className="relative flex items-center justify-end mt-4.5 md:mt-4 lg:mt-5.5">

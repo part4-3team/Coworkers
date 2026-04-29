@@ -27,7 +27,7 @@ export const useBoardDetailMenu = (articleId: string) => {
   const handleDeleteConfirm = () => {
     setIsDeleteModalOpen(false);
     router.push(ROUTES.BOARDS);
-    showToast('게시글이 삭제되었습니다.', 'success');
+    showToast('게시글이 삭제되었습니다.', 'error');
   };
 
   const menuItems = BOARD_DETAIL_DROPDOWN_ITEMS.map((item) => ({

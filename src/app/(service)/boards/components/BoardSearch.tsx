@@ -9,10 +9,7 @@ export default function BoardSearch() {
   const { keyword, handleChange, handleSubmit } = useSearch();
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="relative w-full max-w-85.75 md:max-w-105"
-    >
+    <form onSubmit={handleSubmit} className="relative w-full md:max-w-105">
       <div className="absolute inset-y-0 left-3 top-0.5 flex items-center pointer-events-none md:left-4">
         <Image
           src={icSearchXlarge}

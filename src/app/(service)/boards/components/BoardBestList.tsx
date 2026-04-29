@@ -37,9 +37,9 @@ export default function BoardBestList({
       lg:mx-22.25 lg:px-5.75 lg:pt-10.25 lg:pb-5 lg:rounded-[20px]"
     >
       <div>
-        <span className="shrink-0 block text-text-primary text-lg font-bold leading-5.25 md:text-xl">
+        <p className="shrink-0 text-text-primary text-lg font-bold leading-5.25 md:text-xl">
           베스트 게시글
-        </span>
+        </p>
 
         {emptyMessage ? (
           <div className="px-2 py-8 text-center md:py-10" role="status">

@@ -23,6 +23,7 @@ export { default as icArrowUpCircleActive } from '@/assets/icons/ic_arrow_up_cir
 export { default as icBadgeDefault } from '@/assets/icons/ic_badge_default.svg?url';
 export { default as icBadgeOn } from '@/assets/icons/ic_badge_on.svg?url';
 export { default as icBest } from '@/assets/icons/ic_best.svg?url';
+export { default as icBoardBest } from '@/assets/icons/ic_board_best.svg?url';
 export { default as icBlueCheck } from '@/assets/icons/ic_blue_check.svg?url';
 export { default as icCalendarCircleLarge } from '@/assets/icons/ic_calendar_circle_large.svg?url';
 export { default as icCalendarLarge } from '@/assets/icons/ic_calendar_large.svg?url';
@@ -86,6 +87,7 @@ export { default as icSearchXlarge } from '@/assets/icons/ic_search_xlarge.svg?u
 export { default as icSettingsLarge } from '@/assets/icons/ic_settings_large.svg?url';
 export { default as icSettingsSmall } from '@/assets/icons/ic_settings_small.svg?url';
 export { default as icSpeechBubble } from '@/assets/icons/ic_speech_bubble.svg?url';
+export { default as icStarRed } from '@/assets/icons/ic_star_red.svg?url';
 export { default as icUserLarge } from '@/assets/icons/ic_user_large.svg?url';
 export { default as icUserXlarge } from '@/assets/icons/ic_user_xlarge.svg?url';
 export { default as icVisibility } from '@/assets/icons/ic_visibility.svg?url';

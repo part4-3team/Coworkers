@@ -3,11 +3,13 @@
  * API 연동 전에는 `constants` 목업 데이터로 UI를 표시합니다.
  */
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import BoardBestList from '@/app/(service)/boards/components/BoardBestList';
 import BoardHeader from '@/app/(service)/boards/components/BoardHeader';
 import BoardList from '@/app/(service)/boards/components/BoardList';
+import PostCreateForm from '@/app/(service)/boards/components/PostCreateForm';
 import {
   getMockBoardBestPosts,
   getMockBoardMainListPosts,
@@ -18,10 +20,8 @@ import {
   hasPosts,
   isSearchMode,
 } from '@/app/(service)/boards/utils/boardUtils';
-import { FloatingButton } from '@/components/common/button';
+import { icPencil } from '@/assets';
 import { ROUTES } from '@/constants/ROUTES';
-
-import PostCreateForm from './components/PostCreateForm';
 
 export default async function BoardsPage({
   searchParams,
@@ -59,7 +59,18 @@ export default async function BoardsPage({
             />
 
             <Link href={`${ROUTES.BOARDS}?write=true`} scroll={false}>
-              <FloatingButton aria-label="게시글 작성" />
+              <div
+                className="fixed bottom-10 right-3.5 z-100 md:right-6 md:bottom-20 lg:right-10 
+                bg-brand-primary rounded-full w-14 h-14 hover:bg-interaction-hover shadow-floating"
+              >
+                <Image
+                  src={icPencil}
+                  alt="게시글 작성"
+                  width={24}
+                  height={24}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                />
+              </div>
             </Link>
           </div>
         </>

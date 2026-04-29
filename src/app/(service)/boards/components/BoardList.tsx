@@ -19,11 +19,11 @@ export default function BoardList({
   const hasPostsValue = hasPosts(sortedPosts);
 
   return (
-    <section className="max-w-324.5 px-4 mt-7.25 md:mt-7 md:px-6.5 lg:px-22.25 lg:mt-11.25">
+    <section className="max-w-324.5 px-4 mt-7.25 pb-12.25 md:mt-7 md:px-6.5 lg:px-22.25 lg:mt-11.25">
       <div className="flex items-center justify-between">
-        <span className="text-text-primary text-lg font-bold block leading-5.25 md:text-xl">
+        <p className="text-text-primary text-lg font-bold block leading-5.25 md:text-xl">
           {isSearchMode ? `"${keyword}" 검색 결과입니다.` : '전체'}
-        </span>
+        </p>
         <SelectDropdown
           items={BOARD_SORT_OPTIONS.map((option) => ({
             label: option.label,

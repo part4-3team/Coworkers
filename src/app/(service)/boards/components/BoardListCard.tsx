@@ -16,9 +16,9 @@ export default function BoardListCard({ post }: { post: Post }) {
     >
       <div className="h-20 flex items-center justify-between gap-4 md:h-22">
         <div className="flex-1 min-w-0 md:w-90">
-          <span className="text-text-primary text-base font-bold line-clamp-1 leading-4.75 md:text-lg md:leading-5.25">
+          <p className="text-text-primary text-base font-bold line-clamp-1 leading-4.75 md:text-lg md:leading-5.25">
             {post.title}
-          </span>
+          </p>
           <p className="text-text-default text-sm font-normal leading-4.25 mt-2 line-clamp-2 md:leading-5">
             {post.content}
           </p>
@@ -37,13 +37,13 @@ export default function BoardListCard({ post }: { post: Post }) {
       </div>
       <div className="flex items-center justify-between gap-2 mt-3 min-w-0">
         <div className="flex min-w-0 flex-1 items-center">
-          <span className="text-text-primary text-xs font-medium leading-4 min-w-0 truncate md:text-sm">
+          <span className="text-text-primary text-sm font-medium leading-4 min-w-0 truncate md:text-base">
             {post.writer.nickname}
           </span>
-          <span className="text-text-primary text-xs font-medium leading-4 shrink-0 px-2 md:text-sm">
+          <span className="text-text-primary text-sm font-medium leading-4 shrink-0 px-2 md:text-base">
             |
           </span>
-          <span className="text-interaction-inactive text-xs font-medium leading-4 shrink-0 md:text-sm">
+          <span className="text-interaction-inactive text-sm font-medium leading-4 shrink-0 md:text-base">
             {post.createdAt}
           </span>
         </div>

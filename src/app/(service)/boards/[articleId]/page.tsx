@@ -36,23 +36,28 @@ export default async function BoardDetailPage({
   ) as UserProfileResponse;
 
   return (
-    <div className="max-w-225 items-center bg-background-primary rounded-[20px] mx-4 mt-4 mb-8.25 md:mx-6.5 md:mt-17 md:mb-19 xl:mx-46 xl:my-19">
-      <div className="px-5.5 py-9.75 md:px-10 md:py-13.5 lg:px-15">
-        {isEditMode ? (
-          <BoardDetailEditForm boardDetail={boardDetail} />
-        ) : (
-          <div>
-            <BoardDetailHeader
-              boardDetail={boardDetail}
-              userProfile={userProfile}
-            />
-            <BoardDetailContent
-              boardDetail={boardDetail}
-              userProfile={userProfile}
-            />
-            <BoardDetailComments commentList={MOCK_COMMENT_LIST} />
-          </div>
-        )}
+    <div className="w-full h-full min-h-dvh flex justify-center items-center px-4 py-8 md:px-6.5 md:py-18 lg:py-17">
+      <div className="max-w-225 w-full max-h-236 h-full items-center bg-background-primary rounded-[20px]">
+        <div className="px-5.5 py-9.75 md:px-10 md:py-13.5 lg:px-15">
+          {isEditMode ? (
+            <BoardDetailEditForm boardDetail={boardDetail} />
+          ) : (
+            <div>
+              <BoardDetailHeader
+                boardDetail={boardDetail}
+                userProfile={userProfile}
+              />
+              <BoardDetailContent
+                boardDetail={boardDetail}
+                userProfile={userProfile}
+              />
+              <BoardDetailComments
+                commentList={MOCK_COMMENT_LIST}
+                userProfile={userProfile}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

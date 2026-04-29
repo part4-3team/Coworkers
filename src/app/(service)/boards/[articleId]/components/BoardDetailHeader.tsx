@@ -24,9 +24,9 @@ export default function BoardDetailHeader({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <span className="block flex-1 truncate text-text-primary font-bold text-lg leading-5.25 md:text-xl md:leading-6">
+        <h1 className="flex-1 truncate text-text-primary font-bold text-lg leading-5.25 md:text-xl md:leading-6">
           {boardDetail.title}
-        </span>
+        </h1>
         <ListDropdown
           trigger={
             <Image
@@ -59,13 +59,13 @@ export default function BoardDetailHeader({
             size={24}
             className="mr-2"
           />
-          <span className="text-text-primary text-xs font-medium leading-4 min-w-0 truncate md:text-sm">
+          <span className="text-text-primary text-sm font-medium leading-4 min-w-0 truncate md:text-base">
             {boardDetail.writer.nickname}
           </span>
-          <span className="text-text-secondary text-xs font-medium leading-4 shrink-0 px-2 md:text-sm">
+          <span className="text-text-secondary text-sm font-medium leading-4 shrink-0 px-2 md:text-base">
             |
           </span>
-          <span className="text-interaction-inactive text-xs font-medium leading-4 shrink-0 md:text-sm">
+          <span className="text-interaction-inactive text-sm font-medium leading-4 shrink-0 md:text-base">
             {boardDetail.createdAt}
           </span>
         </div>
