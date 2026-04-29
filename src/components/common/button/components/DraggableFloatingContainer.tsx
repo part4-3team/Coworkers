@@ -21,7 +21,21 @@ export default function DraggableFloatingContainer({
   const nodeRef = useRef<HTMLDivElement>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const hasDragged = useRef(false);
+  const tooltipTimer = useRef<ReturnType<typeof setTimeout>>(null);
+
+  const handleTouchStart = () => {
+    setIsTouchDevice(true);
+    setShowTooltip(true);
+    tooltipTimer.current = setTimeout(() => {
+      setShowTooltip(false);
+    }, 2000);
+  };
+
+  const handleTouchEnd = () => {
+    clearTimeout(tooltipTimer.current ?? undefined);
+  };
 
   return (
     <Draggable
@@ -46,7 +60,8 @@ export default function DraggableFloatingContainer({
         )}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
-        // 드래그 후 클릭 이벤트 막기
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         onClickCapture={(e) => {
           if (hasDragged.current) {
             e.stopPropagation();
@@ -54,7 +69,7 @@ export default function DraggableFloatingContainer({
           }
         }}
       >
-        {showTooltip && !isDragging && (
+        {showTooltip && (isTouchDevice ? true : !isDragging) && (
           <div className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-800 px-3 py-1.5 text-xs font-medium text-white shadow-md">
             마우스로 움직여 보세요!
             <div className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-gray-800" />
