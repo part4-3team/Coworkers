@@ -73,7 +73,13 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
   return (
     <>
       <TaskListContentArea>
-        <TaskListPageHeader teamId={teamId} teamName="경영관리팀" />
+        <TaskListPageHeader
+          teamId={teamId}
+          teamName="경영관리팀"
+          onConfirmTeamPageDelete={() => {
+            showToast('삭제되었습니다.', 'error');
+          }}
+        />
         <div className="flex min-w-0 flex-col gap-4 md:gap-6 lg:flex-row lg:items-start lg:gap-16">
           <TaskListSidebar
             columns={columns}

@@ -75,7 +75,7 @@ export default function TaskListSidebar({
       aria-label="할 일 목록"
     >
       <div className="flex flex-col lg:hidden">
-        <p className="text-xs font-normal leading-4 text-text-default md:text-base md:leading-5">
+        <p className="text-base font-normal leading-5 text-text-default">
           할 일
         </p>
         <div className="mt-2 flex min-w-0 w-full flex-row items-center justify-between gap-2">
