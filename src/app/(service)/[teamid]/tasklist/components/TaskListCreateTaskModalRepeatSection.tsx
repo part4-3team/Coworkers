@@ -3,7 +3,9 @@
 import TaskListRepeatWeekdayPicker from '@/app/(service)/[teamid]/tasklist/components/TaskListRepeatWeekdayPicker';
 import TaskListSelectDropdown from '@/app/(service)/[teamid]/tasklist/components/TaskListSelectDropdown';
 import {
+  CREATE_TASK_MODAL_COLUMN_CLASS,
   MODAL_HEADING_TYPO,
+  REPEAT_DROPDOWN_BUTTON_CLASS,
   REPEAT_TRIGGER_LAYOUT_CLASS,
   TASK_LIST_CREATE_TASK_REPEAT_ITEMS,
 } from '@/app/(service)/[teamid]/tasklist/createTaskModalConstants';
@@ -34,7 +36,7 @@ export default function TaskListCreateTaskModalRepeatSection({
   weekDays,
 }: TaskListCreateTaskModalRepeatSectionProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-4', CREATE_TASK_MODAL_COLUMN_CLASS)}>
       <p
         id={`${formId}-repeat-heading`}
         className={cn(MODAL_HEADING_TYPO, 'text-left')}
@@ -42,7 +44,7 @@ export default function TaskListCreateTaskModalRepeatSection({
         반복 설정
       </p>
       <div
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-4"
         role="group"
         aria-labelledby={`${formId}-repeat-heading`}
       >
@@ -52,6 +54,7 @@ export default function TaskListCreateTaskModalRepeatSection({
           onChange={onRepeatChange}
           placeholder="선택"
           className={REPEAT_TRIGGER_LAYOUT_CLASS}
+          buttonClassName={REPEAT_DROPDOWN_BUTTON_CLASS}
         />
 
         {repeat === 'weekly' ? (
