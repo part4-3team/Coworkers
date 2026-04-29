@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { AuthInput } from '@/components/common/form';
 import Modal from '@/components/common/modal';
+import { useToast } from '@/components/common/toast';
 
 type ForgotPasswordModalProps = {
   onClose: () => void;
@@ -12,6 +13,7 @@ type ForgotPasswordModalProps = {
 export default function ForgotPasswordModal({
   onClose,
 }: ForgotPasswordModalProps) {
+  const { showToast } = useToast();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
@@ -33,6 +35,13 @@ export default function ForgotPasswordModal({
     }
   };
 
+  const handleSendResetLink = () => {
+    if (!email || emailError) return;
+
+    onClose();
+    showToast('비밀번호 재설정 링크를 보냈습니다.', 'success');
+  };
+
   return (
     <Modal
       hasCloseButton={false}
@@ -40,9 +49,10 @@ export default function ForgotPasswordModal({
       description={`가입한 이메일을 입력하시면\n 비밀번호 재설정 링크를 보내드립니다.`}
       lineButtonText="닫기"
       primaryButtonText="링크 보내기"
+      isPrimaryButtonDisabled={!email || Boolean(emailError)}
       onClose={onClose}
       onLineButtonClick={onClose}
-      onPrimaryButtonClick={onClose}
+      onPrimaryButtonClick={handleSendResetLink}
     >
       <div className="mt-4 w-full text-left">
         <AuthInput
