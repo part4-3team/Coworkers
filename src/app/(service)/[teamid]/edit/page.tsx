@@ -27,7 +27,7 @@ export default function EditTeamPage() {
     router.push(`/${teamName}`); // 수정된 팀 이름으로 이동
   };
   return (
-    <div className="px-4 py-25 md:px-14 md:flex md:justify-around md:items-center h-full">
+    <section className="px-4 py-25 md:px-14 flex justify-around items-center h-full">
       <div className="bg-background-primary px-6 pt-10 pb-15 rounded-[20px] w-full max-w-xl md:px-11">
         <h2 className="text-text-primary font-bold text-xl mb-8">
           팀 이름 변경하기
@@ -58,6 +58,6 @@ export default function EditTeamPage() {
           팀 이름은 회사명이나 모임 이름 등으로 설정하면 좋아요.
         </p>
       </div>
-    </div>
+    </section>
   );
 }
