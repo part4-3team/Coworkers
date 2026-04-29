@@ -8,14 +8,10 @@ import {
   MY_HISTORY_DETAIL_DESCRIPTION,
   MY_HISTORY_DETAIL_STARTED_AT,
 } from '@/app/(service)/myhistory/constants';
-import type { MyHistoryTask } from '@/app/(service)/myhistory/types';
+import type { UseHistoryTaskCardParams } from '@/app/(service)/myhistory/types';
 import TaskDetailPanelContent from '@/components/common/rightPanel/components/TaskDetailPanelContent';
 import { useToast } from '@/components/common/toast';
 import useRightPanel from '@/components/layout/hooks/useRightPanel';
-
-type UseHistoryTaskCardParams = {
-  task: MyHistoryTask;
-};
 
 export default function useHistoryTaskCard({ task }: UseHistoryTaskCardParams) {
   const { openRightPanel } = useRightPanel();

@@ -12,6 +12,7 @@
  * - onLineButtonClick (() => void): 라인 버튼 클릭 핸들러
  * - primaryButtonText (string): 파란 버튼 텍스트
  * - onPrimaryButtonClick (() => void): 파란 버튼 클릭 핸들러
+ * - isPrimaryButtonDisabled 파란버튼 비활성화
  * - subButtonText (string): 빨간 버튼 텍스트
  * - onSubButtonClick (() => void): 빨간 버튼 클릭 핸들러
  * - isButtonAlign (boolean): 버튼 정렬 (true: 세로 1열, false: 가로 2열)
@@ -36,6 +37,7 @@ export default function ModalFrame({
   onLineButtonClick,
   primaryButtonText,
   onPrimaryButtonClick,
+  isPrimaryButtonDisabled,
   subButtonText,
   onSubButtonClick,
   isButtonAlign,
@@ -48,7 +50,7 @@ export default function ModalFrame({
       onClick={onClose}
     >
       <div
-        className="w-full bg-white rounded-tl-xl rounded-tr-xl p-10 min-w-80 relative text-center md:max-w-sm md:rounded-3xl"
+        className="w-full bg-white rounded-tl-xl rounded-tr-xl p-10 pb-8 min-w-80 relative text-center md:max-w-sm md:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
         {hasCloseButton && (
@@ -80,7 +82,9 @@ export default function ModalFrame({
           </div>
         )}
         {description && (
-          <p className="text-sm text-text-secondary">{description}</p>
+          <p className="text-sm text-text-secondary whitespace-pre-line">
+            {description}
+          </p>
         )}
         {subDescription && (
           <p className="text-sm text-gray-400">{subDescription}</p>
@@ -103,6 +107,7 @@ export default function ModalFrame({
               type="button"
               className="bg-brand-primary rounded-xl px-4 py-2.75 w-full text-white font-medium hover:enabled:bg-interaction-hover disabled:bg-interaction-inactive"
               onClick={onPrimaryButtonClick}
+              disabled={isPrimaryButtonDisabled}
             >
               {primaryButtonText}
             </button>

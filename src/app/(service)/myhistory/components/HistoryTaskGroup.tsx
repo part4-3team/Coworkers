@@ -3,11 +3,7 @@
  */
 
 import HistoryTaskCard from '@/app/(service)/myhistory/components/HistoryTaskCard';
-import type { MyHistoryTaskGroup } from '@/app/(service)/myhistory/types';
-
-type HistoryTaskGroupProps = {
-  group: MyHistoryTaskGroup;
-};
+import type { HistoryTaskGroupProps } from '@/app/(service)/myhistory/types';
 
 export default function HistoryTaskGroup({ group }: HistoryTaskGroupProps) {
   return (

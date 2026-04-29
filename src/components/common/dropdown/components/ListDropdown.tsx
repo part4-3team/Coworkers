@@ -13,6 +13,7 @@ export default function ListDropdown({
   trigger,
   items,
   className,
+  itemClassName,
   menuClassName,
   itemTextAlign = 'center',
 }: ListDropdownProps) {
@@ -50,6 +51,7 @@ export default function ListDropdown({
                 className={cn(
                   'w-full whitespace-nowrap px-6 py-3 text-sm text-text-primary hover:bg-background-secondary',
                   itemTextAlign === 'start' ? 'text-start' : 'text-center',
+                  itemClassName,
                 )}
                 onClick={() => {
                   item.onClick();

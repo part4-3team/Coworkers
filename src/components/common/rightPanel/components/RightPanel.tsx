@@ -36,15 +36,15 @@ export default function RightPanel({
     <>
       <div
         className={cn(
-          'hidden 2xl:block w-0 shrink-0 transition-[width] duration-300',
+          'hidden w-0 shrink-0 transition-[width] duration-300 ease-out 2xl:block',
           isVisible ? 'w-195 overflow-visible' : 'w-0 overflow-hidden',
         )}
       >
         <aside
           aria-label={ariaLabel}
           className={cn(
-            'sticky top-0 h-dvh w-195 border-l border-background-tertiary bg-background-inverse shadow-[-16px_0_32px_rgba(15,23,42,0.08)] transition-transform duration-300',
-            isVisible ? 'translate-x-0' : 'translate-x-full',
+            'sticky top-0 h-dvh w-195 border-l border-background-tertiary bg-background-inverse shadow-[-16px_0_32px_rgba(15,23,42,0.08)] transition-[transform,opacity] duration-300 ease-out will-change-transform transform-gpu',
+            isVisible ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0',
           )}
         >
           {shell}
@@ -55,9 +55,9 @@ export default function RightPanel({
         aria-label={ariaLabel}
         aria-modal="true"
         className={cn(
-          'fixed right-0 z-50 h-dvh w-full  bg-background-inverse shadow-[-16px_0_32px_rgba(15,23,42,0.08)] transition-transform duration-300 2xl:hidden ',
+          'fixed right-0 z-50 h-dvh w-full bg-background-inverse shadow-[-16px_0_32px_rgba(15,23,42,0.08)] transition-transform duration-300 ease-out will-change-transform transform-gpu 2xl:hidden',
           'top-13 h-[calc(100dvh-3.25rem)] md:top-0 md:h-dvh md:w-130 md:border-l md:border-background-tertiary',
-          isVisible ? 'translate-x-0' : 'translate-x-full',
+          isVisible ? 'translate-x-0' : 'pointer-events-none translate-x-full',
         )}
         role="dialog"
       >

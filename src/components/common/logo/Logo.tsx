@@ -36,6 +36,7 @@ export default function Logo({ className, size = 'large' }: LogoProps) {
       width={logo.width}
       height={logo.height}
       className={className}
+      style={{ height: 'auto' }}
     />
   );
 }

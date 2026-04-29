@@ -1,7 +1,7 @@
-/**
- * 계정 설정 페이지를 구성하는 파일입니다.
- */
+import MyPageClient from '@/app/(service)/mypage/components/MyPageClient';
+
+export const metadata = { title: '계정 설정' };
 
 export default function MyPage() {
-  return <section>계정 설정</section>;
+  return <MyPageClient />;
 }

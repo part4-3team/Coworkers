@@ -71,6 +71,7 @@ export { default as icPinSmall } from '@/assets/icons/ic_pin_small.svg?url';
 export { default as icPlusLarge } from '@/assets/icons/ic_plus_large.svg?url';
 export { default as icPlusSub } from '@/assets/icons/ic_plus_plus_sub.svg?url';
 export { default as icPlusSmall } from '@/assets/icons/ic_plus_small.svg?url';
+export { default as icPlusBoard } from '@/assets/icons/ic_plus_board.svg?url';
 export { default as icPlusXlarge } from '@/assets/icons/ic_plus_xlarge.svg?url';
 export { default as icProfileEditLarge } from '@/assets/icons/ic_profile_edit_large.svg?url';
 export { default as icProfileEditSmall } from '@/assets/icons/ic_profile_edit_small.svg?url';

@@ -54,6 +54,7 @@ export default function MobileSidebarDrawer({
               width={35}
               height={24}
               className="h-6 w-auto"
+              style={{ width: 'auto' }}
             />
           </Link>
 

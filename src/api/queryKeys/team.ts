@@ -140,6 +140,8 @@ export const commentQueryKeys = {
       QUERY_KEY_SEGMENTS.DETAIL,
       commentId,
     ),
+  task: (teamId: string, taskId: QueryKeyId) =>
+    createTeamScopeQueryKey(teamId, QUERY_KEY_RESOURCES.COMMENTS, taskId),
   infiniteList: (
     teamId: string,
     taskId: QueryKeyId,
@@ -149,8 +151,8 @@ export const commentQueryKeys = {
       createTeamScopeQueryKey(
         teamId,
         QUERY_KEY_RESOURCES.COMMENTS,
-        QUERY_KEY_SEGMENTS.INFINITE_LIST,
         taskId,
+        QUERY_KEY_SEGMENTS.INFINITE_LIST,
       ),
       params,
     ),
@@ -163,8 +165,8 @@ export const commentQueryKeys = {
       createTeamScopeQueryKey(
         teamId,
         QUERY_KEY_RESOURCES.COMMENTS,
-        QUERY_KEY_SEGMENTS.LIST,
         taskId,
+        QUERY_KEY_SEGMENTS.LIST,
       ),
       params,
     ),
