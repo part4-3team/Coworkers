@@ -17,15 +17,13 @@ export default function LoginForm() {
     useState(false);
 
   const {
-    email,
-    password,
     emailError,
+    emailField,
+    handleSubmit,
+    isDisabled,
     passwordError,
-    handleChangeEmail,
-    handleChangePassword,
-    handleBlurEmail,
-    handleBlurPassword,
-    isValid,
+    passwordField,
+    serverError,
   } = useLoginForm();
 
   return (
@@ -48,26 +46,28 @@ export default function LoginForm() {
       </h1>
 
       {/* 폼 */}
-      <form className="flex flex-col gap-5 md:px-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5 md:px-6">
         <AuthInput
           label={LOGIN_TEXT.emailLabel}
           type="text"
-          value={email}
-          onChange={(e) => handleChangeEmail(e.target.value)}
-          onBlur={handleBlurEmail}
           errorMessage={emailError}
           placeholder={LOGIN_TEXT.emailPlaceholder}
+          {...emailField}
         />
 
         <AuthInput
           label={LOGIN_TEXT.passwordLabel}
           type="password"
-          value={password}
-          onChange={(e) => handleChangePassword(e.target.value)}
-          onBlur={handleBlurPassword}
           errorMessage={passwordError}
           placeholder={LOGIN_TEXT.passwordPlaceholder}
+          {...passwordField}
         />
+
+        {serverError && (
+          <p className="text-center text-xs font-medium text-status-danger md:text-sm">
+            {serverError}
+          </p>
+        )}
 
         <div className="flex justify-end">
           <button
@@ -79,7 +79,7 @@ export default function LoginForm() {
           </button>
         </div>
 
-        <PrimaryButton type="submit" disabled={!isValid}>
+        <PrimaryButton type="submit" disabled={isDisabled}>
           {LOGIN_TEXT.loginButton}
         </PrimaryButton>
       </form>

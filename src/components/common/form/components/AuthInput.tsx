@@ -6,6 +6,9 @@
 
 import { useId, useState } from 'react';
 
+import Image from 'next/image';
+
+import { icVisibility, icVisibilityOff } from '@/assets';
 import Input from '@/components/common/form/components/Input';
 import type { AuthInputProps } from '@/components/common/form/types';
 import { cn } from '@/utils/cn';
@@ -70,11 +73,17 @@ export default function AuthInput({
             disabled={disabled}
             aria-label={isPasswordVisible ? '비밀번호 숨기기' : '비밀번호 보기'}
             className={cn(
-              'absolute right-4 top-1/2 -translate-y-1/2 text-xs text-text-default md:text-sm',
-              disabled && 'cursor-not-allowed text-interaction-inactive',
+              'absolute right-4 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center md:size-6',
+              disabled && 'cursor-not-allowed opacity-40',
             )}
           >
-            {isPasswordVisible ? '숨기기' : '보기'}
+            <Image
+              src={isPasswordVisible ? icVisibility : icVisibilityOff}
+              alt=""
+              width={24}
+              height={24}
+              className="size-5 md:size-6"
+            />
           </button>
         )}
       </div>
