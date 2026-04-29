@@ -110,7 +110,7 @@ export default function LoginForm() {
           alt="카카오 아이콘"
           width={42}
           height={42}
-          className="h-11 w-11"
+          className="h-11 w-11 cursor-pointer"
         />
       </div>
 
