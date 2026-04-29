@@ -2,10 +2,8 @@
  * 할 일 항목의 체크 상태를 표시하는 공용 컴포넌트입니다.
  */
 
-import Image from 'next/image';
-
-import icCheckboxCheckedLarge from '@/assets/icons/ic_checkbox_checked_large.svg?url';
-import icCheckboxLarge from '@/assets/icons/ic_checkbox_large.svg?url';
+import IcCheckboxCheckedLarge from '@/assets/icons/ic_checkbox_checked_large.svg';
+import IcCheckboxLarge from '@/assets/icons/ic_checkbox_large.svg';
 
 type TodoCheckUncheckProps = {
   label: string;
@@ -27,14 +25,21 @@ export default function TodoCheckUncheck({
         className="sr-only"
       />
 
-      <Image
-        src={checked ? icCheckboxCheckedLarge : icCheckboxLarge}
-        alt=""
-        aria-hidden="true"
-        width={16}
-        height={16}
-        className="h-3 w-3 shrink-0 md:h-4 md:w-4"
-      />
+      {checked ? (
+        <IcCheckboxCheckedLarge
+          width={16}
+          height={16}
+          className="h-3 w-3 shrink-0 md:h-4 md:w-4"
+          aria-hidden="true"
+        />
+      ) : (
+        <IcCheckboxLarge
+          width={16}
+          height={16}
+          className="h-3 w-3 shrink-0 md:h-4 md:w-4"
+          aria-hidden="true"
+        />
+      )}
 
       <span
         className={`text-sm font-medium leading-none truncate w-full md:text-base ${

@@ -2,8 +2,6 @@
  * 랜딩 페이지 소개 섹션의 아이콘, 제목, 설명 영역을 렌더링합니다.
  */
 
-import Image from 'next/image';
-
 import LandingScrollReveal from '@/app/(landing)/components/LandingScrollReveal';
 import type { LandingFeatureCopyProps } from '@/app/(landing)/types';
 import { cn } from '@/utils/cn';
@@ -17,6 +15,8 @@ export default function LandingFeatureCopy({
   revealDirection = 'left',
   title,
 }: LandingFeatureCopyProps) {
+  const Icon = icon;
+
   return (
     <LandingScrollReveal
       direction={revealDirection}
@@ -26,12 +26,11 @@ export default function LandingFeatureCopy({
         className,
       )}
     >
-      <Image
-        src={icon}
-        alt=""
+      <Icon
         width={48}
         height={48}
         className={cn('mb-4 h-12 w-12', iconClassName)}
+        aria-hidden="true"
       />
       <h2 className="whitespace-pre-line text-base font-bold leading-tight md:text-2xl lg:text-4xl">
         {title}

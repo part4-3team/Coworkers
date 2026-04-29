@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import type { Post } from '@/app/(service)/boards/types';
 import { getLikeCount } from '@/app/(service)/boards/utils/boardUtils';
-import { icBoardBest, icHeartSmall } from '@/assets';
+import { IcBoardBest, IcHeartSmall } from '@/assets';
 import { ROUTES } from '@/constants/ROUTES';
 
 export default function BoardBestCard({ post }: { post: Post }) {
@@ -15,12 +15,12 @@ export default function BoardBestCard({ post }: { post: Post }) {
       className="p-5 bg-background-primary rounded-[20px] block border border-border-primary"
     >
       <div className="flex items-center gap-1 bg-background-secondary rounded-full px-3 py-1.5 w-18 h-7.5">
-        <Image
-          src={icBoardBest}
-          alt="베스트 게시글 따봉 모양 아이콘"
+        <IcBoardBest
           width={18}
           height={18}
           className="fill-brand-primary"
+          role="img"
+          aria-label="베스트 게시글 따봉 모양 아이콘"
         />
         <p className="text-brand-primary text-sm font-bold leading-4.25">
           인기
@@ -62,11 +62,11 @@ export default function BoardBestCard({ post }: { post: Post }) {
           </span>
         </div>
         <div className="flex shrink-0 items-center gap-1">
-          <Image
-            src={icHeartSmall}
-            alt="좋아요 모양 아이콘"
+          <IcHeartSmall
             width={16}
             height={16}
+            role="img"
+            aria-label="좋아요 모양 아이콘"
           />
           <span className="text-interaction-inactive text-xs font-medium leading-4 lg:text-sm lg:leading-4.25">
             {likeCount}

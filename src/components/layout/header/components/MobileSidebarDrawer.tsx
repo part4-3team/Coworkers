@@ -4,10 +4,9 @@
  * 모바일 헤더에서 여는 사이드바 드로어를 렌더링하는 컴포넌트입니다.
  */
 
-import Image from 'next/image';
 import Link from 'next/link';
 
-import { icCloseLarge, imgLogoSymbolLarge } from '@/assets';
+import { IcCloseLarge, ImgLogoSymbolLarge } from '@/assets';
 import type { MobileSidebarDrawerProps } from '@/components/layout/header/types';
 import SidebarNav from '@/components/layout/sidebar/components/SidebarNav';
 import { ROUTES } from '@/constants/ROUTES';
@@ -48,13 +47,13 @@ export default function MobileSidebarDrawer({
             aria-label="랜딩 페이지로 이동"
             onClick={onClose}
           >
-            <Image
-              src={imgLogoSymbolLarge}
-              alt="Coworkers"
+            <ImgLogoSymbolLarge
               width={35}
               height={24}
               className="h-6 w-auto"
               style={{ width: 'auto' }}
+              role="img"
+              aria-label="Coworkers"
             />
           </Link>
 
@@ -64,12 +63,11 @@ export default function MobileSidebarDrawer({
             aria-label="사이드바 메뉴 닫기"
             className="flex size-8 items-center justify-center"
           >
-            <Image
-              src={icCloseLarge}
-              alt=""
+            <IcCloseLarge
               width={24}
               height={24}
               className="size-6"
+              aria-hidden="true"
             />
           </button>
         </div>

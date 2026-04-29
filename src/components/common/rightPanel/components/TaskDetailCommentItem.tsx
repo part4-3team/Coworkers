@@ -4,9 +4,7 @@
 
 'use client';
 
-import Image from 'next/image';
-
-import { icMoreVerticalSmall, icUserLarge } from '@/assets';
+import { IcMoreVerticalSmall, IcUserLarge } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import TaskDetailCommentActions from '@/components/common/rightPanel/components/TaskDetailCommentActions';
 import type { TaskDetailCommentItemProps } from '@/components/common/rightPanel/types';
@@ -26,7 +24,7 @@ export default function TaskDetailCommentItem({
       <li className="bg-background-secondary py-4 first:pt-4 last:pb-4">
         <div className="flex gap-3 px-4 md:px-5">
           <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-tertiary md:size-9">
-            <Image src={icUserLarge} alt="" width={20} height={20} />
+            <IcUserLarge width={20} height={20} aria-hidden="true" />
           </span>
 
           <div className="min-w-0 flex-1">
@@ -60,7 +58,7 @@ export default function TaskDetailCommentItem({
     <li className="py-4 first:pt-0 last:pb-0">
       <div className="flex gap-3">
         <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-tertiary md:size-9">
-          <Image src={icUserLarge} alt="" width={20} height={20} />
+          <IcUserLarge width={20} height={20} aria-hidden="true" />
         </span>
 
         <div className="min-w-0 flex-1">
@@ -87,12 +85,11 @@ export default function TaskDetailCommentItem({
                     className="flex size-6 items-center justify-center"
                     aria-hidden="true"
                   >
-                    <Image
-                      src={icMoreVerticalSmall}
-                      alt=""
+                    <IcMoreVerticalSmall
                       width={20}
                       height={20}
                       className="size-5"
+                      aria-hidden="true"
                     />
                   </span>
                 </>

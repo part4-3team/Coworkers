@@ -1,6 +1,4 @@
-import Image from 'next/image';
-
-import { icMoreVerticalGray, icSettingsLarge } from '@/assets/index';
+import { IcMoreVerticalGray, IcSettingsLarge } from '@/assets/index';
 
 export const MOCK_MEMBERS = {
   members: [
@@ -50,9 +48,14 @@ export const TODOS = [
 export const STATUS = ['시작 전', '진행 중', '완료'] as const;
 
 export const SETTING_BUTTON = (
-  <Image src={icSettingsLarge} width="24" height="24" alt="설정 아이콘" />
+  <IcSettingsLarge width="24" height="24" role="img" aria-label="설정 아이콘" />
 );
 
 export const DROPDOWN_BUTTON = (
-  <Image src={icMoreVerticalGray} alt="드롭다운 버튼" width="24" height="24" />
+  <IcMoreVerticalGray
+    width="24"
+    height="24"
+    role="img"
+    aria-label="드롭다운 버튼"
+  />
 );

@@ -13,6 +13,17 @@ export const TASKLIST_WEEKDAY_LABELS = [
   '토',
 ] as const;
 
+const MONTH_PAD_LENGTH = 2;
+const DAY_PAD_LENGTH = 2;
+
+function padMonth(month: number) {
+  return String(month).padStart(MONTH_PAD_LENGTH, '0');
+}
+
+function padDay(day: number) {
+  return String(day).padStart(DAY_PAD_LENGTH, '0');
+}
+
 export function addDays(date: Date, dayCount: number): Date {
   const next = new Date(date);
   next.setDate(date.getDate() + dayCount);
@@ -32,6 +43,10 @@ export function getMonthStart(date: Date, monthOffset = 0): Date {
 
 export function formatYearMonth(date: Date): string {
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
+}
+
+export function formatTaskListTitleDate(date: Date): string {
+  return `${date.getFullYear()}.${padMonth(date.getMonth() + 1)}.${padDay(date.getDate())}`;
 }
 
 /** 예: 2024년 11월 14일 */

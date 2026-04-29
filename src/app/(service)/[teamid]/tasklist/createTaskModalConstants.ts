@@ -4,17 +4,17 @@ import { cn } from '@/utils/cn';
 
 /** 라벨·소제목 — 피그마 16 / leading 19 */
 export const MODAL_HEADING_TYPO = cn(
-  'm-0 block text-base font-medium leading-[19px] tracking-normal text-text-primary',
+  'm-0 block text-base font-medium text-text-primary',
 );
 
-/** 상단 제목 — 피그마 Medium 16 / leading 19 */
+/** 상단 제목 — 공통 모달 기본 타이틀 톤 */
 export const CREATE_TASK_MODAL_INTRO_TITLE_CLASS = cn(
-  'text-center text-base font-medium leading-[19px] text-text-primary',
+  'text-center text-xl font-bold text-text-primary',
 );
 
-/** 상단 안내 14 / leading 17, 텍스트 default */
+/** 상단 안내 — 공통 모달 기본 설명 톤 */
 export const CREATE_TASK_MODAL_INTRO_DESCRIPTION_CLASS = cn(
-  'text-center text-sm font-medium leading-[17px] text-text-default',
+  'text-center text-sm text-text-secondary',
 );
 
 /** 피그마 필드 래퍼: 높이 48px, 좌우 16px, rounded-xl, focus-within 브랜드 보더 */

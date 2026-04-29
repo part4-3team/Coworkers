@@ -1,11 +1,9 @@
 'use client';
 
-import Image from 'next/image';
-
 import { useBoardDetailMenu } from '@/app/(service)/boards/[articleId]/hooks/useBoardDetailMenu';
 import { useLike } from '@/app/(service)/boards/[articleId]/hooks/useLike';
 import type { BoardDetailProps } from '@/app/(service)/boards/[articleId]/types';
-import { icHeartFilledRed, icHeartSmall, icMoreVerticalLarge } from '@/assets';
+import { IcHeartFilledRed, IcHeartSmall, IcMoreVerticalLarge } from '@/assets';
 import { Avatar } from '@/components/common/avatar';
 import { ListDropdown } from '@/components/common/dropdown';
 import Modal from '@/components/common/modal';
@@ -29,12 +27,12 @@ export default function BoardDetailHeader({
         </h1>
         <ListDropdown
           trigger={
-            <Image
-              src={icMoreVerticalLarge}
-              alt="더보기 메뉴"
+            <IcMoreVerticalLarge
               width={24}
               height={24}
               className="cursor-pointer"
+              role="img"
+              aria-label="더보기 메뉴"
             />
           }
           items={menuItems}
@@ -75,13 +73,23 @@ export default function BoardDetailHeader({
             className="flex items-center gap-1 cursor-pointer"
             onClick={handleLikeClick}
           >
-            <Image
-              src={isLiked ? icHeartFilledRed : icHeartSmall}
-              alt="좋아요 모양 아이콘"
-              width={16}
-              height={16}
-              className="w-4 h-4 md:w-6 md:h-6"
-            />
+            {isLiked ? (
+              <IcHeartFilledRed
+                width={16}
+                height={16}
+                className="w-4 h-4 md:w-6 md:h-6"
+                role="img"
+                aria-label="좋아요 모양 아이콘"
+              />
+            ) : (
+              <IcHeartSmall
+                width={16}
+                height={16}
+                className="w-4 h-4 md:w-6 md:h-6"
+                role="img"
+                aria-label="좋아요 모양 아이콘"
+              />
+            )}
             <span className="text-interaction-inactive text-sm font-medium leading-4 md:text-base">
               {likeCount}
             </span>

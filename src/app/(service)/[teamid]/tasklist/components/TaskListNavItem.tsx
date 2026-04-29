@@ -5,10 +5,8 @@
 
 'use client';
 
-import Image from 'next/image';
-
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
-import { icMoreVerticalLarge } from '@/assets';
+import { IcMoreVerticalLarge } from '@/assets';
 import { Badge } from '@/components/common/badge';
 import { ListDropdown } from '@/components/common/dropdown';
 import { cn } from '@/utils/cn';
@@ -78,15 +76,14 @@ export default function TaskListNavItem({
                   isActive ? 'text-icon-inverse' : 'text-icon-primary',
                 )}
               >
-                <Image
-                  src={icMoreVerticalLarge}
-                  alt=""
+                <IcMoreVerticalLarge
                   width={24}
                   height={24}
                   className={cn(
                     'block size-6 shrink-0',
                     isActive && 'brightness-0 invert',
                   )}
+                  aria-hidden="true"
                 />
               </span>
             }

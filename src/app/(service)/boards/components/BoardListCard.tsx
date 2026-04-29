@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import type { Post } from '@/app/(service)/boards/types';
 import { getLikeCount } from '@/app/(service)/boards/utils/boardUtils';
-import { icHeartSmall } from '@/assets';
+import { IcHeartSmall } from '@/assets';
 import { ROUTES } from '@/constants/ROUTES';
 
 export default function BoardListCard({ post }: { post: Post }) {
@@ -48,11 +48,11 @@ export default function BoardListCard({ post }: { post: Post }) {
           </span>
         </div>
         <div className="flex shrink-0 items-center gap-1">
-          <Image
-            src={icHeartSmall}
-            alt="좋아요 모양 아이콘"
+          <IcHeartSmall
             width={16}
             height={16}
+            role="img"
+            aria-label="좋아요 모양 아이콘"
           />
           <span className="text-interaction-inactive text-xs font-medium leading-4 md:text-sm">
             {likeCount}

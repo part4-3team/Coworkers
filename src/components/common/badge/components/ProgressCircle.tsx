@@ -3,12 +3,10 @@
  * 진행 상태를 표시하는 원형 컴포넌트입니다.
  */
 
-import Image from 'next/image';
-
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-import ic_progress_done_large from '@/assets/icons/ic_progress_done_large.svg?url';
+import IcProgressDoneLarge from '@/assets/icons/ic_progress_done_large.svg';
 import {
   BADGE_COLORS,
   BADGE_STATUS,
@@ -48,12 +46,12 @@ export default function ProgressCircle({
     >
       {isDone && (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center">
-          <Image
-            src={ic_progress_done_large}
-            alt="완료 아이콘"
+          <IcProgressDoneLarge
             width={16}
             height={16}
             className="object-contain"
+            role="img"
+            aria-label="완료 아이콘"
           />
         </div>
       )}

@@ -5,9 +5,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { TASK_LIST_BOARD_MOCK } from '@/app/(service)/[teamid]/tasklist/constants';
 import type {
   TaskListBoardTask,
-  TaskListOpenTaskDetail,
   TaskListTaskDetailApplyPatch,
-  TaskListTaskDetailOpenMode,
 } from '@/app/(service)/[teamid]/tasklist/types';
 import { useToast } from '@/components/common/toast';
 
@@ -19,8 +17,6 @@ export function useTaskListBoard() {
   );
   const [taskPendingDelete, setTaskPendingDelete] =
     useState<TaskListBoardTask | null>(null);
-  const [openTaskDetail, setOpenTaskDetail] =
-    useState<TaskListOpenTaskDetail | null>(null);
 
   const sortedTasks = useMemo(
     () => [...tasks].sort((a, b) => a.sortOrder - b.sortOrder),
@@ -49,17 +45,6 @@ export function useTaskListBoard() {
     showToast('삭제되었습니다.', 'error');
   }, [taskPendingDelete, showToast]);
 
-  const handleOpenTaskDetail = useCallback(
-    (task: TaskListBoardTask, mode: TaskListTaskDetailOpenMode) => {
-      setOpenTaskDetail({ task, mode });
-    },
-    [],
-  );
-
-  const handleCloseTaskDetail = useCallback(() => {
-    setOpenTaskDetail(null);
-  }, []);
-
   const handleApplyTaskDetailPatch = useCallback(
     (taskId: string, patch: TaskListTaskDetailApplyPatch) => {
       setTasks((prev) =>
@@ -87,7 +72,6 @@ export function useTaskListBoard() {
 
   const handleRequestDeleteFromDetail = useCallback(
     (task: TaskListBoardTask) => {
-      setOpenTaskDetail(null);
       setTaskPendingDelete(task);
     },
     [],
@@ -96,15 +80,12 @@ export function useTaskListBoard() {
   return {
     handleApplyTaskDetailPatch,
     handleCloseDeleteModal,
-    handleCloseTaskDetail,
     handleCompleteTaskFromDetail,
     handleConfirmDelete,
-    handleOpenTaskDetail,
     handleRequestDelete,
     handleRequestDeleteFromDetail,
     handleToggleChecked,
     isTaskListEmpty,
-    openTaskDetail,
     selectedDate,
     setSelectedDate,
     sortedTasks,

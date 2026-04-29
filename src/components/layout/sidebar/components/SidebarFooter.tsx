@@ -4,11 +4,10 @@
  * 사이드바 하단 유저 정보와 로그인 링크 영역입니다.
  */
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { icUserLarge } from '@/assets';
+import { IcUserLarge } from '@/assets';
 import ProfileMenuDropdown from '@/components/layout/components/ProfileMenuDropdown';
 import useLayoutAuthState from '@/components/layout/hooks/useLayoutAuthState';
 import useSidebar from '@/components/layout/sidebar/hooks/useSidebar';
@@ -43,7 +42,7 @@ export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
               aria-label="프로필 메뉴 열기"
             >
               <span className="flex shrink-0 size-10 items-center justify-center rounded-lg bg-background-tertiary">
-                <Image src={icUserLarge} alt="" width={24} height={24} />
+                <IcUserLarge width={24} height={24} aria-hidden="true" />
               </span>
               {isExpanded ? (
                 <span className="animate-fadeIn [animation-delay:150ms] [animation-fill-mode:both] flex min-w-0 flex-col">
@@ -75,7 +74,7 @@ export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
           {isExpanded ? (
             <>
               <span className="flex shrink-0 size-10 items-center justify-center rounded-lg bg-background-tertiary">
-                <Image src={icUserLarge} alt="" width={24} height={24} />
+                <IcUserLarge width={24} height={24} aria-hidden="true" />
               </span>
               <span className="animate-fadeIn [animation-delay:150ms] [animation-fill-mode:both] whitespace-nowrap text-base">
                 로그인

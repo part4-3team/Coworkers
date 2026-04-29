@@ -1,10 +1,8 @@
-import Image from 'next/image';
-
 import { ModalTaskAdd } from '@/app/(service)/[teamid]/components/modals/ModalTaskAddEdit';
 import TaskItem from '@/app/(service)/[teamid]/components/TaskItem';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { TaskProps } from '@/app/(service)/[teamid]/types';
-import { icPlusSub } from '@/assets/index';
+import { IcPlusSub } from '@/assets/index';
 
 export default function TaskGroup({ status }: TaskProps) {
   const { open, close, is } = useModalState();
@@ -17,7 +15,12 @@ export default function TaskGroup({ status }: TaskProps) {
           className="border border-border-secondary rounded-lg bg-background-inverse w-6 h-6 flex justify-center items-center"
           onClick={() => open('taskAdd')}
         >
-          <Image src={icPlusSub} alt="할일 추가 버튼" width="16" height="16" />
+          <IcPlusSub
+            width="16"
+            height="16"
+            role="img"
+            aria-label="할일 추가 버튼"
+          />
         </button>
       </div>
       <TaskItem title="법인 설립" status={status} />

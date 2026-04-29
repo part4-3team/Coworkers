@@ -6,9 +6,7 @@
 
 import { useId, useState } from 'react';
 
-import Image from 'next/image';
-
-import { icVisibility, icVisibilityOff } from '@/assets';
+import { IcVisibility, IcVisibilityOff } from '@/assets';
 import Input from '@/components/common/form/components/Input';
 import type { AuthInputProps } from '@/components/common/form/types';
 import { cn } from '@/utils/cn';
@@ -77,13 +75,21 @@ export default function AuthInput({
               disabled && 'cursor-not-allowed opacity-40',
             )}
           >
-            <Image
-              src={isPasswordVisible ? icVisibility : icVisibilityOff}
-              alt=""
-              width={24}
-              height={24}
-              className="size-5 md:size-6"
-            />
+            {isPasswordVisible ? (
+              <IcVisibility
+                width={24}
+                height={24}
+                className="size-5 md:size-6"
+                aria-hidden="true"
+              />
+            ) : (
+              <IcVisibilityOff
+                width={24}
+                height={24}
+                className="size-5 md:size-6"
+                aria-hidden="true"
+              />
+            )}
           </button>
         )}
       </div>

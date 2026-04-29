@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import useBoardWrite from '@/app/(service)/boards/hooks/useBoardWrite';
 import { Post } from '@/app/(service)/boards/types';
-import { icCloseLarge, icPlusBoard, icStarRed } from '@/assets';
+import { IcCloseLarge, IcPlusBoard, IcStarRed } from '@/assets';
 import Button from '@/components/common/button/components/Button';
 import { ContentTextarea, TitleInput } from '@/components/common/form';
 import { cn } from '@/utils/cn';
@@ -39,7 +39,12 @@ export default function BoardDetailEditForm({
               <span className="block text-text-primary text-sm font-bold md:text-base">
                 제목
               </span>
-              <Image src={icStarRed} alt="필수 입력" width={8} height={8} />
+              <IcStarRed
+                width={8}
+                height={8}
+                role="img"
+                aria-label="필수 입력"
+              />
             </div>
             <TitleInput
               id="title"
@@ -54,7 +59,12 @@ export default function BoardDetailEditForm({
               <span className="block text-text-primary text-sm font-bold md:text-base">
                 내용
               </span>
-              <Image src={icStarRed} alt="필수 입력" width={8} height={8} />
+              <IcStarRed
+                width={8}
+                height={8}
+                role="img"
+                aria-label="필수 입력"
+              />
             </div>
             <ContentTextarea
               id="content"
@@ -85,12 +95,12 @@ export default function BoardDetailEditForm({
                     className="absolute top-1 -right-2 w-6 h-6 z-10 bg-background-primary rounded-full 
                     border border-border-secondary flex justify-center items-center cursor-pointer"
                   >
-                    <Image
-                      src={icCloseLarge}
-                      alt="게시글 이미지 삭제"
+                    <IcCloseLarge
                       width={18}
                       height={18}
                       className="w-4.5 h-4.5 fill-icon-primary"
+                      role="img"
+                      aria-label="게시글 이미지 삭제"
                     />
                   </button>
                 </div>
@@ -100,12 +110,12 @@ export default function BoardDetailEditForm({
                 className="mt-2 w-20 h-20 border border-background-tertiary rounded-xl flex justify-center items-center md:mt-3 md:w-30 md:h-30"
                 disabled={hasImage}
               >
-                <Image
-                  src={icPlusBoard}
-                  alt="게시글 이미지 추가"
+                <IcPlusBoard
                   width={20}
                   height={20}
                   className="w-5 h-5 fill-background-tertiary flex justify-center items-center md:w-7.5 md:h-7.5"
+                  role="img"
+                  aria-label="게시글 이미지 추가"
                 />
               </button>
             </div>

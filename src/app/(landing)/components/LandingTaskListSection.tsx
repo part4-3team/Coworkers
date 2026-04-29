@@ -6,14 +6,14 @@ import Image from 'next/image';
 
 import LandingFeatureCopy from '@/app/(landing)/components/LandingFeatureCopy';
 import { LANDING_TASKLIST_SECTION } from '@/app/(landing)/constants';
-import { icBlueCheck } from '@/assets';
+import { IcBlueCheck } from '@/assets';
 
 export default function LandingTaskListSection() {
   return (
     <section className="flex min-h-200 flex-col justify-end overflow-hidden bg-brand-primary pt-16 pb-0 md:pt-24 lg:flex-row lg:items-stretch lg:justify-start lg:pt-20">
       <div className="flex w-full flex-col gap-12 lg:mx-auto lg:max-w-375 lg:flex-row lg:items-center lg:gap-30">
         <LandingFeatureCopy
-          icon={icBlueCheck}
+          icon={IcBlueCheck}
           title={LANDING_TASKLIST_SECTION.title}
           description={LANDING_TASKLIST_SECTION.description}
           isInverse

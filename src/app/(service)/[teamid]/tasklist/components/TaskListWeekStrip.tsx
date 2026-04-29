@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useLayoutEffect, useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo } from 'react';
 
 import useTaskListDragScroll from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListDragScroll';
 import { formatWeekdayLabel } from '@/app/(service)/[teamid]/tasklist/utils/boardDate';
@@ -62,11 +62,9 @@ export default function TaskListWeekStrip({
     handlePointerMove,
   } = useTaskListDragScroll();
 
-  const prevMonthKeyRef = useRef<string | null>(null);
-
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
-  const monthKey = `${year}-${month}`;
+  const selectedDayKey = calendarDayKey(selectedDate);
 
   const stripDays = useMemo(() => {
     const prevMonthLastDay = new Date(year, month, 0).getDate();
@@ -85,28 +83,25 @@ export default function TaskListWeekStrip({
   }, [year, month]);
 
   useLayoutEffect(() => {
-    const ul = containerRef.current;
-    if (!ul) return;
-
-    if (prevMonthKeyRef.current === monthKey) return;
-
-    const first = ul.querySelector<HTMLElement>('[data-month-first="true"]');
-    if (!first) return;
-
-    prevMonthKeyRef.current = monthKey;
-
     const applyCenter = () => {
       const row = containerRef.current;
-      const day1 = row?.querySelector<HTMLElement>('[data-month-first="true"]');
-      if (!row || !day1) return;
-      centerChildInHorizontalScrollParent(row, day1);
+      const selectedDay = row?.querySelector<HTMLElement>(
+        `[data-calendar-day-key="${selectedDayKey}"]`,
+      );
+
+      if (!row || !selectedDay) {
+        return;
+      }
+
+      centerChildInHorizontalScrollParent(row, selectedDay);
     };
 
     applyCenter();
-    // 퍼센트 너비 flex 칩은 한 프레임 뒤에 최종 폭이 잡히는 경우가 있어 한 번 더 맞춤
+
     const id = requestAnimationFrame(applyCenter);
+
     return () => cancelAnimationFrame(id);
-  }, [containerRef, monthKey, stripDays.length]);
+  }, [containerRef, selectedDayKey, stripDays.length]);
 
   return (
     <ul
@@ -131,6 +126,7 @@ export default function TaskListWeekStrip({
         return (
           <li
             key={calendarDayKey(day)}
+            data-calendar-day-key={calendarDayKey(day)}
             data-month-first={isMonthFirst ? 'true' : undefined}
             className={WEEK_DAY_CELL_CLASS}
           >

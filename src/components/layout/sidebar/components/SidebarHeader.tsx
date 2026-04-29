@@ -2,14 +2,13 @@
  * 사이드바 상단 로고와 접기/펼치기 버튼 영역입니다.
  */
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import {
-  icIndentLeftLarge,
-  icIndentRightLarge,
-  imgLogoFullLarge,
-  imgLogoSymbolLarge,
+  IcIndentLeftLarge,
+  IcIndentRightLarge,
+  ImgLogoFullLarge,
+  ImgLogoSymbolLarge,
 } from '@/assets';
 import type { SidebarHeaderProps } from '@/components/layout/sidebar/types';
 import { ROUTES } from '@/constants/ROUTES';
@@ -28,22 +27,18 @@ export default function SidebarHeader({
     >
       <Link href={ROUTES.HOME} aria-label="랜딩 페이지로 이동">
         {isExpanded ? (
-          <Image
-            src={imgLogoFullLarge}
-            alt="Coworkers"
+          <ImgLogoFullLarge
             width={144}
             height={24}
-            loading="eager"
-            fetchPriority="high"
+            role="img"
+            aria-label="Coworkers"
           />
         ) : (
-          <Image
-            src={imgLogoSymbolLarge}
-            alt="Coworkers"
+          <ImgLogoSymbolLarge
             width={35}
             height={24}
-            loading="eager"
-            fetchPriority="high"
+            role="img"
+            aria-label="Coworkers"
           />
         )}
       </Link>
@@ -59,13 +54,16 @@ export default function SidebarHeader({
             : 'absolute -right-5 top-9 size-8 rounded-full bg-background-inverse border border-slate-300',
         )}
       >
-        <Image
-          src={isExpanded ? icIndentLeftLarge : icIndentRightLarge}
-          alt=""
-          width={isExpanded ? 25 : 22}
-          height={isExpanded ? 25 : 22}
-          className={cn(!isExpanded && 'relative translate-x-0.5')}
-        />
+        {isExpanded ? (
+          <IcIndentLeftLarge width={25} height={25} aria-hidden="true" />
+        ) : (
+          <IcIndentRightLarge
+            width={22}
+            height={22}
+            className={cn('relative translate-x-0.5')}
+            aria-hidden="true"
+          />
+        )}
       </button>
     </div>
   );

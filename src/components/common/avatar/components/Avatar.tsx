@@ -6,7 +6,7 @@
 
 import Image from 'next/image';
 
-import { icUserLarge } from '@/assets';
+import { IcUserLarge } from '@/assets';
 import type { AvatarProps } from '@/components/common/avatar/types';
 import { cn } from '@/utils/cn';
 
@@ -30,13 +30,23 @@ export default function Avatar({
         className,
       )}
     >
-      <Image
-        src={src || icUserLarge}
-        alt={alt ?? DEFAULT_AVATAR_ALT}
-        width={24}
-        height={24}
-        className="size-6 object-cover"
-      />
+      {src ? (
+        <Image
+          src={src}
+          alt={alt ?? DEFAULT_AVATAR_ALT}
+          width={24}
+          height={24}
+          className="size-6 object-cover"
+        />
+      ) : (
+        <IcUserLarge
+          width={24}
+          height={24}
+          className="size-6"
+          role="img"
+          aria-label={alt ?? DEFAULT_AVATAR_ALT}
+        />
+      )}
     </span>
   );
 }

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
-import { icProfileEditLarge, icUserLarge } from '@/assets/index';
+import { IcProfileEditLarge, IcUserLarge } from '@/assets/index';
 
 import { ImgAddButtonProps } from './types';
 
@@ -49,12 +49,12 @@ export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {
       >
         <div className="bg-border-secondary border-2 border-border-primary rounded-[20px] flex justify-center items-center w-full h-full md:rounded-4xl overflow-hidden">
           {!imgSrc && (
-            <Image
-              src={icUserLarge}
-              alt="프로필 기본 이미지"
+            <IcUserLarge
               width="64"
               height="64"
               className="w-10 h-10 md:w-16 md:h-16"
+              role="img"
+              aria-label="프로필 기본 이미지"
             />
           )}
 
@@ -68,12 +68,12 @@ export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {
             />
           )}
         </div>
-        <Image
-          src={icProfileEditLarge}
-          alt="프로필 수정"
+        <IcProfileEditLarge
           width="32"
           height="32"
           className="absolute bottom-0 -right-1 border-2 border-background-secondary rounded-3xl w-5 h-5 md:w-8 md:h-8 md:-right-2 md:border-0"
+          role="img"
+          aria-label="프로필 수정"
         />
       </button>
     </div>

@@ -8,7 +8,6 @@ import {
   MemberChipsProps,
   TeamMemberListContentProps,
 } from '@/app/(service)/[teamid]/types';
-import { icUserXlarge } from '@/assets/index';
 
 export default function TeamMemberList() {
   const { open, close, is, openMemberDetail, selectedMember } = useModalState();
@@ -70,7 +69,7 @@ export function TeamMemberListContent({
       {members.map((item: MemberChipsProps) => (
         <MemberCard
           key={item.userEmail}
-          userImage={item.userImage || icUserXlarge}
+          userImage={item.userImage}
           name={item.userName}
           email={item.userEmail}
           onClick={() => onMemberClick(item)}

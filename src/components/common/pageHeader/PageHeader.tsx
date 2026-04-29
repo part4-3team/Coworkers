@@ -4,7 +4,7 @@
 
 'use client';
 
-import { icSettingsLarge } from '@/assets';
+import { IcSettingsLarge } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import type { PageHeaderProps } from '@/components/common/pageHeader/types';
 import { cn } from '@/utils/cn';
@@ -38,13 +38,11 @@ export default function PageHeader({
             trigger={
               <>
                 <span className="sr-only">{`${title} 설정 메뉴 열기`}</span>
-                <span
-                  className="block size-5 bg-interaction-inactive md:size-6"
+                <IcSettingsLarge
+                  width={24}
+                  height={24}
+                  className="size-5 text-interaction-inactive md:size-6"
                   aria-hidden="true"
-                  style={{
-                    WebkitMask: `url(${icSettingsLarge}) center / contain no-repeat`,
-                    mask: `url(${icSettingsLarge}) center / contain no-repeat`,
-                  }}
                 />
               </>
             }

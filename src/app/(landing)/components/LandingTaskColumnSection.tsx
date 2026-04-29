@@ -9,14 +9,14 @@ import {
   LANDING_TASK_COLUMN_IMAGES,
   LANDING_TASK_COLUMN_SECTION,
 } from '@/app/(landing)/constants';
-import { icFolder } from '@/assets';
+import { IcFolder } from '@/assets';
 
 export default function LandingTaskColumnSection() {
   return (
     <section className="flex min-h-200 items-center overflow-hidden bg-icon-inverse py-16 md:py-24 lg:py-32">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 lg:flex-row lg:items-center lg:gap-24 xl:gap-46">
         <LandingFeatureCopy
-          icon={icFolder}
+          icon={IcFolder}
           title={LANDING_TASK_COLUMN_SECTION.title}
           description={LANDING_TASK_COLUMN_SECTION.description}
           className="pl-6 md:pl-12 lg:pl-6"

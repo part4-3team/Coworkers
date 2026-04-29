@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-
-import { icCloseLarge } from '@/assets';
+import { IcCloseLarge } from '@/assets';
 import type { RightPanelCloseButtonProps } from '@/components/common/rightPanel/types';
 
 export default function RightPanelCloseButton({
@@ -16,7 +14,7 @@ export default function RightPanelCloseButton({
       onClick={onClose}
       className="flex size-6 items-center justify-center"
     >
-      <Image src={icCloseLarge} alt="" width={24} height={24} />
+      <IcCloseLarge width={24} height={24} aria-hidden="true" />
     </button>
   );
 }

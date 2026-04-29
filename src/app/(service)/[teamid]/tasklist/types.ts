@@ -105,7 +105,6 @@ export type TaskListTaskDetailPanelProps = {
   currentUserName: string;
   initialMode: TaskListTaskDetailOpenMode;
   onApplyPatch: (taskId: string, patch: TaskListTaskDetailApplyPatch) => void;
-  onClose: () => void;
   onCompleteTask: (taskId: string) => void;
   onRequestDeleteTask: (task: TaskListBoardTask) => void;
   task: TaskListBoardTask;

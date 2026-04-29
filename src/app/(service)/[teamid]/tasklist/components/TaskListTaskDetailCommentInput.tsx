@@ -2,9 +2,7 @@
 
 import { type ChangeEvent, type KeyboardEvent, useRef, useState } from 'react';
 
-import Image from 'next/image';
-
-import { icArrowUpCircle, icArrowUpCircleActive, icUserLarge } from '@/assets';
+import { IcArrowUpCircle, IcArrowUpCircleActive, IcUserLarge } from '@/assets';
 
 export default function TaskListTaskDetailCommentInput() {
   const [value, setValue] = useState('');
@@ -52,7 +50,7 @@ export default function TaskListTaskDetailCommentInput() {
   return (
     <div className="flex items-center gap-3 border-y border-background-tertiary py-3">
       <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-tertiary md:size-9">
-        <Image src={icUserLarge} alt="" width={20} height={20} />
+        <IcUserLarge width={20} height={20} aria-hidden="true" />
       </span>
 
       <textarea
@@ -72,13 +70,21 @@ export default function TaskListTaskDetailCommentInput() {
         disabled={!isActive}
         className="flex size-6 shrink-0 items-center justify-center"
       >
-        <Image
-          src={isActive ? icArrowUpCircleActive : icArrowUpCircle}
-          alt=""
-          width={24}
-          height={24}
-          className="size-6"
-        />
+        {isActive ? (
+          <IcArrowUpCircleActive
+            width={24}
+            height={24}
+            className="size-6"
+            aria-hidden="true"
+          />
+        ) : (
+          <IcArrowUpCircle
+            width={24}
+            height={24}
+            className="size-6"
+            aria-hidden="true"
+          />
+        )}
       </button>
     </div>
   );

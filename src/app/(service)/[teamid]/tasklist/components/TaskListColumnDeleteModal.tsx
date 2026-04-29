@@ -5,9 +5,7 @@
 
 'use client';
 
-import Image from 'next/image';
-
-import { icAlertCircleLarge } from '@/assets';
+import { IcAlertCircleLarge } from '@/assets';
 import Modal from '@/components/common/modal';
 
 type TaskListColumnDeleteModalProps = {
@@ -30,7 +28,7 @@ export default function TaskListColumnDeleteModal({
     >
       <div className="flex w-full flex-col items-center gap-4">
         <div className="flex justify-center" aria-hidden="true">
-          <Image src={icAlertCircleLarge} alt="" width={24} height={24} />
+          <IcAlertCircleLarge width={24} height={24} aria-hidden="true" />
         </div>
         <div className="flex w-full flex-col items-center gap-2">
           <h1

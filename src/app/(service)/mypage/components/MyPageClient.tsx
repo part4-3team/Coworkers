@@ -4,11 +4,9 @@
 'use client';
 import { useState } from 'react';
 
-import Image from 'next/image';
-
 import AccountForm from '@/app/(service)/mypage/components/AccountForm';
 import WithdrawModal from '@/app/(service)/mypage/components/WithdrawModal';
-import { icLogout } from '@/assets/index';
+import { IcLogout } from '@/assets/index';
 import { PrimaryButton } from '@/components/common/button';
 
 export default function MyPage() {
@@ -28,11 +26,11 @@ export default function MyPage() {
               onClick={() => setIsWithdrawModalOpen(true)}
               className="flex gap-2 text-status-danger font-medium text-base"
             >
-              <Image
-                src={icLogout}
+              <IcLogout
                 width={15.75}
                 height={12}
-                alt="회원 탈퇴 아이콘"
+                role="img"
+                aria-label="회원 탈퇴 아이콘"
               />
               회원 탈퇴하기
             </button>

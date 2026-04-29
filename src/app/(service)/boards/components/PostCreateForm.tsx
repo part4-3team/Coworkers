@@ -1,9 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-
 import useBoardWrite from '@/app/(service)/boards/hooks/useBoardWrite';
-import { icPlusBoard, icStarRed } from '@/assets';
+import { IcPlusBoard, IcStarRed } from '@/assets';
 import Button from '@/components/common/button/components/Button';
 import { ContentTextarea, TitleInput } from '@/components/common/form';
 import { cn } from '@/utils/cn';
@@ -33,7 +31,12 @@ export default function PostCreateForm() {
                 <span className="block text-text-primary text-sm font-bold md:text-base">
                   제목
                 </span>
-                <Image src={icStarRed} alt="필수 입력" width={8} height={8} />
+                <IcStarRed
+                  width={8}
+                  height={8}
+                  role="img"
+                  aria-label="필수 입력"
+                />
               </div>
               <TitleInput
                 id="title"
@@ -48,7 +51,12 @@ export default function PostCreateForm() {
                 <span className="block text-text-primary text-sm font-bold md:text-base">
                   내용
                 </span>
-                <Image src={icStarRed} alt="필수 입력" width={8} height={8} />
+                <IcStarRed
+                  width={8}
+                  height={8}
+                  role="img"
+                  aria-label="필수 입력"
+                />
               </div>
               <ContentTextarea
                 id="content"
@@ -66,12 +74,12 @@ export default function PostCreateForm() {
                 type="button"
                 className="mt-2 w-20 h-20 border border-background-tertiary rounded-xl flex justify-center items-center md:mt-3 md:w-30 md:h-30"
               >
-                <Image
-                  src={icPlusBoard}
-                  alt="게시글 이미지 추가"
+                <IcPlusBoard
                   width={20}
                   height={20}
                   className="w-5 h-5 fill-background-tertiary flex justify-center items-center md:w-7.5 md:h-7.5"
+                  role="img"
+                  aria-label="게시글 이미지 추가"
                 />
               </button>
             </div>

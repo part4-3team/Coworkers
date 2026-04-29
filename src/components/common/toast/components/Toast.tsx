@@ -6,9 +6,7 @@
 
 'use client';
 
-import Image from 'next/image';
-
-import { icAlertCircleWhiteLarge, icCloseMedium } from '@/assets';
+import { IcAlertCircleWhiteLarge, IcCloseMedium } from '@/assets';
 import type { ToastItem } from '@/components/common/toast/types';
 import { cn } from '@/utils/cn';
 
@@ -37,7 +35,7 @@ export default function Toast({ toast, onRemove }: ToastProps) {
     >
       <div className="flex min-w-0 items-center gap-2">
         <span className="hidden md:block">
-          <Image src={icAlertCircleWhiteLarge} alt="" width={24} height={24} />
+          <IcAlertCircleWhiteLarge width={24} height={24} aria-hidden="true" />
         </span>
         <p className="truncate text-sm font-medium text-text-inverse md:text-base">
           {toast.message}
@@ -65,13 +63,11 @@ export default function Toast({ toast, onRemove }: ToastProps) {
             aria-label="토스트 닫기"
             className="flex size-8 items-center justify-center"
           >
-            <span
+            <IcCloseMedium
+              width={20}
+              height={20}
+              className="size-5"
               aria-hidden="true"
-              className="block size-5 bg-text-inverse"
-              style={{
-                WebkitMask: `url(${icCloseMedium}) center / contain no-repeat`,
-                mask: `url(${icCloseMedium}) center / contain no-repeat`,
-              }}
             />
           </button>
         )}

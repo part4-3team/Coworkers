@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 import TaskListTaskDetailCommentActions from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDetailCommentActions';
 import {
   COMMENT_ACTIONS_SLOT_CLASS_NAME,
@@ -12,7 +10,7 @@ import {
   commentItemRootClassName,
 } from '@/app/(service)/[teamid]/tasklist/taskListTaskDetailCommentClassNames';
 import type { TaskListTaskDetailCommentItemProps } from '@/app/(service)/[teamid]/tasklist/types';
-import { icMoreVerticalSmall, icUserLarge } from '@/assets';
+import { IcMoreVerticalSmall, IcUserLarge } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import { cn } from '@/utils/cn';
 
@@ -34,7 +32,7 @@ export default function TaskListTaskDetailCommentItem({
       <li className={cn('bg-icon-inverse py-4', COMMENT_ROW_BLEED_X)}>
         <div className="flex gap-3">
           <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-tertiary md:size-9">
-            <Image src={icUserLarge} alt="" width={20} height={20} />
+            <IcUserLarge width={20} height={20} aria-hidden="true" />
           </span>
 
           <div className="min-w-0 flex-1">
@@ -75,7 +73,7 @@ export default function TaskListTaskDetailCommentItem({
     <li className={commentItemRootClassName(isOwnComment)}>
       <div className="flex gap-3">
         <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-tertiary md:size-9">
-          <Image src={icUserLarge} alt="" width={20} height={20} />
+          <IcUserLarge width={20} height={20} aria-hidden="true" />
         </span>
 
         <div className="min-w-0 flex-1">
@@ -136,12 +134,11 @@ export default function TaskListTaskDetailCommentItem({
                         className="flex size-6 items-center justify-center"
                         aria-hidden="true"
                       >
-                        <Image
-                          src={icMoreVerticalSmall}
-                          alt=""
+                        <IcMoreVerticalSmall
                           width={20}
                           height={20}
                           className="size-5"
+                          aria-hidden="true"
                         />
                       </span>
                     </>

@@ -4,19 +4,17 @@
 
 'use client';
 
-import Image from 'next/image';
-
 import TaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/components/TaskListCalendarPopover';
 import useTaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListCalendarPopover';
 import {
   addMonths,
-  formatYearMonth,
+  formatTaskListTitleDate,
   getMonthStart,
 } from '@/app/(service)/[teamid]/tasklist/utils/boardDate';
 import {
-  icCalendarCircleLarge,
-  icChevronLeftCircle,
-  icChevronRightCircle,
+  IcCalendarCircleLarge,
+  IcChevronLeftCircle,
+  IcChevronRightCircle,
 } from '@/assets';
 
 type TaskListMonthNavigatorProps = {
@@ -47,30 +45,35 @@ export default function TaskListMonthNavigator({
   };
 
   return (
-    <div className="relative flex min-h-6 shrink-0 items-center justify-end gap-1 sm:min-h-10 sm:gap-2">
-      <button
-        type="button"
-        aria-label="이전 달 보기"
-        className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
-        onClick={() => handleMoveMonth(-1)}
+    <div className="relative flex min-h-6 shrink-0 items-center justify-center sm:min-h-10">
+      <div className="flex items-center gap-1 sm:gap-2">
+        <button
+          type="button"
+          aria-label="이전 달 보기"
+          className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
+          onClick={() => handleMoveMonth(-1)}
+        >
+          <IcChevronLeftCircle width={24} height={24} aria-hidden="true" />
+        </button>
+
+        <p className="shrink-0 text-center text-sm font-bold leading-6 text-text-primary sm:text-base sm:leading-7 md:text-lg md:leading-7">
+          {formatTaskListTitleDate(selectedDate)}
+        </p>
+
+        <button
+          type="button"
+          aria-label="다음 달 보기"
+          className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
+          onClick={() => handleMoveMonth(1)}
+        >
+          <IcChevronRightCircle width={24} height={24} aria-hidden="true" />
+        </button>
+      </div>
+
+      <div
+        ref={calendarButtonRef}
+        className="absolute right-0 inline-flex shrink-0"
       >
-        <Image src={icChevronLeftCircle} alt="" width={24} height={24} />
-      </button>
-
-      <p className="shrink-0 text-sm font-bold leading-6 text-text-primary sm:text-base sm:leading-7 md:text-lg md:leading-7">
-        {formatYearMonth(selectedDate)}
-      </p>
-
-      <button
-        type="button"
-        aria-label="다음 달 보기"
-        className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
-        onClick={() => handleMoveMonth(1)}
-      >
-        <Image src={icChevronRightCircle} alt="" width={24} height={24} />
-      </button>
-
-      <div ref={calendarButtonRef} className="inline-flex shrink-0">
         <button
           type="button"
           aria-label="날짜 선택"
@@ -79,7 +82,7 @@ export default function TaskListMonthNavigator({
           className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
           onClick={toggleCalendar}
         >
-          <Image src={icCalendarCircleLarge} alt="" width={24} height={24} />
+          <IcCalendarCircleLarge width={24} height={24} aria-hidden="true" />
         </button>
       </div>
 

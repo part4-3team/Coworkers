@@ -1,7 +1,5 @@
-import Image from 'next/image';
-
 import type { BestPagination } from '@/app/(service)/boards/types';
-import { icChevronLeftSmall, icChevronRightSmall } from '@/assets';
+import { IcChevronLeftSmall, IcChevronRightSmall } from '@/assets';
 import { cn } from '@/utils/cn';
 
 export default function BoardBestPagination({
@@ -40,12 +38,12 @@ export default function BoardBestPagination({
           onClick={handlePrevPage}
           className="w-6 h-6 bg-background-primary rounded-full border border-border-secondary cursor-pointer lg:w-8 lg:h-8"
         >
-          <Image
-            src={icChevronLeftSmall}
-            alt="이전 페이지"
+          <IcChevronLeftSmall
             width={16}
             height={16}
             className="block mx-auto"
+            role="img"
+            aria-label="이전 페이지"
           />
         </button>
         <button
@@ -53,12 +51,12 @@ export default function BoardBestPagination({
           onClick={handleNextPage}
           className="w-6 h-6 bg-background-primary rounded-full border border-border-secondary cursor-pointer lg:w-8 lg:h-8"
         >
-          <Image
-            src={icChevronRightSmall}
-            alt="다음 페이지"
+          <IcChevronRightSmall
             width={16}
             height={16}
             className="block mx-auto"
+            role="img"
+            aria-label="다음 페이지"
           />
         </button>
       </div>

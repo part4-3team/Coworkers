@@ -7,7 +7,7 @@ import {
   BOARD_DETAIL_MENU,
 } from '@/app/(service)/boards/[articleId]/constants';
 import type { Comment } from '@/app/(service)/boards/[articleId]/types';
-import { icMoreVerticalLarge, icUserLarge } from '@/assets';
+import { IcMoreVerticalLarge, IcUserLarge } from '@/assets';
 import ListDropdown from '@/components/common/dropdown/components/ListDropdown';
 import Modal from '@/components/common/modal';
 import { useToast } from '@/components/common/toast';
@@ -43,13 +43,23 @@ export default function BoardDetailCommentItem({
   return (
     <li className="flex gap-4 py-3 border-t border-background-tertiary md:py-5">
       <div className="flex shrink-0 overflow-hidden rounded-lg bg-background-secondary w-7 h-7 md:w-9 md:h-9">
-        <Image
-          src={comment.writer.image ?? icUserLarge}
-          alt={comment.writer.nickname}
-          width={28}
-          height={28}
-          className="object-cover w-full h-full"
-        />
+        {comment.writer.image ? (
+          <Image
+            src={comment.writer.image}
+            alt={comment.writer.nickname}
+            width={28}
+            height={28}
+            className="object-cover w-full h-full"
+          />
+        ) : (
+          <IcUserLarge
+            width={28}
+            height={28}
+            className="w-full h-full"
+            role="img"
+            aria-label={comment.writer.nickname}
+          />
+        )}
       </div>
       <div className="flex justify-between gap-2 w-full">
         <div className="flex flex-col gap-1 min-w-0">
@@ -66,12 +76,12 @@ export default function BoardDetailCommentItem({
         <div className="shrink-0">
           <ListDropdown
             trigger={
-              <Image
-                src={icMoreVerticalLarge}
-                alt="더보기 메뉴"
+              <IcMoreVerticalLarge
                 width={20}
                 height={20}
                 className="cursor-pointer shrink-0"
+                role="img"
+                aria-label="더보기 메뉴"
               />
             }
             items={menuItems}

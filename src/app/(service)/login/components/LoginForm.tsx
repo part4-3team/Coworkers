@@ -2,13 +2,12 @@
 
 import { useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import ForgotPasswordModal from '@/app/(service)/login/components/ForgotPasswordModal';
 import { LOGIN_LINKS, LOGIN_TEXT } from '@/app/(service)/login/constants';
 import useLoginForm from '@/app/(service)/login/hooks/useLoginForm';
-import { icKakaotalk, imgLogoFullLarge } from '@/assets';
+import { IcKakaotalk, ImgLogoFullLarge } from '@/assets';
 import { PrimaryButton } from '@/components/common/button';
 import { AuthInput } from '@/components/common/form';
 
@@ -30,13 +29,13 @@ export default function LoginForm() {
     <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-5.25 py-9.25 md:px-8 md:py-12.5">
       {/* 로고 */}
       <div className="mb-8 flex justify-center md:mb-10">
-        <Image
-          src={imgLogoFullLarge}
-          alt="Coworkers 로고"
+        <ImgLogoFullLarge
           width={210}
           height={35}
           className="h-auto w-52"
           style={{ height: 'auto' }}
+          role="img"
+          aria-label="Coworkers 로고"
         />
       </div>
 
@@ -105,12 +104,12 @@ export default function LoginForm() {
       {/* 간편 로그인 */}
       <div className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6">
         <span className="text-sm text-text-secondary">간편 로그인하기</span>
-        <Image
-          src={icKakaotalk}
-          alt="카카오 아이콘"
+        <IcKakaotalk
           width={42}
           height={42}
           className="h-11 w-11 cursor-pointer"
+          role="img"
+          aria-label="카카오 아이콘"
         />
       </div>
 

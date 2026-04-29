@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-
-import { icCalendarSmall, icRepeatSmall, icUserLarge } from '@/assets';
+import { IcCalendarSmall, IcRepeatSmall, IcUserLarge } from '@/assets';
 
 type TaskListTaskDetailMetaProps = {
   assigneeName: string;
@@ -19,7 +17,7 @@ export default function TaskListTaskDetailMeta({
     <div>
       <div className="flex items-center gap-2.5">
         <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background-tertiary md:size-9">
-          <Image src={icUserLarge} alt="" width={20} height={20} />
+          <IcUserLarge width={20} height={20} aria-hidden="true" />
         </span>
         <span className="text-sm font-semibold text-text-primary md:text-base">
           {assigneeName}
@@ -28,24 +26,22 @@ export default function TaskListTaskDetailMeta({
 
       <dl className="mt-4 flex flex-col gap-2.5 text-sm font-medium text-text-default md:gap-3">
         <div className="flex flex-wrap items-center gap-2">
-          <Image
-            src={icCalendarSmall}
-            alt=""
+          <IcCalendarSmall
             width={16}
             height={16}
             className="size-4 shrink-0"
+            aria-hidden="true"
           />
           <dt>시작 날짜</dt>
           <dd className="text-text-secondary">{startedAtLabel}</dd>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <Image
-            src={icRepeatSmall}
-            alt=""
+          <IcRepeatSmall
             width={20}
             height={20}
             className="size-4 shrink-0"
+            aria-hidden="true"
           />
           <dt>반복 설정</dt>
           <dd className="text-text-secondary">{frequency}</dd>

@@ -1,9 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-
 import useSearch from '@/app/(service)/boards/hooks/useSearch';
-import { icSearchXlarge } from '@/assets';
+import { IcSearchXlarge } from '@/assets';
 
 export default function BoardSearch() {
   const { keyword, handleChange, handleSubmit } = useSearch();
@@ -11,12 +9,12 @@ export default function BoardSearch() {
   return (
     <form onSubmit={handleSubmit} className="relative w-full md:max-w-105">
       <div className="absolute inset-y-0 left-3 top-0.5 flex items-center pointer-events-none md:left-4">
-        <Image
-          src={icSearchXlarge}
-          alt="검색"
+        <IcSearchXlarge
           width={24}
           height={24}
           className="md:w-8 md:h-8"
+          role="img"
+          aria-label="검색"
         />
       </div>
       <input

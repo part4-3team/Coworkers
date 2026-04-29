@@ -8,7 +8,7 @@ import type {
   CommentListResponse,
   UserProfileResponse,
 } from '@/app/(service)/boards/[articleId]/types';
-import { icArrowUpCircle, icUserLarge } from '@/assets';
+import { IcArrowUpCircle, IcUserLarge } from '@/assets';
 
 export default function BoardDetailComments({
   commentList,
@@ -27,13 +27,23 @@ export default function BoardDetailComments({
       </div>
       <div className="flex items-center gap-3 mt-3 md:mt-4 md:gap-4">
         <div className="flex shrink-0 overflow-hidden rounded-lg w-7 h-7 md:w-9 md:h-9">
-          <Image
-            src={userProfile.image ?? icUserLarge}
-            alt="댓글 작성자 프로필 이미지"
-            width={28}
-            height={28}
-            className="object-cover w-full h-full"
-          />
+          {userProfile.image ? (
+            <Image
+              src={userProfile.image}
+              alt="댓글 작성자 프로필 이미지"
+              width={28}
+              height={28}
+              className="object-cover w-full h-full"
+            />
+          ) : (
+            <IcUserLarge
+              width={28}
+              height={28}
+              className="w-full h-full"
+              role="img"
+              aria-label="댓글 작성자 프로필 이미지"
+            />
+          )}
         </div>
         <div className="relative flex-1">
           <input
@@ -48,11 +58,11 @@ export default function BoardDetailComments({
             className="absolute right-3 bottom-3 flex h-6 w-6 items-center justify-center"
             onClick={() => {}}
           >
-            <Image
-              src={icArrowUpCircle}
-              alt="댓글 등록"
+            <IcArrowUpCircle
               width={24}
               height={24}
+              role="img"
+              aria-label="댓글 등록"
             />
           </button>
         </div>

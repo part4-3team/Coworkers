@@ -9,9 +9,7 @@
  * ```
  */
 
-import Image from 'next/image';
-
-import ic_plus_large from '@/assets/icons/ic_plus_large.svg?url';
+import IcPlusLarge from '@/assets/icons/ic_plus_large.svg';
 import Button from '@/components/common/button/components/Button';
 import type { FloatingButtonProps } from '@/components/common/button/types';
 import { cn } from '@/utils/cn';
@@ -30,14 +28,7 @@ export default function FloatingButton({
       )}
       {...props}
     >
-      <Image
-        src={ic_plus_large}
-        alt="추가 아이콘"
-        width={24}
-        height={24}
-        loading="eager"
-        fetchPriority="high"
-      />
+      <IcPlusLarge width={24} height={24} role="img" aria-label="추가 아이콘" />
     </Button>
   );
 }

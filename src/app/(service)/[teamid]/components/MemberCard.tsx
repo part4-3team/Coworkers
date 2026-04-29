@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import { MemberCardProps } from '@/app/(service)/[teamid]/types';
-import { icMoreVerticalLarge, icUserXlarge } from '@/assets/index';
+import { IcMoreVerticalLarge, IcUserXlarge } from '@/assets/index';
 
 export default function MemberCard({
   name,
@@ -12,13 +12,23 @@ export default function MemberCard({
   return (
     <div className="flex gap-3 items-center cursor-default">
       <div className="overflow-hidden w-9 h-9 rounded-xl bg-background-tertiary">
-        <Image
-          src={userImage || icUserXlarge}
-          width={36}
-          height={36}
-          alt={`${name}'s profile photo`}
-          className={userImage ? 'w-full h-full object-cover' : 'w-6 h-6'}
-        />
+        {userImage ? (
+          <Image
+            src={userImage}
+            width={36}
+            height={36}
+            alt={`${name}'s profile photo`}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <IcUserXlarge
+            width={36}
+            height={36}
+            className="w-6 h-6"
+            role="img"
+            aria-label={`${name}'s profile photo`}
+          />
+        )}
       </div>
       <div className="flex-1">
         <p className="font-semibold text-text-primary text-base text-left">
@@ -29,7 +39,7 @@ export default function MemberCard({
         </p>
       </div>
       <button onClick={onClick}>
-        <Image src={icMoreVerticalLarge} width="16" height="16" alt="" />
+        <IcMoreVerticalLarge width="16" height="16" aria-hidden="true" />
       </button>
     </div>
   );

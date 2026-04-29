@@ -6,14 +6,14 @@ import Image from 'next/image';
 
 import LandingFeatureCopy from '@/app/(landing)/components/LandingFeatureCopy';
 import { LANDING_TASK_DETAIL_SECTION } from '@/app/(landing)/constants';
-import { icSpeechBubble } from '@/assets';
+import { IcSpeechBubble } from '@/assets';
 
 export default function LandingTaskDetailSection() {
   return (
     <section className="flex min-h-180 items-center overflow-hidden bg-background-secondary py-16 md:py-24 lg:pt-20 lg:pb-0">
       <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-12 lg:flex-row lg:items-center lg:gap-16 xl:gap-24">
         <LandingFeatureCopy
-          icon={icSpeechBubble}
+          icon={IcSpeechBubble}
           title={LANDING_TASK_DETAIL_SECTION.title}
           description={LANDING_TASK_DETAIL_SECTION.description}
           className="pl-6 md:pl-12 lg:pl-6"

@@ -4,11 +4,10 @@
 
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { icGnbMenu, icUserLarge, imgLogoSymbolLarge } from '@/assets';
+import { IcGnbMenu, IcUserLarge, ImgLogoSymbolLarge } from '@/assets';
 import ProfileMenuDropdown from '@/components/layout/components/ProfileMenuDropdown';
 import MobileSidebarDrawer from '@/components/layout/header/components/MobileSidebarDrawer';
 import useMobileSidebar from '@/components/layout/header/hooks/useMobileSidebar';
@@ -35,24 +34,23 @@ export default function Header() {
               onClick={handleToggle}
               className="flex size-6 shrink-0 items-center"
             >
-              <Image
-                src={icGnbMenu}
-                alt=""
+              <IcGnbMenu
                 width={24}
                 height={24}
                 className="size-6"
+                aria-hidden="true"
               />
             </button>
           )}
 
           <Link href={ROUTES.HOME} aria-label="랜딩 페이지로 이동">
-            <Image
-              src={imgLogoSymbolLarge}
-              alt="Coworkers"
+            <ImgLogoSymbolLarge
               width={35}
               height={24}
               className="h-6 w-auto"
               style={{ width: 'auto' }}
+              role="img"
+              aria-label="Coworkers"
             />
           </Link>
         </div>
@@ -65,12 +63,11 @@ export default function Header() {
                 aria-label="프로필 메뉴 열기"
                 className="flex size-7 shrink-0 items-center justify-center rounded-full bg-border-secondary"
               >
-                <Image
-                  src={icUserLarge}
-                  alt=""
+                <IcUserLarge
                   width={24}
                   height={24}
                   className="size-6"
+                  aria-hidden="true"
                 />
               </span>
             }

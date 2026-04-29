@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-
-import { icMoreVerticalSmall } from '@/assets';
+import { IcMoreVerticalSmall } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import { TitleInput } from '@/components/common/form';
 import type { TaskDetailPanelHeaderProps } from '@/components/common/rightPanel/types';
@@ -46,12 +44,11 @@ export default function TaskDetailPanelHeader({
               className="flex size-6 items-center justify-center"
               aria-hidden="true"
             >
-              <Image
-                src={icMoreVerticalSmall}
-                alt=""
+              <IcMoreVerticalSmall
                 width={20}
                 height={20}
                 className="size-5"
+                aria-hidden="true"
               />
             </span>
           </>

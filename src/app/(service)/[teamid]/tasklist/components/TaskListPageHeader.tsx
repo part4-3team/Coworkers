@@ -8,12 +8,11 @@
 
 import { useState } from 'react';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import TaskListTaskRowOptionsMenu from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskRowOptionsMenu';
 import TaskListTeamPageDeleteModal from '@/app/(service)/[teamid]/tasklist/components/TaskListTeamPageDeleteModal';
-import { icSettingsLarge, icSettingsSmall } from '@/assets';
+import { IcSettingsLarge, IcSettingsSmall } from '@/assets';
 import { cn } from '@/utils/cn';
 
 type TaskListPageHeaderProps = {
@@ -83,19 +82,17 @@ export default function TaskListPageHeader({
             <>
               <span className="sr-only">{`${teamName} 팀 메뉴 열기`}</span>
               <span className="inline-flex size-5 items-center justify-center md:size-6">
-                <Image
-                  src={icSettingsSmall}
-                  alt=""
+                <IcSettingsSmall
                   width={24}
                   height={24}
                   className="size-5 md:size-6 lg:hidden"
+                  aria-hidden="true"
                 />
-                <Image
-                  src={icSettingsLarge}
-                  alt=""
+                <IcSettingsLarge
                   width={24}
                   height={24}
                   className="hidden lg:block"
+                  aria-hidden="true"
                 />
               </span>
             </>

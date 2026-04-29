@@ -4,18 +4,16 @@
 
 'use client';
 
-import Image from 'next/image';
-
 import TaskListTaskRowOptionsMenu from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskRowOptionsMenu';
 import type {
   TaskListBoardTask,
   TaskListTaskDetailOpenMode,
 } from '@/app/(service)/[teamid]/tasklist/types';
 import {
-  icCalendarSmall,
-  icComment,
-  icMoreVerticalSmall,
-  icRepeatSmall,
+  IcCalendarSmall,
+  IcComment,
+  IcMoreVerticalSmall,
+  IcRepeatSmall,
 } from '@/assets';
 import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
 import { cn } from '@/utils/cn';
@@ -63,12 +61,11 @@ export default function TaskListTaskRow({
             />
           </span>
           <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base">
-            <Image
-              src={icComment}
-              alt=""
+            <IcComment
               width={22}
               height={22}
               className="size-5.5"
+              aria-hidden="true"
             />
             {task.commentCount}
           </span>
@@ -76,14 +73,14 @@ export default function TaskListTaskRow({
 
         <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-normal text-text-default md:mt-2.5 md:text-base">
           <span className="flex items-center gap-2">
-            <Image src={icCalendarSmall} alt="" width={16} height={16} />
+            <IcCalendarSmall width={16} height={16} aria-hidden="true" />
             {task.dueDateLabel}
           </span>
           <span aria-hidden="true" className="text-border-secondary">
             |
           </span>
           <span className="flex items-center gap-2">
-            <Image src={icRepeatSmall} alt="" width={22} height={22} />
+            <IcRepeatSmall width={22} height={22} aria-hidden="true" />
             {task.repeatLabel}
           </span>
         </div>
@@ -116,11 +113,10 @@ export default function TaskListTaskRow({
                 className="flex size-8 items-center justify-center rounded-lg"
                 aria-hidden="true"
               >
-                <Image
-                  src={icMoreVerticalSmall}
-                  alt=""
+                <IcMoreVerticalSmall
                   width={22}
                   height={22}
+                  aria-hidden="true"
                 />
               </span>
             </>

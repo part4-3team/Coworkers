@@ -4,6 +4,8 @@
 
 'use client';
 
+import { useCallback } from 'react';
+
 import TaskListBoardEmptyTaskRow from '@/app/(service)/[teamid]/tasklist/components/TaskListBoardEmptyTaskRow';
 import TaskListMonthNavigator from '@/app/(service)/[teamid]/tasklist/components/TaskListMonthNavigator';
 import TaskListTaskDeleteModal from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDeleteModal';
@@ -16,30 +18,57 @@ import {
   TASK_LIST_BOARD_CARD_SHELL_CLASS,
   TASK_LIST_BOARD_COLUMN_TITLE_CLASS,
 } from '@/app/(service)/[teamid]/tasklist/taskListBoardConstants';
-import type { TaskListBoardProps } from '@/app/(service)/[teamid]/tasklist/types';
+import type {
+  TaskListBoardProps,
+  TaskListBoardTask,
+  TaskListTaskDetailOpenMode,
+} from '@/app/(service)/[teamid]/tasklist/types';
+import useRightPanel from '@/components/layout/hooks/useRightPanel';
 import { cn } from '@/utils/cn';
 
 export default function TaskListBoard({
   columnTitle,
   className,
 }: TaskListBoardProps) {
+  const { openRightPanel } = useRightPanel();
   const {
     handleApplyTaskDetailPatch,
     handleCloseDeleteModal,
-    handleCloseTaskDetail,
     handleCompleteTaskFromDetail,
     handleConfirmDelete,
-    handleOpenTaskDetail,
     handleRequestDelete,
     handleRequestDeleteFromDetail,
     handleToggleChecked,
     isTaskListEmpty,
-    openTaskDetail,
     selectedDate,
     setSelectedDate,
     sortedTasks,
     taskPendingDelete,
   } = useTaskListBoard();
+
+  const handleOpenTaskDetail = useCallback(
+    (task: TaskListBoardTask, mode: TaskListTaskDetailOpenMode) => {
+      openRightPanel({
+        content: (
+          <TaskListTaskDetailPanel
+            key={`${task.id}-${mode}`}
+            currentUserName={TASK_LIST_DETAIL_CURRENT_USER_NAME}
+            initialMode={mode}
+            task={task}
+            onApplyPatch={handleApplyTaskDetailPatch}
+            onCompleteTask={handleCompleteTaskFromDetail}
+            onRequestDeleteTask={handleRequestDeleteFromDetail}
+          />
+        ),
+      });
+    },
+    [
+      handleApplyTaskDetailPatch,
+      handleCompleteTaskFromDetail,
+      handleRequestDeleteFromDetail,
+      openRightPanel,
+    ],
+  );
 
   return (
     <section
@@ -92,19 +121,6 @@ export default function TaskListBoard({
           taskTitle={taskPendingDelete.title}
           onClose={handleCloseDeleteModal}
           onConfirm={handleConfirmDelete}
-        />
-      )}
-
-      {openTaskDetail && (
-        <TaskListTaskDetailPanel
-          key={`${openTaskDetail.task.id}-${openTaskDetail.mode}`}
-          currentUserName={TASK_LIST_DETAIL_CURRENT_USER_NAME}
-          initialMode={openTaskDetail.mode}
-          task={openTaskDetail.task}
-          onApplyPatch={handleApplyTaskDetailPatch}
-          onClose={handleCloseTaskDetail}
-          onCompleteTask={handleCompleteTaskFromDetail}
-          onRequestDeleteTask={handleRequestDeleteFromDetail}
         />
       )}
     </section>

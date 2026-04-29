@@ -3,7 +3,6 @@
  * API 연동 전에는 `constants` 목업 데이터로 UI를 표시합니다.
  */
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import BoardBestList from '@/app/(service)/boards/components/BoardBestList';
@@ -20,7 +19,7 @@ import {
   hasPosts,
   isSearchMode,
 } from '@/app/(service)/boards/utils/boardUtils';
-import { icPencil } from '@/assets';
+import { IcPencil } from '@/assets';
 import { ROUTES } from '@/constants/ROUTES';
 
 export default async function BoardsPage({
@@ -63,12 +62,12 @@ export default async function BoardsPage({
                 className="fixed bottom-10 right-3.5 z-100 md:right-6 md:bottom-20 lg:right-10 
                 bg-brand-primary rounded-full w-14 h-14 hover:bg-interaction-hover shadow-floating"
               >
-                <Image
-                  src={icPencil}
-                  alt="게시글 작성"
+                <IcPencil
                   width={24}
                   height={24}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                  role="img"
+                  aria-label="게시글 작성"
                 />
               </div>
             </Link>

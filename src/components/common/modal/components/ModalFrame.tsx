@@ -19,9 +19,8 @@
  */
 
 'use client';
-import Image from 'next/image';
 
-import { icAlertCircleLarge, icCloseMedium } from '@/assets/index';
+import { IcAlertCircleLarge, IcCloseMedium } from '@/assets/index';
 
 import { ModalFrameProps } from '../types';
 
@@ -55,21 +54,21 @@ export default function ModalFrame({
       >
         {hasCloseButton && (
           <button className="absolute right-4 top-4" onClick={onClose}>
-            <Image
-              src={icCloseMedium}
-              alt="모달 닫기 아이콘"
+            <IcCloseMedium
               width="24"
               height="24"
+              role="img"
+              aria-label="모달 닫기 아이콘"
             />
           </button>
         )}
         {hasIcon && (
           <div className="flex justify-center items-center mb-4">
-            <Image
-              src={icAlertCircleLarge}
-              alt="느낌표 아이콘"
+            <IcAlertCircleLarge
               width="24"
               height="24"
+              role="img"
+              aria-label="느낌표 아이콘"
             />
           </div>
         )}

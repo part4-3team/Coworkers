@@ -4,17 +4,15 @@
 
 'use client';
 
-import Image from 'next/image';
-
 import HistoryCalendarPopover from '@/app/(service)/myhistory/components/HistoryCalendarPopover';
 import useHistoryCalendarPopover from '@/app/(service)/myhistory/hooks/useHistoryCalendarPopover';
 import useHistoryMonthNavigator from '@/app/(service)/myhistory/hooks/useHistoryMonthNavigator';
 import type { HistoryMonthNavigatorProps } from '@/app/(service)/myhistory/types';
 import { getHistoryRangeTitleParts } from '@/app/(service)/myhistory/utils/formatHistoryDate';
 import {
-  icCalendarCircleLarge,
-  icChevronLeftCircle,
-  icChevronRightCircle,
+  IcCalendarCircleLarge,
+  IcChevronLeftCircle,
+  IcChevronRightCircle,
 } from '@/assets';
 
 export default function HistoryMonthNavigator({
@@ -56,7 +54,7 @@ export default function HistoryMonthNavigator({
           className="flex size-7 items-center justify-center rounded-lg"
           onClick={() => handleMoveMonth(-1)}
         >
-          <Image src={icChevronLeftCircle} alt="" width={24} height={24} />
+          <IcChevronLeftCircle width={24} height={24} aria-hidden="true" />
         </button>
 
         <p className="text-center text-lg leading-tight font-bold text-text-primary md:text-xl md:leading-normal">
@@ -78,7 +76,7 @@ export default function HistoryMonthNavigator({
           className="flex size-7 items-center justify-center rounded-lg"
           onClick={() => handleMoveMonth(1)}
         >
-          <Image src={icChevronRightCircle} alt="" width={24} height={24} />
+          <IcChevronRightCircle width={24} height={24} aria-hidden="true" />
         </button>
       </div>
 
@@ -91,7 +89,7 @@ export default function HistoryMonthNavigator({
         className="absolute right-0 flex size-10 items-center justify-center rounded-lg"
         onClick={handleToggleCalendar}
       >
-        <Image src={icCalendarCircleLarge} alt="" width={32} height={32} />
+        <IcCalendarCircleLarge width={32} height={32} aria-hidden="true" />
       </button>
 
       {isCalendarOpen && (

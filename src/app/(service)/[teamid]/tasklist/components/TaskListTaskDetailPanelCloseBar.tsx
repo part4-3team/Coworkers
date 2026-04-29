@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-
-import { icCloseSmall } from '@/assets';
+import { IcCloseSmall } from '@/assets';
 
 type TaskListTaskDetailPanelCloseBarProps = {
   onClose: () => void;
@@ -19,7 +17,7 @@ export default function TaskListTaskDetailPanelCloseBar({
         aria-label="닫기"
         onClick={onClose}
       >
-        <Image src={icCloseSmall} alt="" width={24} height={24} />
+        <IcCloseSmall width={24} height={24} aria-hidden="true" />
       </button>
     </div>
   );

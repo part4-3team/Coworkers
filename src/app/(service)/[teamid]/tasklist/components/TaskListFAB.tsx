@@ -4,9 +4,7 @@
 
 'use client';
 
-import Image from 'next/image';
-
-import { icPlusLarge } from '@/assets';
+import { IcPlusLarge } from '@/assets';
 import { cn } from '@/utils/cn';
 
 type TaskListFABProps = {
@@ -27,12 +25,11 @@ export default function TaskListFAB({ onClick, className }: TaskListFABProps) {
         className,
       )}
     >
-      <Image
-        src={icPlusLarge}
-        alt=""
+      <IcPlusLarge
         width={28}
         height={28}
         className="size-7 brightness-0 invert md:size-8"
+        aria-hidden="true"
       />
     </button>
   );

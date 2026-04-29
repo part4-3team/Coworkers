@@ -1,4 +1,4 @@
-import { icChevronLeftSmall, icChevronRightSmall } from '@/assets';
+import { IcChevronLeftSmall, IcChevronRightSmall } from '@/assets';
 
 import type { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
 
@@ -18,13 +18,11 @@ export default function DatePickerCalendarHeader({
         disabled={prevMonthButtonDisabled}
         onClick={decreaseMonth}
       >
-        <span
+        <IcChevronLeftSmall
+          width={16}
+          height={16}
+          className="size-4"
           aria-hidden="true"
-          className="block size-4 bg-text-primary"
-          style={{
-            WebkitMask: `url(${icChevronLeftSmall}) center / contain no-repeat`,
-            mask: `url(${icChevronLeftSmall}) center / contain no-repeat`,
-          }}
         />
       </button>
 
@@ -39,13 +37,11 @@ export default function DatePickerCalendarHeader({
         disabled={nextMonthButtonDisabled}
         onClick={increaseMonth}
       >
-        <span
+        <IcChevronRightSmall
+          width={16}
+          height={16}
+          className="size-4"
           aria-hidden="true"
-          className="block size-4 bg-text-primary"
-          style={{
-            WebkitMask: `url(${icChevronRightSmall}) center / contain no-repeat`,
-            mask: `url(${icChevronRightSmall}) center / contain no-repeat`,
-          }}
         />
       </button>
     </div>

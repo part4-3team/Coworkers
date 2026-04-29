@@ -4,9 +4,7 @@
 
 'use client';
 
-import Image from 'next/image';
-
-import { icDownArrowLarge, icDownArrowSmall } from '@/assets';
+import { IcDownArrowLarge, IcDownArrowSmall } from '@/assets';
 import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
 import { cn } from '@/utils/cn';
 
@@ -60,19 +58,17 @@ export default function TaskListSelectDropdown<T extends string>({
             isOpen && 'rotate-180',
           )}
         >
-          <Image
-            src={icDownArrowSmall}
-            alt=""
+          <IcDownArrowSmall
             width={20}
             height={20}
             className="block md:hidden"
+            aria-hidden="true"
           />
-          <Image
-            src={icDownArrowLarge}
-            alt=""
+          <IcDownArrowLarge
             width={24}
             height={24}
             className="hidden md:block"
+            aria-hidden="true"
           />
         </span>
       </button>

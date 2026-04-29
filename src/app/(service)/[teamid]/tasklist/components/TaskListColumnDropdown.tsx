@@ -5,10 +5,8 @@
 
 'use client';
 
-import Image from 'next/image';
-
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
-import { icCheck, icDownArrowLarge, icDownArrowSmall } from '@/assets';
+import { IcCheck, IcDownArrowLarge, IcDownArrowSmall } from '@/assets';
 import { Badge } from '@/components/common/badge';
 import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
 import { cn } from '@/utils/cn';
@@ -64,19 +62,17 @@ export default function TaskListColumnDropdown({
           )}
           aria-hidden
         >
-          <Image
-            src={icDownArrowSmall}
-            alt=""
+          <IcDownArrowSmall
             width={20}
             height={20}
             className="block md:hidden"
+            aria-hidden="true"
           />
-          <Image
-            src={icDownArrowLarge}
-            alt=""
+          <IcDownArrowLarge
             width={24}
             height={24}
             className="hidden md:block"
+            aria-hidden="true"
           />
         </span>
       </button>
@@ -107,12 +103,11 @@ export default function TaskListColumnDropdown({
                   <span className="flex min-w-0 flex-1 items-center gap-2 md:min-w-0">
                     <span className="inline-flex size-4 shrink-0 items-center justify-center">
                       {isSelected ? (
-                        <Image
-                          src={icCheck}
-                          alt=""
+                        <IcCheck
                           width={16}
                           height={16}
                           className="size-4 shrink-0"
+                          aria-hidden="true"
                         />
                       ) : null}
                     </span>

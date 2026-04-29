@@ -4,9 +4,7 @@
 
 'use client';
 
-import Image from 'next/image';
-
-import { icMoreVerticalLarge } from '@/assets';
+import { IcMoreVerticalLarge } from '@/assets';
 import { Badge } from '@/components/common/badge';
 import { ListDropdown } from '@/components/common/dropdown';
 import { cn } from '@/utils/cn';
@@ -42,12 +40,11 @@ export default function TaskListEmptyColumnPlaceholder({
         <ListDropdown
           trigger={
             <span className="flex size-6 shrink-0 items-center justify-center rounded-md text-icon-primary hover:bg-background-tertiary">
-              <Image
-                src={icMoreVerticalLarge}
-                alt=""
+              <IcMoreVerticalLarge
                 width={24}
                 height={24}
                 className="block size-6 shrink-0"
+                aria-hidden="true"
               />
             </span>
           }

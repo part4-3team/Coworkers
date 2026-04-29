@@ -4,9 +4,7 @@
 
 'use client';
 
-import Image from 'next/image';
-
-import { icCalendarSmall, icCheckboxLarge, icRepeatSmall } from '@/assets';
+import { IcCalendarSmall, IcCheckboxLarge, IcRepeatSmall } from '@/assets';
 import { cn } from '@/utils/cn';
 
 function formatBoardPlaceholderDate(d: Date) {
@@ -35,13 +33,11 @@ export default function TaskListBoardEmptyTaskRow({
     >
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-start gap-2 md:gap-2.5">
-          <Image
-            src={icCheckboxLarge}
-            alt=""
+          <IcCheckboxLarge
             width={16}
             height={16}
             className="mt-0.5 h-3 w-3 shrink-0 md:h-4 md:w-4"
-            aria-hidden
+            aria-hidden="true"
           />
           <p className="min-w-0 text-sm font-normal leading-snug text-interaction-inactive md:text-base">
             할 일을 달성하기 위한 체크리스트를 입력해주세요.
@@ -50,14 +46,14 @@ export default function TaskListBoardEmptyTaskRow({
 
         <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-normal text-text-default md:mt-2.5 md:text-base">
           <span className="flex items-center gap-2">
-            <Image src={icCalendarSmall} alt="" width={16} height={16} />
+            <IcCalendarSmall width={16} height={16} aria-hidden="true" />
             {formatBoardPlaceholderDate(selectedDate)}
           </span>
           <span aria-hidden="true" className="text-border-secondary">
             |
           </span>
           <span className="flex items-center gap-2">
-            <Image src={icRepeatSmall} alt="" width={22} height={22} />
+            <IcRepeatSmall width={22} height={22} aria-hidden="true" />
             매일 반복
           </span>
         </div>
