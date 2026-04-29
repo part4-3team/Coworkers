@@ -7,7 +7,7 @@
 import Image from 'next/image';
 
 import useHistoryTaskCard from '@/app/(service)/myhistory/hooks/useHistoryTaskCard';
-import type { MyHistoryTask } from '@/app/(service)/myhistory/types';
+import type { HistoryTaskCardProps } from '@/app/(service)/myhistory/types';
 import {
   icCalendarSmall,
   icComment,
@@ -17,10 +17,6 @@ import {
 import { ListDropdown } from '@/components/common/dropdown';
 import { TaskDeleteConfirmModal } from '@/components/common/modal';
 import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
-
-type HistoryTaskCardProps = {
-  task: MyHistoryTask;
-};
 
 export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
   const {

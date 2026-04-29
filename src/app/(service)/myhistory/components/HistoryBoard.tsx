@@ -9,19 +9,21 @@ import HistoryFilterTabs from '@/app/(service)/myhistory/components/HistoryFilte
 import HistoryMonthNavigator from '@/app/(service)/myhistory/components/HistoryMonthNavigator';
 import { MY_HISTORY_FILTERS } from '@/app/(service)/myhistory/constants';
 import useHistoryBoard from '@/app/(service)/myhistory/hooks/useHistoryBoard';
+import type { HistoryBoardProps } from '@/app/(service)/myhistory/types';
 import { cn } from '@/utils/cn';
-
-type HistoryBoardProps = {
-  activeFilterId: string | null;
-  onSelectFilter: (filterId: string) => void;
-};
 
 export default function HistoryBoard({
   activeFilterId,
   onSelectFilter,
 }: HistoryBoardProps) {
-  const { datedHistorySections, hasTasks, selectedDate, setSelectedDate } =
-    useHistoryBoard(activeFilterId);
+  const {
+    datedHistorySections,
+    handleApplyRange,
+    handleMoveMonth,
+    hasTasks,
+    selectedRange,
+    title,
+  } = useHistoryBoard(activeFilterId);
 
   return (
     <section
@@ -31,8 +33,10 @@ export default function HistoryBoard({
       )}
     >
       <HistoryMonthNavigator
-        selectedDate={selectedDate}
-        onSelectDate={setSelectedDate}
+        title={title}
+        selectedRange={selectedRange}
+        onApplyRange={handleApplyRange}
+        onMoveMonth={handleMoveMonth}
       />
 
       <div className="mt-8 2xl:hidden">

@@ -5,12 +5,8 @@
 'use client';
 
 import { MY_HISTORY_SUMMARY_ITEMS } from '@/app/(service)/myhistory/constants';
+import type { MyHistorySummaryProps } from '@/app/(service)/myhistory/types';
 import { cn } from '@/utils/cn';
-
-type MyHistorySummaryProps = {
-  activeItemId: string | null;
-  onSelectItem: (itemId: string) => void;
-};
 
 export default function MyHistorySummary({
   activeItemId,

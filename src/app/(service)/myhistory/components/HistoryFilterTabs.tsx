@@ -5,14 +5,8 @@
  */
 
 import useDragScroll from '@/app/(service)/myhistory/hooks/useDragScroll';
-import type { MyHistoryFilter } from '@/app/(service)/myhistory/types';
+import type { HistoryFilterTabsProps } from '@/app/(service)/myhistory/types';
 import { cn } from '@/utils/cn';
-
-type HistoryFilterTabsProps = {
-  activeFilterId: string | null;
-  filters: readonly MyHistoryFilter[];
-  onSelectFilter: (filterId: string) => void;
-};
 
 export default function HistoryFilterTabs({
   activeFilterId,

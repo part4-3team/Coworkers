@@ -73,7 +73,7 @@
   display: flex;
   width: 248px;
   flex-direction: column;
-  gap: 0;
+  gap: 4px;
   margin: 4px auto 16px;
 }
 
@@ -93,7 +93,9 @@
   align-items: center;
   justify-content: center;
   margin: 0;
+  border: 2px solid transparent;
   border-radius: 8px;
+  background-clip: padding-box;
   color: var(--color-text-primary);
   font-size: 14px;
   font-weight: 400;
@@ -101,8 +103,11 @@
   cursor: pointer;
 }
 
-.coworkers-date-picker .react-datepicker__day:not([aria-disabled='true']):hover {
-  background: var(--color-brand-secondary);
+.coworkers-date-picker .react-datepicker__day:not([aria-disabled='true']):hover,
+.coworkers-date-picker .react-datepicker__day:not([aria-disabled='true']):active {
+  background: var(--color-brand-primary);
+  border-radius: 8px;
+  color: var(--color-text-inverse);
 }
 
 .coworkers-date-picker .react-datepicker__day--outside-month {
@@ -118,10 +123,33 @@
   color: var(--color-text-primary);
 }
 
+.coworkers-date-picker .react-datepicker__day--in-range:not(.react-datepicker__day--range-start):not(.react-datepicker__day--range-end),
+.coworkers-date-picker .react-datepicker__day--in-range:not(.react-datepicker__day--range-start):not(.react-datepicker__day--range-end):hover {
+  background: var(--color-brand-secondary);
+  border-radius: 8px;
+  color: var(--color-text-primary);
+}
+
+.coworkers-date-picker .react-datepicker__day--in-selecting-range:not(.react-datepicker__day--selecting-range-start):not(.react-datepicker__day--selecting-range-end),
+.coworkers-date-picker .react-datepicker__day--in-selecting-range:not(.react-datepicker__day--selecting-range-start):not(.react-datepicker__day--selecting-range-end):hover {
+  background: transparent;
+  border-radius: 8px;
+  color: var(--color-text-primary);
+}
+
 .coworkers-date-picker .react-datepicker__day--selected,
 .coworkers-date-picker .react-datepicker__day--selected:hover,
+.coworkers-date-picker .react-datepicker__day--range-start,
+.coworkers-date-picker .react-datepicker__day--range-start:hover,
+.coworkers-date-picker .react-datepicker__day--range-end,
+.coworkers-date-picker .react-datepicker__day--range-end:hover,
+.coworkers-date-picker .react-datepicker__day--selecting-range-start,
+.coworkers-date-picker .react-datepicker__day--selecting-range-start:hover,
+.coworkers-date-picker .react-datepicker__day--selecting-range-end,
+.coworkers-date-picker .react-datepicker__day--selecting-range-end:hover,
 .coworkers-date-picker .react-datepicker__day--keyboard-selected.react-datepicker__day--selected {
   background: var(--color-brand-primary);
+  border-radius: 8px;
   color: var(--color-text-inverse);
 }
 

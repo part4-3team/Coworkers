@@ -35,7 +35,9 @@ export default function useAnimatedVisibility({
     setIsRendered(true);
 
     animationFrameRef.current = window.requestAnimationFrame(() => {
-      setIsVisible(true);
+      animationFrameRef.current = window.requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
     });
   }, [clearTimers]);
 
