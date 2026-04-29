@@ -59,7 +59,7 @@ export default function SidebarNavItem({
           ? 'bg-brand-primary'
           : 'bg-text-disabled';
 
-  const iconSrc = typeof icon === 'string' ? icon : icon.src;
+  const iconSrc = icon;
 
   const linkElement = (
     <Link

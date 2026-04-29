@@ -3,10 +3,28 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   turbopack: {
     rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
+      '*.svg': [
+        {
+          condition: {
+            all: [{ not: 'foreign' }, { query: /[?&]url(?=&|$)/ }],
+          },
+          type: 'asset',
+        },
+        {
+          condition: {
+            all: [{ not: 'foreign' }, { not: { query: /[?&]url(?=&|$)/ } }],
+          },
+          loaders: [
+            {
+              loader: '@svgr/webpack',
+              options: {
+                dimensions: false,
+              },
+            },
+          ],
+          as: '*.js',
+        },
+      ],
     },
   },
   webpack(config) {
@@ -25,7 +43,14 @@ const nextConfig: NextConfig = {
         test: /\.svg$/i,
         issuer: fileLoaderRule.issuer,
         resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] },
-        use: ['@svgr/webpack'],
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              dimensions: false,
+            },
+          },
+        ],
       },
     );
 

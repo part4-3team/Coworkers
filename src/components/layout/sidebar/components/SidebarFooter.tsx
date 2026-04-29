@@ -31,8 +31,9 @@ export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
       {layoutAuthState.isAuthenticated ? (
         <ProfileMenuDropdown
           className="w-full"
-          menuClassName="bottom-full left-0 right-auto top-auto mb-2 mt-0"
           onNavigate={handleSidebarInteraction}
+          horizontalAlign="start"
+          verticalPosition="top"
           trigger={
             <div
               className={cn(

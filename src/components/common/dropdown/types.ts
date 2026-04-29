@@ -15,6 +15,8 @@ export type ListDropdownProps = {
   itemClassName?: string;
   menuClassName?: string;
   itemTextAlign?: ListDropdownItemTextAlign;
+  horizontalAlign?: 'start' | 'end';
+  verticalPosition?: 'top' | 'bottom';
 };
 
 export type SelectDropdownItem<T extends string> = {

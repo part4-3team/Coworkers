@@ -2,10 +2,10 @@
  * 사이드바에서 사용하는 메뉴 목데이터와 아이콘 매핑을 정의하는 파일입니다.
  */
 
-import IcClipboardLargeUrl from '@/assets/icons/ic_clipboard_large.svg';
-import IcCrownSmallUrl from '@/assets/icons/ic_crown_small.svg';
-import IcPinSmallUrl from '@/assets/icons/ic_pin_small.svg';
-import IcPlusLargeUrl from '@/assets/icons/ic_plus_large.svg';
+import IcClipboardLargeUrl from '@/assets/icons/ic_clipboard_large.svg?url';
+import IcCrownSmallUrl from '@/assets/icons/ic_crown_small.svg?url';
+import IcPinSmallUrl from '@/assets/icons/ic_pin_small.svg?url';
+import IcPlusLargeUrl from '@/assets/icons/ic_plus_large.svg?url';
 import type { SidebarTeam } from '@/components/layout/sidebar/types';
 import { ROUTES } from '@/constants/ROUTES';
 

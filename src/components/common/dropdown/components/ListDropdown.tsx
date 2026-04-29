@@ -20,6 +20,8 @@ export default function ListDropdown({
   itemClassName,
   menuClassName,
   itemTextAlign = 'center',
+  horizontalAlign = 'end',
+  verticalPosition = 'bottom',
 }: ListDropdownProps) {
   const triggerRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLUListElement>(null);
@@ -31,15 +33,35 @@ export default function ListDropdown({
   });
 
   useLayoutEffect(() => {
-    if (!isOpen || !triggerRef.current) return;
+    if (!isOpen || !triggerRef.current || !menuRef.current) return;
 
-    const rect = triggerRef.current.getBoundingClientRect();
+    const triggerRect = triggerRef.current.getBoundingClientRect();
+    const menuRect = menuRef.current.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const menuWidth = menuRect.width || 120;
+    const menuHeight = menuRect.height || 0;
+
+    const alignedLeft =
+      horizontalAlign === 'start'
+        ? triggerRect.left
+        : triggerRect.right - menuWidth;
+    const alignedTop =
+      verticalPosition === 'top'
+        ? triggerRect.top - menuHeight - 8
+        : triggerRect.bottom + 8;
 
     setMenuPosition({
-      top: rect.bottom + 8,
-      left: rect.right - 120,
+      top: Math.min(
+        Math.max(8, alignedTop),
+        Math.max(8, viewportHeight - menuHeight - 8),
+      ),
+      left: Math.min(
+        Math.max(8, alignedLeft),
+        Math.max(8, viewportWidth - menuWidth - 8),
+      ),
     });
-  }, [isOpen]);
+  }, [horizontalAlign, isOpen, verticalPosition]);
 
   return (
     <div

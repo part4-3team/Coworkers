@@ -20,6 +20,8 @@ type ProfileMenuDropdownProps = {
   className?: string;
   menuClassName?: string;
   onNavigate?: () => void;
+  horizontalAlign?: 'start' | 'end';
+  verticalPosition?: 'top' | 'bottom';
 };
 
 export default function ProfileMenuDropdown({
@@ -27,6 +29,8 @@ export default function ProfileMenuDropdown({
   className,
   menuClassName,
   onNavigate,
+  horizontalAlign,
+  verticalPosition,
 }: ProfileMenuDropdownProps) {
   const router = useRouter();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -56,6 +60,8 @@ export default function ProfileMenuDropdown({
         trigger={trigger}
         className={className}
         menuClassName={cn('w-36', menuClassName)}
+        horizontalAlign={horizontalAlign}
+        verticalPosition={verticalPosition}
         items={[
           {
             label: '마이 히스토리',
