@@ -33,7 +33,9 @@ export default function SelectDropdown<T extends string>({
         aria-expanded={isOpen}
         className="flex w-full items-center justify-between gap-2 rounded-lg border border-border-secondary bg-background-primary p-2 text-sm text-text-primary md:rounded-xl md:px-3.5 md:py-2.5"
       >
-        <span>{selectedLabel}</span>
+        <span className="min-w-0 flex-1 whitespace-nowrap text-left">
+          {selectedLabel}
+        </span>
         <span
           className={cn(
             'transition-transform duration-200',
@@ -71,8 +73,8 @@ export default function SelectDropdown<T extends string>({
                 role="option"
                 aria-selected={item.value === value}
                 className={cn(
-                  'w-full px-6 py-3 text-left text-sm text-text-primary hover:bg-background-secondary',
-                  item.value === value && 'font-medium text-point-purple',
+                  'w-full whitespace-nowrap px-2 py-3 text-left text-sm text-text-primary hover:bg-background-secondary md:px-3.5',
+                  item.value === value && 'font-medium text-brand-primary',
                 )}
                 onClick={() => {
                   onChange(item.value);

@@ -51,7 +51,7 @@ export default function TaskListSelectDropdown<T extends string>({
           buttonClassName,
         )}
       >
-        <span className="min-w-0 flex-1 truncate text-left">
+        <span className="min-w-0 flex-1 whitespace-nowrap text-left">
           {selectedLabel}
         </span>
         <span
@@ -80,7 +80,7 @@ export default function TaskListSelectDropdown<T extends string>({
         <ul
           role="listbox"
           className={cn(
-            'absolute top-full left-0 z-10 mt-2 flex w-full flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
+            'absolute left-0 top-full z-10 mt-2 flex w-full flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
             menuClassName,
           )}
         >
@@ -91,8 +91,8 @@ export default function TaskListSelectDropdown<T extends string>({
                 role="option"
                 aria-selected={item.value === value}
                 className={cn(
-                  'w-full px-6 py-3 text-left text-sm text-text-primary hover:bg-background-secondary',
-                  item.value === value && 'font-medium text-point-purple',
+                  'w-full whitespace-nowrap px-2 py-3 text-left text-sm text-text-primary hover:bg-background-secondary md:px-3.5',
+                  item.value === value && 'font-medium text-brand-primary',
                 )}
                 onClick={() => {
                   onChange(item.value);
