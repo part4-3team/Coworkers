@@ -22,9 +22,9 @@ export default function BoardDetailHeader({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="flex-1 truncate text-text-primary font-bold text-lg leading-5.25 md:text-xl md:leading-6">
+        <h2 className="flex-1 truncate text-text-primary font-bold text-lg leading-5.25 md:text-xl md:leading-6">
           {boardDetail.title}
-        </h1>
+        </h2>
         <ListDropdown
           trigger={
             <IcMoreVerticalLarge

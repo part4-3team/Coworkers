@@ -16,9 +16,9 @@ export default function JoinTeamPage() {
   return (
     <div className="flex h-full items-center justify-center px-4 py-24 md:px-14">
       <div className="w-full max-w-xl rounded-[20px] bg-background-primary px-6 py-11 md:p-11">
-        <h1 className="mb-8 text-xl font-bold text-text-primary">
+        <h2 className="mb-8 text-xl font-bold text-text-primary">
           팀 참여하기
-        </h1>
+        </h2>
 
         <h2 className="sr-only">팀 링크 입력</h2>
         <form onSubmit={handleSubmit} className="flex flex-col">

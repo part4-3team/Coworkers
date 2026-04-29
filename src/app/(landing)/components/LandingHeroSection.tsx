@@ -30,8 +30,12 @@ export default function LandingHeroSection() {
             <p className="text-sm font-medium text-interaction-inactive lg:text-xl">
               함께 만들어가는 To do list
             </p>
-            <Logo size="small" className="lg:hidden" />
-            <Logo size="large" className="hidden lg:block" />
+            <h1>
+              <Link href={ROUTES.HOME} aria-label="Coworkers 홈으로 이동">
+                <Logo size="small" className="lg:hidden" />
+                <Logo size="large" className="hidden lg:block" />
+              </Link>
+            </h1>
           </div>
           {/* 데스크탑 버튼 */}
           <Link

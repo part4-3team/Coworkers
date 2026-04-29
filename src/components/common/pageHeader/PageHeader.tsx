@@ -24,9 +24,9 @@ export default function PageHeader({
       )}
     >
       <div className="flex items-center gap-2 md:gap-2.5 2xl:w-full 2xl:justify-between 2xl:gap-0">
-        <h1 className="text-xl font-bold text-text-primary md:text-2xl">
+        <h2 className="text-xl font-bold text-text-primary md:text-2xl">
           {title}
-        </h1>
+        </h2>
 
         {hasSettingsButton && (
           <ListDropdown

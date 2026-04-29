@@ -31,12 +31,12 @@ export default function TaskListTeamPageDeleteModal({
           <IcAlertCircleLarge width={24} height={24} aria-hidden="true" />
         </div>
         <div className="flex w-full flex-col items-center gap-2">
-          <h1
+          <h2
             id="modal-team-page-delete-title"
             className="w-full text-center text-base font-medium leading-5 text-text-primary"
           >
             페이지를 삭제하시겠습니까?
-          </h1>
+          </h2>
           <p
             id="modal-team-page-delete-description"
             className="text-center text-sm font-medium leading-snug text-text-secondary"

@@ -10,6 +10,7 @@ import useLoginForm from '@/app/(service)/login/hooks/useLoginForm';
 import { IcKakaotalk, ImgLogoFullLarge } from '@/assets';
 import { PrimaryButton } from '@/components/common/button';
 import { AuthInput } from '@/components/common/form';
+import { ROUTES } from '@/constants/ROUTES';
 
 export default function LoginForm() {
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
@@ -28,21 +29,23 @@ export default function LoginForm() {
   return (
     <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-5.25 py-9.25 md:px-8 md:py-12.5">
       {/* 로고 */}
-      <div className="mb-8 flex justify-center md:mb-10">
-        <ImgLogoFullLarge
-          width={210}
-          height={35}
-          className="h-auto w-52"
-          style={{ height: 'auto' }}
-          role="img"
-          aria-label="Coworkers 로고"
-        />
-      </div>
+      <h1 className="mb-8 flex justify-center md:mb-10">
+        <Link href={ROUTES.HOME} aria-label="Coworkers 홈으로 이동">
+          <ImgLogoFullLarge
+            width={210}
+            height={35}
+            className="h-auto w-52"
+            style={{ height: 'auto' }}
+            role="img"
+            aria-label="Coworkers 로고"
+          />
+        </Link>
+      </h1>
 
       {/* 타이틀 */}
-      <h1 className="mb-6 text-center text-base font-semibold text-text-primary md:mb-8 md:text-lg">
+      <h2 className="mb-6 text-center text-base font-semibold text-text-primary md:mb-8 md:text-lg">
         {LOGIN_TEXT.title}
-      </h1>
+      </h2>
 
       {/* 폼 */}
       <form onSubmit={handleSubmit} className="flex flex-col gap-5 md:px-6">

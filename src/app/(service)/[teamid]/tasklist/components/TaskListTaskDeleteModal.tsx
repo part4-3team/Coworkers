@@ -33,13 +33,13 @@ export default function TaskListTaskDeleteModal({
           <IcAlertCircleLarge width={24} height={24} aria-hidden="true" />
         </div>
         <div className="flex w-full flex-col items-center gap-2">
-          <h1
+          <h2
             id="modal-danger-title"
             className="w-full text-center text-base font-medium leading-5 text-text-primary"
           >
             <span className="block">&apos;{taskTitle}&apos;</span>
             <span className="block">할 일을 정말 삭제하시겠어요?</span>
-          </h1>
+          </h2>
           <p
             id="modal-danger-description"
             className="text-center text-sm font-medium leading-snug text-text-secondary"

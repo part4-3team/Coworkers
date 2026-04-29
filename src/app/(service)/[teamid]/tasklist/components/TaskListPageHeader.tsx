@@ -48,7 +48,7 @@ export default function TaskListPageHeader({
         )}
         aria-label="팀"
       >
-        <h1
+        <h2
           className={cn(
             'min-w-0 flex-none truncate font-bold text-text-primary',
             'text-base leading-5',
@@ -58,7 +58,7 @@ export default function TaskListPageHeader({
           )}
         >
           {teamName}
-        </h1>
+        </h2>
         <TaskListTaskRowOptionsMenu
           className={cn(
             'inline-flex shrink-0 items-center justify-center',
