@@ -6,7 +6,7 @@
 
 import { usePathname } from 'next/navigation';
 
-import { getLayoutAuthState } from '@/components/layout/constants';
+import useLayoutAuthState from '@/components/layout/hooks/useLayoutAuthState';
 import SidebarNavItem from '@/components/layout/sidebar/components/SidebarNavItem';
 import {
   SIDEBAR_ICONS,
@@ -24,7 +24,7 @@ export default function SidebarNav({
 }: SidebarNavProps) {
   const { handleSidebarInteraction } = useSidebar();
   const pathname = usePathname();
-  const layoutAuthState = getLayoutAuthState(pathname);
+  const layoutAuthState = useLayoutAuthState(pathname);
   const isBoardActive =
     pathname === SIDEBAR_LINKS.boards.href ||
     pathname.startsWith(`${SIDEBAR_LINKS.boards.href}/`);

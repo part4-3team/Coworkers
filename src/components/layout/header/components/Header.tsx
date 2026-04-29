@@ -10,14 +10,14 @@ import { usePathname } from 'next/navigation';
 
 import { icGnbMenu, icUserLarge, imgLogoSymbolLarge } from '@/assets';
 import ProfileMenuDropdown from '@/components/layout/components/ProfileMenuDropdown';
-import { getLayoutAuthState } from '@/components/layout/constants';
 import MobileSidebarDrawer from '@/components/layout/header/components/MobileSidebarDrawer';
 import useMobileSidebar from '@/components/layout/header/hooks/useMobileSidebar';
+import useLayoutAuthState from '@/components/layout/hooks/useLayoutAuthState';
 import { ROUTES } from '@/constants/ROUTES';
 
 export default function Header() {
   const pathname = usePathname();
-  const layoutAuthState = getLayoutAuthState(pathname);
+  const layoutAuthState = useLayoutAuthState(pathname);
   const { handleClose, handleToggle, isRendered, isVisible, menuButtonRef } =
     useMobileSidebar();
 

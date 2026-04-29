@@ -11,6 +11,7 @@ import { ERROR_MESSAGES } from '@/constants/ERROR_MESSAGES';
 import { ROUTES } from '@/constants/ROUTES';
 import { useSignInMutation } from '@/hooks/useAuth';
 import { loginFormSchema, type LoginFormValues } from '@/types/auth';
+import { extractAuthSession, saveAuthSession } from '@/utils/authSession';
 
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
 
@@ -21,7 +22,16 @@ export default function useLoginForm() {
     onError: () => {
       setServerError(ERROR_MESSAGES.LOGIN_FAILED);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const session = extractAuthSession(data);
+
+      if (!session) {
+        setServerError('로그인 응답을 확인할 수 없습니다.');
+        return;
+      }
+
+      saveAuthSession(session);
+
       if (!TEAM_ID) {
         router.push(ROUTES.HOME);
         return;
