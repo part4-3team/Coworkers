@@ -11,7 +11,9 @@ type UseDropdownReturn = {
   containerRef: React.RefObject<HTMLDivElement | null>;
 };
 
-export function useDropdown(): UseDropdownReturn {
+export function useDropdown(
+  ignoreRefs: React.RefObject<HTMLElement | null>[] = [],
+): UseDropdownReturn {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -20,10 +22,14 @@ export function useDropdown(): UseDropdownReturn {
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
+      const target = event.target as Node;
+
+      const isInsideContainer = containerRef.current?.contains(target);
+      const isInsideIgnoredElement = ignoreRefs.some((ref) =>
+        ref.current?.contains(target),
+      );
+
+      if (!isInsideContainer && !isInsideIgnoredElement) {
         close();
       }
     };
@@ -35,7 +41,7 @@ export function useDropdown(): UseDropdownReturn {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [isOpen, close]);
+  }, [isOpen, close, ignoreRefs]);
 
   return { isOpen, toggle, close, containerRef };
 }
