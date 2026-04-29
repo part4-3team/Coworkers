@@ -19,7 +19,11 @@ export const LAYOUT_AUTH_STATE = {
 } as const;
 
 export function isGuestLayoutPath(pathname: string | null) {
-  return pathname === ROUTES.LOGIN;
+  return (
+    pathname === ROUTES.LOGIN ||
+    pathname === ROUTES.SIGNUP ||
+    pathname?.startsWith('/oauth/signup/') === true
+  );
 }
 
 export function getLayoutAuthState(pathname: string | null) {
