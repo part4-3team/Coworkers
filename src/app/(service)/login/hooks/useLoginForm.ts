@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 import { ERROR_MESSAGES } from '@/constants/ERROR_MESSAGES';
 import { ROUTES } from '@/constants/ROUTES';
@@ -42,7 +42,8 @@ export default function useLoginForm() {
   });
 
   const {
-    formState: { errors, isValid },
+    control,
+    formState: { errors },
     handleSubmit,
     register,
   } = useForm<LoginFormValues>({
@@ -54,6 +55,14 @@ export default function useLoginForm() {
     reValidateMode: 'onChange',
     resolver: zodResolver(loginFormSchema),
   });
+  const [email, password] = useWatch({
+    control,
+    name: ['email', 'password'],
+  });
+  const isSubmittable = loginFormSchema.safeParse({
+    email,
+    password,
+  }).success;
 
   const handleSubmitForm = handleSubmit((values) => {
     setServerError('');
@@ -73,7 +82,7 @@ export default function useLoginForm() {
     emailError: errors.email?.message,
     emailField: register('email'),
     handleSubmit: handleSubmitForm,
-    isDisabled: !isValid || signInMutation.isPending,
+    isDisabled: !isSubmittable || signInMutation.isPending,
     passwordError: errors.password?.message,
     passwordField: register('password'),
     serverError,
