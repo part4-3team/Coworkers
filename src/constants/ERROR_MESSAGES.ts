@@ -10,7 +10,10 @@ export const ERROR_MESSAGES = {
   OAUTH_NAME_MAX_LENGTH: '이름은 최대 10자까지 가능합니다.',
   PASSWORD_REQUIRED: '비밀번호는 필수 입력입니다.',
   PASSWORD_MIN_LENGTH: '비밀번호는 최소 8자 이상입니다.',
-  PASSWORD_ALLOWED_CHARS: '비밀번호는 숫자, 영문, 특수문자로만 가능합니다.',
+  PASSWORD_ALLOWED_CHARS:
+    '비밀번호는 영문, 숫자, 특수문자(!@#$%^&*)만 사용할 수 있습니다.',
+  PASSWORD_REQUIRED_COMBINATION:
+    '비밀번호는 영문, 숫자, 특수문자(!@#$%^&*)를 각각 1자 이상 포함해야 합니다.',
   PASSWORD_CONFIRM_REQUIRED: '비밀번호 확인을 입력해주세요.',
   PASSWORD_MISMATCH: '비밀번호가 일치하지 않습니다.',
   LOGIN_FAILED: '이메일 혹은 비밀번호를 확인해주세요.',

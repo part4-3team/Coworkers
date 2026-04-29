@@ -22,10 +22,11 @@ export default function CreateTeamPage() {
   return (
     <div className="flex h-full items-center justify-center px-4 py-24 md:px-14">
       <div className="w-full max-w-xl rounded-[20px] bg-background-primary p-11">
-        <h2 className="mb-8 text-xl font-bold text-text-primary">
+        <h1 className="mb-8 text-xl font-bold text-text-primary">
           팀 생성하기
-        </h2>
+        </h1>
 
+        <h2 className="sr-only">팀 정보 입력</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <AddUserImg onChangeFile={handleChangeFile} />
 

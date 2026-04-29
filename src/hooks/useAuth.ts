@@ -17,6 +17,7 @@ import {
   createMutationOptions,
   type MutationOptionsOverrides,
 } from '@/api/queryOptions/factory';
+import type { LoginFormValues, SignUpFormValues } from '@/types/auth';
 
 type SignUpData = Awaited<ReturnType<typeof signUp>>;
 type SignInData = Awaited<ReturnType<typeof signIn>>;
@@ -24,21 +25,14 @@ type RefreshAccessTokenData = Awaited<ReturnType<typeof refreshAccessToken>>;
 type SignInWithOauthData = Awaited<ReturnType<typeof signInWithOauth>>;
 
 type SignUpVariables = {
-  body: {
-    email: string;
+  body: SignUpFormValues & {
     image?: string;
-    nickname: string;
-    password: string;
-    passwordConfirmation: string;
   };
   teamId: string;
 };
 
 type SignInVariables = {
-  body: {
-    email: string;
-    password: string;
-  };
+  body: LoginFormValues;
   teamId: string;
 };
 
