@@ -11,7 +11,7 @@ export default function MemberCard({
 }: MemberCardProps) {
   return (
     <div className="flex gap-3 items-center cursor-default">
-      <div className="overflow-hidden w-8 h-8 rounded-lg bg-background-tertiary">
+      <div className="overflow-hidden w-10 h-10 rounded-xl bg-background-tertiary">
         <Image
           src={userImage || icUserXlarge}
           width={userImage ? 32 : 24}
@@ -21,10 +21,10 @@ export default function MemberCard({
         />
       </div>
       <div className="flex-1">
-        <p className="font-semibold text-text-primary text-sm text-left">
+        <p className="font-semibold text-text-primary text-base text-left">
           {name}
         </p>
-        <p className="font-normal text-text-secondary text-xs text-left">
+        <p className="font-normal text-text-secondary text-sm text-left">
           {email}
         </p>
       </div>

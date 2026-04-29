@@ -54,7 +54,7 @@ export default function EditTeamPage() {
         >
           수정하기
         </button>
-        <p className="text-xs text-text-default font-normal text-center">
+        <p className="text-sm text-text-default font-normal text-center">
           팀 이름은 회사명이나 모임 이름 등으로 설정하면 좋아요.
         </p>
       </div>

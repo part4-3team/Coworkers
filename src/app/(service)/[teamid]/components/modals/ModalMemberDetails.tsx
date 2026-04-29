@@ -54,10 +54,10 @@ export function ModalMemberDetail({
             className="w-full h-full object-cover"
           />
         </div>
-        <p className="text-sm text-text-primary font-semibold mb-1">
+        <p className="text-base text-text-primary font-semibold mb-1">
           {member?.userName}
         </p>
-        <p className="text-xs text-text-secondary font-normal">
+        <p className="text-sm text-text-secondary font-normal">
           {member?.userEmail}
         </p>
       </div>
