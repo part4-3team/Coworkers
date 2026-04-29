@@ -11,7 +11,7 @@ export default function MemberCard({
 }: MemberCardProps) {
   return (
     <div className="flex gap-3 items-center cursor-default">
-      <div className="overflow-hidden w-9 h-9 rounded-xl bg-background-tertiary">
+      <div className="overflow-hidden w-9 h-9 rounded-xl bg-background-tertiary flex items-center justify-center">
         {userImage ? (
           <Image
             src={userImage}
