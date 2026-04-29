@@ -25,7 +25,7 @@ export default function SignupForm() {
   } = useSignupForm();
 
   return (
-    <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-6 py-8 shadow-md md:px-8 md:py-10">
+    <section className="mx-auto w-full max-w-lg rounded-[20px] bg-background-inverse px-5.25 py-9.25 md:px-8 md:py-12.5">
       <div className="mb-8 flex justify-center md:mb-10">
         <Image
           src={imgLogoFullLarge}
@@ -106,16 +106,16 @@ export default function SignupForm() {
         <div className="h-px flex-1 bg-background-tertiary" />
       </div>
 
-      <div className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6">
+      <div className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6 ">
         <span className="text-sm text-text-secondary">
           {SIGNUP_TEXT.kakaoSignUp}
         </span>
         <Image
           src={icKakaotalk}
           alt="카카오 아이콘"
-          width={42}
-          height={42}
-          className="h-11 w-11"
+          width={44}
+          height={44}
+          className="h-11 w-11 cursor-pointer"
         />
       </div>
     </section>

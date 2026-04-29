@@ -2,69 +2,70 @@
 
 import { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
+import { ERROR_MESSAGES } from '@/constants/ERROR_MESSAGES';
+import { ROUTES } from '@/constants/ROUTES';
+import { useSignInMutation } from '@/hooks/useAuth';
+import { loginFormSchema, type LoginFormValues } from '@/types/auth';
+
+const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
+
 export default function useLoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const [serverError, setServerError] = useState('');
+  const signInMutation = useSignInMutation({
+    onError: () => {
+      setServerError(ERROR_MESSAGES.LOGIN_FAILED);
+    },
+    onSuccess: () => {
+      if (!TEAM_ID) {
+        router.push(ROUTES.HOME);
+        return;
+      }
 
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+      router.push(ROUTES.TEAM(TEAM_ID));
+    },
+  });
 
-  // 이메일 변경
-  const handleChangeEmail = (value: string) => {
-    setEmail(value);
+  const {
+    formState: { errors, isValid },
+    handleSubmit,
+    register,
+  } = useForm<LoginFormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+    resolver: zodResolver(loginFormSchema),
+  });
 
-    // 입력 중 실시간 검증
-    if (!value) {
-      setEmailError('');
-    } else if (!value.includes('@')) {
-      setEmailError('이메일 형식이 아닙니다');
-    } else {
-      setEmailError('');
+  const handleSubmitForm = handleSubmit((values) => {
+    setServerError('');
+
+    if (!TEAM_ID) {
+      setServerError('팀 정보가 설정되지 않았습니다.');
+      return;
     }
-  };
 
-  // 비밀번호 변경
-  const handleChangePassword = (value: string) => {
-    setPassword(value);
-
-    if (!value) {
-      setPasswordError('');
-    } else if (value.length < 8) {
-      setPasswordError('비밀번호는 8자 이상 입력해주세요');
-    } else {
-      setPasswordError('');
-    }
-  };
-
-  // blur 시 한 번 더 검증 (선택)
-  const handleBlurEmail = () => {
-    if (email && !email.includes('@')) {
-      setEmailError('이메일 형식이 아닙니다');
-    }
-  };
-
-  const handleBlurPassword = () => {
-    if (password && password.length < 8) {
-      setPasswordError('비밀번호는 8자 이상 입력해주세요');
-    }
-  };
-
-  // 전체 유효성
-  const isValid =
-    email.includes('@') &&
-    password.length >= 8 &&
-    !emailError &&
-    !passwordError;
+    signInMutation.mutate({
+      body: values,
+      teamId: TEAM_ID,
+    });
+  });
 
   return {
-    email,
-    password,
-    emailError,
-    passwordError,
-    handleChangeEmail,
-    handleChangePassword,
-    handleBlurEmail,
-    handleBlurPassword,
-    isValid,
+    emailError: errors.email?.message,
+    emailField: register('email'),
+    handleSubmit: handleSubmitForm,
+    isDisabled: !isValid || signInMutation.isPending,
+    passwordError: errors.password?.message,
+    passwordField: register('password'),
+    serverError,
   };
 }

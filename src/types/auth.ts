@@ -1,37 +1,57 @@
 import { z } from 'zod';
 
-export const SignupSchema = z
+import { ERROR_MESSAGES } from '@/constants/ERROR_MESSAGES';
+import { AUTH_FORM_VALIDATION_RULES } from '@/constants/VALIDATION';
+
+const passwordSchema = z
+  .string()
+  .min(1, ERROR_MESSAGES.PASSWORD_REQUIRED)
+  .min(
+    AUTH_FORM_VALIDATION_RULES.USER_PASSWORD_MIN_LENGTH,
+    ERROR_MESSAGES.PASSWORD_MIN_LENGTH,
+  )
+  .regex(
+    AUTH_FORM_VALIDATION_RULES.USER_PASSWORD_ALLOWED_CHARACTERS_REGEX,
+    ERROR_MESSAGES.PASSWORD_ALLOWED_CHARS,
+  )
+  .regex(
+    AUTH_FORM_VALIDATION_RULES.USER_PASSWORD_REQUIRED_COMBINATION_REGEX,
+    ERROR_MESSAGES.PASSWORD_REQUIRED_COMBINATION,
+  );
+
+export const signUpFormSchema = z
   .object({
     email: z
       .string()
-      .min(1, '이메일은 필수 입력입니다.')
-      .pipe(z.email({ error: '이메일 형식으로 작성해 주세요.' })),
-    name: z
+      .trim()
+      .min(1, ERROR_MESSAGES.EMAIL_REQUIRED)
+      .pipe(z.email(ERROR_MESSAGES.EMAIL_INVALID)),
+    nickname: z
       .string()
-      .min(1, '이름은 필수 입력입니다.')
-      .max(20, '이름은 최대 20자까지 가능합니다.'),
-    password: z
-      .string()
-      .min(1, '비밀번호는 필수 입력입니다.')
-      .min(8, '비밀번호는 최소 8자 이상입니다.')
-      .regex(
-        /^[a-zA-Z0-9!@#$%^&*]+$/,
-        '비밀번호는 숫자, 영문, 특수문자로만 가능합니다.',
+      .trim()
+      .min(1, ERROR_MESSAGES.NAME_REQUIRED)
+      .max(
+        AUTH_FORM_VALIDATION_RULES.USER_NAME_MAX_LENGTH,
+        ERROR_MESSAGES.NAME_MAX_LENGTH,
       ),
-    passwordConfirm: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
+    password: passwordSchema,
+    passwordConfirmation: z
+      .string()
+      .min(1, ERROR_MESSAGES.PASSWORD_CONFIRM_REQUIRED),
   })
-  .refine((data) => data.password === data.passwordConfirm, {
-    message: '비밀번호가 일치하지 않습니다.',
-    path: ['passwordConfirm'],
+  .refine((values) => values.password === values.passwordConfirmation, {
+    message: ERROR_MESSAGES.PASSWORD_MISMATCH,
+    path: ['passwordConfirmation'],
   });
 
-export const LoginSchema = z.object({
+export const loginFormSchema = z.object({
   email: z
     .string()
-    .min(1, '이메일은 필수 입력입니다.')
-    .pipe(z.email({ error: '이메일 형식으로 작성해 주세요.' })),
-  password: z.string().min(1, '비밀번호는 필수 입력입니다.'),
+    .trim()
+    .min(1, ERROR_MESSAGES.EMAIL_REQUIRED)
+    .pipe(z.email(ERROR_MESSAGES.EMAIL_INVALID)),
+  password: z.string().min(1, ERROR_MESSAGES.PASSWORD_REQUIRED),
 });
 
-export type SignupFormType = z.infer<typeof SignupSchema>;
-export type LoginFormType = z.infer<typeof LoginSchema>;
+export type SignUpFormValues = z.infer<typeof signUpFormSchema>;
+export type LoginFormValues = z.infer<typeof loginFormSchema>;

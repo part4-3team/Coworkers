@@ -32,7 +32,7 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
           <TodoCheckUncheck label={task.title} checked />
-          <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base">
+          <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default">
             <Image
               src={icComment}
               alt=""
@@ -44,7 +44,7 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
           </span>
         </div>
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-normal text-text-default md:mt-2.5 md:text-base 2xl:mt-2">
+        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-normal text-text-default md:mt-2.5 2xl:mt-2">
           <span className="flex items-center gap-2">
             <Image src={icCalendarSmall} alt="" width={16} height={16} />
             {task.dueDate}

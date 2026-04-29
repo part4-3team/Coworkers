@@ -40,6 +40,7 @@ export default function useUnsavedChangesToastGuard({
 
       isUnsavedToastVisibleRef.current = true;
       showToast('저장하지 않은 변경사항이 있어요!', 'error', {
+        hideCloseButton: true,
         label: '변경사항 취소',
         onClick: onDiscardChanges,
         textClassName: 'text-status-danger',

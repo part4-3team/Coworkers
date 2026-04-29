@@ -7,6 +7,8 @@ export default function NoGroup() {
   return (
     <div className="flex flex-col gap-12 justify-center items-center h-full md:gap-20 ">
       <div className="flex flex-col gap-6 justify-center md:gap-8">
+        <h1 className="sr-only">소속된 팀이 없습니다</h1>
+        <h2 className="sr-only">팀 생성 또는 팀 참여 안내</h2>
         <Image
           src={imgNoTeam}
           width="404"

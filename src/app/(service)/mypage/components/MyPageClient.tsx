@@ -19,7 +19,8 @@ export default function MyPage() {
   return (
     <div className="w-full h-full min-h-dvh flex justify-center items-center gap-4 flex-wrap px-4 py-6 md:px-16 md:py-10">
       <div className="bg-background-inverse px-5.5 pt-12 pb-16 rounded-[20px] flex flex-col gap-8 w-full md:px-11 md:pt-16  xl:max-w-235 xl:px-14">
-        <h2 className="text-text-primary text-[20px] font-bold">계정 설정</h2>
+        <h1 className="text-text-primary text-[20px] font-bold">계정 설정</h1>
+        <h2 className="sr-only">기본 계정 정보 수정</h2>
         <AccountForm isDirty={isDirty} onDirtyChange={setIsDirty} />
         <div className="mt-1">
           <div className="flex justify-end">

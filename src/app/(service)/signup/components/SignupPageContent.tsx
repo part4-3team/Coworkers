@@ -8,7 +8,7 @@ import SignupForm from '@/app/(service)/signup/components/SignupForm';
 
 export default function SignupPageContent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background-secondary px-5 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-background-secondary px-4 py-10">
       <SignupForm />
     </div>
   );
