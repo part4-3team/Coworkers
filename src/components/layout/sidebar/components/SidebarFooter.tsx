@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 
 import { icUserLarge } from '@/assets';
 import ProfileMenuDropdown from '@/components/layout/components/ProfileMenuDropdown';
-import { getLayoutAuthState } from '@/components/layout/constants';
+import useLayoutAuthState from '@/components/layout/hooks/useLayoutAuthState';
 import useSidebar from '@/components/layout/sidebar/hooks/useSidebar';
 import type { SidebarFooterProps } from '@/components/layout/sidebar/types';
 import { ROUTES } from '@/constants/ROUTES';
@@ -19,7 +19,7 @@ import { cn } from '@/utils/cn';
 export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
   const { handleSidebarInteraction } = useSidebar();
   const pathname = usePathname();
-  const layoutAuthState = getLayoutAuthState(pathname);
+  const layoutAuthState = useLayoutAuthState(pathname);
   const href = layoutAuthState.isAuthenticated ? ROUTES.MY_PAGE : ROUTES.LOGIN;
 
   return (

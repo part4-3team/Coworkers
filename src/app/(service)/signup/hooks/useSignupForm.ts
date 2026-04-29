@@ -2,112 +2,73 @@
 
 import { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { useToast } from '@/components/common/toast';
+import { ROUTES } from '@/constants/ROUTES';
+import { useSignUpMutation } from '@/hooks/useAuth';
+import { signUpFormSchema } from '@/types/auth';
+
+const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
+
 export default function useSignupForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const router = useRouter();
+  const { showToast } = useToast();
+  const [serverError, setServerError] = useState('');
+  const signUpMutation = useSignUpMutation({
+    onError: (error) => {
+      setServerError(error.message);
+    },
+    onSuccess: () => {
+      showToast('가입이 완료되었습니다.', 'success');
+      router.push(ROUTES.LOGIN);
+    },
+  });
+  const {
+    formState: { errors, isValid },
+    handleSubmit,
+    register,
+  } = useForm<z.infer<typeof signUpFormSchema>>({
+    defaultValues: {
+      email: '',
+      nickname: '',
+      password: '',
+      passwordConfirmation: '',
+    },
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+    resolver: zodResolver(signUpFormSchema),
+  });
 
-  const [nameError, setNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [passwordConfirmError, setPasswordConfirmError] = useState('');
+  const handleSubmitForm = handleSubmit((values) => {
+    setServerError('');
 
-  const handleChangeName = (value: string) => {
-    setName(value);
-    if (!value) {
-      setNameError('');
-    } else if (value.length < 2) {
-      setNameError('이름은 2자 이상 입력해주세요');
-    } else {
-      setNameError('');
+    if (!TEAM_ID) {
+      setServerError('팀 정보가 설정되지 않았습니다.');
+      return;
     }
-  };
 
-  const handleChangeEmail = (value: string) => {
-    setEmail(value);
-    if (!value) {
-      setEmailError('');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      setEmailError('이메일 형식이 아닙니다');
-    } else {
-      setEmailError('');
-    }
-  };
-
-  const handleChangePassword = (value: string) => {
-    setPassword(value);
-    if (!value) {
-      setPasswordError('');
-    } else if (value.length < 8) {
-      setPasswordError('비밀번호는 8자 이상 입력해주세요');
-    } else {
-      setPasswordError('');
-    }
-  };
-
-  const handleChangePasswordConfirm = (value: string) => {
-    setPasswordConfirm(value);
-    if (!value) {
-      setPasswordConfirmError('');
-    } else if (value !== password) {
-      setPasswordConfirmError('비밀번호가 일치하지 않습니다');
-    } else {
-      setPasswordConfirmError('');
-    }
-  };
-
-  const handleBlurName = () => {
-    if (name && name.length < 2) {
-      setNameError('이름은 2자 이상 입력해주세요');
-    }
-  };
-
-  const handleBlurEmail = () => {
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError('이메일 형식이 아닙니다');
-    }
-  };
-
-  const handleBlurPassword = () => {
-    if (password && password.length < 8) {
-      setPasswordError('비밀번호는 8자 이상 입력해주세요');
-    }
-  };
-
-  const handleBlurPasswordConfirm = () => {
-    if (passwordConfirm && passwordConfirm !== password) {
-      setPasswordConfirmError('비밀번호가 일치하지 않습니다');
-    }
-  };
-
-  const isValid =
-    name.length >= 2 &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
-    password.length >= 8 &&
-    passwordConfirm === password &&
-    !nameError &&
-    !emailError &&
-    !passwordError &&
-    !passwordConfirmError;
+    signUpMutation.mutate({
+      body: values,
+      teamId: TEAM_ID,
+    });
+  });
 
   return {
-    name,
-    email,
-    password,
-    passwordConfirm,
-    nameError,
-    emailError,
-    passwordError,
-    passwordConfirmError,
-    handleChangeName,
-    handleChangeEmail,
-    handleChangePassword,
-    handleChangePasswordConfirm,
-    handleBlurName,
-    handleBlurEmail,
-    handleBlurPassword,
-    handleBlurPasswordConfirm,
-    isValid,
+    emailError: errors.email?.message,
+    emailField: register('email'),
+    handleSubmit: handleSubmitForm,
+    isDisabled: !isValid || signUpMutation.isPending,
+    nicknameError: errors.nickname?.message,
+    nicknameField: register('nickname'),
+    passwordConfirmationError: errors.passwordConfirmation?.message,
+    passwordConfirmationField: register('passwordConfirmation'),
+    passwordError: errors.password?.message,
+    passwordField: register('password'),
+    serverError,
   };
 }

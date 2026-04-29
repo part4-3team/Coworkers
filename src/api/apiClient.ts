@@ -1,3 +1,5 @@
+import { getStoredAccessToken } from '@/utils/authSession';
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
 
@@ -53,6 +55,7 @@ export async function apiClient<T>(
   options: FetchOptions = {},
 ): Promise<T> {
   const { token, ...rest } = options;
+  const accessToken = token ?? getStoredAccessToken();
   const headers = new Headers(rest.headers);
   const isFormData =
     typeof FormData !== 'undefined' && rest.body instanceof FormData;
@@ -61,8 +64,8 @@ export async function apiClient<T>(
     headers.set('Content-Type', 'application/json');
   }
 
-  if (token) {
-    headers.set('Authorization', `Bearer ${token}`);
+  if (accessToken) {
+    headers.set('Authorization', `Bearer ${accessToken}`);
   }
 
   const res = await fetch(buildApiUrl(endpoint), {

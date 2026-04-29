@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { ListDropdown } from '@/components/common/dropdown';
 import Modal from '@/components/common/modal';
 import { ROUTES } from '@/constants/ROUTES';
+import { clearAuthSession } from '@/utils/authSession';
 import { cn } from '@/utils/cn';
 
 type ProfileMenuDropdownProps = {
@@ -45,6 +46,7 @@ export default function ProfileMenuDropdown({
 
   const handleConfirmLogout = () => {
     handleCloseLogoutModal();
+    clearAuthSession();
     handleMove(ROUTES.LOGIN);
   };
 

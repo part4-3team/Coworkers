@@ -5,19 +5,13 @@
 import { apiClient, teamEndpoint } from '@/api/apiClient';
 import { API_PATH_SEGMENTS, HTTP_METHODS } from '@/api/constants';
 import type { QueryKeyId } from '@/api/queryKeys';
+import type { LoginFormValues, SignUpFormValues } from '@/types/auth';
 
-type SignUpBody = {
-  email: string;
+type SignUpBody = SignUpFormValues & {
   image?: string;
-  nickname: string;
-  password: string;
-  passwordConfirmation: string;
 };
 
-type SignInBody = {
-  email: string;
-  password: string;
-};
+type SignInBody = LoginFormValues;
 
 type RefreshTokenBody = {
   refreshToken: string;

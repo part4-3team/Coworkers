@@ -6,5 +6,7 @@ export const AUTH_FORM_VALIDATION_RULES = {
   OAUTH_SIGN_UP_NAME_MAX_LENGTH: 10,
   USER_NAME_MAX_LENGTH: 20,
   USER_PASSWORD_ALLOWED_CHARACTERS_REGEX: /^[a-zA-Z0-9!@#$%^&*]+$/,
+  USER_PASSWORD_REQUIRED_COMBINATION_REGEX:
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/,
   USER_PASSWORD_MIN_LENGTH: 8,
 } as const;
