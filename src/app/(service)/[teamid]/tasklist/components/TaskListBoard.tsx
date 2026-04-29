@@ -118,7 +118,6 @@ export default function TaskListBoard({
 
       {taskPendingDelete && (
         <TaskListTaskDeleteModal
-          taskTitle={taskPendingDelete.title}
           onClose={handleCloseDeleteModal}
           onConfirm={handleConfirmDelete}
         />

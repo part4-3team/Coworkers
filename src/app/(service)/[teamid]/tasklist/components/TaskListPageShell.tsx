@@ -13,6 +13,7 @@ import TaskListCreateColumnModal from '@/app/(service)/[teamid]/tasklist/compone
 import TaskListCreateTaskModal from '@/app/(service)/[teamid]/tasklist/components/TaskListCreateTaskModal';
 import TaskListFAB from '@/app/(service)/[teamid]/tasklist/components/TaskListFAB';
 import TaskListPageHeader from '@/app/(service)/[teamid]/tasklist/components/TaskListPageHeader';
+import TaskListRenameColumnModal from '@/app/(service)/[teamid]/tasklist/components/TaskListRenameColumnModal';
 import TaskListSidebar from '@/app/(service)/[teamid]/tasklist/components/TaskListSidebar';
 import { TASK_LIST_COLUMN_MOCK } from '@/app/(service)/[teamid]/tasklist/constants';
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
@@ -32,6 +33,8 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
   );
   const [columnPendingDelete, setColumnPendingDelete] =
     useState<TaskListColumnItem | null>(null);
+  const [columnPendingRename, setColumnPendingRename] =
+    useState<TaskListColumnItem | null>(null);
   const [isCreateColumnOpen, setIsCreateColumnOpen] = useState(false);
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
 
@@ -42,6 +45,10 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
 
   const handleRequestDeleteColumn = (item: TaskListColumnItem) => {
     setColumnPendingDelete(item);
+  };
+
+  const handleRequestRenameColumn = (item: TaskListColumnItem) => {
+    setColumnPendingRename(item);
   };
 
   const handleCloseColumnDeleteModal = () => {
@@ -68,6 +75,32 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
     ]);
     setActiveId(id);
     setIsCreateColumnOpen(false);
+    showToast('할일 목록이 생성되었습니다.', 'success');
+  };
+
+  const handleCreateTask = () => {
+    setIsCreateTaskOpen(false);
+    showToast('할일이 생성되었습니다.', 'success');
+  };
+
+  const handleCloseRenameColumnModal = () => {
+    setColumnPendingRename(null);
+  };
+
+  const handleRenameColumn = (name: string) => {
+    if (!columnPendingRename) {
+      return;
+    }
+
+    const targetId = columnPendingRename.id;
+
+    setColumns((prev) =>
+      prev.map((column) =>
+        column.id === targetId ? { ...column, title: name } : column,
+      ),
+    );
+    setColumnPendingRename(null);
+    showToast('변경되었습니다.', 'success');
   };
 
   return (
@@ -85,6 +118,7 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
             columns={columns}
             activeId={activeId}
             onSelectColumn={setActiveId}
+            onRequestRenameColumn={handleRequestRenameColumn}
             onRequestDeleteColumn={handleRequestDeleteColumn}
             onAddListClick={() => setIsCreateColumnOpen(true)}
           />
@@ -102,13 +136,24 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
       )}
 
       {isCreateTaskOpen && (
-        <TaskListCreateTaskModal onClose={() => setIsCreateTaskOpen(false)} />
+        <TaskListCreateTaskModal
+          onClose={() => setIsCreateTaskOpen(false)}
+          onSubmit={handleCreateTask}
+        />
       )}
 
       {columnPendingDelete && (
         <TaskListColumnDeleteModal
           onClose={handleCloseColumnDeleteModal}
           onConfirm={handleConfirmDeleteColumn}
+        />
+      )}
+
+      {columnPendingRename && (
+        <TaskListRenameColumnModal
+          initialName={columnPendingRename.title}
+          onClose={handleCloseRenameColumnModal}
+          onSubmit={handleRenameColumn}
         />
       )}
     </>

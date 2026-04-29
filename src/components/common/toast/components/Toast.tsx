@@ -66,7 +66,7 @@ export default function Toast({ toast, onRemove }: ToastProps) {
             <IcCloseMedium
               width={20}
               height={20}
-              className="size-5"
+              className="size-5 [&_path]:stroke-text-inverse"
               aria-hidden="true"
             />
           </button>

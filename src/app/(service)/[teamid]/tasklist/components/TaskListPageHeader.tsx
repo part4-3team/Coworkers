@@ -43,7 +43,7 @@ export default function TaskListPageHeader({
           'flex min-w-0 items-center bg-transparent p-0',
           'h-5 w-full max-w-24.5 gap-1',
           'md:h-7 md:w-34 md:max-w-34 md:shrink-0',
-          'lg:h-16 lg:w-full lg:max-w-none lg:gap-0 lg:overflow-hidden lg:rounded-xl lg:border lg:border-background-tertiary lg:bg-background-primary lg:shadow-[0_15px_50px_-12px_rgba(0,0,0,0.05)]',
+          'lg:h-16 lg:w-full lg:max-w-none lg:gap-0 lg:overflow-hidden lg:rounded-xl lg:bg-background-inverse lg:shadow-[0_8px_20px_rgba(49,84,153,0.12)]',
           className,
         )}
         aria-label="팀"
@@ -54,7 +54,7 @@ export default function TaskListPageHeader({
             'text-base leading-5',
             'max-w-[calc(100%-1.5rem)]',
             'md:text-2xl md:leading-7 md:max-w-[calc(100%-1.75rem)]',
-            'lg:max-w-none lg:flex-1 lg:pl-7',
+            'lg:max-w-none lg:flex-1 lg:pl-6',
           )}
         >
           {teamName}
@@ -62,7 +62,7 @@ export default function TaskListPageHeader({
         <TaskListTaskRowOptionsMenu
           className={cn(
             'inline-flex shrink-0 items-center justify-center',
-            'lg:mr-7',
+            'lg:mr-6',
           )}
           items={[
             {

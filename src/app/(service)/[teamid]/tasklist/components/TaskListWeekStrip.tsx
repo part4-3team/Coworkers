@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useLayoutEffect, useMemo } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
 
 import useTaskListDragScroll from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListDragScroll';
 import { formatWeekdayLabel } from '@/app/(service)/[teamid]/tasklist/utils/boardDate';
@@ -19,6 +19,7 @@ function calendarDayKey(d: Date): string {
 function centerChildInHorizontalScrollParent(
   scrollParent: HTMLElement,
   child: HTMLElement,
+  behavior: ScrollBehavior = 'auto',
 ) {
   const parentRect = scrollParent.getBoundingClientRect();
   const childRect = child.getBoundingClientRect();
@@ -30,7 +31,8 @@ function centerChildInHorizontalScrollParent(
     scrollParent.scrollWidth - scrollParent.clientWidth,
   );
   const next = scrollParent.scrollLeft + delta;
-  scrollParent.scrollLeft = Math.max(0, Math.min(next, maxScroll));
+  const left = Math.max(0, Math.min(next, maxScroll));
+  scrollParent.scrollTo({ left, behavior });
 }
 
 type TaskListWeekStripProps = {
@@ -55,6 +57,7 @@ export default function TaskListWeekStrip({
   onSelectDate,
   className,
 }: TaskListWeekStripProps) {
+  const shouldAnimateCenterRef = useRef(false);
   const {
     containerRef,
     handleClickCapture,
@@ -83,25 +86,27 @@ export default function TaskListWeekStrip({
   }, [year, month]);
 
   useLayoutEffect(() => {
-    const applyCenter = () => {
-      const row = containerRef.current;
-      const selectedDay = row?.querySelector<HTMLElement>(
-        `[data-calendar-day-key="${selectedDayKey}"]`,
-      );
+    const row = containerRef.current;
+    const selectedDay = row?.querySelector<HTMLElement>(
+      `[data-calendar-day-key="${selectedDayKey}"]`,
+    );
 
-      if (!row || !selectedDay) {
-        return;
-      }
+    if (!row || !selectedDay) {
+      return;
+    }
 
-      centerChildInHorizontalScrollParent(row, selectedDay);
-    };
-
-    applyCenter();
-
-    const id = requestAnimationFrame(applyCenter);
-
-    return () => cancelAnimationFrame(id);
+    centerChildInHorizontalScrollParent(
+      row,
+      selectedDay,
+      shouldAnimateCenterRef.current ? 'smooth' : 'auto',
+    );
+    shouldAnimateCenterRef.current = false;
   }, [containerRef, selectedDayKey, stripDays.length]);
+
+  const handleSelectDay = (day: Date) => {
+    shouldAnimateCenterRef.current = true;
+    onSelectDate(day);
+  };
 
   return (
     <ul
@@ -142,7 +147,7 @@ export default function TaskListWeekStrip({
                     ? 'border-background-tertiary bg-background-primary text-text-primary hover:bg-background-secondary'
                     : 'border-background-tertiary bg-background-primary text-text-secondary opacity-80 hover:bg-background-secondary hover:opacity-100',
               )}
-              onClick={() => onSelectDate(day)}
+              onClick={() => handleSelectDay(day)}
             >
               <span className="text-xs font-medium opacity-90">{label}</span>
               <span className="text-base font-semibold tabular-nums sm:text-lg">

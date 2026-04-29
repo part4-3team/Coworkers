@@ -61,6 +61,7 @@ export default function TaskListSidebar({
   columns,
   activeId,
   onSelectColumn,
+  onRequestRenameColumn,
   onRequestDeleteColumn,
   onAddListClick,
 }: TaskListSidebarProps) {
@@ -117,6 +118,7 @@ export default function TaskListSidebar({
                 key={item.id}
                 item={item}
                 isActive={item.id === activeId}
+                onRequestRename={onRequestRenameColumn}
                 onSelect={() => onSelectColumn(item.id)}
                 onRequestDelete={onRequestDeleteColumn}
               />

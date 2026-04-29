@@ -46,24 +46,24 @@ export default function TaskListMonthNavigator({
 
   return (
     <div className="relative flex min-h-6 shrink-0 items-center justify-center sm:min-h-10">
-      <div className="flex items-center gap-1 sm:gap-2">
+      <div className="flex items-center gap-2 pr-8 sm:gap-4 sm:pr-10">
         <button
           type="button"
           aria-label="이전 달 보기"
-          className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
+          className="flex size-7 shrink-0 items-center justify-center rounded-lg"
           onClick={() => handleMoveMonth(-1)}
         >
           <IcChevronLeftCircle width={24} height={24} aria-hidden="true" />
         </button>
 
-        <p className="shrink-0 text-center text-sm font-bold leading-6 text-text-primary sm:text-base sm:leading-7 md:text-lg md:leading-7">
+        <p className="shrink-0 text-center text-lg leading-tight font-bold text-text-primary md:text-xl md:leading-normal">
           {formatTaskListTitleDate(selectedDate)}
         </p>
 
         <button
           type="button"
           aria-label="다음 달 보기"
-          className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
+          className="flex size-7 shrink-0 items-center justify-center rounded-lg"
           onClick={() => handleMoveMonth(1)}
         >
           <IcChevronRightCircle width={24} height={24} aria-hidden="true" />
@@ -79,10 +79,10 @@ export default function TaskListMonthNavigator({
           aria-label="날짜 선택"
           aria-haspopup="dialog"
           aria-expanded={isCalendarOpen}
-          className="flex size-6 shrink-0 items-center justify-center rounded-lg sm:size-7"
+          className="flex size-10 shrink-0 items-center justify-center rounded-lg"
           onClick={toggleCalendar}
         >
-          <IcCalendarCircleLarge width={24} height={24} aria-hidden="true" />
+          <IcCalendarCircleLarge width={32} height={32} aria-hidden="true" />
         </button>
       </div>
 

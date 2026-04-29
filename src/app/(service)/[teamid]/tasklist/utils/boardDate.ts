@@ -46,6 +46,10 @@ export function formatYearMonth(date: Date): string {
 }
 
 export function formatTaskListTitleDate(date: Date): string {
+  if (date.getDate() === 1) {
+    return `${date.getFullYear()}.${padMonth(date.getMonth() + 1)}`;
+  }
+
   return `${date.getFullYear()}.${padMonth(date.getMonth() + 1)}.${padDay(date.getDate())}`;
 }
 

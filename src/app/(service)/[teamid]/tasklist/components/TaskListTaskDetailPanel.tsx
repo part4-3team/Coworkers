@@ -4,6 +4,7 @@ import TaskListTaskDetailPanelContent from '@/app/(service)/[teamid]/tasklist/co
 import TaskListTaskDetailPanelFooterActions from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDetailPanelFooterActions';
 import useTaskListTaskDetailPanel from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListTaskDetailPanel';
 import type { TaskListTaskDetailPanelProps } from '@/app/(service)/[teamid]/tasklist/types';
+import useUnsavedChangesToastGuard from '@/components/common/rightPanel/hooks/useUnsavedChangesToastGuard';
 import useRightPanel from '@/components/layout/hooks/useRightPanel';
 
 export default function TaskListTaskDetailPanel({
@@ -29,6 +30,8 @@ export default function TaskListTaskDetailPanel({
     handleStartCommentEdit,
     handleStartTaskEdit,
     handleSubmitCommentEdit,
+    handleDiscardUnsavedChanges,
+    hasUnsavedChanges,
     isTaskEditing,
     setDraftCommentContent,
     setDraftDescription,
@@ -36,6 +39,11 @@ export default function TaskListTaskDetailPanel({
     title,
     editingCommentId,
   } = useTaskListTaskDetailPanel({ currentUserName, initialMode, task });
+
+  useUnsavedChangesToastGuard({
+    hasUnsavedChanges,
+    onDiscardChanges: handleDiscardUnsavedChanges,
+  });
 
   const handleRegisterTask = () => {
     const patch = commitTaskEdit();

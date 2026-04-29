@@ -97,6 +97,7 @@ export type TaskListSidebarProps = {
   columns: TaskListColumnItem[];
   activeId: string;
   onSelectColumn: (id: string) => void;
+  onRequestRenameColumn: (item: TaskListColumnItem) => void;
   onRequestDeleteColumn: (item: TaskListColumnItem) => void;
   onAddListClick: () => void;
 };

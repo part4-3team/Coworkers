@@ -14,6 +14,7 @@ import { cn } from '@/utils/cn';
 type TaskListNavItemProps = {
   item: TaskListColumnItem;
   isActive: boolean;
+  onRequestRename: (item: TaskListColumnItem) => void;
   onSelect: () => void;
   onRequestDelete: (item: TaskListColumnItem) => void;
 };
@@ -21,6 +22,7 @@ type TaskListNavItemProps = {
 export default function TaskListNavItem({
   item,
   isActive,
+  onRequestRename,
   onSelect,
   onRequestDelete,
 }: TaskListNavItemProps) {
@@ -90,7 +92,9 @@ export default function TaskListNavItem({
             items={[
               {
                 label: '이름 변경',
-                onClick: () => {},
+                onClick: () => {
+                  onRequestRename(item);
+                },
               },
               {
                 label: '삭제',

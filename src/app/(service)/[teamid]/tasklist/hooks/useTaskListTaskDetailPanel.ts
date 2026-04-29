@@ -122,20 +122,49 @@ export default function useTaskListTaskDetailPanel({
     [comments, currentUserName, editingCommentId],
   );
 
+  const editingComment = editingCommentId
+    ? (comments.find((comment) => comment.id === editingCommentId) ?? null)
+    : null;
+  const hasUnsavedTaskChanges =
+    isTaskEditing && (draftTitle !== title || draftDescription !== description);
+  const hasUnsavedCommentChanges =
+    editingComment !== null && draftCommentContent !== editingComment.content;
+  const hasUnsavedChanges = hasUnsavedTaskChanges || hasUnsavedCommentChanges;
+
+  const handleDiscardUnsavedChanges = useCallback(() => {
+    if (isTaskEditing) {
+      handleCancelTaskEdit();
+      return;
+    }
+
+    if (!editingCommentId) {
+      return;
+    }
+
+    handleCancelCommentEdit();
+  }, [
+    editingCommentId,
+    handleCancelCommentEdit,
+    handleCancelTaskEdit,
+    isTaskEditing,
+  ]);
+
   return {
     comments,
+    commitTaskEdit,
     description,
     draftCommentContent,
     draftDescription,
     draftTitle,
     editingCommentId,
+    handleDiscardUnsavedChanges,
     handleCancelCommentEdit,
     handleCancelTaskEdit,
     handleDeleteComment,
     handleStartCommentEdit,
     handleStartTaskEdit,
     handleSubmitCommentEdit,
-    commitTaskEdit,
+    hasUnsavedChanges,
     isTaskEditing,
     setDraftCommentContent,
     setDraftDescription,

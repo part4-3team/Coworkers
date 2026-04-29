@@ -1,6 +1,7 @@
 'use client';
 
 import TaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/components/TaskListCalendarPopover';
+import TaskListTimePopover from '@/app/(service)/[teamid]/tasklist/components/TaskListTimePopover';
 import {
   CREATE_TASK_MODAL_COLUMN_CLASS,
   DATE_TIME_TIME_COLUMN_CLASS,
@@ -73,6 +74,7 @@ export default function TaskListCreateTaskModalDateTimeSection({
             >
               <button
                 type="button"
+                id={`${formId}-time-value`}
                 aria-label="시작 시간 선택"
                 aria-expanded={isTimePopoverOpen}
                 aria-haspopup="dialog"
@@ -91,16 +93,10 @@ export default function TaskListCreateTaskModalDateTimeSection({
                   role="dialog"
                   aria-label="시간 선택"
                 >
-                  <label htmlFor={`${formId}-time-native`} className="sr-only">
-                    시간
-                  </label>
-                  <input
-                    id={`${formId}-time-native`}
-                    type="time"
-                    step={300}
-                    value={startTime}
-                    onChange={(e) => onStartTimeChange(e.target.value)}
-                    className="h-11 w-full rounded-lg border border-background-tertiary bg-background-primary px-3 text-base font-medium text-text-primary outline-none focus:border-brand-primary md:h-12"
+                  <TaskListTimePopover
+                    formId={formId}
+                    selectedTime={startTime}
+                    onSelectTime={onStartTimeChange}
                   />
                 </div>
               ) : null}

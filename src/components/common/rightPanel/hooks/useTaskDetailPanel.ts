@@ -5,12 +5,14 @@ import type { RightPanelComment } from '@/components/common/rightPanel/types';
 type UseTaskDetailPanelParams = {
   initialComments: readonly RightPanelComment[];
   initialDescription: string;
+  initialMode?: 'view' | 'edit';
   initialTitle: string;
 };
 
 export default function useTaskDetailPanel({
   initialComments,
   initialDescription,
+  initialMode = 'view',
   initialTitle,
 }: UseTaskDetailPanelParams) {
   const [title, setTitle] = useState(initialTitle);
@@ -22,7 +24,7 @@ export default function useTaskDetailPanel({
   const [draftDescription, setDraftDescription] = useState(initialDescription);
   const [draftCommentContent, setDraftCommentContent] = useState('');
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [isTaskEditing, setIsTaskEditing] = useState(false);
+  const [isTaskEditing, setIsTaskEditing] = useState(initialMode === 'edit');
 
   const handleStartTaskEdit = () => {
     setDraftTitle(title);

@@ -53,6 +53,7 @@ export type TaskDetailPanelContentProps = {
   comments: readonly RightPanelComment[];
   description: string;
   frequency: string;
+  initialMode?: 'view' | 'edit';
   startedAt: string;
   title: string;
 };

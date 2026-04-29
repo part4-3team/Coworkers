@@ -7,16 +7,6 @@ export const MODAL_HEADING_TYPO = cn(
   'm-0 block text-base font-medium text-text-primary',
 );
 
-/** 상단 제목 — 공통 모달 기본 타이틀 톤 */
-export const CREATE_TASK_MODAL_INTRO_TITLE_CLASS = cn(
-  'text-center text-xl font-bold text-text-primary',
-);
-
-/** 상단 안내 — 공통 모달 기본 설명 톤 */
-export const CREATE_TASK_MODAL_INTRO_DESCRIPTION_CLASS = cn(
-  'text-center text-sm text-text-secondary',
-);
-
 /** 피그마 필드 래퍼: 높이 48px, 좌우 16px, rounded-xl, focus-within 브랜드 보더 */
 export const CREATE_TASK_FIELD_SHELL_CLASS = cn(
   'flex h-12 items-center gap-2.5 rounded-xl border border-background-tertiary bg-background-primary px-4',
@@ -71,9 +61,20 @@ export const CREATE_TASK_MODAL_COLUMN_CLASS = 'w-full min-w-0 max-w-full';
 /** 시간 트리거 열 — 피그마 고정 폭 124px */
 export const DATE_TIME_TIME_COLUMN_CLASS = 'relative z-10 w-[124px] shrink-0';
 
-/** 시간 선택 오버레이 — 트리거와 동일 최소 폭, 최대 200px */
+/** 시간 선택 오버레이 — 달력과 톤을 맞춘 커스텀 선택 패널 */
 export const DATE_TIME_TIME_POPOVER_CLASS =
-  'absolute top-full right-0 z-30 mt-1 w-full min-w-[124px] max-w-[200px] rounded-xl border border-brand-primary bg-background-primary p-3 shadow-lg';
+  'absolute top-full right-0 z-30 mt-2 w-[240px] rounded-xl border border-brand-primary bg-background-primary p-4 shadow-lg';
+
+export const DATE_TIME_TIME_POPOVER_COLUMN_CLASS =
+  'flex max-h-45 flex-col gap-1 overflow-y-auto rounded-lg bg-background-secondary p-1';
+
+export const DATE_TIME_TIME_POPOVER_OPTION_CLASS = cn(
+  'flex h-9 items-center justify-center rounded-lg text-sm font-medium text-text-primary transition-colors',
+  'hover:bg-brand-secondary hover:text-brand-primary',
+);
+
+export const DATE_TIME_TIME_POPOVER_OPTION_ACTIVE_CLASS =
+  'bg-brand-primary text-text-inverse hover:bg-brand-primary hover:text-text-inverse';
 
 /** 반복 드롭다운 트리거 — '반복 안함' 한 줄 표시(110px → 124px) */
 export const REPEAT_TRIGGER_LAYOUT_CLASS =

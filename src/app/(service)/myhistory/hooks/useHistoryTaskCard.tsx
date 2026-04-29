@@ -27,6 +27,7 @@ export default function useHistoryTaskCard({ task }: UseHistoryTaskCardParams) {
           comments={MY_HISTORY_DETAIL_COMMENTS}
           description={MY_HISTORY_DETAIL_DESCRIPTION}
           frequency={task.frequency}
+          initialMode="edit"
           startedAt={MY_HISTORY_DETAIL_STARTED_AT}
           title={task.title}
         />

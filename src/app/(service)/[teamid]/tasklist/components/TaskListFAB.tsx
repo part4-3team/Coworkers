@@ -19,9 +19,9 @@ export default function TaskListFAB({ onClick, className }: TaskListFABProps) {
       onClick={onClick}
       aria-label="할 일 만들기"
       className={cn(
-        'fixed right-4 bottom-24 z-40 flex size-14 items-center justify-center rounded-full',
+        'fixed right-6 bottom-24 z-40 flex size-14 items-center justify-center rounded-full',
         'bg-brand-primary text-white shadow-lg transition-colors hover:bg-interaction-hover',
-        'md:right-8 md:bottom-28 md:size-16',
+        'md:right-10 md:bottom-28 md:size-16',
         className,
       )}
     >

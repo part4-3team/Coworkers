@@ -15,8 +15,6 @@ import {
   CREATE_TASK_MEMO_SHELL_CLASS,
   CREATE_TASK_MEMO_TEXTAREA_CLASS,
   CREATE_TASK_MODAL_COLUMN_CLASS,
-  CREATE_TASK_MODAL_INTRO_DESCRIPTION_CLASS,
-  CREATE_TASK_MODAL_INTRO_TITLE_CLASS,
   CREATE_TASK_TITLE_INPUT_INNER_CLASS,
   MODAL_HEADING_TYPO,
 } from '@/app/(service)/[teamid]/tasklist/createTaskModalConstants';
@@ -66,24 +64,14 @@ export default function TaskListCreateTaskModal({
   return (
     <Modal
       onClose={onClose}
+      title="할 일 만들기"
+      description={
+        '할 일은 실제로 행동 가능한 작업 중심으로\n작성해주시면 좋습니다.'
+      }
       primaryButtonText="만들기"
       onPrimaryButtonClick={handleCreate}
     >
       <div className="flex w-full min-w-0 flex-col gap-8 text-left">
-        <div
-          className={cn(
-            '-mt-1 flex flex-col gap-4',
-            CREATE_TASK_MODAL_COLUMN_CLASS,
-          )}
-        >
-          <p className={CREATE_TASK_MODAL_INTRO_TITLE_CLASS}>할 일 만들기</p>
-          <p className={CREATE_TASK_MODAL_INTRO_DESCRIPTION_CLASS}>
-            할 일은 실제로 행동 가능한 작업 중심으로
-            <br />
-            작성해주시면 좋습니다.
-          </p>
-        </div>
-
         <div
           className={cn('flex flex-col gap-4', CREATE_TASK_MODAL_COLUMN_CLASS)}
         >

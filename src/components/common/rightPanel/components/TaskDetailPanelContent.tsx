@@ -21,6 +21,7 @@ export default function TaskDetailPanelContent({
   comments,
   description: initialDescription,
   frequency,
+  initialMode,
   startedAt,
   title: initialTitle,
 }: TaskDetailPanelContentProps) {
@@ -49,6 +50,7 @@ export default function TaskDetailPanelContent({
   } = useTaskDetailPanel({
     initialComments: comments,
     initialDescription: initialDescription,
+    initialMode,
     initialTitle,
   });
 
