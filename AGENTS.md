@@ -28,7 +28,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - TanStack Query
 - Zod
 - React Hook Form
-- NextAuth.js
 - react-datepicker
 - react-circular-progressbar
 - @ramonak/react-progress-bar

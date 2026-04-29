@@ -5,13 +5,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useForm, useWatch } from 'react-hook-form';
 
 import { useToast } from '@/components/common/toast';
 import { ROUTES } from '@/constants/ROUTES';
 import { useSignUpMutation } from '@/hooks/useAuth';
-import { signUpFormSchema } from '@/types/auth';
+import { signUpFormSchema, type SignUpFormValues } from '@/types/auth';
 
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
 
@@ -29,10 +28,11 @@ export default function useSignupForm() {
     },
   });
   const {
-    formState: { errors, isValid },
+    control,
+    formState: { errors },
     handleSubmit,
     register,
-  } = useForm<z.infer<typeof signUpFormSchema>>({
+  } = useForm<SignUpFormValues>({
     defaultValues: {
       email: '',
       nickname: '',
@@ -43,6 +43,16 @@ export default function useSignupForm() {
     reValidateMode: 'onChange',
     resolver: zodResolver(signUpFormSchema),
   });
+  const [email, nickname, password, passwordConfirmation] = useWatch({
+    control,
+    name: ['email', 'nickname', 'password', 'passwordConfirmation'],
+  });
+  const isSubmittable = signUpFormSchema.safeParse({
+    email,
+    nickname,
+    password,
+    passwordConfirmation,
+  }).success;
 
   const handleSubmitForm = handleSubmit((values) => {
     setServerError('');
@@ -62,7 +72,7 @@ export default function useSignupForm() {
     emailError: errors.email?.message,
     emailField: register('email'),
     handleSubmit: handleSubmitForm,
-    isDisabled: !isValid || signUpMutation.isPending,
+    isDisabled: !isSubmittable || signUpMutation.isPending,
     nicknameError: errors.nickname?.message,
     nicknameField: register('nickname'),
     passwordConfirmationError: errors.passwordConfirmation?.message,

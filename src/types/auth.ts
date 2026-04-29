@@ -50,7 +50,13 @@ export const loginFormSchema = z.object({
     .trim()
     .min(1, ERROR_MESSAGES.EMAIL_REQUIRED)
     .pipe(z.email(ERROR_MESSAGES.EMAIL_INVALID)),
-  password: z.string().min(1, ERROR_MESSAGES.PASSWORD_REQUIRED),
+  password: z
+    .string()
+    .min(1, ERROR_MESSAGES.PASSWORD_REQUIRED)
+    .min(
+      AUTH_FORM_VALIDATION_RULES.USER_PASSWORD_MIN_LENGTH,
+      ERROR_MESSAGES.PASSWORD_MIN_LENGTH,
+    ),
 });
 
 export type SignUpFormValues = z.infer<typeof signUpFormSchema>;
