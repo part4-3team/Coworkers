@@ -23,12 +23,14 @@ export default function LandingTaskListSection() {
         />
 
         <div className="ml-auto w-11/12 lg:order-1 lg:ml-0 lg:min-w-0 lg:flex-1 lg:self-end">
-          <Image
-            src={LANDING_TASKLIST_SECTION.image}
-            alt={LANDING_TASKLIST_SECTION.imageAlt}
-            className="w-full min-w-175 rounded-tl-3xl object-contain lg:min-w-0 lg:rounded-t-3xl"
-            sizes="(min-width: 1280px) 1100px, (min-width: 1024px) 85vw, 90vw"
-          />
+          {LANDING_TASKLIST_SECTION.image && (
+            <Image
+              src={LANDING_TASKLIST_SECTION.image}
+              alt={LANDING_TASKLIST_SECTION.imageAlt}
+              className="w-full min-w-175 rounded-tl-3xl object-contain lg:min-w-0 lg:rounded-t-3xl"
+              sizes="(min-width: 1280px) 1100px, (min-width: 1024px) 85vw, 90vw"
+            />
+          )}
         </div>
       </div>
     </section>

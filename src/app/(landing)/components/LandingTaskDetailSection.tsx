@@ -21,12 +21,14 @@ export default function LandingTaskDetailSection() {
         />
 
         <div className="ml-auto w-11/12 lg:ml-0 lg:w-auto lg:min-w-0 lg:flex-1 lg:pb-20">
-          <Image
-            src={LANDING_TASK_DETAIL_SECTION.image}
-            alt={LANDING_TASK_DETAIL_SECTION.imageAlt}
-            className="w-full min-w-150 rounded-t-3xl object-cover lg:min-w-0"
-            sizes="(min-width: 1280px) 1300px, (min-width: 1024px) 95vw, 90vw"
-          />
+          {LANDING_TASK_DETAIL_SECTION.image && (
+            <Image
+              src={LANDING_TASK_DETAIL_SECTION.image}
+              alt={LANDING_TASK_DETAIL_SECTION.imageAlt}
+              className="w-full min-w-150 rounded-t-3xl object-cover lg:min-w-0"
+              sizes="(min-width: 1280px) 1300px, (min-width: 1024px) 95vw, 90vw"
+            />
+          )}
         </div>
       </div>
     </section>

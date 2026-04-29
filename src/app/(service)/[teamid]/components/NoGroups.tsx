@@ -9,13 +9,15 @@ export default function NoGroup() {
       <div className="flex flex-col gap-6 justify-center md:gap-8">
         <h1 className="sr-only">소속된 팀이 없습니다</h1>
         <h2 className="sr-only">팀 생성 또는 팀 참여 안내</h2>
-        <Image
-          src={imgNoTeam}
-          width="404"
-          height="264"
-          alt=""
-          className="w-46 md:w-80 xl:w-101"
-        />
+        {imgNoTeam && (
+          <Image
+            src={imgNoTeam}
+            width={404}
+            height={264}
+            alt=""
+            className="w-46 md:w-80 xl:w-101"
+          />
+        )}
         <p className="text-center font-medium text-sm text-text-default">
           아직 소속된 팀이 없습니다.
           <br />

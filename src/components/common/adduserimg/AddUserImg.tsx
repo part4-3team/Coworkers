@@ -62,8 +62,8 @@ export default function AddUserImg({ src, onChangeFile }: ImgAddButtonProps) {
             <Image
               src={imgSrc}
               alt="유저 프로필 이미지"
-              width="98"
-              height="98"
+              width={98}
+              height={98}
               className="object-cover h-full"
             />
           )}

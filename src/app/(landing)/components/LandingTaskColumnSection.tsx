@@ -24,15 +24,17 @@ export default function LandingTaskColumnSection() {
 
         <div className="ml-auto w-11/12 lg:ml-0 lg:w-full lg:px-6">
           <div className="grid min-w-120 grid-cols-3 items-start gap-4 md:gap-6 lg:min-w-0">
-            {LANDING_TASK_COLUMN_IMAGES.map(({ alt, image }) => (
-              <Image
-                key={alt}
-                src={image}
-                alt={alt}
-                className="mx-auto h-auto max-w-full rounded-lg object-contain"
-                sizes="(min-width: 1024px) 270px, 30vw"
-              />
-            ))}
+            {LANDING_TASK_COLUMN_IMAGES.filter(({ image }) => image).map(
+              ({ alt, image }) => (
+                <Image
+                  key={alt}
+                  src={image}
+                  alt={alt}
+                  className="mx-auto h-auto max-w-full rounded-lg object-contain"
+                  sizes="(min-width: 1024px) 270px, 30vw"
+                />
+              ),
+            )}
           </div>
         </div>
       </div>

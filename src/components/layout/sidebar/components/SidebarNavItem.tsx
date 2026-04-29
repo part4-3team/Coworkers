@@ -20,16 +20,19 @@ export default function SidebarNavItem({
   variant = 'team',
 }: SidebarNavItemProps) {
   const isMenuVariant = variant === 'team' || variant === 'board';
+
   const linkSizeClass = isMobileDrawer
     ? 'h-11 gap-4 rounded-lg px-5 text-sm hover:bg-background-secondary'
     : isExpanded
       ? 'h-12 gap-4 rounded-lg px-5 text-base hover:bg-background-secondary'
       : 'size-10 justify-center rounded-lg hover:bg-background-secondary';
+
   const addTeamSizeClass = isMobileDrawer
     ? 'mt-3 h-11 w-full gap-2 rounded-lg text-sm'
     : isExpanded
       ? 'mt-6 h-12 w-full gap-2 rounded-lg text-base'
       : 'mt-6 size-10 rounded-lg';
+
   const linkToneClass =
     variant === 'team'
       ? isActive
@@ -42,6 +45,7 @@ export default function SidebarNavItem({
         : variant === 'addTeam'
           ? 'justify-center border border-brand-primary text-brand-primary hover:bg-brand-secondary'
           : 'text-text-primary';
+
   const iconColorClass =
     variant === 'team'
       ? isActive
@@ -54,6 +58,7 @@ export default function SidebarNavItem({
         : variant === 'addTeam'
           ? 'bg-brand-primary'
           : 'bg-text-disabled';
+
   const iconSrc = typeof icon === 'string' ? icon : icon.src;
 
   const linkElement = (
@@ -69,8 +74,16 @@ export default function SidebarNavItem({
       onClick={onClick}
     >
       {isOriginalIconColor ? (
-        <Image src={icon} alt="" width={20} height={20} className="shrink-0" />
-      ) : (
+        iconSrc ? (
+          <Image
+            src={iconSrc}
+            alt=""
+            width={20}
+            height={20}
+            className="shrink-0"
+          />
+        ) : null
+      ) : iconSrc ? (
         <span
           aria-hidden="true"
           className={cn('block size-5 shrink-0', iconColorClass)}
@@ -79,7 +92,8 @@ export default function SidebarNavItem({
             mask: `url(${iconSrc}) center / contain no-repeat`,
           }}
         />
-      )}
+      ) : null}
+
       {isExpanded && <span className="whitespace-nowrap">{label}</span>}
     </Link>
   );
