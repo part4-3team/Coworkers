@@ -1,10 +1,6 @@
 import { useParams, useRouter } from 'next/navigation';
 
 import MemberChip from '@/app/(service)/[teamid]/components/MemberChip';
-import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/ConfirmModal';
-import { ModalMemberDetail } from '@/app/(service)/[teamid]/components/modals/ModalMemberDetails';
-import { ModalMembersInvite } from '@/app/(service)/[teamid]/components/modals/ModalMemberInvite';
-import { ModalMembers } from '@/app/(service)/[teamid]/components/modals/ModalMembers';
 import {
   MOCK_MEMBERS,
   SETTING_BUTTON,
@@ -13,12 +9,14 @@ import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { ListDropdown } from '@/components/common/dropdown';
 
 import TeamProgressBar from './TeamProgressBar';
+import { TeamProgressModals } from './TeamProgressModal';
+import { TeamProgressStats } from './TeamProgressState';
 
 export default function TeamProgress() {
   const router = useRouter();
   const params = useParams();
 
-  const { open, close, is, openMemberDetail, selectedMember } = useModalState();
+  const { open, close, is, selectedMember, openMemberDetail } = useModalState();
 
   // 현재 유저 상태가 나뉘어 있지 않아 임시로 구성함
   const masterItems = [
@@ -53,25 +51,8 @@ export default function TeamProgress() {
               25%
             </p>
           </div>
-          <div className="flex items-end">
-            <div className="px-4 flex flex-col gap-1 justify-center items-center border-r border-background-tertiary">
-              <span className="text-sm font-medium text-interaction-inactive md:text-sm">
-                오늘의 할 일
-              </span>
-              <p className="text-2xl text-text-default font-bold  md:text-[32px]">
-                20
-                {/* TODO: 데이터 가져오면 교체 예정*/}
-              </p>
-            </div>
-            <div className="pl-4 flex flex-col gap-1 justify-center items-center">
-              <span className="text-sm font-medium text-interaction-inactive md:text-sm">
-                완료 🙌
-              </span>
-              <p className="text-2xl text-brand-primary font-bold md:text-[32px]">
-                5{/* TODO: 데이터 가져오면 교체 예정*/}
-              </p>
-            </div>
-          </div>
+          <TeamProgressStats today={3} done={1} />
+          {/* Todo: 데이터 가져와 교체 예정 */}
         </div>
         <div className="flex gap-4">
           <div className="w-full h-5 md:h-7">
@@ -86,37 +67,13 @@ export default function TeamProgress() {
           </div>
         </div>
       </div>
-      {/* 각 레이어 불러오기 */}
-      {is('memberList') && (
-        <ModalMembers
-          onClose={close}
-          onMemberClick={(member) => {
-            close();
-            openMemberDetail(member);
-          }}
-        />
-      )}
-      {is('memberDetail') && (
-        <ModalMemberDetail onClose={close} member={selectedMember} />
-      )}
-      {is('memberInvite') && <ModalMembersInvite onClose={close} />}
-      {is('teamDelete') && (
-        <ConfirmModal
-          onClose={close}
-          title="해당 팀을 삭제하시겠습니까?"
-          description="팀 관련 모든 정보가 삭제됩니다."
-          confirmText="삭제"
-          toastMessage="삭제 되었습니다."
-        />
-      )}
-      {is('teamLeave') && (
-        <ConfirmModal
-          onClose={close}
-          title="해당 팀에서 나가시겠어요?"
-          confirmText="팀 나가기"
-          toastMessage="팀에서 나가기 되었습니다."
-        />
-      )}
+      <TeamProgressModals
+        is={is}
+        close={close}
+        open={open}
+        selectedMember={selectedMember}
+        openMemberDetail={openMemberDetail}
+      />
     </section>
   );
 }

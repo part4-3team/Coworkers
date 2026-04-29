@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { ModalMembersProps } from '@/app/(service)/[teamid]/types';
 import { icUserXlarge } from '@/assets/index';
 import Modal from '@/components/common/modal';
@@ -12,6 +13,7 @@ export function ModalMemberDetail({
   member,
 }: ModalMembersProps) {
   const { showToast } = useToast();
+  const { open, close, is } = useModalState();
 
   const handleCopyEmail = async () => {
     try {
@@ -25,10 +27,9 @@ export function ModalMemberDetail({
 
   const handleDelete = async () => {
     try {
-      // TODO: 멤버 삭제 API 호출 로직 구현
-      showToast('멤버가 삭제되었습니다.', 'error');
-      onPrimaryButtonClick?.();
+      open('memberDelete');
       onClose();
+      onPrimaryButtonClick?.();
     } catch (err) {
       console.error('삭제 실패:', err);
     }
