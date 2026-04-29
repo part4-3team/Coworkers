@@ -22,10 +22,10 @@ export default function JoinTeamPage() {
 
         <h2 className="sr-only">팀 링크 입력</h2>
         <form onSubmit={handleSubmit} className="flex flex-col">
-          <div className="mb-10 flex flex-col">
+          <div className="mb-10 flex flex-col gap-3">
             <label
               htmlFor="teamLink"
-              className="text-sm font-medium text-text-primary mb-3"
+              className="text-base font-medium text-text-primary"
             >
               팀 링크
             </label>
@@ -57,7 +57,7 @@ export default function JoinTeamPage() {
           </PrimaryButton>
         </form>
 
-        <p className="text-center text-xs font-normal text-text-default">
+        <p className="text-center text-sm font-normal text-text-default">
           공유받은 팀 링크를 입력해 참여할 수 있어요.
         </p>
       </div>

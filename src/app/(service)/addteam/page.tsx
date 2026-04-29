@@ -27,13 +27,15 @@ export default function CreateTeamPage() {
         </h1>
 
         <h2 className="sr-only">팀 정보 입력</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <AddUserImg onChangeFile={handleChangeFile} />
+        <form onSubmit={handleSubmit} className="flex flex-col">
+          <div className="mb-3">
+            <AddUserImg onChangeFile={handleChangeFile} />
+          </div>
 
           <div className="mb-10 flex flex-col gap-3">
             <label
               htmlFor="teamName"
-              className="text-sm font-medium text-text-primary"
+              className="text-base font-medium text-text-primary"
             >
               팀 이름
             </label>
@@ -65,7 +67,7 @@ export default function CreateTeamPage() {
           </PrimaryButton>
         </form>
 
-        <p className="text-center text-xs font-normal text-text-default">
+        <p className="text-center text-sm font-normal text-text-default">
           팀 이름은 회사명이나 모임 이름 등으로 설정하면 좋아요.
         </p>
       </div>
