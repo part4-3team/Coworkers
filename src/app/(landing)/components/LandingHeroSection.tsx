@@ -26,6 +26,7 @@ export default function LandingHeroSection() {
               width={35}
               height={24}
               className="h-auto w-16"
+              style={{ height: 'auto' }}
             />
             <p className="text-sm font-medium text-interaction-inactive lg:text-xl">
               함께 만들어가는 To do list

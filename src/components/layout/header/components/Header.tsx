@@ -52,6 +52,7 @@ export default function Header() {
               width={35}
               height={24}
               className="h-6 w-auto"
+              style={{ width: 'auto' }}
             />
           </Link>
         </div>

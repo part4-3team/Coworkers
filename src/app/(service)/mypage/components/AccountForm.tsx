@@ -47,7 +47,7 @@ export default function AccountForm({
 
         <div className="flex flex-col gap-2">
           <label htmlFor="userEmail">이메일</label>
-          <Input id="userEmail" value="ziy1027@naver.com" disabled />
+          <Input id="userEmail" value="ziy1027@naver.com" readOnly />
         </div>
 
         <div className="flex flex-row gap-4 items-center">

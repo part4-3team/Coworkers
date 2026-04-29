@@ -33,6 +33,7 @@ export default function SignupForm() {
           width={210}
           height={35}
           className="h-auto w-52"
+          style={{ height: 'auto' }}
         />
       </div>
 
