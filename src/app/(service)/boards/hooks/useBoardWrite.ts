@@ -21,9 +21,9 @@ export default function useBoardWrite(initialData?: {
   const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToast();
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setFormData({ ...formData, title: e.target.value });
+    setFormData((prev) => ({ ...prev, title: e.target.value }));
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setFormData({ ...formData, content: e.target.value });
+    setFormData((prev) => ({ ...prev, content: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ export default function useBoardWrite(initialData?: {
       setIsLoading(true);
       showToast('게시글이 성공적으로 등록되었습니다.', 'success');
       router.push(ROUTES.BOARDS);
-    } catch (error) {
+    } catch {
       showToast('등록 중 오류가 발생했습니다.', 'error');
     } finally {
       setIsLoading(false);

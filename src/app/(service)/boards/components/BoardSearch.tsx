@@ -30,7 +30,7 @@ export default function BoardSearch() {
         className="w-full h-12 px-12 py-3 text-text-default text-base font-normal leading-4.75
         rounded-full border-2 border-brand-primary 
         focus:outline-none focus:ring-0 
-        md:h-16 md:px-15 md:py-4"
+        md:h-14 md:px-15 md:py-4"
       />
     </form>
   );

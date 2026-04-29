@@ -12,7 +12,7 @@ export default function BoardListCard({ post }: { post: Post }) {
   return (
     <Link
       href={ROUTES.BOARD_DETAIL(post.id.toString())}
-      className="mt-5 rounded-lg border border-border-secondary px-4 py-4 h-35 md:h-39 md:px-6 md:py-5 block"
+      className="rounded-[20px] border border-background-tertiary px-4 py-4 h-35 md:h-39 md:px-6 md:py-5 block"
     >
       <div className="h-20 flex items-center justify-between gap-4 md:h-22">
         <div className="flex-1 min-w-0 md:w-90">

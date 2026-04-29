@@ -14,7 +14,7 @@ export default function useBoardBestMemo({
     }
 
     return boardBestPosts.some((post) => (post.likeCount ?? 0) > 0);
-  }, [boardBestPosts]);
+  }, [boardBestPosts, hasBoardPosts]);
 
   const emptyMessage = useMemo(() => {
     if (showBestGrid) {

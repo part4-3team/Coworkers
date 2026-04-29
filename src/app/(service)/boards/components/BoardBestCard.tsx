@@ -12,7 +12,7 @@ export default function BoardBestCard({ post }: { post: Post }) {
   return (
     <Link
       href={ROUTES.BOARD_DETAIL(post.id.toString())}
-      className="p-5 bg-background-primary rounded-[20px] block"
+      className="p-5 bg-background-primary rounded-[20px] block border border-border-primary"
     >
       <div className="flex items-center gap-1 bg-background-secondary rounded-full px-3 py-1.5 w-18 h-7.5">
         <Image

@@ -4,7 +4,10 @@ import { useState } from 'react';
 
 import BoardBestCard from '@/app/(service)/boards/components/BoardBestCard';
 import BoardBestPagination from '@/app/(service)/boards/components/BoardBestPagination';
-import { BOARD_DEVICE_TYPE_LIMIT } from '@/app/(service)/boards/constants';
+import {
+  BOARD_DEVICE_TYPE,
+  BOARD_DEVICE_TYPE_LIMIT,
+} from '@/app/(service)/boards/constants';
 import useBoardBestMemo from '@/app/(service)/boards/hooks/useBoardBestMemo';
 import type { BoardBestListProps } from '@/app/(service)/boards/types';
 import {
@@ -19,7 +22,8 @@ export default function BoardBestList({
 }: BoardBestListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const deviceType = useDeviceType();
-  const pageSize = BOARD_DEVICE_TYPE_LIMIT[deviceType];
+  const pageSize =
+    BOARD_DEVICE_TYPE_LIMIT[deviceType ?? BOARD_DEVICE_TYPE.MOBILE];
 
   const { emptyMessage } = useBoardBestMemo({ boardBestPosts, hasBoardPosts });
 

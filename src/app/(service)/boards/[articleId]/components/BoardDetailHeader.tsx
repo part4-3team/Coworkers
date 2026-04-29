@@ -5,11 +5,7 @@ import Image from 'next/image';
 import { useBoardDetailMenu } from '@/app/(service)/boards/[articleId]/hooks/useBoardDetailMenu';
 import { useLike } from '@/app/(service)/boards/[articleId]/hooks/useLike';
 import type { BoardDetailProps } from '@/app/(service)/boards/[articleId]/types';
-import {
-  icHeartFilledSmall,
-  icHeartSmall,
-  icMoreVerticalLarge,
-} from '@/assets';
+import { icHeartFilledRed, icHeartSmall, icMoreVerticalLarge } from '@/assets';
 import { Avatar } from '@/components/common/avatar';
 import { ListDropdown } from '@/components/common/dropdown';
 import Modal from '@/components/common/modal';
@@ -45,11 +41,11 @@ export default function BoardDetailHeader({
         />
         {isDeleteModalOpen && (
           <Modal
-            onClose={() => handleDeleteConfirm()}
+            onClose={handleDeleteConfirm}
             title="게시글을 삭제하시겠습니까?"
             description="게시글 정보가 삭제됩니다."
             lineButtonText="닫기"
-            onLineButtonClick={() => handleDeleteConfirm()}
+            onLineButtonClick={handleDeleteConfirm}
             subButtonText="삭제"
             onSubButtonClick={handleDeleteConfirm}
           />
@@ -66,7 +62,7 @@ export default function BoardDetailHeader({
           <span className="text-text-primary text-xs font-medium leading-4 min-w-0 truncate md:text-sm">
             {boardDetail.writer.nickname}
           </span>
-          <span className="text-text-primary text-xs font-medium leading-4 shrink-0 px-2 md:text-sm">
+          <span className="text-text-secondary text-xs font-medium leading-4 shrink-0 px-2 md:text-sm">
             |
           </span>
           <span className="text-interaction-inactive text-xs font-medium leading-4 shrink-0 md:text-sm">
@@ -80,12 +76,13 @@ export default function BoardDetailHeader({
             onClick={handleLikeClick}
           >
             <Image
-              src={isLiked ? icHeartFilledSmall : icHeartSmall}
+              src={isLiked ? icHeartFilledRed : icHeartSmall}
               alt="좋아요 모양 아이콘"
               width={16}
               height={16}
+              className="w-4 h-4 md:w-6 md:h-6"
             />
-            <span className="text-interaction-inactive text-xs font-medium leading-4 md:text-sm">
+            <span className="text-interaction-inactive text-sm font-medium leading-4 md:text-base">
               {likeCount}
             </span>
           </button>

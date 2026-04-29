@@ -53,13 +53,13 @@ export default function BoardDetailCommentItem({
       </div>
       <div className="flex justify-between gap-2 w-full">
         <div className="flex flex-col gap-1 min-w-0">
-          <span className="text-sm font-bold text-text-primary">
+          <span className="text-xs font-bold text-text-primary md:text-sm">
             {comment.writer.nickname}
           </span>
-          <span className="text-sm font-normal text-text-primary line-clamp-1">
+          <span className="text-xs font-normal text-text-primary line-clamp-1 md:text-sm">
             {comment.content}
           </span>
-          <span className="text-sm font-medium text-interaction-inactive">
+          <span className="text-xs font-medium text-interaction-inactive md:text-sm">
             {comment.createdAt}
           </span>
         </div>

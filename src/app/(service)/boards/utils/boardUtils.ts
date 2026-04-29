@@ -28,6 +28,8 @@ export const isSearchMode = (keyword?: string) => {
 
 export const filterPostsByKeyword = (posts: Post[], keyword: string) => {
   return isSearchMode(keyword)
-    ? posts.filter((post) => post.title.includes(keyword))
+    ? posts.filter((post) =>
+        post.title.toLowerCase().includes(keyword.toLowerCase()),
+      )
     : posts;
 };

@@ -22,6 +22,7 @@ export default function BoardDetailComments({
           {commentList.list.length}
         </span>
       </div>
+      {/* TODO: 기존 컴포넌트 대신 새로운 댓글 입력창 구현 후 주석 해제 */}
       <CommentInput
         id="comment-input"
         placeholder="댓글을 달아주세요"
@@ -37,7 +38,7 @@ export default function BoardDetailComments({
         </div>
       ) : (
         <div className="pt-5 border-t border-background-tertiary mt-7 md:mt-9">
-          <span className="block text-sm font-normal text-text-default text-center py-12.5 md:py-20 lg:py-12.5">
+          <span className="block text-xs font-normal text-text-default text-center py-12.5 md:text-sm md:py-20 lg:py-12.5">
             아직 작성된 댓글이 없습니다.
           </span>
         </div>

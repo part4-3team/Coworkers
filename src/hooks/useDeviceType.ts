@@ -6,9 +6,7 @@ import { BOARD_DEVICE_TYPE } from '@/app/(service)/boards/constants';
 import type { BoardDeviceType } from '@/app/(service)/boards/types';
 
 export default function useDeviceType() {
-  const [deviceType, setDeviceType] = useState<BoardDeviceType>(
-    BOARD_DEVICE_TYPE.PC as BoardDeviceType,
-  );
+  const [deviceType, setDeviceType] = useState<BoardDeviceType | null>(null);
 
   useEffect(() => {
     const handleResize = () => {

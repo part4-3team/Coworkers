@@ -47,7 +47,7 @@ export default function BoardList({
           </span>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <div className="mt-5 grid grid-cols-1 gap-4 xl:grid-cols-2">
           {sortedPosts.map((post) => (
             <BoardListCard key={post.id} post={post} />
           ))}
