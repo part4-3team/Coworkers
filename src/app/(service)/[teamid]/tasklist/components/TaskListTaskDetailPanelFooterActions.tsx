@@ -1,0 +1,68 @@
+'use client';
+
+import Image from 'next/image';
+
+import { icCheckInverse } from '@/assets';
+
+type TaskListTaskDetailPanelFooterActionsProps = {
+  isTaskEditing: boolean;
+  onCancelTaskEdit: () => void;
+  onComplete: () => void;
+  onRegisterTask: () => void;
+};
+
+export default function TaskListTaskDetailPanelFooterActions({
+  isTaskEditing,
+  onCancelTaskEdit,
+  onComplete,
+  onRegisterTask,
+}: TaskListTaskDetailPanelFooterActionsProps) {
+  return (
+    <div className="absolute inset-x-0 bottom-8 px-6 md:bottom-10 md:px-8">
+      <div className="flex justify-end">
+        {isTaskEditing ? (
+          <div className="flex items-center gap-3 text-sm font-medium text-text-default md:text-base">
+            <button
+              data-allow-unsaved="true"
+              type="button"
+              className="text-text-default"
+              onClick={onCancelTaskEdit}
+            >
+              취소
+            </button>
+            <button
+              data-allow-unsaved="true"
+              type="button"
+              className="inline-flex h-11 items-center gap-1.5 rounded-full bg-brand-primary px-5 font-semibold text-text-inverse md:h-12 md:px-6"
+              onClick={onRegisterTask}
+            >
+              <Image
+                src={icCheckInverse}
+                alt=""
+                width={16}
+                height={16}
+                className="size-4"
+              />
+              등록하기
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="inline-flex h-11 items-center gap-1.5 rounded-full bg-brand-primary px-5 text-sm font-semibold text-text-inverse md:h-12 md:px-6 md:text-base"
+            onClick={onComplete}
+          >
+            <Image
+              src={icCheckInverse}
+              alt=""
+              width={16}
+              height={16}
+              className="size-4"
+            />
+            완료하기
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -1,16 +1,21 @@
 /**
  * 할 일 리스트 페이지를 구성하는 파일입니다.
+ * 태블릿(md~lg)은 상단 패딩을 넉넉히 둡니다.
+ * md+: 사이드바 노출 구간부터 좌우 패딩 확보. lg+는 더 넓게.
  */
 
-export default function TaskListPage() {
+import TaskListPageShell from '@/app/(service)/[teamid]/tasklist/components/TaskListPageShell';
+
+export default async function TaskListPage({
+  params,
+}: {
+  params: Promise<{ teamid: string }>;
+}) {
+  const { teamid } = await params;
+
   return (
-    <section className="px-4 py-8 md:px-6 md:py-10">
-      <h1 className="text-xl font-bold text-text-primary md:text-2xl">
-        할 일 리스트
-      </h1>
-      <h2 className="mt-4 text-base font-medium text-text-default md:text-lg">
-        할 일 목록과 상세 내용을 확인할 수 있어요.
-      </h2>
-    </section>
+    <div className="min-w-0 px-4 pb-4 pt-3.25 sm:px-5 sm:pt-4 md:px-10 md:pb-6 md:pt-20 lg:px-16 lg:pt-30">
+      <TaskListPageShell teamId={teamid} />
+    </div>
   );
 }
