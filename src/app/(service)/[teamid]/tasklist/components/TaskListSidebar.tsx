@@ -9,7 +9,7 @@
 import TaskListColumnDropdown from '@/app/(service)/[teamid]/tasklist/components/TaskListColumnDropdown';
 import TaskListEmptyColumnPlaceholder from '@/app/(service)/[teamid]/tasklist/components/TaskListEmptyColumnPlaceholder';
 import TaskListNavItem from '@/app/(service)/[teamid]/tasklist/components/TaskListNavItem';
-import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
+import type { TaskListSidebarProps } from '@/app/(service)/[teamid]/tasklist/types';
 import { cn } from '@/utils/cn';
 
 /** 16×16, stroke = currentColor (brand) */
@@ -40,29 +40,21 @@ function AddTaskListPlusIcon({ className }: { className?: string }) {
   );
 }
 
-const addButtonDesktop = cn(
-  'mx-auto mt-10 inline-flex h-10 w-35.75 shrink-0 items-center justify-center',
+const TASK_LIST_ADD_LIST_BUTTON_CORE = cn(
   'rounded-[40px] border border-solid border-brand-primary bg-background-inverse',
-  'px-0 text-sm font-medium leading-4.25 text-brand-primary',
-  'transition-colors hover:bg-brand-secondary',
+  'text-sm font-medium leading-4.25 text-brand-primary transition-colors hover:bg-brand-secondary',
 );
 
-const addButtonCompact = cn(
-  'inline-flex h-10 shrink-0 flex-row items-center justify-center',
-  'rounded-[40px] border border-solid border-brand-primary bg-background-inverse',
-  'px-3 py-3 text-sm font-medium leading-4.25 text-brand-primary',
+const TASK_LIST_ADD_LIST_BUTTON_MOBILE = cn(
+  'inline-flex h-10 shrink-0 flex-row items-center justify-center px-3 py-3',
   'shadow-[0_15px_50px_-12px_rgba(0,0,0,0.05)]',
-  'transition-colors hover:bg-brand-secondary',
+  TASK_LIST_ADD_LIST_BUTTON_CORE,
 );
 
-type TaskListSidebarProps = {
-  className?: string;
-  columns: TaskListColumnItem[];
-  activeId: string;
-  onSelectColumn: (id: string) => void;
-  onRequestDeleteColumn: (item: TaskListColumnItem) => void;
-  onAddListClick: () => void;
-};
+const TASK_LIST_ADD_LIST_BUTTON_DESKTOP = cn(
+  'mx-auto mt-10 inline-flex h-10 w-35.75 shrink-0 items-center justify-center px-0',
+  TASK_LIST_ADD_LIST_BUTTON_CORE,
+);
 
 export default function TaskListSidebar({
   className,
@@ -100,7 +92,7 @@ export default function TaskListSidebar({
           <button
             type="button"
             aria-label="할 일 목록 추가"
-            className={addButtonCompact}
+            className={TASK_LIST_ADD_LIST_BUTTON_MOBILE}
             onClick={onAddListClick}
           >
             <span className="inline-flex items-center justify-center gap-1">
@@ -135,7 +127,7 @@ export default function TaskListSidebar({
         <button
           type="button"
           aria-label="할 일 목록 추가"
-          className={addButtonDesktop}
+          className={TASK_LIST_ADD_LIST_BUTTON_DESKTOP}
           onClick={onAddListClick}
         >
           <span className="inline-flex items-center justify-center gap-1">

@@ -4,114 +4,38 @@
 
 'use client';
 
-import { useMemo, useState } from 'react';
-
 import TaskListBoardEmptyTaskRow from '@/app/(service)/[teamid]/tasklist/components/TaskListBoardEmptyTaskRow';
 import TaskListMonthNavigator from '@/app/(service)/[teamid]/tasklist/components/TaskListMonthNavigator';
 import TaskListTaskDeleteModal from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDeleteModal';
 import TaskListTaskDetailPanel from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDetailPanel';
 import TaskListTaskRow from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskRow';
 import TaskListWeekStrip from '@/app/(service)/[teamid]/tasklist/components/TaskListWeekStrip';
-import {
-  TASK_LIST_BOARD_MOCK,
-  TASK_LIST_DETAIL_CURRENT_USER_NAME,
-} from '@/app/(service)/[teamid]/tasklist/constants';
-import type {
-  TaskListBoardTask,
-  TaskListTaskDetailApplyPatch,
-  TaskListTaskDetailOpenMode,
-} from '@/app/(service)/[teamid]/tasklist/types';
-import { useToast } from '@/components/common/toast';
+import { TASK_LIST_DETAIL_CURRENT_USER_NAME } from '@/app/(service)/[teamid]/tasklist/constants';
+import { useTaskListBoard } from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListBoard';
+import type { TaskListBoardProps } from '@/app/(service)/[teamid]/tasklist/types';
 import { cn } from '@/utils/cn';
-
-type TaskListBoardProps = {
-  columnTitle: string;
-  className?: string;
-};
 
 export default function TaskListBoard({
   columnTitle,
   className,
 }: TaskListBoardProps) {
-  const { showToast } = useToast();
-  const [selectedDate, setSelectedDate] = useState(() => new Date(2025, 4, 21));
-  const [tasks, setTasks] = useState<TaskListBoardTask[]>(
-    () => TASK_LIST_BOARD_MOCK,
-  );
-  const [taskPendingDelete, setTaskPendingDelete] =
-    useState<TaskListBoardTask | null>(null);
-  const [openTaskDetail, setOpenTaskDetail] = useState<{
-    mode: TaskListTaskDetailOpenMode;
-    task: TaskListBoardTask;
-  } | null>(null);
-
-  const sortedTasks = useMemo(
-    () => [...tasks].sort((a, b) => a.sortOrder - b.sortOrder),
-    [tasks],
-  );
-
-  const isTaskListEmpty = sortedTasks.length === 0;
-
-  const handleToggleChecked = (id: string, checked: boolean) => {
-    setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, checked } : t)));
-  };
-
-  const handleRequestDelete = (task: TaskListBoardTask) => {
-    setTaskPendingDelete(task);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setTaskPendingDelete(null);
-  };
-
-  const handleConfirmDelete = () => {
-    if (!taskPendingDelete) return;
-    const id = taskPendingDelete.id;
-    setTaskPendingDelete(null);
-    setTasks((prev) => prev.filter((t) => t.id !== id));
-    showToast('삭제되었습니다.', 'error');
-  };
-
-  const handleOpenTaskDetail = (
-    task: TaskListBoardTask,
-    mode: TaskListTaskDetailOpenMode,
-  ) => {
-    setOpenTaskDetail({ task, mode });
-  };
-
-  const handleCloseTaskDetail = () => {
-    setOpenTaskDetail(null);
-  };
-
-  const handleApplyTaskDetailPatch = (
-    taskId: string,
-    patch: TaskListTaskDetailApplyPatch,
-  ) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === taskId
-          ? {
-              ...t,
-              title: patch.title,
-              description: patch.description,
-              comments: patch.comments,
-              commentCount: patch.comments.length,
-            }
-          : t,
-      ),
-    );
-  };
-
-  const handleCompleteTaskFromDetail = (taskId: string) => {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === taskId ? { ...t, checked: true } : t)),
-    );
-  };
-
-  const handleRequestDeleteFromDetail = (task: TaskListBoardTask) => {
-    setOpenTaskDetail(null);
-    setTaskPendingDelete(task);
-  };
+  const {
+    handleApplyTaskDetailPatch,
+    handleCloseDeleteModal,
+    handleCloseTaskDetail,
+    handleCompleteTaskFromDetail,
+    handleConfirmDelete,
+    handleOpenTaskDetail,
+    handleRequestDelete,
+    handleRequestDeleteFromDetail,
+    handleToggleChecked,
+    isTaskListEmpty,
+    openTaskDetail,
+    selectedDate,
+    setSelectedDate,
+    sortedTasks,
+    taskPendingDelete,
+  } = useTaskListBoard();
 
   return (
     <section
