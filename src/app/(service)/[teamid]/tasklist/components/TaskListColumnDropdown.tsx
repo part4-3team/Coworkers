@@ -105,15 +105,17 @@ export default function TaskListColumnDropdown({
                   }}
                 >
                   <span className="flex min-w-0 flex-1 items-center gap-2 md:min-w-0">
-                    {isSelected ? (
-                      <Image
-                        src={icCheck}
-                        alt=""
-                        width={16}
-                        height={16}
-                        className="hidden shrink-0 md:block"
-                      />
-                    ) : null}
+                    <span className="inline-flex size-4 shrink-0 items-center justify-center">
+                      {isSelected ? (
+                        <Image
+                          src={icCheck}
+                          alt=""
+                          width={16}
+                          height={16}
+                          className="size-4 shrink-0"
+                        />
+                      ) : null}
+                    </span>
                     <span className="min-w-0 truncate">{item.title}</span>
                   </span>
                   <Badge

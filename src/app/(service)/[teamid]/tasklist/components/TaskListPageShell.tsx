@@ -18,7 +18,11 @@ import { TASK_LIST_COLUMN_MOCK } from '@/app/(service)/[teamid]/tasklist/constan
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
 import { useToast } from '@/components/common/toast';
 
-export default function TaskListPageShell() {
+type TaskListPageShellProps = {
+  teamId: string;
+};
+
+export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
   const { showToast } = useToast();
   const [columns, setColumns] = useState<TaskListColumnItem[]>(() => [
     ...TASK_LIST_COLUMN_MOCK,
@@ -69,7 +73,7 @@ export default function TaskListPageShell() {
   return (
     <>
       <TaskListContentArea>
-        <TaskListPageHeader teamName="경영관리팀" />
+        <TaskListPageHeader teamId={teamId} teamName="경영관리팀" />
         <div className="flex min-w-0 flex-col gap-4 md:gap-6 lg:flex-row lg:items-start lg:gap-16">
           <TaskListSidebar
             columns={columns}

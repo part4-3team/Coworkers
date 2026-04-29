@@ -11,11 +11,13 @@ import { ROUTES } from '@/constants/ROUTES';
 import { cn } from '@/utils/cn';
 
 type TaskListPageHeaderProps = {
+  teamId: string;
   teamName: string;
   className?: string;
 };
 
 export default function TaskListPageHeader({
+  teamId,
   teamName,
   className,
 }: TaskListPageHeaderProps) {
@@ -41,13 +43,13 @@ export default function TaskListPageHeader({
         {teamName}
       </h1>
       <Link
-        href={ROUTES.MY_PAGE}
+        href={ROUTES.TEAM_EDIT(teamId)}
         className={cn(
           'inline-flex size-5 shrink-0 items-center justify-center',
           'md:size-6',
           'lg:mr-7',
         )}
-        aria-label="계정 설정으로 이동"
+        aria-label="팀 설정으로 이동"
       >
         <Image
           src={icSettingsSmall}

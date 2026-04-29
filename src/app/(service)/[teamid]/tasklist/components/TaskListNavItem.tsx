@@ -30,38 +30,63 @@ export default function TaskListNavItem({
     <li className="list-none">
       <article
         className={cn(
-          'flex h-13.75 w-full min-w-0 max-w-full items-center gap-3 rounded-xl border bg-background-primary py-0 pl-4 pr-3 transition-colors md:pl-5 lg:max-w-67.5',
+          'flex h-13.75 w-full min-w-0 max-w-full items-center gap-3 rounded-xl border py-0 pl-4 pr-3 transition-colors md:pl-5 lg:max-w-67.5',
           isActive
-            ? 'border-brand-primary shadow-sm ring-1 ring-brand-primary/20'
-            : 'border-background-tertiary hover:border-background-tertiary hover:bg-background-secondary',
+            ? 'border-transparent bg-brand-primary shadow-none'
+            : 'border-background-tertiary bg-background-primary',
         )}
         aria-current={isActive ? 'true' : undefined}
       >
         <button
           type="button"
           onClick={onSelect}
-          className="min-w-0 flex-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
+          className={cn(
+            'min-w-0 flex-1 text-left outline-none',
+            isActive
+              ? 'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary'
+              : 'focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2',
+          )}
           aria-label={`${item.title} 목록 선택`}
         >
-          <h2 className="truncate text-sm font-medium text-text-primary">
+          <h2
+            className={cn(
+              'truncate text-sm font-medium',
+              isActive ? 'text-text-inverse' : 'text-text-primary',
+            )}
+          >
             {item.title}
           </h2>
         </button>
         <div className="flex shrink-0 items-center gap-1.5">
-          <Badge
-            completed={item.completed}
-            total={item.total}
-            className="items-center gap-1 leading-none"
-          />
+          <div
+            className={cn(
+              'inline-flex items-center rounded-full px-2.5 py-1 leading-none transition-colors',
+              isActive ? 'bg-background-inverse' : 'bg-transparent',
+            )}
+          >
+            <Badge
+              completed={item.completed}
+              total={item.total}
+              className="items-center gap-1 leading-none"
+            />
+          </div>
           <ListDropdown
             trigger={
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-md text-icon-primary hover:bg-background-tertiary">
+              <span
+                className={cn(
+                  'flex size-6 shrink-0 items-center justify-center rounded-md',
+                  isActive ? 'text-icon-inverse' : 'text-icon-primary',
+                )}
+              >
                 <Image
                   src={icMoreVerticalLarge}
                   alt=""
                   width={24}
                   height={24}
-                  className="block size-6 shrink-0"
+                  className={cn(
+                    'block size-6 shrink-0',
+                    isActive && 'brightness-0 invert',
+                  )}
                 />
               </span>
             }

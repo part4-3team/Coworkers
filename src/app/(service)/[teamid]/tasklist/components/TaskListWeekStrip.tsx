@@ -1,5 +1,7 @@
 /**
  * 한 주(월~일) 날짜 칩을 가로로 나열합니다.
+ * 선택일이 매월 1일이면 1일이 7칩의 가운데(4번째)에 오도록, 그날 기준 앞뒤 3일씩을 보여줍니다.
+ * 그 외에는 월요일 시작 한 주(7일)를 사용합니다.
  */
 
 'use client';
@@ -10,6 +12,10 @@ import {
   startOfWeekMonday,
 } from '@/app/(service)/[teamid]/tasklist/utils/boardDate';
 import { cn } from '@/utils/cn';
+
+function calendarDayKey(d: Date): string {
+  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
 
 type TaskListWeekStripProps = {
   selectedDate: Date;
@@ -22,7 +28,10 @@ export default function TaskListWeekStrip({
   onSelectDate,
   className,
 }: TaskListWeekStripProps) {
-  const monday = startOfWeekMonday(selectedDate);
+  const isFirstOfSelectedMonth = selectedDate.getDate() === 1;
+  const rangeStart = isFirstOfSelectedMonth
+    ? addDays(selectedDate, -3)
+    : startOfWeekMonday(selectedDate);
 
   return (
     <div
@@ -31,7 +40,7 @@ export default function TaskListWeekStrip({
       aria-label="주간 날짜 선택"
     >
       {Array.from({ length: 7 }, (_, i) => {
-        const day = addDays(monday, i);
+        const day = addDays(rangeStart, i);
         const isSelected =
           day.getFullYear() === selectedDate.getFullYear() &&
           day.getMonth() === selectedDate.getMonth() &&
@@ -40,7 +49,7 @@ export default function TaskListWeekStrip({
 
         return (
           <button
-            key={day.toISOString()}
+            key={calendarDayKey(day)}
             type="button"
             role="tab"
             aria-selected={isSelected}

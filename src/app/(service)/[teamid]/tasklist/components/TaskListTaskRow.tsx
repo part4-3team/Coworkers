@@ -6,6 +6,7 @@
 
 import Image from 'next/image';
 
+import TaskListTaskRowOptionsMenu from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskRowOptionsMenu';
 import type {
   TaskListBoardTask,
   TaskListTaskDetailOpenMode,
@@ -16,7 +17,6 @@ import {
   icMoreVerticalSmall,
   icRepeatSmall,
 } from '@/assets';
-import { ListDropdown } from '@/components/common/dropdown';
 import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
 import { cn } from '@/utils/cn';
 
@@ -90,10 +90,10 @@ export default function TaskListTaskRow({
       </div>
 
       <div
-        className="absolute right-3 top-3 z-10 sm:right-4 sm:top-3"
+        className="absolute right-3 top-3 sm:right-4 sm:top-3"
         data-task-detail-ignore
       >
-        <ListDropdown
+        <TaskListTaskRowOptionsMenu
           className="shrink-0"
           items={[
             {
@@ -109,7 +109,6 @@ export default function TaskListTaskRow({
               },
             },
           ]}
-          menuClassName="mt-1 w-30 overflow-hidden rounded-lg border border-background-tertiary py-0"
           trigger={
             <>
               <span className="sr-only">{`${task.title} 더보기`}</span>

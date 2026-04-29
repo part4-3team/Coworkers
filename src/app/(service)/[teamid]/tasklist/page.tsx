@@ -6,10 +6,16 @@
 
 import TaskListPageShell from '@/app/(service)/[teamid]/tasklist/components/TaskListPageShell';
 
-export default function TaskListPage() {
+export default async function TaskListPage({
+  params,
+}: {
+  params: Promise<{ teamid: string }>;
+}) {
+  const { teamid } = await params;
+
   return (
     <div className="min-w-0 px-4 pb-4 pt-3.25 sm:px-5 sm:pt-4 md:px-10 md:pb-6 md:pt-20 lg:px-16 lg:pt-30">
-      <TaskListPageShell />
+      <TaskListPageShell teamId={teamid} />
     </div>
   );
 }
