@@ -5,11 +5,15 @@
 import { ROUTES } from '@/constants/ROUTES';
 
 export type LayoutCurrentUser = {
+  email?: string;
+  image?: string | null;
   name: string;
   teamName: string;
 };
 
 export const DEFAULT_LAYOUT_CURRENT_USER = {
+  email: undefined,
+  image: null,
   name: '사용자',
   teamName: 'Coworkers',
 } satisfies LayoutCurrentUser;

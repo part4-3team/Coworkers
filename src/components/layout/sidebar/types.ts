@@ -38,7 +38,7 @@ export type SidebarNavItemProps = SidebarExpandedProps & {
   icon: SidebarIcon;
   isActive?: boolean;
   isMobileDrawer?: boolean;
-  isOriginalIconColor?: boolean;
+  isOwnerIcon?: boolean;
   label: string;
   onClick?: () => void;
   variant?: SidebarNavItemVariant;

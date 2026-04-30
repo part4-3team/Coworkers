@@ -1,4 +1,4 @@
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 
 import MemberChip from '@/app/(service)/[teamid]/components/MemberChip';
 import TeamProgressBar from '@/app/(service)/[teamid]/components/TeamProgressBar';
@@ -10,12 +10,16 @@ import {
 } from '@/app/(service)/[teamid]/constants';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { ListDropdown } from '@/components/common/dropdown';
+import useLayoutAuthState from '@/components/layout/hooks/useLayoutAuthState';
 
 export default function TeamProgress() {
   const router = useRouter();
   const params = useParams();
-  const teamName =
-    typeof params.teamid === 'string' ? decodeURIComponent(params.teamid) : '';
+  const pathname = usePathname();
+  const layoutAuthState = useLayoutAuthState(pathname);
+  const teamName = layoutAuthState.isAuthenticated
+    ? layoutAuthState.currentUser.teamName
+    : '';
 
   const { open, close, is, selectedMember, openMemberDetail } = useModalState();
 

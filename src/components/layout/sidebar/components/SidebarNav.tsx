@@ -11,7 +11,6 @@ import SidebarNavItem from '@/components/layout/sidebar/components/SidebarNavIte
 import {
   SIDEBAR_ICONS,
   SIDEBAR_LINKS,
-  SIDEBAR_TEAMS,
 } from '@/components/layout/sidebar/constants';
 import useSidebar from '@/components/layout/sidebar/hooks/useSidebar';
 import type { SidebarNavProps } from '@/components/layout/sidebar/types';
@@ -53,7 +52,7 @@ export default function SidebarNav({
                   : 'items-center gap-2',
             )}
           >
-            {SIDEBAR_TEAMS.map((team) => {
+            {layoutAuthState.teams.map((team) => {
               const teamHref = ROUTES.TEAM(team.id);
               const isActive =
                 pathname === teamHref || pathname.startsWith(`${teamHref}/`);
@@ -68,7 +67,7 @@ export default function SidebarNav({
                   isActive={isActive}
                   isExpanded={isExpanded}
                   isMobileDrawer={isMobileDrawer}
-                  isOriginalIconColor={team.isOwner}
+                  isOwnerIcon={team.isOwner}
                   label={team.name}
                   onClick={handleSidebarInteraction}
                   variant="team"

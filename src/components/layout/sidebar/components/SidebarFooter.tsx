@@ -4,6 +4,7 @@
  * 사이드바 하단 유저 정보와 로그인 링크 영역입니다.
  */
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -42,8 +43,18 @@ export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
               )}
               aria-label="프로필 메뉴 열기"
             >
-              <span className="flex shrink-0 size-10 items-center justify-center rounded-lg bg-background-tertiary">
-                <IcUserLarge width={24} height={24} aria-hidden="true" />
+              <span className="flex shrink-0 size-10 items-center justify-center overflow-hidden rounded-lg bg-background-tertiary">
+                {layoutAuthState.currentUser.image ? (
+                  <Image
+                    src={layoutAuthState.currentUser.image}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="size-10 object-cover"
+                  />
+                ) : (
+                  <IcUserLarge width={24} height={24} aria-hidden="true" />
+                )}
               </span>
               {isExpanded ? (
                 <span className="animate-fadeIn [animation-delay:150ms] [animation-fill-mode:both] flex min-w-0 flex-col">

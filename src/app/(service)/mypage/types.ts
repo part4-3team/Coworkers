@@ -10,6 +10,7 @@ export type AccountFormProps = {
 export type AccountFormValues = z.infer<typeof accountSchema>;
 
 export type UseAccountFormProps = {
+  initialEmail: string;
   initialName: string;
   isDirty: boolean;
   onDirtyChange: (value: boolean) => void;

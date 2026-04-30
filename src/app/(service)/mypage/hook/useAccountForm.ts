@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
@@ -13,6 +13,7 @@ import {
 import { useToast } from '@/components/common/toast';
 
 export function useAccountForm({
+  initialEmail,
   initialName,
   isDirty,
   onDirtyChange,
@@ -33,6 +34,14 @@ export function useAccountForm({
       name: initialName,
     },
   });
+
+  useEffect(() => {
+    if (isDirty) {
+      return;
+    }
+
+    reset({ name: initialName });
+  }, [initialName, isDirty, reset]);
 
   const name = useWatch({
     control,
@@ -82,6 +91,7 @@ export function useAccountForm({
   };
 
   return {
+    email: initialEmail,
     name,
     errors,
     register,

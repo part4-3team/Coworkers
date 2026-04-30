@@ -2,7 +2,6 @@
  * 사이드바 메뉴 목록에서 하나의 링크 아이템을 렌더링하는 컴포넌트입니다.
  */
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import type { SidebarNavItemProps } from '@/components/layout/sidebar/types';
@@ -14,7 +13,7 @@ export default function SidebarNavItem({
   isActive = false,
   isExpanded,
   isMobileDrawer = false,
-  isOriginalIconColor = false,
+  isOwnerIcon = false,
   label,
   onClick,
   variant = 'team',
@@ -48,9 +47,13 @@ export default function SidebarNavItem({
 
   const iconColorClass =
     variant === 'team'
-      ? isActive
-        ? 'bg-brand-primary'
-        : 'bg-text-disabled'
+      ? isOwnerIcon
+        ? isActive
+          ? 'bg-point-yellow'
+          : 'bg-text-disabled'
+        : isActive
+          ? 'bg-brand-primary'
+          : 'bg-text-disabled'
       : variant === 'board'
         ? isActive
           ? 'bg-brand-primary'
@@ -73,17 +76,7 @@ export default function SidebarNavItem({
       aria-current={isActive ? 'page' : undefined}
       onClick={onClick}
     >
-      {isOriginalIconColor ? (
-        iconSrc ? (
-          <Image
-            src={iconSrc}
-            alt=""
-            width={20}
-            height={20}
-            className="shrink-0"
-          />
-        ) : null
-      ) : iconSrc ? (
+      {iconSrc ? (
         <span
           aria-hidden="true"
           className={cn('block size-5 shrink-0', iconColorClass)}

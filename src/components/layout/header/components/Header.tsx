@@ -4,6 +4,7 @@
 
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -61,14 +62,24 @@ export default function Header() {
             trigger={
               <span
                 aria-label="프로필 메뉴 열기"
-                className="flex size-7 shrink-0 items-center justify-center rounded-full bg-border-secondary"
+                className="flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-border-secondary"
               >
-                <IcUserLarge
-                  width={24}
-                  height={24}
-                  className="size-6"
-                  aria-hidden="true"
-                />
+                {layoutAuthState.currentUser.image ? (
+                  <Image
+                    src={layoutAuthState.currentUser.image}
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="size-7 object-cover"
+                  />
+                ) : (
+                  <IcUserLarge
+                    width={24}
+                    height={24}
+                    className="size-6"
+                    aria-hidden="true"
+                  />
+                )}
               </span>
             }
           />

@@ -40,12 +40,6 @@ export default function MyPage() {
               변경하기
             </PrimaryButton>
           </div>
-          {/* 소셜 회원 확인 후 노출 될 문구 */}
-          <div className="flex justify-center items-center px-6 pt-10">
-            <p className="text-brand-primary text-[15px] font-medium">
-              소셜 로그인 회원입니다.
-            </p>
-          </div>
           {isWithdrawModalOpen && (
             <WithdrawModal onClose={() => setIsWithdrawModalOpen(false)} />
           )}
