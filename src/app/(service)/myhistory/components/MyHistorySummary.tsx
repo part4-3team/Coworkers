@@ -12,6 +12,10 @@ export default function MyHistorySummary({
   activeItemId,
   onSelectItem,
 }: MyHistorySummaryProps) {
+  if (MY_HISTORY_SUMMARY_ITEMS.length === 0) {
+    return null;
+  }
+
   return (
     <aside className="hidden w-76 shrink-0 2xl:block">
       <h2 className="text-xl font-bold text-text-primary">내가 한 일</h2>

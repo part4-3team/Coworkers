@@ -13,7 +13,7 @@ export default function EditTeamPage() {
   const { showToast } = useToast();
   const router = useRouter();
 
-  const [teamName, setTeamName] = useState('기존 팀이름 가져오기'); // 기존 팀 이름으로 초기화
+  const [teamName, setTeamName] = useState('');
 
   const handleEditTeam = () => {
     if (!teamName.trim()) {

@@ -2,7 +2,7 @@ import MemberCard from '@/app/(service)/[teamid]/components/MemberCard';
 import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/ConfirmModal';
 import { ModalMemberDetail } from '@/app/(service)/[teamid]/components/modals/ModalMemberDetails';
 import { ModalMembersInvite } from '@/app/(service)/[teamid]/components/modals/ModalMemberInvite';
-import { MOCK_MEMBERS } from '@/app/(service)/[teamid]/constants';
+import { TEAM_MEMBERS } from '@/app/(service)/[teamid]/constants';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import {
   MemberChipsProps,
@@ -18,7 +18,7 @@ export default function TeamMemberList() {
         <h2 className="text-text-primary text-base font-medium">
           멤버{' '}
           <span className="text-text-default font-normal">
-            ({MOCK_MEMBERS.members.length}명)
+            ({TEAM_MEMBERS.length}명)
           </span>
         </h2>
         <button
@@ -31,7 +31,7 @@ export default function TeamMemberList() {
         </button>
       </div>
       <TeamMemberListContent
-        members={MOCK_MEMBERS.members}
+        members={TEAM_MEMBERS}
         onMemberClick={(member) => {
           close(); // memberInvite 닫기
           openMemberDetail(member); // memberDetail 열기
@@ -64,6 +64,14 @@ export function TeamMemberListContent({
   members,
   onMemberClick,
 }: TeamMemberListContentProps) {
+  if (members.length === 0) {
+    return (
+      <p className="py-3 text-center text-sm font-normal text-text-default">
+        아직 멤버가 없어요.
+      </p>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4.5 mb-3">
       {members.map((item: MemberChipsProps) => (

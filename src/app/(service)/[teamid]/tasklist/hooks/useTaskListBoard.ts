@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { TASK_LIST_BOARD_MOCK } from '@/app/(service)/[teamid]/tasklist/constants';
+import { TASK_LIST_INITIAL_TASKS } from '@/app/(service)/[teamid]/tasklist/constants';
 import type {
   TaskListBoardTask,
   TaskListTaskDetailApplyPatch,
@@ -13,7 +13,7 @@ export function useTaskListBoard() {
   const { showToast } = useToast();
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [tasks, setTasks] = useState<TaskListBoardTask[]>(
-    () => TASK_LIST_BOARD_MOCK,
+    () => TASK_LIST_INITIAL_TASKS,
   );
   const [taskPendingDelete, setTaskPendingDelete] =
     useState<TaskListBoardTask | null>(null);

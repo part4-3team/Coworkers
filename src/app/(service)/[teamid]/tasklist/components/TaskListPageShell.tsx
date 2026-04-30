@@ -15,7 +15,7 @@ import TaskListFAB from '@/app/(service)/[teamid]/tasklist/components/TaskListFA
 import TaskListPageHeader from '@/app/(service)/[teamid]/tasklist/components/TaskListPageHeader';
 import TaskListRenameColumnModal from '@/app/(service)/[teamid]/tasklist/components/TaskListRenameColumnModal';
 import TaskListSidebar from '@/app/(service)/[teamid]/tasklist/components/TaskListSidebar';
-import { TASK_LIST_COLUMN_MOCK } from '@/app/(service)/[teamid]/tasklist/constants';
+import { TASK_LIST_INITIAL_COLUMNS } from '@/app/(service)/[teamid]/tasklist/constants';
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
 import { useToast } from '@/components/common/toast';
 
@@ -26,10 +26,10 @@ type TaskListPageShellProps = {
 export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
   const { showToast } = useToast();
   const [columns, setColumns] = useState<TaskListColumnItem[]>(() => [
-    ...TASK_LIST_COLUMN_MOCK,
+    ...TASK_LIST_INITIAL_COLUMNS,
   ]);
   const [activeId, setActiveId] = useState<string>(
-    TASK_LIST_COLUMN_MOCK[1]?.id ?? TASK_LIST_COLUMN_MOCK[0]?.id ?? '',
+    TASK_LIST_INITIAL_COLUMNS[1]?.id ?? TASK_LIST_INITIAL_COLUMNS[0]?.id ?? '',
   );
   const [columnPendingDelete, setColumnPendingDelete] =
     useState<TaskListColumnItem | null>(null);
@@ -108,7 +108,7 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
       <TaskListContentArea>
         <TaskListPageHeader
           teamId={teamId}
-          teamName="경영관리팀"
+          teamName={teamId}
           onConfirmTeamPageDelete={() => {
             showToast('삭제되었습니다.', 'error');
           }}

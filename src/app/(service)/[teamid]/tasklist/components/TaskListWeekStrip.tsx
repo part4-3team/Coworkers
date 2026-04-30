@@ -42,7 +42,7 @@ type TaskListWeekStripProps = {
 };
 
 const WEEK_STRIP_SCROLL_ROW_CLASS =
-  'flex cursor-grab gap-1 overflow-x-auto select-none touch-pan-y sm:gap-2.5 md:gap-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden active:cursor-grabbing';
+  'flex cursor-grab gap-1 overflow-x-auto select-none touch-pan-y sm:gap-2.5 md:gap-1.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden active:cursor-grabbing';
 
 /** 한 화면에 약 7칸 기준 칩 너비 */
 const WEEK_DAY_CELL_CLASS = cn(

@@ -5,8 +5,8 @@ import TeamProgressBar from '@/app/(service)/[teamid]/components/TeamProgressBar
 import { TeamProgressModals } from '@/app/(service)/[teamid]/components/TeamProgressModals';
 import { TeamProgressStats } from '@/app/(service)/[teamid]/components/TeamProgressState';
 import {
-  MOCK_MEMBERS,
   SETTING_BUTTON,
+  TEAM_MEMBERS,
 } from '@/app/(service)/[teamid]/constants';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { ListDropdown } from '@/components/common/dropdown';
@@ -14,6 +14,8 @@ import { ListDropdown } from '@/components/common/dropdown';
 export default function TeamProgress() {
   const router = useRouter();
   const params = useParams();
+  const teamName =
+    typeof params.teamid === 'string' ? decodeURIComponent(params.teamid) : '';
 
   const { open, close, is, selectedMember, openMemberDetail } = useModalState();
 
@@ -31,11 +33,11 @@ export default function TeamProgress() {
     <section className="w-full bg-background-inverse p-6 shadow-[0_4px_10px_rgba(49,84,153,0.06)] md:rounded-[20px] xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]">
       <div className="flex gap-3 items-center">
         <h2 className="text-text-primary font-bold text-xl md:text-2xl">
-          경영관리팀
+          {teamName}
         </h2>
         <div className="flex justify-between flex-1 items-center xl:hidden">
           <button onClick={() => open('memberList')}>
-            <MemberChip members={MOCK_MEMBERS.members} />
+            <MemberChip members={TEAM_MEMBERS} />
           </button>
           <ListDropdown trigger={SETTING_BUTTON} items={masterItems} />
         </div>
@@ -47,10 +49,10 @@ export default function TeamProgress() {
               오늘의 진행 상황
             </p>
             <p className="text-[32px] font-bold text-brand-primary  md:text-[40px]">
-              25%
+              0%
             </p>
           </div>
-          <TeamProgressStats today={3} done={1} />
+          <TeamProgressStats today={0} done={0} />
           {/* Todo: 데이터 가져와 교체 예정 */}
         </div>
         <div className="flex gap-4">

@@ -1,6 +1,5 @@
 /**
  * 채용 / 홍보 페이지를 구성하는 파일입니다.
- * API 연동 전에는 `constants` 목업 데이터로 UI를 표시합니다.
  */
 
 import BoardBestList from '@/app/(service)/boards/components/BoardBestList';
@@ -8,10 +7,6 @@ import BoardHeader from '@/app/(service)/boards/components/BoardHeader';
 import BoardList from '@/app/(service)/boards/components/BoardList';
 import BoardWriteFloatingButton from '@/app/(service)/boards/components/BoardWriteFloatingButton';
 import PostCreateForm from '@/app/(service)/boards/components/PostCreateForm';
-import {
-  getMockBoardBestPosts,
-  getMockBoardMainListPosts,
-} from '@/app/(service)/boards/constants';
 import type { Post } from '@/app/(service)/boards/types';
 import {
   filterPostsByKeyword,
@@ -28,8 +23,8 @@ export default async function BoardsPage({
   const keyword = parsedParams.search;
   const isSearchModeValue = isSearchMode(keyword);
   const isWriteMode = parsedParams.write === 'true';
-  const bestPosts = getMockBoardBestPosts() as unknown as Post[];
-  const listPosts = getMockBoardMainListPosts() as unknown as Post[];
+  const bestPosts: Post[] = [];
+  const listPosts: Post[] = [];
   const filteredListPosts = filterPostsByKeyword(listPosts, keyword ?? '');
 
   return (

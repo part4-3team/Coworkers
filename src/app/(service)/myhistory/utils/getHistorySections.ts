@@ -1,4 +1,3 @@
-import { EMPTY_HISTORY_FILTER_ID } from '@/app/(service)/myhistory/constants';
 import type {
   MyHistoryDateRange,
   MyHistoryDateSection,
@@ -14,8 +13,6 @@ export function hasHistoryTasks(
   activeFilterId: string | null,
   sections: readonly MyHistoryDisplayDateSection[],
 ) {
-  if (activeFilterId === EMPTY_HISTORY_FILTER_ID) return false;
-
   return sections.some((section) =>
     section.groups.some((group) => group.tasks.length > 0),
   );

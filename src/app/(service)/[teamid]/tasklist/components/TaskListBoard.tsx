@@ -12,7 +12,6 @@ import TaskListTaskDeleteModal from '@/app/(service)/[teamid]/tasklist/component
 import TaskListTaskDetailPanel from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDetailPanel';
 import TaskListTaskRow from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskRow';
 import TaskListWeekStrip from '@/app/(service)/[teamid]/tasklist/components/TaskListWeekStrip';
-import { TASK_LIST_DETAIL_CURRENT_USER_NAME } from '@/app/(service)/[teamid]/tasklist/constants';
 import { useTaskListBoard } from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListBoard';
 import {
   TASK_LIST_BOARD_CARD_SHELL_CLASS,
@@ -24,6 +23,7 @@ import type {
   TaskListTaskDetailOpenMode,
 } from '@/app/(service)/[teamid]/tasklist/types';
 import useRightPanel from '@/components/layout/hooks/useRightPanel';
+import { getAuthSession } from '@/utils/authSession';
 import { cn } from '@/utils/cn';
 
 export default function TaskListBoard({
@@ -31,6 +31,7 @@ export default function TaskListBoard({
   className,
 }: TaskListBoardProps) {
   const { openRightPanel } = useRightPanel();
+  const currentUserName = getAuthSession()?.user?.nickname ?? '';
   const {
     handleApplyTaskDetailPatch,
     handleCloseDeleteModal,
@@ -52,7 +53,7 @@ export default function TaskListBoard({
         content: (
           <TaskListTaskDetailPanel
             key={`${task.id}-${mode}`}
-            currentUserName={TASK_LIST_DETAIL_CURRENT_USER_NAME}
+            currentUserName={currentUserName}
             initialMode={mode}
             task={task}
             onApplyPatch={handleApplyTaskDetailPatch}
@@ -67,6 +68,7 @@ export default function TaskListBoard({
       handleCompleteTaskFromDetail,
       handleRequestDeleteFromDetail,
       openRightPanel,
+      currentUserName,
     ],
   );
 

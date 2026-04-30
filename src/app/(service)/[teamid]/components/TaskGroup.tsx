@@ -1,5 +1,4 @@
 import { ModalTaskAdd } from '@/app/(service)/[teamid]/components/modals/ModalTaskAddEdit';
-import TaskItem from '@/app/(service)/[teamid]/components/TaskItem';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { TaskProps } from '@/app/(service)/[teamid]/types';
 import { IcPlusSub } from '@/assets/index';
@@ -23,10 +22,11 @@ export default function TaskGroup({ status }: TaskProps) {
           />
         </button>
       </div>
-      <TaskItem title="법인 설립" status={status} />
+      <div className="rounded-2xl border border-border-secondary bg-background-inverse px-6 py-8 text-center text-sm font-normal text-text-default">
+        아직 등록된 할 일이 없어요.
+      </div>
 
       {is('taskAdd') && <ModalTaskAdd onClose={close} />}
-      {/** tasks.map  TODO: 데이터 불러와소 map으로 나열할 예정*/}
     </div>
   );
 }

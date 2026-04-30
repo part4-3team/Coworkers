@@ -39,13 +39,15 @@ export default function HistoryBoard({
         onMoveMonth={handleMoveMonth}
       />
 
-      <div className="mt-8 2xl:hidden">
-        <HistoryFilterTabs
-          activeFilterId={activeFilterId}
-          filters={MY_HISTORY_FILTERS}
-          onSelectFilter={onSelectFilter}
-        />
-      </div>
+      {MY_HISTORY_FILTERS.length > 0 ? (
+        <div className="mt-8 2xl:hidden">
+          <HistoryFilterTabs
+            activeFilterId={activeFilterId}
+            filters={MY_HISTORY_FILTERS}
+            onSelectFilter={onSelectFilter}
+          />
+        </div>
+      ) : null}
 
       {hasTasks ? (
         <div className="mt-9 md:mt-12 2xl:mt-10">

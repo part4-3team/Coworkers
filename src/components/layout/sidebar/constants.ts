@@ -11,12 +11,7 @@ import { ROUTES } from '@/constants/ROUTES';
 
 export const SIDEBAR_DESKTOP_MEDIA_QUERY = '(min-width: 1024px)';
 
-export const SIDEBAR_TEAMS: SidebarTeam[] = [
-  { id: '22-3', isOwner: true, name: '경영관리팀' },
-  { id: 'product', name: '프로덕트팀' },
-  { id: 'marketing', name: '마케팅팀' },
-  { id: 'contents', name: '콘텐츠팀' },
-];
+export const SIDEBAR_TEAMS: SidebarTeam[] = [];
 
 export const SIDEBAR_ICONS = {
   board: IcClipboardLargeUrl,

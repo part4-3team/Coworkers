@@ -2,16 +2,17 @@ import { useState } from 'react';
 
 import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/ConfirmModal';
 import { ModalTaskEdit } from '@/app/(service)/[teamid]/components/modals/ModalTaskAddEdit';
-import { DROPDOWN_BUTTON, TODOS } from '@/app/(service)/[teamid]/constants';
+import { DROPDOWN_BUTTON } from '@/app/(service)/[teamid]/constants';
 import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { TaskItemProps } from '@/app/(service)/[teamid]/types';
-import { Badge } from '@/components/common/badge';
 import { ListDropdown } from '@/components/common/dropdown';
 import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
 import { cn } from '@/utils/cn';
 
 export default function TaskItem({ title, status }: TaskItemProps) {
-  const [todos, setTodos] = useState(TODOS);
+  const [todos, setTodos] = useState<
+    { id: number; label: string; status: boolean }[]
+  >([]);
   const { open, close, is } = useModalState();
 
   const DropdownItems = [
@@ -48,23 +49,28 @@ export default function TaskItem({ title, status }: TaskItemProps) {
           <p className="flex-1 text-text-primary text-sm font-semibold whitespace-nowrap">
             {title}
           </p>
-          <div>
-            <Badge completed={3} total={5} />
-          </div>
           <div className="w-6 h-6 shrink-0">
             <ListDropdown trigger={DROPDOWN_BUTTON} items={DropdownItems} />
           </div>
         </div>
         {status !== '완료' && (
           <div className="flex flex-col gap-3 pr-2 w-full">
-            {todos.slice(0, 3).map((todo) => (
-              <TodoCheckUncheck
-                key={todo.id}
-                label={todo.label}
-                checked={todo.status}
-                onChange={(next) => handleChange(todo.id, next)}
-              />
-            ))}
+            {todos.length > 0 ? (
+              todos
+                .slice(0, 3)
+                .map((todo) => (
+                  <TodoCheckUncheck
+                    key={todo.id}
+                    label={todo.label}
+                    checked={todo.status}
+                    onChange={(next) => handleChange(todo.id, next)}
+                  />
+                ))
+            ) : (
+              <p className="text-sm font-normal text-text-default">
+                아직 체크리스트가 없어요.
+              </p>
+            )}
           </div>
         )}
       </div>
