@@ -22,7 +22,7 @@ export default function useBoardBestMemo({
     }
 
     if (!hasBoardPosts) {
-      return '아직 등록된 게시글이 없어요';
+      return '아직 등록된 게시글이 없어요.';
     }
 
     return '아직 좋아요가 달린 인기 게시글이 없어요.';

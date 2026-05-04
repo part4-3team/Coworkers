@@ -43,7 +43,7 @@ export default function BoardBestList({
 
         {emptyMessage ? (
           <div className="px-2 py-8 text-center md:py-10" role="status">
-            <p className="text-text-default text-sm leading-5 md:text-base">
+            <p className="text-text-default text-sm leading-5 md:text-sm">
               {emptyMessage}
             </p>
           </div>

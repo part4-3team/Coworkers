@@ -40,10 +40,10 @@ export default function BoardList({
           className="mt-5 items-center px-6 py-12 text-center md:mt-6 md:py-16"
           role="status"
         >
-          <span className="text-text-default text-base font-regular md:text-lg">
+          <span className="text-text-default text-base font-regular md:text-sm">
             {isSearchMode
-              ? `"${keyword}"에 대한 검색 결과가 없어요`
-              : '아직 게시글이 없어요'}
+              ? `"${keyword}"에 대한 검색 결과가 없어요.`
+              : '아직 게시글이 없어요.'}
           </span>
         </div>
       ) : (
