@@ -29,7 +29,7 @@ export default function TaskListEmptyColumnPlaceholder({
       aria-label="할 일 목록이 비어 있습니다"
     >
       <p className="min-w-0 flex-1 truncate text-sm font-medium text-text-primary">
-        제목 없음
+        목록이 없습니다.
       </p>
       <div className="flex shrink-0 items-center gap-1.5">
         <Badge

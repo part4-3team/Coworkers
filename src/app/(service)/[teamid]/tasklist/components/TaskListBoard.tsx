@@ -80,7 +80,7 @@ export default function TaskListBoard({
       <header className="flex min-w-0 flex-row items-center gap-2 sm:gap-6">
         {isTaskListEmpty ? (
           <h2 className="min-w-0 flex-1 text-base font-semibold leading-6 text-interaction-inactive md:text-xl md:leading-6">
-            할 일을 입력해주세요..
+            목록이 없습니다.
           </h2>
         ) : (
           <h2 className={TASK_LIST_BOARD_COLUMN_TITLE_CLASS}>{columnTitle}</h2>

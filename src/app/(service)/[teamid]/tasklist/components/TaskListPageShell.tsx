@@ -105,16 +105,18 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
 
   return (
     <>
-      <TaskListContentArea>
-        <TaskListPageHeader
-          teamId={teamId}
-          teamName={teamId}
-          onConfirmTeamPageDelete={() => {
-            showToast('삭제되었습니다.', 'error');
-          }}
-        />
-        <div className="flex min-w-0 flex-col gap-4 md:gap-6 lg:flex-row lg:items-start lg:gap-16">
+      <TaskListContentArea className="gap-0 lg:grid lg:grid-cols-[16.875rem_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-6">
+        <div className="-mx-4 bg-background-secondary px-4 pb-8 pt-7.5 sm:-mx-5 sm:px-5 md:-mx-10 md:px-10 lg:contents">
+          <TaskListPageHeader
+            teamId={teamId}
+            teamName={teamId}
+            className="lg:col-span-2"
+            onConfirmTeamPageDelete={() => {
+              showToast('삭제되었습니다.', 'error');
+            }}
+          />
           <TaskListSidebar
+            className="mt-7.5 lg:col-start-1 lg:row-start-2 lg:mt-0"
             columns={columns}
             activeId={activeId}
             onSelectColumn={setActiveId}
@@ -122,8 +124,11 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
             onRequestDeleteColumn={handleRequestDeleteColumn}
             onAddListClick={() => setIsCreateColumnOpen(true)}
           />
-          <TaskListBoard columnTitle={columnTitle} />
         </div>
+        <TaskListBoard
+          className="lg:col-start-2 lg:row-start-2"
+          columnTitle={columnTitle}
+        />
       </TaskListContentArea>
 
       <TaskListFAB onClick={() => setIsCreateTaskOpen(true)} />

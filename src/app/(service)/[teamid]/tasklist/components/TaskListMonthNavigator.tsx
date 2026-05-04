@@ -45,8 +45,8 @@ export default function TaskListMonthNavigator({
   };
 
   return (
-    <div className="relative flex min-h-6 shrink-0 items-center justify-center sm:min-h-10">
-      <div className="flex items-center gap-2 pr-8 sm:gap-4 sm:pr-10">
+    <div className="relative flex min-h-7 shrink-0 items-center justify-center sm:min-h-10">
+      <div className="flex items-center gap-1 pr-11 sm:gap-4 sm:pr-10">
         <button
           type="button"
           aria-label="이전 달 보기"
