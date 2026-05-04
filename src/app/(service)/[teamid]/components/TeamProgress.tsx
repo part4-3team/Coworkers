@@ -29,7 +29,7 @@ export default function TeamProgress() {
     { label: '삭제하기', onClick: () => open('teamDelete') },
   ];
   const memberItems = [
-    { label: '팀 나가기', onClick: () => open('teamLeave') },
+    { label: '팀 탈퇴하기', onClick: () => open('teamLeave') },
   ];
   // TODO: 추후에 유저 상태 나뉘면 유저에 따라 드롭다운 구분할 예정
 

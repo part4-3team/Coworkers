@@ -43,9 +43,9 @@ export function TeamProgressModals({
       {is('teamLeave') && (
         <ConfirmModal
           onClose={close}
-          title="해당 팀에서 나가시겠어요?"
-          confirmText="팀 나가기"
-          toastMessage="팀에서 나가기 되었습니다."
+          title="해당 팀에서 탈퇴하시겠어요?"
+          confirmText="팀 탈퇴하기"
+          toastMessage="팀에서 탈퇴되었습니다."
         />
       )}
 
