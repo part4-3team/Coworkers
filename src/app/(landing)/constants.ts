@@ -1,7 +1,3 @@
-/**
- * 랜딩 페이지에서 사용하는 상수와 반복 데이터를 정의하는 파일입니다.
- */
-
 import type {
   LandingRevealDelay,
   LandingRevealDirection,
@@ -44,6 +40,7 @@ export const LANDING_TASKLIST_SECTION = {
   eyebrow: '세부 체크',
   image: imgLandingTasklist,
   imageAlt: '캘린더와 할 일 리스트 예시',
+  imagePriority: true, // ✅ LCP 이미지
   title: '세부적으로 할 일들을\n간편하게 체크해요',
 } as const satisfies LandingSectionContent;
 
@@ -53,6 +50,7 @@ export const LANDING_TASK_DETAIL_SECTION = {
   eyebrow: '할 일 공유',
   image: imgLandingTaskDetail,
   imageAlt: '할 일 상세와 댓글 예시',
+  imagePriority: false,
   title: '할 일 공유를 넘어\n의견을 나누고 함께 결정해요',
 } as const satisfies LandingSectionContent;
 
@@ -64,10 +62,10 @@ export const REVEAL_DIRECTION_CLASS = {
 } as const satisfies Record<LandingRevealDirection, string>;
 
 export const REVEAL_DELAY_CLASS = {
-  long: 'delay-300',
-  medium: 'delay-200',
   none: '',
   short: 'delay-100',
+  medium: 'delay-200',
+  long: 'delay-300',
 } as const satisfies Record<LandingRevealDelay, string>;
 
 export const REVEAL_OPTIONS = {
