@@ -14,7 +14,7 @@ export default function LandingCtaSection() {
         direction="up"
         className="flex flex-col items-center text-center"
       >
-        <h2 className="text-base font-bold leading-tight text-brand-primary md:text-2xl lg:text-4xl">
+        <h2 className="text-base font-bold leading-tight text-brand-primary md:text-2xl lg:text-3xl">
           지금 바로 시작해보세요.
         </h2>
         <p className="mt-3 whitespace-pre-line text-sm text-interaction-inactive lg:text-base">

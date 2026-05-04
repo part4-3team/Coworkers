@@ -27,17 +27,19 @@ export default function LandingFeatureCopy({
       )}
     >
       <Icon
-        width={48}
-        height={48}
-        className={cn('mb-4 h-12 w-12', iconClassName)}
+        width={40}
+        height={40}
+        className={cn('mb-4 h-10 w-10 md:h-12 md:w-12', iconClassName)}
         aria-hidden="true"
       />
-      <h2 className="whitespace-pre-line text-base font-bold leading-tight md:text-2xl lg:text-4xl">
+
+      <h2 className="whitespace-pre-line text-base font-bold leading-tight md:text-2xl lg:text-3xl">
         {title}
       </h2>
+
       <p
         className={cn(
-          'mt-4.5 whitespace-pre-line text-sm lg:text-base',
+          'mt-3 whitespace-pre-line text-sm leading-relaxed md:mt-4.5 lg:text-base',
           isInverse ? 'text-background-tertiary' : 'text-interaction-inactive',
         )}
       >
