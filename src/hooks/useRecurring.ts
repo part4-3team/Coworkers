@@ -7,11 +7,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import type { QueryParams } from '@/api/queryKeys';
-import { queryKeys } from '@/api/queryKeys';
 import {
   createMutationOptions,
   type MutationOptionsOverrides,
 } from '@/api/queryOptions/factory';
+import { refetchRecurringQueries } from '@/api/queryRefetch';
 import {
   createRecurring,
   deleteRecurring,
@@ -47,21 +47,6 @@ type DeleteRecurringVariables = {
   token?: string;
 };
 
-async function invalidateRecurringRelatedQueries(
-  queryClient: ReturnType<typeof useQueryClient>,
-  teamId: string,
-) {
-  await Promise.all([
-    queryClient.invalidateQueries({ queryKey: queryKeys.task.lists(teamId) }),
-    queryClient.invalidateQueries({
-      queryKey: queryKeys.taskList.lists(teamId),
-    }),
-    queryClient.invalidateQueries({
-      queryKey: queryKeys.recurring.lists(teamId),
-    }),
-  ]);
-}
-
 export function useCreateRecurringMutation(
   options?: MutationOptionsOverrides<
     CreateRecurringData,
@@ -83,10 +68,7 @@ export function useCreateRecurringMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await invalidateRecurringRelatedQueries(
-            queryClient,
-            variables.teamId,
-          );
+          await refetchRecurringQueries(queryClient, variables.teamId);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -116,10 +98,7 @@ export function useUpdateRecurringMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await invalidateRecurringRelatedQueries(
-            queryClient,
-            variables.teamId,
-          );
+          await refetchRecurringQueries(queryClient, variables.teamId);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -149,10 +128,7 @@ export function useDeleteRecurringMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await invalidateRecurringRelatedQueries(
-            queryClient,
-            variables.teamId,
-          );
+          await refetchRecurringQueries(queryClient, variables.teamId);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },

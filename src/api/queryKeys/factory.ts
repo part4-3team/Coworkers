@@ -1,5 +1,17 @@
 /**
  * TanStack Query 키를 일관된 형태로 생성하는 공용 팩토리입니다.
+ *
+ * 이 파일은 새 query key를 만들 때 "형태를 통일"하기 위해 사용합니다.
+ *
+ * 언제 보면 좋은가:
+ * - 새 도메인의 `list`, `detail`, `all` 키를 만들 때
+ * - params 객체 순서 때문에 query key가 매번 달라지는 문제를 막고 싶을 때
+ * - 팀 스코프(`/teams/{teamId}/...`) 키를 공통 형식으로 만들고 싶을 때
+ *
+ * 핵심 역할:
+ * - `normalizeQueryParams`: params 순서를 고정해서 같은 요청은 같은 key가 되게 함
+ * - `createResourceQueryKeys`: 일반적인 list/detail/all 패턴 생성
+ * - `createTeamResourceQueryKeys`: 팀 스코프 리소스용 list/detail/all 패턴 생성
  */
 
 import {

@@ -16,13 +16,16 @@ import {
   updateArticle,
 } from '@/api/articleApi';
 import type { ArticleListQueryParams, QueryKeyId } from '@/api/queryKeys';
-import { queryKeys } from '@/api/queryKeys';
 import { articleQueryOptions } from '@/api/queryOptions';
 import {
   createMutationOptions,
   type MutationOptionsOverrides,
   type QueryOptionsOverrides,
 } from '@/api/queryOptions/factory';
+import {
+  refetchArticleListQueries,
+  refetchArticleQueries,
+} from '@/api/queryRefetch';
 
 type ArticleListData = Awaited<ReturnType<typeof getArticleList>>;
 type ArticleDetailData = Awaited<ReturnType<typeof getArticleDetail>>;
@@ -110,9 +113,7 @@ export function useCreateArticleMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await queryClient.invalidateQueries({
-            queryKey: queryKeys.article.lists(variables.teamId),
-          });
+          await refetchArticleListQueries(queryClient, variables.teamId);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -138,17 +139,11 @@ export function useUpdateArticleMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.detail(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.lists(variables.teamId),
-            }),
-          ]);
+          await refetchArticleQueries(
+            queryClient,
+            variables.teamId,
+            variables.articleId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -169,17 +164,11 @@ export function useDeleteArticleMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.detail(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.lists(variables.teamId),
-            }),
-          ]);
+          await refetchArticleQueries(
+            queryClient,
+            variables.teamId,
+            variables.articleId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -200,17 +189,11 @@ export function useLikeArticleMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.detail(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.lists(variables.teamId),
-            }),
-          ]);
+          await refetchArticleQueries(
+            queryClient,
+            variables.teamId,
+            variables.articleId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -231,17 +214,11 @@ export function useUnlikeArticleMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.detail(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.lists(variables.teamId),
-            }),
-          ]);
+          await refetchArticleQueries(
+            queryClient,
+            variables.teamId,
+            variables.articleId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },

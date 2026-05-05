@@ -1,5 +1,13 @@
 /**
- * Swagger `Comment`, `ArticleComment` 도메인 query options를 정의합니다.
+ * Swagger `Comment`, `ArticleComment` 도메인 query options 모음입니다.
+ *
+ * 댓글은 파일 기준으로는 둘로 나뉩니다.
+ * - 할 일 댓글 -> `commentQueryOptions`
+ * - 게시글 댓글 -> `articleCommentQueryOptions`
+ *
+ * 즉 댓글 기능을 붙일 때는
+ * 먼저 "이 댓글이 할 일 댓글인지, 게시글 댓글인지"를 구분한 뒤
+ * 이 파일에서 맞는 options를 보면 됩니다.
  */
 
 import { getArticleComments, getTaskComments } from '@/api/commentApi';
@@ -15,6 +23,7 @@ import {
 type TaskCommentsData = Awaited<ReturnType<typeof getTaskComments>>;
 type ArticleCommentsData = Awaited<ReturnType<typeof getArticleComments>>;
 
+/** 할 일 댓글 조회용 query options입니다. */
 export const commentQueryOptions = {
   taskComments: <TData = TaskCommentsData>(
     teamId: string,
@@ -29,6 +38,7 @@ export const commentQueryOptions = {
     }),
 } as const;
 
+/** 게시글 댓글 조회용 query options입니다. */
 export const articleCommentQueryOptions = {
   list: <TData = ArticleCommentsData>(
     teamId: string,

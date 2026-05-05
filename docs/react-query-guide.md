@@ -522,7 +522,50 @@ queryClient.invalidateQueries({
 
 ---
 
-## 11. 왜 화면에서는 hook만 쓰면 편한가
+## 11. 지금은 공통 refetch helper도 같이 쓴다
+
+반복해서 같은 `invalidateQueries` 코드를 쓰지 않도록
+지금 프로젝트에는 공통 helper 파일도 있습니다.
+
+- [queryRefetch.ts](../src/api/queryRefetch.ts)
+
+이 파일은 이름은 `refetch`지만,
+내부 구현은 React Query의 `invalidateQueries`를 사용합니다.
+
+즉 팀원 입장에서는
+
+> “mutation 성공 후 어떤 데이터를 다시 받아와야 하는지”
+
+를 훅마다 새로 쓰지 않고,
+이미 만들어둔 helper를 가져다 쓰면 됩니다.
+
+예를 들면:
+
+```ts
+await refetchArticleQueries(queryClient, teamId, articleId);
+await refetchTaskCommentQueries(queryClient, teamId, taskId);
+await refetchUserQueries(queryClient);
+```
+
+쉽게 연결하면:
+
+- 사용자 정보가 바뀌면 -> `refetchUserQueries`
+- 게시글 상세/좋아요/삭제가 바뀌면 -> `refetchArticleQueries`
+- 게시글 댓글이 바뀌면 -> `refetchArticleCommentQueries`
+- 할 일 댓글이 바뀌면 -> `refetchTaskCommentQueries`
+- 반복 일정이 바뀌면 -> `refetchRecurringQueries`
+
+즉 지금은
+
+- `queryKeys`는 캐시 이름을 만들고
+- `queryRefetch.ts`는 “무엇을 다시 받아올지”를 묶고
+- `hooks`는 그 helper를 호출하는 구조
+
+라고 생각하면 됩니다.
+
+---
+
+## 12. 왜 화면에서는 hook만 쓰면 편한가
 
 예를 들어 댓글 생성 버튼을 눌렀다고 해볼게요.
 
@@ -558,7 +601,7 @@ createArticleCommentMutation.mutate({
 
 ---
 
-## 12. 새 API를 붙일 때 순서
+## 13. 새 API를 붙일 때 순서
 
 새 기능을 붙일 때는 아래 순서대로 가면 됩니다.
 
@@ -617,6 +660,21 @@ createArticleCommentMutation.mutate({
 
 - [useArticle.ts](../src/hooks/useArticle.ts)
 - [useArticleComment.ts](../src/hooks/useArticleComment.ts)
+
+mutation이 있다면 이 단계에서 같이 확인합니다.
+
+- 기존 `queryRefetch.ts` helper를 재사용할 수 있는가?
+- 없다면 새 도메인용 refetch helper를 추가해야 하는가?
+
+즉 새 기능을 만들 때는 이제
+
+1. API 함수
+2. query key
+3. query options
+4. hook
+5. mutation 후 refetch 범위
+
+까지 같이 보는 흐름입니다.
 
 여기서 화면에서 바로 쓸 수 있는 형태로 감쌉니다.
 

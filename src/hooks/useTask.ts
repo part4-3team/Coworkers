@@ -13,13 +13,13 @@ import {
   updateTaskComment,
 } from '@/api/commentApi';
 import type { QueryKeyId, TaskQueryParams } from '@/api/queryKeys';
-import { queryKeys } from '@/api/queryKeys';
 import { commentQueryOptions, taskQueryOptions } from '@/api/queryOptions';
 import {
   createMutationOptions,
   type MutationOptionsOverrides,
   type QueryOptionsOverrides,
 } from '@/api/queryOptions/factory';
+import { refetchTaskCommentQueries } from '@/api/queryRefetch';
 import { getTaskDetail, getTasks } from '@/api/taskApi';
 
 type TasksData = Awaited<ReturnType<typeof getTasks>>;
@@ -124,17 +124,11 @@ export function useCreateTaskCommentMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.comment.task(
-                variables.teamId,
-                variables.taskId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.task.lists(variables.teamId),
-            }),
-          ]);
+          await refetchTaskCommentQueries(
+            queryClient,
+            variables.teamId,
+            variables.taskId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -164,17 +158,11 @@ export function useUpdateTaskCommentMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.comment.task(
-                variables.teamId,
-                variables.taskId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.task.lists(variables.teamId),
-            }),
-          ]);
+          await refetchTaskCommentQueries(
+            queryClient,
+            variables.teamId,
+            variables.taskId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -203,17 +191,11 @@ export function useDeleteTaskCommentMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.comment.task(
-                variables.teamId,
-                variables.taskId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.task.lists(variables.teamId),
-            }),
-          ]);
+          await refetchTaskCommentQueries(
+            queryClient,
+            variables.teamId,
+            variables.taskId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },

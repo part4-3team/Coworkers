@@ -1,5 +1,11 @@
 /**
- * 팀 관련 query options를 정의하는 파일입니다.
+ * 팀 관련 query options 모음입니다.
+ *
+ * 이 파일은 팀 메인 페이지처럼
+ * - 팀 상세
+ * - 날짜별 팀 할 일
+ *
+ * 을 조회하는 hook을 만들 때 사용합니다.
  */
 
 import { getTeamDetail, getTeamTasksByDate } from '@/api/groupApi';
@@ -15,6 +21,7 @@ import {
 type TeamDetailData = Awaited<ReturnType<typeof getTeamDetail>>;
 type TeamTasksByDateData = Awaited<ReturnType<typeof getTeamTasksByDate>>;
 
+/** 팀 상세 / 날짜별 할 일 조회용 options입니다. */
 export const teamQueryOptions = {
   detail: <TData = TeamDetailData>(
     teamId: string,

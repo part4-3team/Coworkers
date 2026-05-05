@@ -1,5 +1,12 @@
 /**
- * 할 일 관련 query options를 정의하는 파일입니다.
+ * 할 일 관련 query options 모음입니다.
+ *
+ * 이 파일은 아래 조회 기능을 만들 때 사용합니다.
+ * - 날짜 / 조건별 할 일 목록 조회
+ * - 할 일 상세 조회
+ * - 할 일 목록(컬럼) 상세 조회
+ *
+ * 즉 `taskApi.ts`의 조회 함수를 React Query에 연결하는 중간 단계라고 보면 됩니다.
  */
 
 import type {
@@ -20,6 +27,7 @@ type TaskDetailData = Awaited<ReturnType<typeof getTaskDetail>>;
 type TasksData = Awaited<ReturnType<typeof getTasks>>;
 type TaskListDetailData = Awaited<ReturnType<typeof getTaskListDetail>>;
 
+/** 할 일 / 할 일 목록 조회 hook이 공통으로 사용하는 options입니다. */
 export const taskQueryOptions = {
   detail: <TData = TaskDetailData>(
     teamId: string,

@@ -1,5 +1,13 @@
 /**
- * 사용자 관련 query options를 정의하는 파일입니다.
+ * 사용자 관련 query options 모음입니다.
+ *
+ * 이 파일은 현재 로그인한 사용자를 기준으로 한 조회에서 사용합니다.
+ *
+ * 예:
+ * - 내 정보 -> `me`
+ * - 내가 속한 팀 목록 -> `memberships`
+ * - 내가 가진 그룹 목록 -> `groups`
+ * - 마이히스토리 완료 목록 -> `completedTasks`
  */
 
 import type {
@@ -25,6 +33,7 @@ type MyGroupsData = Awaited<ReturnType<typeof getMyGroups>>;
 type MeData = Awaited<ReturnType<typeof getMe>>;
 type MyMembershipsData = Awaited<ReturnType<typeof getMyMemberships>>;
 
+/** 사용자 / 마이페이지 / 마이히스토리에서 공통으로 사용하는 options입니다. */
 export const userQueryOptions = {
   completedTasks: <TData = CompletedTasksData>(
     params?: CompletedTaskHistoryQueryParams,

@@ -13,13 +13,13 @@ import {
   updateArticleComment,
 } from '@/api/commentApi';
 import type { CursorPaginationQueryParams, QueryKeyId } from '@/api/queryKeys';
-import { queryKeys } from '@/api/queryKeys';
 import { articleCommentQueryOptions } from '@/api/queryOptions';
 import {
   createMutationOptions,
   type MutationOptionsOverrides,
   type QueryOptionsOverrides,
 } from '@/api/queryOptions/factory';
+import { refetchArticleCommentQueries } from '@/api/queryRefetch';
 
 type ArticleCommentsData = Awaited<ReturnType<typeof getArticleComments>>;
 type CreateArticleCommentData = Awaited<
@@ -107,20 +107,11 @@ export function useCreateArticleCommentMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.articleComment.article(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.detail(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-          ]);
+          await refetchArticleCommentQueries(
+            queryClient,
+            variables.teamId,
+            variables.articleId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -149,20 +140,11 @@ export function useUpdateArticleCommentMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.articleComment.article(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.detail(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-          ]);
+          await refetchArticleCommentQueries(
+            queryClient,
+            variables.teamId,
+            variables.articleId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -190,20 +172,11 @@ export function useDeleteArticleCommentMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.articleComment.article(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.article.detail(
-                variables.teamId,
-                variables.articleId,
-              ),
-            }),
-          ]);
+          await refetchArticleCommentQueries(
+            queryClient,
+            variables.teamId,
+            variables.articleId,
+          );
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },

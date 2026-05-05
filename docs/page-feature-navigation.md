@@ -12,6 +12,31 @@
 
 ---
 
+## 0. mutation 후 다시 불러오는 공통 helper
+
+생성 / 수정 / 삭제 후 관련 데이터를 다시 받아와야 할 때는
+아래 파일도 같이 보면 됩니다.
+
+- [queryRefetch.ts](../src/api/queryRefetch.ts)
+
+여기에는 지금 자주 쓰는 공통 helper가 들어 있습니다.
+
+- `refetchUserQueries`
+- `refetchArticleListQueries`
+- `refetchArticleQueries`
+- `refetchArticleCommentQueries`
+- `refetchTaskCommentQueries`
+- `refetchRecurringQueries`
+
+즉, 화면에서 mutation을 새로 붙일 때
+
+1. 어떤 훅을 쓸지 찾고
+2. 성공 후 어떤 helper를 같이 호출하는지 보면
+
+“왜 이 데이터가 다시 그려지는지”를 훨씬 빨리 이해할 수 있습니다.
+
+---
+
 ## 1. 빠르게 찾는 요약
 
 ### 인증
@@ -22,6 +47,7 @@
 - API: [authApi.ts](../src/api/authApi.ts)
 - 훅: [useAuth.ts](../src/hooks/useAuth.ts)
 - 먼저 찾을 export: `useSignInMutation`, `useSignUpMutation`
+- 같이 보면 좋은 refetch helper: `refetchUserQueries`
 
 **OAuth 로그인**
 
@@ -29,6 +55,7 @@
 - API: [authApi.ts](../src/api/authApi.ts)
 - 훅: [useAuth.ts](../src/hooks/useAuth.ts)
 - 먼저 찾을 export: `useSignInWithOauthMutation`, `useRefreshTokenMutation`
+- 같이 보면 좋은 refetch helper: `refetchUserQueries`
 
 ---
 
@@ -83,6 +110,7 @@
   - `useCreateTaskCommentMutation`
   - `useUpdateTaskCommentMutation`
   - `useDeleteTaskCommentMutation`
+- 같이 보면 좋은 refetch helper: `refetchTaskCommentQueries`
 
 **반복 일정**
 
@@ -93,6 +121,7 @@
   - `useCreateRecurringMutation`
   - `useUpdateRecurringMutation`
   - `useDeleteRecurringMutation`
+- 같이 보면 좋은 refetch helper: `refetchRecurringQueries`
 
 ---
 
@@ -123,6 +152,7 @@
   - `useDeleteArticleMutation`
   - `useLikeArticleMutation`
   - `useUnlikeArticleMutation`
+- 같이 보면 좋은 refetch helper: `refetchArticleListQueries`, `refetchArticleQueries`
 
 **게시글 댓글**
 
@@ -134,6 +164,7 @@
   - `useCreateArticleCommentMutation`
   - `useUpdateArticleCommentMutation`
   - `useDeleteArticleCommentMutation`
+- 같이 보면 좋은 refetch helper: `refetchArticleCommentQueries`
 
 ---
 

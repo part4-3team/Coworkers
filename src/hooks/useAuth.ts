@@ -12,11 +12,11 @@ import {
   signInWithOauth,
   signUp,
 } from '@/api/authApi';
-import { queryKeys } from '@/api/queryKeys';
 import {
   createMutationOptions,
   type MutationOptionsOverrides,
 } from '@/api/queryOptions/factory';
+import { refetchUserQueries } from '@/api/queryRefetch';
 import type { LoginFormValues, SignUpFormValues } from '@/types/auth';
 
 type SignUpData = Awaited<ReturnType<typeof signUp>>;
@@ -65,15 +65,7 @@ export function useSignUpMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.user.groups(),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.user.memberships(),
-            }),
-          ]);
+          await refetchUserQueries(queryClient);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -93,15 +85,7 @@ export function useSignInMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.user.groups(),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.user.memberships(),
-            }),
-          ]);
+          await refetchUserQueries(queryClient);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
@@ -140,15 +124,7 @@ export function useSignInWithOauthMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
-          await Promise.all([
-            queryClient.invalidateQueries({ queryKey: queryKeys.user.me() }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.user.groups(),
-            }),
-            queryClient.invalidateQueries({
-              queryKey: queryKeys.user.memberships(),
-            }),
-          ]);
+          await refetchUserQueries(queryClient);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },

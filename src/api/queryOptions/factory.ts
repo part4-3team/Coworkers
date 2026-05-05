@@ -1,5 +1,15 @@
 /**
- * 도메인별 query options 생성을 도와주는 공용 팩토리입니다.
+ * 도메인별 query options / mutation options 생성을 도와주는 공용 팩토리입니다.
+ *
+ * 이 파일은 아래 상황에서 열어보면 됩니다.
+ * - 새 queryOptions 파일을 만들 때
+ * - 목록 조회에 `keepPreviousData`를 자동으로 넣고 싶을 때
+ * - mutation options 타입을 통일하고 싶을 때
+ *
+ * 핵심 규칙:
+ * - `createQueryOptions`: 일반 조회용
+ * - `createListQueryOptions`: 목록 조회용 (기본 `keepPreviousData` 포함)
+ * - `createMutationOptions`: mutation용
  */
 
 import {
