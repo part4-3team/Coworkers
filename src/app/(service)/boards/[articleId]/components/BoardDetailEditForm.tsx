@@ -31,16 +31,16 @@ export default function BoardDetailEditForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div className="px-5.5 py-9.75 md:px-10 md:py-13.5 lg:px-15">
         <h2 className="text-text-primary text-xl font-bold leading-6">
           게시글 수정
         </h2>
         <div className="mt-8 md:mt-10">
           <div>
             <div className="flex items-center gap-1 md:gap-1.5">
-              <span className="block text-text-primary text-sm font-bold md:text-base">
+              <p className="text-text-primary text-sm font-bold md:text-base">
                 제목
-              </span>
+              </p>
               <IcStarRed
                 width={8}
                 height={8}
@@ -58,9 +58,9 @@ export default function BoardDetailEditForm({
           </div>
           <div className="mt-6 md:mt-8">
             <div className="flex items-center gap-1 md:gap-1.5">
-              <span className="block text-text-primary text-sm font-bold md:text-base">
+              <p className="text-text-primary text-sm font-bold md:text-base">
                 내용
-              </span>
+              </p>
               <IcStarRed
                 width={8}
                 height={8}
@@ -77,14 +77,14 @@ export default function BoardDetailEditForm({
             />
           </div>
           <div className="mt-6 md:mt-8">
-            <span className="block text-text-primary text-sm font-bold md:text-base">
+            <p className="text-text-primary text-sm font-bold md:text-base">
               이미지
-            </span>
+            </p>
             <ImageUploadField
               variant="post"
               src={formData.image || null}
               previewAlt="게시글 이미지"
-              buttonAriaLabel="게시글 이미지 추가"
+              buttonAriaLabel="게시글 이미지 수정"
               onChangeFile={handleImageChange}
             />
           </div>

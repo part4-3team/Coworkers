@@ -1,23 +1,32 @@
 'use client';
 
+import Image from 'next/image';
+
 import { useBoardDetailMenu } from '@/app/(service)/boards/[articleId]/hooks/useBoardDetailMenu';
 import { useLike } from '@/app/(service)/boards/[articleId]/hooks/useLike';
-import type { BoardDetailProps } from '@/app/(service)/boards/[articleId]/types';
-import { IcHeartFilledRed, IcHeartSmall, IcMoreVerticalLarge } from '@/assets';
-import { Avatar } from '@/components/common/avatar';
+import type {
+  BoardDetailProps,
+  UserProfileResponse,
+} from '@/app/(service)/boards/[articleId]/types';
+import {
+  IcHeartFilledRed,
+  IcHeartSmall,
+  IcMoreVerticalLarge,
+  IcUserXlarge,
+} from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import Modal from '@/components/common/modal';
 
 export default function BoardDetailHeader({
   boardDetail,
   userProfile,
-}: BoardDetailProps) {
+}: {
+  boardDetail: BoardDetailProps['boardDetail'];
+  userProfile: UserProfileResponse;
+}) {
   const { menuItems, isDeleteModalOpen, handleDeleteConfirm } =
     useBoardDetailMenu(boardDetail.id.toString());
-  const { isLiked, likeCount, handleLikeClick } = useLike({
-    boardDetail,
-    userProfile,
-  });
+  const { isLiked, likeCount, handleLikeClick } = useLike(boardDetail);
 
   return (
     <div>
@@ -51,12 +60,25 @@ export default function BoardDetailHeader({
       </div>
       <div className="flex items-center justify-between gap-2 mt-2 pb-3 border-b border-border-secondary md:mt-4">
         <div className="flex min-w-0 flex-1 items-center">
-          <Avatar
-            src={userProfile.image}
-            alt={boardDetail.writer.nickname}
-            size={24}
-            className="mr-2"
-          />
+          <div className="flex shrink-0 overflow-hidden size-6 rounded-md bg-background-tertiary items-center justify-center mr-2">
+            {userProfile.image ? (
+              <Image
+                src={userProfile.image}
+                width={24}
+                height={24}
+                alt={`${boardDetail.writer.nickname}의 프로필 이미지`}
+                className="size-6 object-cover"
+              />
+            ) : (
+              <IcUserXlarge
+                width={24}
+                height={24}
+                className="size-6"
+                role="img"
+                aria-label={`${boardDetail.writer.nickname}의 프로필 이미지`}
+              />
+            )}
+          </div>
           <span className="text-text-primary text-sm font-medium leading-4 min-w-0 truncate md:text-base">
             {boardDetail.writer.nickname}
           </span>

@@ -34,7 +34,7 @@ export const useBoardDetailMenu = (articleId: string) => {
     ...item,
     onClick: () => {
       if (item.label === BOARD_DETAIL_MENU.EDIT) handleEdit();
-      if (item.label === BOARD_DETAIL_MENU.DELETE) handleDelete();
+      else if (item.label === BOARD_DETAIL_MENU.DELETE) handleDelete();
     },
   }));
 
