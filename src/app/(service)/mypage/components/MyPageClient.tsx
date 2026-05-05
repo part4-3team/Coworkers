@@ -24,11 +24,12 @@ export default function MyPage() {
           <div className="flex justify-end">
             <button
               onClick={() => setIsWithdrawModalOpen(true)}
-              className="flex gap-2 text-status-danger font-medium text-base"
+              className="flex items-center gap-2 leading-none text-status-danger font-medium text-base"
             >
               <IcLogout
                 width={15.75}
                 height={12}
+                className="shrink-0"
                 role="img"
                 aria-label="회원 탈퇴 아이콘"
               />

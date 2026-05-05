@@ -4,15 +4,20 @@
 
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
 } from '@/api/queryKeys';
 import { userQueryOptions } from '@/api/queryOptions';
-import type { QueryOptionsOverrides } from '@/api/queryOptions/factory';
 import {
+  createMutationOptions,
+  type MutationOptionsOverrides,
+  type QueryOptionsOverrides,
+} from '@/api/queryOptions/factory';
+import {
+  deleteMe,
   getCompletedTasks,
   getMe,
   getMyGroups,
@@ -20,6 +25,7 @@ import {
 } from '@/api/userApi';
 
 type CompletedTasksData = Awaited<ReturnType<typeof getCompletedTasks>>;
+type DeleteMeData = Awaited<ReturnType<typeof deleteMe>>;
 type MeData = Awaited<ReturnType<typeof getMe>>;
 type MyGroupsData = Awaited<ReturnType<typeof getMyGroups>>;
 type MyMembershipsData = Awaited<ReturnType<typeof getMyMemberships>>;
@@ -43,10 +49,23 @@ type UseMeParams<TData = MeData> = {
   options?: QueryOptionsOverrides<MeData, TData>;
 };
 
+type DeleteMeVariables = void;
+
 export function useMeQuery<TData = MeData>({
   options,
 }: UseMeParams<TData> = {}) {
   return useQuery(userQueryOptions.me<TData>(options));
+}
+
+export function useDeleteMeMutation(
+  options?: MutationOptionsOverrides<DeleteMeData, DeleteMeVariables>,
+) {
+  return useMutation(
+    createMutationOptions({
+      mutationFn: () => deleteMe(),
+      options,
+    }),
+  );
 }
 
 export function useMyGroupsQuery<TData = MyGroupsData>({

@@ -1,18 +1,38 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import Modal from '@/components/common/modal';
 import { useToast } from '@/components/common/toast';
+import { ROUTES } from '@/constants/ROUTES';
+import { useDeleteMeMutation } from '@/hooks/useUser';
+import { clearAuthSession } from '@/utils/authSession';
 
 type Props = {
   onClose: () => void;
 };
 
 export default function WithdrawModal({ onClose }: Props) {
+  const router = useRouter();
   const { showToast } = useToast();
+  const deleteMeMutation = useDeleteMeMutation({
+    onError: () => {
+      showToast('회원 탈퇴에 실패했습니다. 다시 시도해주세요.', 'error');
+    },
+    onSuccess: () => {
+      clearAuthSession();
+      onClose();
+      showToast('회원 탈퇴가 완료되었습니다.', 'error');
+      router.replace(ROUTES.LOGIN);
+    },
+  });
 
   const handleWithdraw = () => {
-    onClose();
-    showToast('회원 탈퇴가 완료되었습니다.', 'error');
+    if (deleteMeMutation.isPending) {
+      return;
+    }
+
+    deleteMeMutation.mutate();
   };
 
   return (

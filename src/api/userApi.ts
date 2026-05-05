@@ -4,6 +4,7 @@
 
 import { apiClient, teamEndpoint } from '@/api/apiClient';
 import { buildQueryString } from '@/api/buildQueryString';
+import { HTTP_METHODS } from '@/api/constants';
 import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
@@ -11,6 +12,12 @@ import type {
 
 export async function getMe() {
   return apiClient<unknown>(teamEndpoint('/user'));
+}
+
+export async function deleteMe() {
+  return apiClient<void>(teamEndpoint('/user'), {
+    method: HTTP_METHODS.DELETE,
+  });
 }
 
 export async function getMyGroups(params?: QueryParams) {

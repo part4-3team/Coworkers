@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 import { ROUTES } from '@/constants/ROUTES';
 
 const SUPPORTED_OAUTH_PROVIDER = 'kakao';
+const KAKAO_PROFILE_SCOPES = ['profile_nickname', 'profile_image'];
 
 export async function GET(
   request: NextRequest,
@@ -29,6 +30,7 @@ export async function GET(
   authorizeUrl.searchParams.set('client_id', clientId);
   authorizeUrl.searchParams.set('redirect_uri', redirectUri.toString());
   authorizeUrl.searchParams.set('response_type', 'code');
+  authorizeUrl.searchParams.set('scope', KAKAO_PROFILE_SCOPES.join(','));
 
   return NextResponse.redirect(authorizeUrl);
 }
