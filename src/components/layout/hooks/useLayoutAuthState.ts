@@ -7,7 +7,10 @@ import {
   isGuestLayoutPath,
 } from '@/components/layout/constants';
 import type { LayoutAuthState } from '@/components/layout/types/auth';
-import { getCurrentUser } from '@/components/layout/utils/layoutAuthStateHelpers';
+import {
+  getCurrentUser,
+  getProfileTeamName,
+} from '@/components/layout/utils/layoutAuthStateHelpers';
 import {
   toMeResponse,
   toSidebarTeams,
@@ -67,6 +70,7 @@ export default function useLayoutAuthState(pathname: string | null) {
         ? getCurrentUser(pathname, meData, teams)
         : DEFAULT_LAYOUT_CURRENT_USER,
       isAuthenticated,
+      profileTeamName: isAuthenticated ? getProfileTeamName(teams) : undefined,
       teams: isAuthenticated ? teams : [],
     }),
     [isAuthenticated, meData, pathname, teams],

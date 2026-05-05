@@ -2,6 +2,7 @@ import type { LayoutCurrentUser } from '@/components/layout/constants';
 import type { SidebarTeam } from '@/components/layout/sidebar/types';
 
 export type LayoutMembershipGroup = {
+  createdAt?: string;
   id?: number | string;
   name?: string;
   teamId?: string;
@@ -28,5 +29,6 @@ export type LayoutSessionFallbackUser = {
 export type LayoutAuthState = {
   currentUser: LayoutCurrentUser;
   isAuthenticated: boolean;
+  profileTeamName?: string;
   teams: SidebarTeam[];
 };

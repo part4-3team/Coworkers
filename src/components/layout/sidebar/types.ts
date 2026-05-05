@@ -21,6 +21,7 @@ export type SidebarFooterProps = SidebarExpandedProps;
 export type SidebarIcon = string;
 
 export type SidebarTeam = {
+  createdAt?: string;
   id: string;
   isOwner?: boolean;
   name: string;

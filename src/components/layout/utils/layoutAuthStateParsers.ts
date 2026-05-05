@@ -64,6 +64,10 @@ export function toSidebarTeams(data: unknown): SidebarTeam[] {
     }
 
     teams.push({
+      createdAt:
+        typeof membership.group?.createdAt === 'string'
+          ? membership.group.createdAt
+          : undefined,
       id: teamId,
       isOwner: membership.role === 'ADMIN',
       name: teamName,

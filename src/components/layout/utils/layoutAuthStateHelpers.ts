@@ -83,3 +83,18 @@ export function getCurrentUser(
       DEFAULT_LAYOUT_CURRENT_USER.teamName,
   };
 }
+
+export function getProfileTeamName(teams: SidebarTeam[]) {
+  if (teams.length === 0) {
+    return undefined;
+  }
+
+  const [firstJoinedTeam] = [...teams].sort((teamA, teamB) => {
+    const teamATime = teamA.createdAt ? new Date(teamA.createdAt).getTime() : 0;
+    const teamBTime = teamB.createdAt ? new Date(teamB.createdAt).getTime() : 0;
+
+    return teamATime - teamBTime;
+  });
+
+  return firstJoinedTeam?.name;
+}
