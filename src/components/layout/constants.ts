@@ -15,13 +15,13 @@ export const DEFAULT_LAYOUT_CURRENT_USER = {
   email: undefined,
   image: null,
   name: '사용자',
-  teamName: 'Coworkers',
+  teamName: '',
 } satisfies LayoutCurrentUser;
 
 export function isGuestLayoutPath(pathname: string | null) {
   return (
     pathname === ROUTES.LOGIN ||
     pathname === ROUTES.SIGNUP ||
-    pathname?.startsWith('/oauth/signup/') === true
+    pathname?.startsWith('/oauth/') === true
   );
 }

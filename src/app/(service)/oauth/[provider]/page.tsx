@@ -4,7 +4,7 @@
 
 import OAuthSignupPageContent from '@/app/(service)/oauth/signup/[provider]/components/OAuthSignupPageContent';
 
-type OAuthSignupPageProps = {
+type OAuthCallbackPageProps = {
   params: Promise<{ provider: string }>;
   searchParams: Promise<{
     code?: string;
@@ -13,10 +13,10 @@ type OAuthSignupPageProps = {
   }>;
 };
 
-export default async function OAuthSignupPage({
+export default async function OAuthCallbackPage({
   params,
   searchParams,
-}: OAuthSignupPageProps) {
+}: OAuthCallbackPageProps) {
   const { provider } = await params;
   const { code, error, state } = await searchParams;
 

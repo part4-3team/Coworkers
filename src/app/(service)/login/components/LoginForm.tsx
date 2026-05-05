@@ -102,7 +102,13 @@ export default function LoginForm() {
       </div>
 
       {/* 간편 로그인 */}
-      <div className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6">
+      <button
+        type="button"
+        onClick={() => {
+          window.location.assign(ROUTES.OAUTH_AUTHORIZE('kakao'));
+        }}
+        className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6"
+      >
         <span className="text-sm text-text-secondary">간편 로그인하기</span>
         <IcKakaotalk
           width={42}
@@ -111,7 +117,7 @@ export default function LoginForm() {
           role="img"
           aria-label="카카오 아이콘"
         />
-      </div>
+      </button>
 
       {isForgotPasswordModalOpen && (
         <ForgotPasswordModal

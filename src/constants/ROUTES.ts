@@ -15,5 +15,7 @@ export const ROUTES = {
   TEAM: (teamId: string) => `/${teamId}`,
   TASK_LIST: (teamId: string) => `/${teamId}/tasklist`,
   TASK_DETAIL: (teamId: string, taskId: string) => `/${teamId}/${taskId}`,
+  OAUTH_AUTHORIZE: (provider: string) => `/api/oauth/${provider}/authorize`,
+  OAUTH_CALLBACK: (provider: string) => `/oauth/${provider}`,
   OAUTH_SIGNUP: (provider: string) => `/oauth/signup/${provider}`,
 } as const;

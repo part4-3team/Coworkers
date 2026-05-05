@@ -20,6 +20,24 @@ export function getSessionFallbackUser(): LayoutSessionFallbackUser {
   };
 }
 
+function getDisplayName(...candidates: Array<string | undefined>) {
+  for (const candidate of candidates) {
+    if (!candidate) {
+      continue;
+    }
+
+    const trimmedCandidate = candidate.trim();
+
+    if (!trimmedCandidate) {
+      continue;
+    }
+
+    return trimmedCandidate;
+  }
+
+  return DEFAULT_LAYOUT_CURRENT_USER.name;
+}
+
 function getTeamIdFromPathname(pathname: string | null) {
   if (!pathname) {
     return null;
@@ -57,10 +75,7 @@ export function getCurrentUser(
   return {
     email: meData?.email ?? sessionFallbackUser.email,
     image: meData?.image ?? sessionFallbackUser.image ?? null,
-    name:
-      meData?.nickname ??
-      sessionFallbackUser.nickname ??
-      DEFAULT_LAYOUT_CURRENT_USER.name,
+    name: getDisplayName(meData?.nickname, sessionFallbackUser.nickname),
     teamName:
       currentPathTeam?.name ??
       sessionFallbackUser.teamName ??

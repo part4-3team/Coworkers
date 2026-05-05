@@ -105,7 +105,13 @@ export default function SignupForm() {
         <div className="h-px flex-1 bg-background-tertiary" />
       </div>
 
-      <div className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6 ">
+      <button
+        type="button"
+        onClick={() => {
+          window.location.assign(ROUTES.OAUTH_AUTHORIZE('kakao'));
+        }}
+        className="mx-auto mt-4 flex h-11 w-full max-w-md items-center justify-between md:px-6 "
+      >
         <span className="text-sm text-text-secondary">
           {SIGNUP_TEXT.kakaoSignUp}
         </span>
@@ -116,7 +122,7 @@ export default function SignupForm() {
           role="img"
           aria-label="카카오 아이콘"
         />
-      </div>
+      </button>
     </section>
   );
 }
