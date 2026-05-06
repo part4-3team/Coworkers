@@ -2,7 +2,6 @@ import type { Post } from '@/app/(service)/boards/types';
 
 export type BoardDetailProps = {
   boardDetail: Post;
-  userProfile: UserProfileResponse;
 };
 
 export type BoardDetailParams = {
@@ -14,7 +13,7 @@ type Group = {
   teamId: string;
   updatedAt: string;
   createdAt: string;
-  image: string;
+  image: string | null;
   name: string;
 };
 
@@ -23,7 +22,7 @@ type Group = {
 type Membership = {
   group: Group;
   role: 'ADMIN' | 'MEMBER';
-  userImage?: string;
+  userImage: string | null;
   userEmail: string;
   userName: string;
   groupId: number;
@@ -34,7 +33,7 @@ type Membership = {
  */
 export type UserProfileResponse = {
   teamId: string;
-  image: string;
+  image: string | null; // 프로필 이미지
   nickname: string;
   updatedAt: string;
   createdAt: string;
