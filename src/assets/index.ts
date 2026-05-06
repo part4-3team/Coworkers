@@ -90,3 +90,5 @@ export { default as IcUserLarge } from '@/assets/icons/ic_user_large.svg';
 export { default as IcUserXlarge } from '@/assets/icons/ic_user_xlarge.svg';
 export { default as IcVisibility } from '@/assets/icons/ic_visibility.svg';
 export { default as IcVisibilityOff } from '@/assets/icons/ic_visibility_off.svg';
+
+export { default as IcError } from '@/assets/icons/ic_error.svg';
