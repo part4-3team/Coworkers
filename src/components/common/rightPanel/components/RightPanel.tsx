@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import RightPanelShell from '@/components/common/rightPanel/components/RightPanelShell';
 import type { RightPanelProps } from '@/components/common/rightPanel/types';
 import { cn } from '@/utils/cn';
@@ -18,27 +16,6 @@ export default function RightPanel({
   onClose,
   title,
 }: RightPanelProps) {
-  useEffect(() => {
-    if (
-      !isVisible ||
-      typeof window === 'undefined' ||
-      window.innerWidth >= 1536
-    ) {
-      return;
-    }
-
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousHtmlOverflow;
-    };
-  }, [isVisible]);
-
   if (!isRendered) {
     return null;
   }
