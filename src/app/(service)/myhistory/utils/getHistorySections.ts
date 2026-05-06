@@ -1,3 +1,7 @@
+/**
+ * 히스토리 섹션을 날짜 범위에 맞게 필터링하고 화면 표시용으로 변환하는 유틸입니다.
+ */
+
 import type {
   MyHistoryDateRange,
   MyHistoryDateSection,

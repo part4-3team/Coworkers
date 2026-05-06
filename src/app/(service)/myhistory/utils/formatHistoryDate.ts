@@ -1,3 +1,7 @@
+/**
+ * 마이 히스토리 날짜 범위 생성과 표시 문자열 포맷을 담당하는 유틸입니다.
+ */
+
 import type { MyHistoryDateRange } from '@/app/(service)/myhistory/types';
 export {
   addDays,

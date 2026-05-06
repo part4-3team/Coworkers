@@ -1,5 +1,9 @@
 'use client';
 
+/**
+ * 내 히스토리 화면의 날짜 범위, 완료 이력, 보드 상태를 조합하는 훅입니다.
+ */
+
 import { useMemo, useState } from 'react';
 
 import useHistoryBoardData from '@/app/(service)/myhistory/hooks/useHistoryBoardData';

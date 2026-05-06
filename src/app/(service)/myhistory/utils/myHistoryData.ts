@@ -1,3 +1,7 @@
+/**
+ * 마이 히스토리 데이터 유틸을 한 곳에서 다시 내보내는 파일입니다.
+ */
+
 export type {
   HistoryTaskListDetailSource,
   HistoryTeamDetail,

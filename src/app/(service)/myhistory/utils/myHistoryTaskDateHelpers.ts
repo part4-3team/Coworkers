@@ -1,3 +1,7 @@
+/**
+ * 완료 이력의 날짜 파싱과 범위 계산을 돕는 유틸입니다.
+ */
+
 import type {
   MyHistoryCompletedTaskRecord,
   MyHistoryDateRange,

@@ -1,3 +1,7 @@
+/**
+ * 히스토리 보드 조회에 필요한 날짜 키와 할 일 목록 식별자 조합을 만드는 유틸입니다.
+ */
+
 import type {
   HistoryTaskListDescriptor,
   HistoryTeamDetail,

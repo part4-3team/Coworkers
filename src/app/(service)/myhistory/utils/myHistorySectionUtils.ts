@@ -1,3 +1,7 @@
+/**
+ * 히스토리 섹션 생성에 필요한 작업 메타와 화면 표시용 작업 변환 유틸입니다.
+ */
+
 import type {
   HistoryTaskListDetailSource,
   HistoryTaskMeta,

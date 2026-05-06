@@ -1,3 +1,7 @@
+/**
+ * 팀별 요약 카드와 필터 데이터를 만드는 유틸입니다.
+ */
+
 import type {
   HistorySummaryAccumulator,
   HistoryTaskListDetailSource,

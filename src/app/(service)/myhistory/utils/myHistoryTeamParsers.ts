@@ -1,3 +1,7 @@
+/**
+ * 멤버십과 팀 상세 응답을 마이 히스토리 전용 데이터로 변환하는 유틸입니다.
+ */
+
 import type {
   HistoryMembershipTeam,
   HistoryTaskListSummary,

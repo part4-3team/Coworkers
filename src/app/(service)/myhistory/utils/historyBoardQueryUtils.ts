@@ -1,3 +1,7 @@
+/**
+ * 히스토리 보드의 중복 제거와 쿼리 결과 병합을 돕는 유틸입니다.
+ */
+
 import type {
   HistoryMembershipTeam,
   HistoryTaskListDescriptor,

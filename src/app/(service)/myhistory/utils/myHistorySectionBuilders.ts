@@ -1,3 +1,7 @@
+/**
+ * 완료 이력을 날짜별, 주제별 히스토리 섹션 구조로 만드는 유틸입니다.
+ */
+
 import type {
   HistoryTaskListDetailSource,
   MyHistoryCompletedTaskRecord,

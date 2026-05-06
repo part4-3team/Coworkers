@@ -1,3 +1,7 @@
+/**
+ * 마이 히스토리 페이지 전역에서 사용하는 타입을 정의하는 파일입니다.
+ */
+
 import type {
   MouseEvent as ReactMouseEvent,
   PointerEvent as ReactPointerEvent,
@@ -5,10 +9,6 @@ import type {
 } from 'react';
 
 import type { DatePickerRangeValue } from '@/components/common/form/types';
-
-/**
- * 마이 히스토리 페이지에서 사용하는 타입을 정의하는 파일입니다.
- */
 
 export type MyHistoryFilter = {
   count: number;

@@ -1,3 +1,7 @@
+/**
+ * 히스토리 날짜 비교와 월/기간 범위 계산에 사용하는 기본 유틸입니다.
+ */
+
 import type {
   MyHistoryDateRange,
   MyHistoryResolvedDateRange,

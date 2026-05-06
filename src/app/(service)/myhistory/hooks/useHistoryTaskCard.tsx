@@ -1,5 +1,9 @@
 'use client';
 
+/**
+ * 내 히스토리 작업 카드의 수정, 삭제, 오른쪽 패널 열기 동작을 관리하는 훅입니다.
+ */
+
 import { useState } from 'react';
 
 import type { UseHistoryTaskCardParams } from '@/app/(service)/myhistory/types';

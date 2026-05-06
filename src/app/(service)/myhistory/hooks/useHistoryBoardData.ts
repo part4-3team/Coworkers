@@ -1,5 +1,9 @@
 'use client';
 
+/**
+ * 완료 이력과 팀/할 일 목록 상세 데이터를 조합해 보드 표시 데이터를 만드는 훅입니다.
+ */
+
 import { useMemo } from 'react';
 
 import { useQueries } from '@tanstack/react-query';

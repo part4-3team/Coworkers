@@ -1,3 +1,7 @@
+/**
+ * 완료 이력과 할 일 목록 상세 응답을 화면용 데이터로 변환하는 유틸입니다.
+ */
+
 import type {
   HistoryTaskListDetailSource,
   HistoryTaskListTask,

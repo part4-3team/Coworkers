@@ -1,3 +1,7 @@
+/**
+ * 마이 히스토리 데이터 파싱 전반에서 공통으로 쓰는 기본 변환 유틸입니다.
+ */
+
 import type { HistoryTaskFrequency } from '@/app/(service)/myhistory/types';
 
 export function isRecord(value: unknown): value is Record<string, unknown> {
