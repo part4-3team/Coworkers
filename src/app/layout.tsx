@@ -4,6 +4,7 @@
 
 import localFont from 'next/font/local';
 
+import GlobalLoader from '@/app/globalLoader';
 import Providers from '@/app/providers';
 import { cn } from '@/utils/cn';
 
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={cn(pretendard.variable, 'h-full antialiased')}>
       <body className="min-h-full flex flex-col">
+        <GlobalLoader />
         <Providers>{children}</Providers>
       </body>
     </html>
