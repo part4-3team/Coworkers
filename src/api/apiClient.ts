@@ -1,15 +1,12 @@
+/**
+ * 팀 스코프 API URL 생성과 공통 fetch 에러 처리를 담당하는 클라이언트입니다.
+ */
+
+import type { ApiError, FetchOptions } from '@/api/types';
 import { clearAuthSession, getStoredAccessToken } from '@/utils/authSession';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
-
-type FetchOptions = RequestInit & {
-  token?: string;
-};
-
-type ApiError = Error & {
-  status?: number;
-};
 
 function normalizeEndpoint(endpoint: string) {
   return endpoint.startsWith('/') ? endpoint : `/${endpoint}`;

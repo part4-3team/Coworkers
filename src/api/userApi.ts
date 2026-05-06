@@ -9,18 +9,11 @@ import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
 } from '@/api/queryKeys';
+import type {
+  ResetPasswordBody,
+  SendResetPasswordEmailBody,
+} from '@/api/types';
 import { getStoredAccessToken } from '@/utils/authSession';
-
-type SendResetPasswordEmailBody = {
-  email: string;
-  redirectUrl: string;
-};
-
-type ResetPasswordBody = {
-  password: string;
-  passwordConfirmation: string;
-  token: string;
-};
 
 export async function getMe() {
   if (!getStoredAccessToken()) {
