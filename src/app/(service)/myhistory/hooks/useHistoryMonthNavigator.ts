@@ -16,6 +16,7 @@ export default function useHistoryMonthNavigator({
   isCalendarOpen,
   onApplyRange,
   onMoveMonth,
+  onResetRange,
   selectedRange,
   toggleCalendar,
 }: UseHistoryMonthNavigatorParams) {
@@ -68,6 +69,15 @@ export default function useHistoryMonthNavigator({
   };
 
   const handleToggleCalendar = () => {
+    if (!isCalendarOpen && selectedRange.mode === 'range') {
+      setDraftRange({
+        endDate: null,
+        startDate: null,
+      });
+      onResetRange();
+      return;
+    }
+
     if (!isCalendarOpen) {
       setDraftRange({
         endDate: selectedRange.endDate,

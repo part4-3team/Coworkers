@@ -2,33 +2,36 @@
 
 import { useState } from 'react';
 
-import {
-  MY_HISTORY_DETAIL_ASSIGNEE,
-  MY_HISTORY_DETAIL_COMMENTS,
-  MY_HISTORY_DETAIL_DESCRIPTION,
-  MY_HISTORY_DETAIL_STARTED_AT,
-} from '@/app/(service)/myhistory/constants';
 import type { UseHistoryTaskCardParams } from '@/app/(service)/myhistory/types';
 import TaskDetailPanelContent from '@/components/common/rightPanel/components/TaskDetailPanelContent';
 import { useToast } from '@/components/common/toast';
 import useRightPanel from '@/components/layout/hooks/useRightPanel';
+import { useMeQuery } from '@/hooks/useUser';
 
 export default function useHistoryTaskCard({ task }: UseHistoryTaskCardParams) {
   const { openRightPanel } = useRightPanel();
   const { showToast } = useToast();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { data: meData } = useMeQuery();
+  const assigneeName =
+    typeof meData === 'object' &&
+    meData !== null &&
+    'nickname' in meData &&
+    typeof meData.nickname === 'string'
+      ? meData.nickname
+      : '';
 
   const handleEdit = () => {
     openRightPanel({
       content: (
         <TaskDetailPanelContent
           key={task.id}
-          assigneeName={MY_HISTORY_DETAIL_ASSIGNEE}
-          comments={MY_HISTORY_DETAIL_COMMENTS}
-          description={MY_HISTORY_DETAIL_DESCRIPTION}
+          assigneeName={assigneeName}
+          comments={[]}
+          description={task.description}
           frequency={task.frequency}
           initialMode="edit"
-          startedAt={MY_HISTORY_DETAIL_STARTED_AT}
+          startedAt={task.startedAt}
           title={task.title}
         />
       ),

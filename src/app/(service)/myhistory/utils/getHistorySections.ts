@@ -10,7 +10,6 @@ import {
 } from '@/app/(service)/myhistory/utils/formatHistoryDate';
 
 export function hasHistoryTasks(
-  activeFilterId: string | null,
   sections: readonly MyHistoryDisplayDateSection[],
 ) {
   return sections.some((section) =>
@@ -32,7 +31,11 @@ export function getHistorySectionsInRange(
         parsedDate,
       };
     })
-    .filter((section) => isDateWithinHistoryRange(section.parsedDate, range))
+    .filter((section) =>
+      range.mode === 'all'
+        ? true
+        : isDateWithinHistoryRange(section.parsedDate, range),
+    )
     .sort((firstSection, secondSection) => {
       return (
         firstSection.parsedDate.getTime() - secondSection.parsedDate.getTime()
