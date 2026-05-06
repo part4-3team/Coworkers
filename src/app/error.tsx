@@ -1,17 +1,12 @@
 // app/error.tsx
-'use client'; // ← 필수! error.tsx는 반드시 클라이언트 컴포넌트
+'use client';
 
 import { useEffect } from 'react';
 
+import { ErrorProps } from '@/app/types';
 import { IcError } from '@/assets/index';
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
     console.error(error);
   }, [error]);
