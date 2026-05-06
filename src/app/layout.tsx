@@ -4,7 +4,7 @@
 
 import localFont from 'next/font/local';
 
-import GlobalLoader from '@/app/global-loader';
+import GlobalLoader from '@/app/globalLoader';
 import Providers from '@/app/providers';
 import { cn } from '@/utils/cn';
 

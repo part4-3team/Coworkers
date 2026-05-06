@@ -1,4 +1,4 @@
-// app/global-loader.tsx
+// app/globalLoader.tsx
 'use client';
 
 import { useEffect } from 'react';
