@@ -1,23 +1,26 @@
 'use client';
 
+import CommentWriterAvatar from '@/app/(service)/boards/[articleId]/components/CommentWriterAvatar';
 import { useBoardDetailMenu } from '@/app/(service)/boards/[articleId]/hooks/useBoardDetailMenu';
 import { useLike } from '@/app/(service)/boards/[articleId]/hooks/useLike';
-import type { BoardDetailProps } from '@/app/(service)/boards/[articleId]/types';
+import type {
+  BoardDetailProps,
+  UserProfileResponse,
+} from '@/app/(service)/boards/[articleId]/types';
 import { IcHeartFilledRed, IcHeartSmall, IcMoreVerticalLarge } from '@/assets';
-import { Avatar } from '@/components/common/avatar';
 import { ListDropdown } from '@/components/common/dropdown';
 import Modal from '@/components/common/modal';
 
 export default function BoardDetailHeader({
   boardDetail,
   userProfile,
-}: BoardDetailProps) {
+}: {
+  boardDetail: BoardDetailProps['boardDetail'];
+  userProfile: UserProfileResponse;
+}) {
   const { menuItems, isDeleteModalOpen, handleDeleteConfirm } =
     useBoardDetailMenu(boardDetail.id.toString());
-  const { isLiked, likeCount, handleLikeClick } = useLike({
-    boardDetail,
-    userProfile,
-  });
+  const { isLiked, likeCount, handleLikeClick } = useLike(boardDetail);
 
   return (
     <div>
@@ -51,11 +54,14 @@ export default function BoardDetailHeader({
       </div>
       <div className="flex items-center justify-between gap-2 mt-2 pb-3 border-b border-border-secondary md:mt-4">
         <div className="flex min-w-0 flex-1 items-center">
-          <Avatar
-            src={userProfile.image}
-            alt={boardDetail.writer.nickname}
-            size={24}
-            className="mr-2"
+          <CommentWriterAvatar
+            image={userProfile.image}
+            nickname={boardDetail.writer.nickname}
+            width={24}
+            height={24}
+            containerClassName="mr-2 size-6 rounded-md items-center justify-center md:size-6"
+            imageClassName="size-6 md:size-6"
+            iconClassName="size-6 md:size-6"
           />
           <span className="text-text-primary text-sm font-medium leading-4 min-w-0 truncate md:text-base">
             {boardDetail.writer.nickname}

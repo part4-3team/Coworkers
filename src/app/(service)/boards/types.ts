@@ -1,4 +1,7 @@
-import { BOARD_DEVICE_TYPE, BOARD_ORDER_BY } from './constants';
+import {
+  BOARD_DEVICE_TYPE,
+  BOARD_ORDER_BY,
+} from '@/app/(service)/boards/constants';
 
 export type Writer = {
   id: number;
@@ -9,7 +12,7 @@ export type Post = {
   id: number;
   title: string;
   content: string;
-  image?: string;
+  image: string | null;
   writer: Writer;
   likeCount: number;
   commentCount: number;

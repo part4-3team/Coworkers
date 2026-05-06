@@ -10,13 +10,13 @@ import { ROUTES } from '@/constants/ROUTES';
 export default function useBoardWrite(initialData?: {
   title: string;
   content: string;
-  image?: string;
+  image: string | null;
 }) {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: initialData?.title || '',
     content: initialData?.content || '',
-    image: initialData?.image || '',
+    image: initialData?.image || null,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,11 +43,10 @@ export default function useBoardWrite(initialData?: {
 
     try {
       setIsLoading(true);
-      console.log('게시글 이미지 파일:', imageFile);
-      showToast('게시글이 성공적으로 등록되었습니다.', 'success');
+      showToast('게시글이 성공적으로 수정되었습니다.', 'success');
       router.push(ROUTES.BOARDS);
     } catch {
-      showToast('등록 중 오류가 발생했습니다.', 'error');
+      showToast('수정 중 오류가 발생했습니다.', 'error');
     } finally {
       setIsLoading(false);
     }
