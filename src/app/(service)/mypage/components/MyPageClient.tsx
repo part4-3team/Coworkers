@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { queryKeys } from '@/api/queryKeys';
 import { getMe, updateMe } from '@/api/userApi';
 import AccountForm from '@/app/(service)/mypage/components/AccountForm';
 import WithdrawModal from '@/app/(service)/mypage/components/WithdrawModal';
@@ -26,7 +27,7 @@ export default function MyPage() {
   const { mutate: updateProfile } = useMutation({
     mutationFn: updateMe,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.user.me() });
       setIsDirty(false);
     },
     onError: (error) => {

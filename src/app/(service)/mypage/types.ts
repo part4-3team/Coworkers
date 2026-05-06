@@ -27,3 +27,13 @@ export type UserInfo = {
   nickname: string;
   image?: string | null;
 };
+
+export type ChangePassword = {
+  password: string;
+  passwordConfirmation: string;
+};
+
+export type PasswordFormValues = {
+  currentPassword: string;
+  confirmPassword: string;
+};

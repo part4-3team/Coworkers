@@ -9,7 +9,7 @@ import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
 } from '@/api/queryKeys';
-import { UserInfo } from '@/app/(service)/mypage/types';
+import { ChangePassword, UserInfo } from '@/app/(service)/mypage/types';
 
 export async function getMe() {
   return apiClient<UserInfo>(teamEndpoint('/user'));
@@ -49,4 +49,11 @@ export async function getCompletedTasks(
   const endpoint = `${teamEndpoint('/user/history')}${buildQueryString(params)}`;
 
   return apiClient<unknown>(endpoint);
+}
+
+export async function changePassword(body: ChangePassword) {
+  return apiClient<{ message: string }>(teamEndpoint('/user/password'), {
+    method: HTTP_METHODS.PATCH,
+    body: JSON.stringify(body),
+  });
 }

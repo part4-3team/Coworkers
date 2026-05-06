@@ -1,10 +1,14 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
+import { queryKeys } from '@/api/queryKeys';
+import { changePassword } from '@/api/userApi';
 import { passwordSchema } from '@/app/(service)/mypage/schemas/passwordSchema';
-import { Input } from '@/components/common/form';
+import { PasswordFormValues } from '@/app/(service)/mypage/types';
+import { AuthInput } from '@/components/common/form';
 import Modal from '@/components/common/modal';
 import { useToast } from '@/components/common/toast';
 
@@ -14,6 +18,7 @@ type Props = {
 
 export default function PasswordModal({ onClose }: Props) {
   const { showToast } = useToast();
+  const queryClient = useQueryClient();
 
   const handleConfirm = () => {
     showToast('비밀번호가 변경되었습니다.', 'success');
@@ -21,13 +26,33 @@ export default function PasswordModal({ onClose }: Props) {
     onClose();
   };
 
+  const { mutate: updatePassword } = useMutation({
+    mutationFn: changePassword,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.user.me() });
+      handleConfirm();
+    },
+    onError: (error) => {
+      console.log(error.message);
+    },
+  });
+
   const {
     register,
+    handleSubmit,
     formState: { isValid, errors },
-  } = useForm({
+  } = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     mode: 'onChange',
   });
+
+  const onSubmit = (data: PasswordFormValues) => {
+    updatePassword({
+      password: data.currentPassword,
+      passwordConfirmation: data.confirmPassword,
+    });
+  };
+
   return (
     <Modal
       onClose={onClose}
@@ -36,21 +61,16 @@ export default function PasswordModal({ onClose }: Props) {
       lineButtonText="닫기"
       onLineButtonClick={onClose}
       primaryButtonText="변경하기"
-      onPrimaryButtonClick={handleConfirm}
+      onPrimaryButtonClick={handleSubmit(onSubmit)}
       isPrimaryButtonDisabled={!isValid}
     >
       <form className="text-left flex flex-col gap-6 min-w-70">
         <div className="flex flex-col gap-2 relative">
-          <label
-            htmlFor="newPassword"
-            className="text-text-primary text-sm font-medium"
-          >
-            새 비밀번호
-          </label>
-          <Input
+          <AuthInput
             {...register('currentPassword')}
             id="newPassword"
             type="password"
+            label="새 비밀번호"
             placeholder="새 비밀번호를 입력해주세요."
           />
           {errors.currentPassword && (
@@ -60,16 +80,11 @@ export default function PasswordModal({ onClose }: Props) {
           )}
         </div>
         <div className="flex flex-col gap-2 relative">
-          <label
-            htmlFor="confirmPassword"
-            className="text-text-primary text-sm font-medium"
-          >
-            새 비밀번호 확인
-          </label>
-          <Input
+          <AuthInput
             {...register('confirmPassword')}
             id="confirmPassword"
             type="password"
+            label="새 비밀번호 확인"
             placeholder="새 비밀번호를 다시 한번 입력해주세요."
           />
           {errors.confirmPassword && (
