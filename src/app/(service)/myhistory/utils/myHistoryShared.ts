@@ -1,4 +1,4 @@
-type HistoryTaskFrequency = string | undefined;
+import type { HistoryTaskFrequency } from '@/app/(service)/myhistory/types';
 
 export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;

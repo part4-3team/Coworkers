@@ -1,29 +1,12 @@
-import type { MyHistoryCompletedTaskRecord } from '@/app/(service)/myhistory/types';
+import type {
+  HistoryTaskListDetailSource,
+  HistoryTaskListTask,
+  MyHistoryCompletedTaskRecord,
+} from '@/app/(service)/myhistory/types';
 import {
   isRecord,
   toNumber,
 } from '@/app/(service)/myhistory/utils/myHistoryShared';
-
-type HistoryTaskListTask = {
-  commentCount: number;
-  description: string;
-  displayIndex: number;
-  doneAt?: string;
-  doneByUserId?: number | string;
-  frequency?: string;
-  id: string;
-  name: string;
-};
-
-export type HistoryTaskListDetailSource = {
-  dateKey: string;
-  displayIndex: number;
-  taskListId: string;
-  taskListName: string;
-  tasks: HistoryTaskListTask[];
-  teamId: string;
-  teamName: string;
-};
 
 export function toCompletedTaskRecords(data: unknown) {
   if (!isRecord(data)) {

@@ -1,23 +1,10 @@
 import type {
+  HistorySummaryAccumulator,
+  HistoryTaskListDetailSource,
+  HistoryTeamDetail,
   MyHistoryFilter,
   MyHistorySummaryItem,
 } from '@/app/(service)/myhistory/types';
-import type { HistoryTaskListDetailSource } from '@/app/(service)/myhistory/utils/myHistoryTaskParsers';
-import type { HistoryTeamDetail } from '@/app/(service)/myhistory/utils/myHistoryTeamParsers';
-
-type HistorySummaryAccumulator = {
-  details: Map<
-    string,
-    {
-      displayIndex: number;
-      doneCount: number;
-      name: string;
-      totalCount: number;
-    }
-  >;
-  doneCount: number;
-  name: string;
-};
 
 export function getHistorySummaryData(
   currentUserId: number | string | undefined,

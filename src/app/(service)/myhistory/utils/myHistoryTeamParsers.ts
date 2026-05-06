@@ -1,25 +1,12 @@
+import type {
+  HistoryMembershipTeam,
+  HistoryTaskListSummary,
+  HistoryTeamDetail,
+} from '@/app/(service)/myhistory/types';
 import {
   isRecord,
   toNumber,
 } from '@/app/(service)/myhistory/utils/myHistoryShared';
-
-type HistoryMembershipTeam = {
-  createdAt?: string;
-  id: string;
-  name: string;
-};
-
-type HistoryTaskListSummary = {
-  displayIndex: number;
-  id: string;
-  name: string;
-};
-
-export type HistoryTeamDetail = {
-  id: string;
-  name: string;
-  taskLists: HistoryTaskListSummary[];
-};
 
 export function toHistoryTeams(data: unknown) {
   if (!Array.isArray(data)) {

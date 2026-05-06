@@ -1,4 +1,6 @@
 import type {
+  HistoryTaskListDetailSource,
+  HistoryTaskMeta,
   MyHistoryCompletedTaskRecord,
   MyHistoryTask,
 } from '@/app/(service)/myhistory/types';
@@ -6,17 +8,6 @@ import {
   formatHistoryTaskFrequency,
   toDateLabel,
 } from '@/app/(service)/myhistory/utils/myHistoryShared';
-import type { HistoryTaskListDetailSource } from '@/app/(service)/myhistory/utils/myHistoryTaskParsers';
-
-export type HistoryTaskMeta = {
-  commentCount: number;
-  taskDisplayIndex: number;
-  taskListDisplayIndex: number;
-  taskListId: string;
-  taskListName: string;
-  teamId: string;
-  teamName: string;
-};
 
 export function getTaskMetaMap(
   sources: readonly HistoryTaskListDetailSource[],

@@ -9,8 +9,12 @@ import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
 } from '@/api/queryKeys';
+import { getStoredAccessToken } from '@/utils/authSession';
 
 export async function getMe() {
+  if (!getStoredAccessToken()) {
+    return null;
+  }
   return apiClient<unknown>(teamEndpoint('/user'));
 }
 
@@ -22,15 +26,11 @@ export async function deleteMe() {
 
 export async function getMyGroups(params?: QueryParams) {
   const endpoint = `${teamEndpoint('/user/groups')}${buildQueryString(params)}`;
-
   return apiClient<unknown>(endpoint);
 }
 
 export async function getMyMemberships(params?: QueryParams) {
-  const endpoint = `${teamEndpoint('/user/memberships')}${buildQueryString(
-    params,
-  )}`;
-
+  const endpoint = `${teamEndpoint('/user/memberships')}${buildQueryString(params)}`;
   return apiClient<unknown>(endpoint);
 }
 
@@ -38,6 +38,5 @@ export async function getCompletedTasks(
   params?: CompletedTaskHistoryQueryParams,
 ) {
   const endpoint = `${teamEndpoint('/user/history')}${buildQueryString(params)}`;
-
   return apiClient<unknown>(endpoint);
 }

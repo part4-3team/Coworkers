@@ -38,7 +38,7 @@ export function getHistorySectionsInRange(
     )
     .sort((firstSection, secondSection) => {
       return (
-        firstSection.parsedDate.getTime() - secondSection.parsedDate.getTime()
+        secondSection.parsedDate.getTime() - firstSection.parsedDate.getTime()
       );
     })
     .map((section) => ({

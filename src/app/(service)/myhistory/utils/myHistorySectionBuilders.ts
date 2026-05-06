@@ -1,4 +1,5 @@
 import type {
+  HistoryTaskListDetailSource,
   MyHistoryCompletedTaskRecord,
   MyHistoryDateSection,
 } from '@/app/(service)/myhistory/types';
@@ -10,7 +11,6 @@ import {
   toSectionDateKey,
   toTaskDate,
 } from '@/app/(service)/myhistory/utils/myHistoryTaskDateHelpers';
-import type { HistoryTaskListDetailSource } from '@/app/(service)/myhistory/utils/myHistoryTaskParsers';
 
 export function getHistorySections(
   completedTasks: readonly MyHistoryCompletedTaskRecord[],

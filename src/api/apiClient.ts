@@ -1,4 +1,4 @@
-import { getStoredAccessToken } from '@/utils/authSession';
+import { clearAuthSession, getStoredAccessToken } from '@/utils/authSession';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
@@ -45,11 +45,6 @@ async function getErrorMessage(res: Response) {
   return data?.message ?? `API Error: ${res.status}`;
 }
 
-/**
- * 공통 fetch 래퍼
- * @param endpoint - API 엔드포인트
- * @param options - fetch 옵션 및 토큰
- */
 export async function apiClient<T>(
   endpoint: string,
   options: FetchOptions = {},
@@ -72,6 +67,11 @@ export async function apiClient<T>(
     ...rest,
     headers,
   });
+
+  if (res.status === 401) {
+    clearAuthSession();
+    throw new Error('로그인이 만료되었습니다. 다시 로그인해주세요.');
+  }
 
   if (!res.ok) {
     throw new Error(await getErrorMessage(res));

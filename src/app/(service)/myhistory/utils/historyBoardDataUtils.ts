@@ -1,14 +1,8 @@
-import type { MyHistoryCompletedTaskRecord } from '@/app/(service)/myhistory/types';
-import type { HistoryTeamDetail } from '@/app/(service)/myhistory/utils/myHistoryTeamParsers';
-
-export type HistoryTaskListDescriptor = {
-  dateKey: string;
-  displayIndex: number;
-  taskListId: string;
-  taskListName: string;
-  teamId: string;
-  teamName: string;
-};
+import type {
+  HistoryTaskListDescriptor,
+  HistoryTeamDetail,
+  MyHistoryCompletedTaskRecord,
+} from '@/app/(service)/myhistory/types';
 
 export function getCompletedDateKeys(
   completedTasks: readonly MyHistoryCompletedTaskRecord[],
