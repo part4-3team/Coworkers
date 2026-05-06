@@ -27,7 +27,7 @@ export default function BoardDetailCommentItem({
   } = useBoardDetailCommentItem({ comment, userProfile });
 
   return (
-    <div>
+    <>
       {isOwnComment && isEditing ? (
         <CommentEditingContent
           comment={comment}
@@ -45,6 +45,6 @@ export default function BoardDetailCommentItem({
           onDeleteConfirm={handleDeleteConfirm}
         />
       )}
-    </div>
+    </>
   );
 }

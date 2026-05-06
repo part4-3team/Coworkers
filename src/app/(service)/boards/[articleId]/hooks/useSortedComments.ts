@@ -13,6 +13,13 @@ type UseSortedCommentsParams = {
   userId: number;
 };
 
+const parseDateToTime = (value: string) => {
+  const normalizedValue = value.replace(/\./g, '-');
+  const time = new Date(normalizedValue).getTime();
+
+  return Number.isNaN(time) ? 0 : time;
+};
+
 export const useSortedComments = ({
   comments,
   userId,
@@ -27,9 +34,7 @@ export const useSortedComments = ({
           return isAOwnComment ? MOVE_TO_FRONT : MOVE_TO_BACK;
         }
 
-        return (
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
+        return parseDateToTime(b.createdAt) - parseDateToTime(a.createdAt);
       }),
     [comments, userId],
   );

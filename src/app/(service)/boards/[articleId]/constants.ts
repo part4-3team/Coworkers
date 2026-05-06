@@ -8,5 +8,7 @@ export const BOARD_DETAIL_DROPDOWN_ITEMS = [
   { label: BOARD_DETAIL_MENU.DELETE },
 ];
 
+export const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID ?? '';
+
 export const MOVE_TO_FRONT = -1;
 export const MOVE_TO_BACK = 1;

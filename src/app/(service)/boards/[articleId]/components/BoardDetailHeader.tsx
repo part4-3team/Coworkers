@@ -1,19 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-
+import CommentWriterAvatar from '@/app/(service)/boards/[articleId]/components/CommentWriterAvatar';
 import { useBoardDetailMenu } from '@/app/(service)/boards/[articleId]/hooks/useBoardDetailMenu';
 import { useLike } from '@/app/(service)/boards/[articleId]/hooks/useLike';
 import type {
   BoardDetailProps,
   UserProfileResponse,
 } from '@/app/(service)/boards/[articleId]/types';
-import {
-  IcHeartFilledRed,
-  IcHeartSmall,
-  IcMoreVerticalLarge,
-  IcUserXlarge,
-} from '@/assets';
+import { IcHeartFilledRed, IcHeartSmall, IcMoreVerticalLarge } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import Modal from '@/components/common/modal';
 
@@ -60,25 +54,15 @@ export default function BoardDetailHeader({
       </div>
       <div className="flex items-center justify-between gap-2 mt-2 pb-3 border-b border-border-secondary md:mt-4">
         <div className="flex min-w-0 flex-1 items-center">
-          <div className="flex shrink-0 overflow-hidden size-6 rounded-md bg-background-tertiary items-center justify-center mr-2">
-            {userProfile.image ? (
-              <Image
-                src={userProfile.image}
-                width={24}
-                height={24}
-                alt={`${boardDetail.writer.nickname}의 프로필 이미지`}
-                className="size-6 object-cover"
-              />
-            ) : (
-              <IcUserXlarge
-                width={24}
-                height={24}
-                className="size-6"
-                role="img"
-                aria-label={`${boardDetail.writer.nickname}의 프로필 이미지`}
-              />
-            )}
-          </div>
+          <CommentWriterAvatar
+            image={userProfile.image}
+            nickname={boardDetail.writer.nickname}
+            width={24}
+            height={24}
+            containerClassName="mr-2 size-6 rounded-md items-center justify-center md:size-6"
+            imageClassName="size-6 md:size-6"
+            iconClassName="size-6 md:size-6"
+          />
           <span className="text-text-primary text-sm font-medium leading-4 min-w-0 truncate md:text-base">
             {boardDetail.writer.nickname}
           </span>
