@@ -9,9 +9,18 @@ import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
 } from '@/api/queryKeys';
+import { UserInfo } from '@/app/(service)/mypage/types';
 
 export async function getMe() {
-  return apiClient<unknown>(teamEndpoint('/user'));
+  return apiClient<UserInfo>(teamEndpoint('/user'));
+}
+export async function updateMe(
+  body: Partial<Pick<UserInfo, 'nickname' | 'image'>>,
+) {
+  return apiClient<UserInfo>(teamEndpoint('/user'), {
+    method: HTTP_METHODS.PATCH,
+    body: JSON.stringify(body),
+  });
 }
 
 export async function deleteMe() {
