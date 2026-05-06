@@ -5,68 +5,37 @@ import { useMemo } from 'react';
 import { useQueries } from '@tanstack/react-query';
 
 import { taskQueryOptions, teamQueryOptions } from '@/api/queryOptions';
+import useHistoryBoardBaseData from '@/app/(service)/myhistory/hooks/useHistoryBoardBaseData';
 import type {
-  HistoryTaskListDetailSource,
   HistoryTeamDetail,
   UseHistoryBoardDataParams,
 } from '@/app/(service)/myhistory/types';
+import { getHistoryTaskListDescriptors } from '@/app/(service)/myhistory/utils/historyBoardDataUtils';
 import {
-  getCompletedDateKeys,
-  getHistoryTaskListDescriptors,
-} from '@/app/(service)/myhistory/utils/historyBoardDataUtils';
+  getHistoryTaskListSources,
+  getUniqueHistoryTaskListDescriptors,
+  hasHistoryQueryError,
+  hasHistoryQueryLoading,
+} from '@/app/(service)/myhistory/utils/historyBoardQueryUtils';
 import {
   getHistorySections,
   getHistorySummaryData,
-  toHistoryCurrentUserId,
-  toHistoryTaskListDetailSource,
   toHistoryTeamDetail,
-  toHistoryTeams,
 } from '@/app/(service)/myhistory/utils/myHistoryData';
-import { useMeQuery, useMyMembershipsQuery } from '@/hooks/useUser';
-
-function getTaskListDescriptorKey(
-  descriptor: ReturnType<typeof getHistoryTaskListDescriptors>[number],
-) {
-  return `${descriptor.teamId}-${descriptor.taskListId}-${descriptor.dateKey}`;
-}
 
 export default function useHistoryBoardData({
   activeFilterId,
   completedTasks,
 }: UseHistoryBoardDataParams) {
   const {
-    data: meData,
-    isLoading: isMeLoading,
-    isError: isMeError,
-  } = useMeQuery();
-
-  const {
-    data: membershipsData,
-    isLoading: isMembershipsLoading,
-    isError: isMembershipsError,
-  } = useMyMembershipsQuery();
-
-  const currentUserId = useMemo(() => toHistoryCurrentUserId(meData), [meData]);
-
-  const teams = useMemo(
-    () => toHistoryTeams(membershipsData),
-    [membershipsData],
-  );
-
-  const completedDateKeys = useMemo(
-    () => getCompletedDateKeys(completedTasks),
-    [completedTasks],
-  );
-
-  const uniqueTeams = useMemo(() => {
-    const map = new Map<string | number, (typeof teams)[number]>();
-
-    teams.forEach((team) => {
-      map.set(team.id, team);
-    });
-
-    return [...map.values()];
-  }, [teams]);
+    completedDateKeys,
+    currentUserId,
+    isMembershipsError,
+    isMembershipsLoading,
+    isMeError,
+    isMeLoading,
+    uniqueTeams,
+  } = useHistoryBoardBaseData(completedTasks);
 
   const teamDetailQueries = useQueries({
     queries: uniqueTeams.map((team) => teamQueryOptions.detail(team.id)),
@@ -87,15 +56,10 @@ export default function useHistoryBoardData({
     [completedDateKeys, teamDetails],
   );
 
-  const uniqueTaskListDescriptors = useMemo(() => {
-    const map = new Map<string, (typeof taskListDescriptors)[number]>();
-
-    taskListDescriptors.forEach((descriptor) => {
-      map.set(getTaskListDescriptorKey(descriptor), descriptor);
-    });
-
-    return [...map.values()];
-  }, [taskListDescriptors]);
+  const uniqueTaskListDescriptors = useMemo(
+    () => getUniqueHistoryTaskListDescriptors(taskListDescriptors),
+    [taskListDescriptors],
+  );
 
   const taskListDetailQueries = useQueries({
     queries: uniqueTaskListDescriptors.map((descriptor) =>
@@ -115,19 +79,9 @@ export default function useHistoryBoardData({
 
   const taskListSources = useMemo(
     () =>
-      uniqueTaskListDescriptors.reduce<HistoryTaskListDetailSource[]>(
-        (sources, descriptor, index) => {
-          const data = taskListDetailQueries[index]?.data;
-
-          if (!data) {
-            return sources;
-          }
-
-          sources.push(toHistoryTaskListDetailSource(data, descriptor));
-
-          return sources;
-        },
-        [],
+      getHistoryTaskListSources(
+        uniqueTaskListDescriptors,
+        taskListDetailQueries,
       ),
     [uniqueTaskListDescriptors, taskListDetailQueries],
   );
@@ -148,13 +102,13 @@ export default function useHistoryBoardData({
     isError:
       isMeError ||
       isMembershipsError ||
-      teamDetailQueries.some((query) => query.isError) ||
-      taskListDetailQueries.some((query) => query.isError),
+      hasHistoryQueryError(teamDetailQueries) ||
+      hasHistoryQueryError(taskListDetailQueries),
     isLoading:
       isMeLoading ||
       isMembershipsLoading ||
-      teamDetailQueries.some((query) => query.isLoading) ||
-      taskListDetailQueries.some((query) => query.isLoading),
+      hasHistoryQueryLoading(teamDetailQueries) ||
+      hasHistoryQueryLoading(taskListDetailQueries),
     summaryItems: summaryData.items,
   } as const;
 }
