@@ -162,6 +162,7 @@ export type HistoryTaskListDescriptor = {
 export type UseHistoryBoardDataParams = {
   activeFilterId: string | null;
   completedTasks: readonly MyHistoryCompletedTaskRecord[];
+  shouldLimitTeamQueries: boolean;
 };
 
 export type UseDragScrollReturn = {

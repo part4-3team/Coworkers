@@ -64,6 +64,8 @@ export default function useHistoryBoard(activeFilterId: string | null) {
   } = useHistoryBoardData({
     activeFilterId,
     completedTasks: completedTasksInRange,
+    shouldLimitTeamQueries:
+      activeFilterId !== null && selectedRange.mode === 'all',
   });
   const datedHistorySections = useMemo(
     () => getHistorySectionsInRange(historySections, selectedRange),

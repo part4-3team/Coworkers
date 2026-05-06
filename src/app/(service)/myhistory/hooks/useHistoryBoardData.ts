@@ -30,6 +30,7 @@ import {
 export default function useHistoryBoardData({
   activeFilterId,
   completedTasks,
+  shouldLimitTeamQueries,
 }: UseHistoryBoardDataParams) {
   const {
     completedDateKeys,
@@ -75,7 +76,8 @@ export default function useHistoryBoardData({
           enabled:
             Boolean(descriptor.teamId) &&
             Boolean(descriptor.taskListId) &&
-            Boolean(descriptor.dateKey),
+            Boolean(descriptor.dateKey) &&
+            (!shouldLimitTeamQueries || descriptor.teamId === activeFilterId),
         },
       ),
     ),
