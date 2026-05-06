@@ -7,6 +7,10 @@ type FetchOptions = RequestInit & {
   token?: string;
 };
 
+type ApiError = Error & {
+  status?: number;
+};
+
 function normalizeEndpoint(endpoint: string) {
   return endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
 }
@@ -45,6 +49,12 @@ async function getErrorMessage(res: Response) {
   return data?.message ?? `API Error: ${res.status}`;
 }
 
+function createApiError(message: string, status?: number): ApiError {
+  return Object.assign(new Error(message), {
+    status,
+  });
+}
+
 export async function apiClient<T>(
   endpoint: string,
   options: FetchOptions = {},
@@ -69,12 +79,15 @@ export async function apiClient<T>(
   });
 
   if (res.status === 401) {
-    clearAuthSession();
-    throw new Error('로그인이 만료되었습니다. 다시 로그인해주세요.');
+    clearAuthSession('unauthorized');
+    throw createApiError(
+      '로그인이 만료되었습니다. 다시 로그인해주세요.',
+      res.status,
+    );
   }
 
   if (!res.ok) {
-    throw new Error(await getErrorMessage(res));
+    throw createApiError(await getErrorMessage(res), res.status);
   }
 
   if (res.status === 204) {

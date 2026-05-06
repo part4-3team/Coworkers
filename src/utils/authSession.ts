@@ -6,6 +6,12 @@ const ACCESS_TOKEN_COOKIE_KEY = 'access-token';
 const AUTH_SESSION_STORAGE_KEY = 'coworkers-auth-session';
 const AUTH_SESSION_CHANGE_EVENT = 'coworkers-auth-session-change';
 
+export type AuthSessionChangeReason =
+  | 'saved'
+  | 'manual'
+  | 'expired'
+  | 'unauthorized';
+
 export type AuthSessionUser = {
   email?: string;
   image?: string | null;
@@ -40,12 +46,43 @@ function getCookieValue(name: string) {
   return cookie?.slice(key.length) ?? null;
 }
 
-function emitAuthSessionChange() {
+function decodeJwtPayload(accessToken: string) {
+  if (!isBrowser()) {
+    return null;
+  }
+
+  const [, encodedPayload] = accessToken.split('.');
+
+  if (!encodedPayload) {
+    return null;
+  }
+
+  const normalizedPayload = encodedPayload
+    .replace(/-/g, '+')
+    .replace(/_/g, '/')
+    .padEnd(Math.ceil(encodedPayload.length / 4) * 4, '=');
+
+  try {
+    return JSON.parse(window.atob(normalizedPayload)) as {
+      exp?: number;
+    };
+  } catch {
+    return null;
+  }
+}
+
+function emitAuthSessionChange(reason: AuthSessionChangeReason) {
   if (!isBrowser()) {
     return;
   }
 
-  window.dispatchEvent(new Event(AUTH_SESSION_CHANGE_EVENT));
+  window.dispatchEvent(
+    new CustomEvent(AUTH_SESSION_CHANGE_EVENT, {
+      detail: {
+        reason,
+      },
+    }),
+  );
 }
 
 function buildAccessTokenCookie(accessToken: string) {
@@ -130,17 +167,25 @@ export function saveAuthSession(session: AuthSession) {
     JSON.stringify(session),
   );
   document.cookie = buildAccessTokenCookie(session.accessToken);
-  emitAuthSessionChange();
+  emitAuthSessionChange('saved');
 }
 
-export function clearAuthSession() {
+export function clearAuthSession(reason: AuthSessionChangeReason = 'manual') {
   if (!isBrowser()) {
+    return;
+  }
+
+  const hasStoredSession =
+    window.localStorage.getItem(AUTH_SESSION_STORAGE_KEY) !== null ||
+    Boolean(getCookieValue(ACCESS_TOKEN_COOKIE_KEY));
+
+  if (!hasStoredSession) {
     return;
   }
 
   window.localStorage.removeItem(AUTH_SESSION_STORAGE_KEY);
   document.cookie = buildExpiredAccessTokenCookie();
-  emitAuthSessionChange();
+  emitAuthSessionChange(reason);
 }
 
 export function getStoredAccessToken() {
@@ -153,17 +198,58 @@ export function getStoredAccessToken() {
   return getCookieValue(ACCESS_TOKEN_COOKIE_KEY);
 }
 
-export function hasAuthSession() {
-  return Boolean(getStoredAccessToken());
+export function getAccessTokenExpirationTime(accessToken?: string | null) {
+  if (!accessToken) {
+    return null;
+  }
+
+  const payload = decodeJwtPayload(accessToken);
+
+  if (typeof payload?.exp !== 'number') {
+    return null;
+  }
+
+  return payload.exp * 1000;
 }
 
-export function subscribeAuthSessionChange(onChange: () => void) {
+export function isAccessTokenExpired(accessToken?: string | null) {
+  const expirationTime = getAccessTokenExpirationTime(accessToken);
+
+  if (!expirationTime) {
+    return false;
+  }
+
+  return expirationTime <= Date.now();
+}
+
+export function hasAuthSession() {
+  const accessToken = getStoredAccessToken();
+
+  if (!accessToken) {
+    return false;
+  }
+
+  return !isAccessTokenExpired(accessToken);
+}
+
+export function subscribeAuthSessionChange(
+  onChange: (reason: AuthSessionChangeReason) => void,
+) {
   if (!isBrowser()) {
     return () => {};
   }
 
-  window.addEventListener(AUTH_SESSION_CHANGE_EVENT, onChange);
+  const handleChange = (event: Event) => {
+    const reason =
+      event instanceof CustomEvent && typeof event.detail?.reason === 'string'
+        ? (event.detail.reason as AuthSessionChangeReason)
+        : 'manual';
+
+    onChange(reason);
+  };
+
+  window.addEventListener(AUTH_SESSION_CHANGE_EVENT, handleChange);
   return () => {
-    window.removeEventListener(AUTH_SESSION_CHANGE_EVENT, onChange);
+    window.removeEventListener(AUTH_SESSION_CHANGE_EVENT, handleChange);
   };
 }

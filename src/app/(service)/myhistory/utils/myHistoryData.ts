@@ -1,3 +1,7 @@
+export type {
+  HistoryTaskListDetailSource,
+  HistoryTeamDetail,
+} from '@/app/(service)/myhistory/types';
 export { getHistorySections } from '@/app/(service)/myhistory/utils/myHistorySectionBuilders';
 export { getHistorySummaryData } from '@/app/(service)/myhistory/utils/myHistorySummaryBuilders';
 export {
@@ -5,12 +9,10 @@ export {
   getLatestHistoryTaskDate,
 } from '@/app/(service)/myhistory/utils/myHistoryTaskDateHelpers';
 export {
-  type HistoryTaskListDetailSource,
   toCompletedTaskRecords,
   toHistoryTaskListDetailSource,
 } from '@/app/(service)/myhistory/utils/myHistoryTaskParsers';
 export {
-  type HistoryTeamDetail,
   toHistoryCurrentUserId,
   toHistoryTeamDetail,
   toHistoryTeams,
