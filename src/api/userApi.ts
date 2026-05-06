@@ -11,6 +11,17 @@ import type {
 } from '@/api/queryKeys';
 import { getStoredAccessToken } from '@/utils/authSession';
 
+type SendResetPasswordEmailBody = {
+  email: string;
+  redirectUrl: string;
+};
+
+type ResetPasswordBody = {
+  password: string;
+  passwordConfirmation: string;
+  token: string;
+};
+
 export async function getMe() {
   if (!getStoredAccessToken()) {
     return null;
@@ -39,4 +50,27 @@ export async function getCompletedTasks(
 ) {
   const endpoint = `${teamEndpoint('/user/history')}${buildQueryString(params)}`;
   return apiClient<unknown>(endpoint);
+}
+
+export async function sendResetPasswordEmail(
+  teamId: string,
+  body: SendResetPasswordEmailBody,
+) {
+  return apiClient<{ message: string }>(
+    teamEndpoint('/user/send-reset-password-email', teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.POST,
+    },
+  );
+}
+
+export async function resetPassword(teamId: string, body: ResetPasswordBody) {
+  return apiClient<{ message: string }>(
+    teamEndpoint('/user/reset-password', teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.PATCH,
+    },
+  );
 }
