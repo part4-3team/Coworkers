@@ -156,20 +156,22 @@ export default function ImageUploadField({
         </div>
       )}
 
-      <button
-        type="button"
-        aria-label={buttonAriaLabel}
-        className="mt-2 flex h-20 w-20 items-center justify-center rounded-xl border border-background-tertiary md:mt-3 md:h-30 md:w-30"
-        onClick={handleOpenFileDialog}
-        disabled={disabled || hasPreview}
-      >
-        <IcPlusBoard
-          width={20}
-          height={20}
-          className="h-5 w-5 fill-background-tertiary md:h-7.5 md:w-7.5"
-          aria-hidden="true"
-        />
-      </button>
+      {!previewSrc && (
+        <button
+          type="button"
+          aria-label={buttonAriaLabel}
+          className="mt-2 flex h-20 w-20 items-center justify-center rounded-xl border border-background-tertiary md:mt-3 md:h-30 md:w-30"
+          onClick={handleOpenFileDialog}
+          disabled={disabled || hasPreview}
+        >
+          <IcPlusBoard
+            width={20}
+            height={20}
+            className="h-5 w-5 fill-background-tertiary md:h-7.5 md:w-7.5"
+            aria-hidden="true"
+          />
+        </button>
+      )}
     </div>
   );
 }
