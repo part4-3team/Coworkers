@@ -5,6 +5,8 @@ import TeamProgressBar from '@/app/(service)/[teamid]/components/TeamProgressBar
 import { TeamProgressModals } from '@/app/(service)/[teamid]/components/TeamProgressModals';
 import { TeamProgressStats } from '@/app/(service)/[teamid]/components/TeamProgressState';
 import {
+  CREATE_MASTER_ITEMS,
+  CREATE_MEMBER_ITEMS,
   SETTING_BUTTON,
   TEAM_MEMBERS,
 } from '@/app/(service)/[teamid]/constants';
@@ -23,15 +25,12 @@ export default function TeamProgress() {
 
   const { open, close, is, selectedMember, openMemberDetail } = useModalState();
 
-  // 현재 유저 상태가 나뉘어 있지 않아 임시로 구성함
-  const masterItems = [
-    { label: '수정하기', onClick: () => router.push(`/${params.teamid}/edit`) },
-    { label: '삭제하기', onClick: () => open('teamDelete') },
-  ];
-  const memberItems = [
-    { label: '팀 나가기', onClick: () => open('teamLeave') },
-  ];
-  // TODO: 추후에 유저 상태 나뉘면 유저에 따라 드롭다운 구분할 예정
+  const masterItems = CREATE_MASTER_ITEMS(
+    params.teamid as string,
+    router.push,
+    open,
+  );
+  const memberItems = CREATE_MEMBER_ITEMS(open);
 
   return (
     <section className="w-full bg-background-inverse p-6 shadow-[0_4px_10px_rgba(49,84,153,0.06)] md:rounded-[20px] xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]">

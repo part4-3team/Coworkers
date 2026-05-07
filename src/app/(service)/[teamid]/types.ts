@@ -73,3 +73,14 @@ export type TeamProgressModalProps = {
   selectedMember: MemberChipsProps | null;
   openMemberDetail: (member: MemberChipsProps) => void;
 };
+
+export type OpenModal = (modal: ModalKey) => void;
+
+export type GroupType = {
+  id: number;
+  name: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+  teamId: string;
+};
