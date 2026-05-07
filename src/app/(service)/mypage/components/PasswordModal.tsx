@@ -68,7 +68,7 @@ export default function PasswordModal({ onClose }: Props) {
       <form className="text-left flex flex-col gap-6 min-w-70">
         <div className="flex flex-col gap-2 relative">
           <AuthInput
-            {...register('currentPassword')}
+            {...register('newPassword')}
             id="newPassword"
             type="password"
             label="새 비밀번호"
