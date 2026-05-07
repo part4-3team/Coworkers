@@ -6,11 +6,11 @@ export type AccountFormProps = {
   isDirty: boolean;
   onDirtyChange: (isDirty: boolean) => void;
   userInfo: UserInfo;
-  onSubmitData: (data: Partial<Pick<UserInfo, 'nickname' | 'image'>>) => void;
+  onSubmitData: (
+    data: Partial<Pick<UserInfo, 'nickname' | 'image'>>,
+  ) => Promise<UserInfo>;
   onSubmitError?: string | null;
 };
-
-export type AccountFormValues = z.infer<typeof accountSchema>;
 
 export type UseAccountFormProps = {
   initialEmail: string;
@@ -18,8 +18,11 @@ export type UseAccountFormProps = {
   initialImage?: string | null;
   isDirty: boolean;
   onDirtyChange: (value: boolean) => void;
-  onSubmitData: (data: Partial<Pick<UserInfo, 'nickname' | 'image'>>) => void;
+  onSubmitData: (
+    data: Partial<Pick<UserInfo, 'nickname' | 'image'>>,
+  ) => Promise<UserInfo>;
 };
+export type AccountFormValues = z.infer<typeof accountSchema>;
 
 export type UserInfo = {
   id: number;

@@ -1,6 +1,3 @@
-/**
- * 계정 설정 페이지를 구성하는 파일입니다.
- */
 'use client';
 import { useState } from 'react';
 
@@ -16,20 +13,21 @@ import { PrimaryButton } from '@/components/common/button';
 export default function MyPage() {
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null); // 추가
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const { data: me } = useQuery({
-    queryKey: ['me'],
+    queryKey: queryKeys.user.me(),
     queryFn: getMe,
   });
 
-  const { mutate: updateProfile } = useMutation({
+  // ✅ mutate → mutateAsync로 변경
+  const { mutateAsync: updateProfile } = useMutation({
     mutationFn: updateMe,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.user.me() });
-      setIsDirty(false);
       setSubmitError(null);
+      // setIsDirty(false)는 훅 내부 onSubmit에서 처리
     },
     onError: (error) => {
       setSubmitError(error.message);
@@ -40,14 +38,14 @@ export default function MyPage() {
 
   return (
     <div className="w-full h-full min-h-dvh flex justify-center items-center gap-4 flex-wrap px-4 py-6 md:px-16 md:py-10">
-      <div className="bg-background-inverse px-5.5 pt-12 pb-16 rounded-[20px] flex flex-col gap-8 w-full md:px-11 md:pt-16  xl:max-w-235 xl:px-14">
+      <div className="bg-background-inverse px-5.5 pt-12 pb-16 rounded-[20px] flex flex-col gap-8 w-full md:px-11 md:pt-16 xl:max-w-235 xl:px-14">
         <h2 className="text-text-primary text-[20px] font-bold">계정 설정</h2>
         <h2 className="sr-only">기본 계정 정보 수정</h2>
         <AccountForm
           isDirty={isDirty}
           onDirtyChange={setIsDirty}
           userInfo={me}
-          onSubmitData={updateProfile}
+          onSubmitData={updateProfile} // ✅ mutateAsync 전달
           onSubmitError={submitError}
         />
         <div className="mt-1">

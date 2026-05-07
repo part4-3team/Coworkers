@@ -33,7 +33,6 @@ export default function PasswordModal({ onClose }: Props) {
       handleConfirm();
     },
     onError: (error) => {
-      console.log(error.message);
       showToast(error.message, 'error');
     },
   });

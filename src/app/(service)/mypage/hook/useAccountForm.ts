@@ -28,7 +28,6 @@ export function useAccountForm({
 
   const baseNameRef = useRef<string>(initialName ?? '');
   const baseImageRef = useRef<string | null>(initialImage ?? null);
-
   const [imageResetKey, setImageResetKey] = useState(0);
 
   const {
@@ -48,7 +47,7 @@ export function useAccountForm({
   useEffect(() => {
     if (isDirty) return;
     reset({ name: baseNameRef.current });
-  }, [isDirty, reset]);
+  }, [initialName, isDirty, reset]);
 
   const name = useWatch({
     control,
@@ -81,7 +80,6 @@ export function useAccountForm({
     if (!dirty && isDirty) {
       if (toastIdRef.current) removeToast(toastIdRef.current);
     }
-
     onDirtyChange(dirty);
   };
 
@@ -91,7 +89,6 @@ export function useAccountForm({
         const { url } = await uploadImage(file);
         imageRef.current = url;
       } catch (error) {
-        console.log(error);
         showToast('이미지 업로드에 실패했습니다.', 'error');
         return;
       }
@@ -107,24 +104,23 @@ export function useAccountForm({
     checkIsDirty(e.target.value);
   };
 
-  const onSubmit = (data: AccountFormValues) => {
+  const onSubmit = async (data: AccountFormValues) => {
     const payload: Partial<Pick<UserInfo, 'nickname' | 'image'>> = {};
 
     if (data.name !== baseNameRef.current) {
       payload.nickname = data.name;
     }
-
     if (imageRef.current !== baseImageRef.current) {
-      payload.image = imageRef.current;
+      payload.image = imageRef.current ?? undefined;
     }
 
-    onSubmitData(payload);
-
-    baseNameRef.current = data.name;
-    baseImageRef.current = imageRef.current;
-
-    if (toastIdRef.current) removeToast(toastIdRef.current);
-    onDirtyChange(false);
+    try {
+      await onSubmitData(payload); // mutateAsync라 실패 시 throw함
+      baseNameRef.current = data.name;
+      baseImageRef.current = imageRef.current;
+      if (toastIdRef.current) removeToast(toastIdRef.current);
+      onDirtyChange(false);
+    } catch {}
   };
 
   return {
