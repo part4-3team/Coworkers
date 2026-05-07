@@ -34,6 +34,7 @@ export default function PasswordModal({ onClose }: Props) {
     },
     onError: (error) => {
       console.log(error.message);
+      showToast(error.message, 'error');
     },
   });
 
@@ -48,7 +49,7 @@ export default function PasswordModal({ onClose }: Props) {
 
   const onSubmit = (data: PasswordFormValues) => {
     updatePassword({
-      password: data.currentPassword,
+      password: data.newPassword,
       passwordConfirmation: data.confirmPassword,
     });
   };
@@ -73,9 +74,9 @@ export default function PasswordModal({ onClose }: Props) {
             label="새 비밀번호"
             placeholder="새 비밀번호를 입력해주세요."
           />
-          {errors.currentPassword && (
+          {errors.newPassword && (
             <p className="text-status-danger text-sm">
-              {errors.currentPassword.message}
+              {errors.newPassword.message}
             </p>
           )}
         </div>

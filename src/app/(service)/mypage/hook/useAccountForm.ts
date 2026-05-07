@@ -25,14 +25,18 @@ export function useAccountForm({
   const { showToast, removeToast } = useToast();
   const toastIdRef = useRef<string | null>(null);
   const imageRef = useRef<string | null>(initialImage ?? null);
+
+  const baseNameRef = useRef<string>(initialName ?? '');
+  const baseImageRef = useRef<string | null>(initialImage ?? null);
+
   const [imageResetKey, setImageResetKey] = useState(0);
 
   const {
-    register,
     handleSubmit,
     reset,
     control,
     formState: { errors },
+    register,
   } = useForm<AccountFormValues>({
     resolver: zodResolver(accountSchema),
     mode: 'onChange',
@@ -42,29 +46,21 @@ export function useAccountForm({
   });
 
   useEffect(() => {
-    if (isDirty) {
-      return;
-    }
-
-    reset({ name: initialName });
-  }, [initialName, isDirty, reset]);
+    if (isDirty) return;
+    reset({ name: baseNameRef.current });
+  }, [isDirty, reset]);
 
   const name = useWatch({
     control,
     name: 'name',
   });
 
-  const handleImageChange = async (file: File | null) => {
-    if (file) {
-      const { url } = await uploadImage(file);
-      imageRef.current = url;
-    } else {
-      imageRef.current = null;
-    }
+  const checkIsDirty = (currentName: string) => {
+    const nameChanged = currentName !== baseNameRef.current;
+    const imageChanged = imageRef.current !== baseImageRef.current;
+    const dirty = nameChanged || imageChanged;
 
-    const changed = file !== null;
-
-    if (changed && !isDirty) {
+    if (dirty && !isDirty) {
       toastIdRef.current = showToast(
         '저장하지 않은 변경사항이 있어요!',
         'error',
@@ -73,66 +69,59 @@ export function useAccountForm({
           label: '변경사항 취소하기',
           textClassName: 'text-status-danger',
           onClick: () => {
-            reset({ name: initialName });
-            imageRef.current = initialImage ?? null;
+            reset({ name: baseNameRef.current });
+            imageRef.current = baseImageRef.current;
             setImageResetKey((prev) => prev + 1);
             onDirtyChange(false);
           },
         },
       );
-      onDirtyChange(true);
     }
 
-    if (!changed && isDirty) {
+    if (!dirty && isDirty) {
       if (toastIdRef.current) removeToast(toastIdRef.current);
-      onDirtyChange(false);
     }
+
+    onDirtyChange(dirty);
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    register('name').onChange(e);
-
-    const changed = e.target.value !== initialName;
-
-    if (changed && !isDirty) {
-      toastIdRef.current = showToast(
-        '저장하지 않은 변경사항이 있어요!',
-        'error',
-        {
-          hideCloseButton: true,
-          label: '변경사항 취소하기',
-          textClassName: 'text-status-danger',
-          onClick: () => {
-            reset({ name: initialName });
-            onDirtyChange(false);
-          },
-        },
-      );
-
-      onDirtyChange(true);
-    }
-
-    if (!changed && isDirty) {
-      if (toastIdRef.current) {
-        removeToast(toastIdRef.current);
+  const handleImageChange = async (file: File | null) => {
+    if (file) {
+      try {
+        const { url } = await uploadImage(file);
+        imageRef.current = url;
+      } catch (error) {
+        console.log(error);
+        showToast('이미지 업로드에 실패했습니다.', 'error');
+        return;
       }
-
-      onDirtyChange(false);
+    } else {
+      imageRef.current = null;
     }
+    checkIsDirty(name);
+  };
+
+  const { onChange: onNameChange, ...nameRegister } = register('name');
+  const handleNameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    await onNameChange(e);
+    checkIsDirty(e.target.value);
   };
 
   const onSubmit = (data: AccountFormValues) => {
     const payload: Partial<Pick<UserInfo, 'nickname' | 'image'>> = {};
 
-    if (data.name !== initialName) {
+    if (data.name !== baseNameRef.current) {
       payload.nickname = data.name;
     }
 
-    if (imageRef.current !== initialImage) {
-      payload.image = imageRef.current ?? undefined;
+    if (imageRef.current !== baseImageRef.current) {
+      payload.image = imageRef.current;
     }
 
     onSubmitData(payload);
+
+    baseNameRef.current = data.name;
+    baseImageRef.current = imageRef.current;
 
     if (toastIdRef.current) removeToast(toastIdRef.current);
     onDirtyChange(false);
@@ -144,6 +133,7 @@ export function useAccountForm({
     errors,
     register,
     handleSubmit,
+    nameRegister,
     handleNameChange,
     handleImageChange,
     onSubmit,

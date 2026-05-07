@@ -29,6 +29,7 @@ export default function MyPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.user.me() });
       setIsDirty(false);
+      setSubmitError(null);
     },
     onError: (error) => {
       setSubmitError(error.message);

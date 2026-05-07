@@ -18,8 +18,7 @@ export default function AccountForm({
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const {
     email,
-    name,
-    register,
+    nameRegister,
     handleSubmit,
     handleNameChange,
     handleImageChange,
@@ -33,7 +32,6 @@ export default function AccountForm({
     onDirtyChange,
     onSubmitData,
   });
-
   return (
     <>
       <form
@@ -50,12 +48,7 @@ export default function AccountForm({
         <div className="flex flex-col gap-3">
           <label htmlFor="userName">이름</label>
 
-          <Input
-            id="userName"
-            value={name}
-            {...register('name')}
-            onChange={handleNameChange}
-          />
+          <Input id="userName" {...nameRegister} onChange={handleNameChange} />
 
           {onSubmitError && (
             <p className="text-sm text-status-danger font-medium">
