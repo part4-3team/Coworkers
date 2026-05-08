@@ -21,7 +21,6 @@ export default function MyPage() {
     queryFn: getMe,
   });
 
-  // ✅ mutate → mutateAsync로 변경
   const { mutateAsync: updateProfile } = useMutation({
     mutationFn: updateMe,
     onSuccess: () => {
@@ -45,7 +44,7 @@ export default function MyPage() {
           isDirty={isDirty}
           onDirtyChange={setIsDirty}
           userInfo={me}
-          onSubmitData={updateProfile} // ✅ mutateAsync 전달
+          onSubmitData={updateProfile}
           onSubmitError={submitError}
         />
         <div className="mt-1">
