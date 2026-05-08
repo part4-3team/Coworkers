@@ -88,7 +88,7 @@ export function useAccountForm({
       try {
         const { url } = await uploadImage(file);
         imageRef.current = url;
-      } catch (error) {
+      } catch {
         showToast('이미지 업로드에 실패했습니다.', 'error');
         return;
       }
