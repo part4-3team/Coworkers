@@ -99,7 +99,11 @@ export type TeamDetailData = GroupType & {
 };
 export type TeamProgressProps = {
   role?: RoleProps;
-  teamdata: TeamDetailData | undefined;
+  teamData: TeamDetailData | undefined;
+};
+
+export type TeamMemberProps = {
+  teamData: TeamDetailData;
 };
 
 export type Writer = {

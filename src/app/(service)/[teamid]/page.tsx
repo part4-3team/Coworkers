@@ -21,7 +21,7 @@ export default function TaskDetailPage({ params }: TeamPageProps) {
   const { teamid } = use(params);
 
   const { data: meData } = useMeQuery() as { data: MeData | undefined };
-  const { data: teamdata, isLoading: isTeamLoading } =
+  const { data: teamData, isLoading: isTeamLoading } =
     useTeamDetailQuery<TeamDetailData>({ teamId: teamid });
 
   if (isTeamLoading) return null;
@@ -30,7 +30,7 @@ export default function TaskDetailPage({ params }: TeamPageProps) {
     return <NoGroups />;
   }
 
-  if (!teamdata) return null;
+  if (!teamData) return null;
 
   const myRole = meData.memberships.find(
     (m) => m.groupId === Number(teamid),
@@ -38,10 +38,10 @@ export default function TaskDetailPage({ params }: TeamPageProps) {
 
   return (
     <div className="flex gap-4 flex-wrap pb-30 md:gap-8 md:px-6 md:pt-18 xl:w-full xl:py-30 xl:max-w-7xl xl:px-20">
-      <TeamProgress role={myRole} teamdata={teamdata} />
+      <TeamProgress role={myRole} teamData={teamData} />
       <div className="flex w-full xl:border-t xl:border-background-tertiary xl:pt-8 xl:gap-6">
-        <TeamTaskList {...teamdata} />
-        <TeamMemberList />
+        <TeamTaskList {...teamData} />
+        <TeamMemberList teamData={teamData} />
       </div>
     </div>
   );

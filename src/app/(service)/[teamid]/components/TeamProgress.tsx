@@ -13,12 +13,12 @@ import { useModalState } from '@/app/(service)/[teamid]/hooks/useModalState';
 import { TeamProgressProps } from '@/app/(service)/[teamid]/types';
 import { ListDropdown } from '@/components/common/dropdown';
 
-export default function TeamProgress({ role, teamdata }: TeamProgressProps) {
+export default function TeamProgress({ role, teamData }: TeamProgressProps) {
   const router = useRouter();
   const params = useParams();
   const { open, close, is, selectedMember, openMemberDetail } = useModalState();
 
-  if (!teamdata) return null;
+  if (!teamData) return null;
 
   const masterItems = CREATE_MASTER_ITEMS(
     params.teamid as string,
@@ -29,14 +29,14 @@ export default function TeamProgress({ role, teamdata }: TeamProgressProps) {
   return (
     <section className="w-full bg-background-inverse p-6 shadow-[0_4px_10px_rgba(49,84,153,0.06)] md:rounded-[20px] xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]">
       <div className="flex gap-3 items-center mb-8">
-        {teamdata ? (
+        {teamData ? (
           <h2 className="text-text-primary font-bold text-xl md:text-2xl">
-            {teamdata.name}
+            {teamData.name}
           </h2>
         ) : null}
         <div className="flex justify-between flex-1 items-center xl:hidden">
           <button onClick={() => open('memberList')}>
-            <MemberChip members={teamdata.members} />
+            <MemberChip members={teamData.members} />
           </button>
           <ListDropdown
             trigger={SETTING_BUTTON}
@@ -55,7 +55,7 @@ export default function TeamProgress({ role, teamdata }: TeamProgressProps) {
               0%
             </p>
           </div>
-          <TeamProgressStats today={teamdata.taskLists.length} done={0} />
+          <TeamProgressStats today={teamData.taskLists.length} done={0} />
         </div>
 
         <div className="flex gap-4">

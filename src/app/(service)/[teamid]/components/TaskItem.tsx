@@ -49,7 +49,9 @@ export default function TaskItem({
       <div
         className={cn(
           'bg-background-inverse p-6 pr-3 rounded-2xl border border-border-secondary flex flex-col gap-4',
-          status === '완료' && 'pl-6 pr-3 py-3.5',
+          {
+            'pl-6 pr-3 py-3.5': status === '완료',
+          },
         )}
       >
         <div className="flex gap-3 items-center justify-center">
@@ -63,25 +65,26 @@ export default function TaskItem({
             <ListDropdown trigger={DROPDOWN_BUTTON} items={DropdownItems} />
           </div>
         </div>
-
-        <div className="flex flex-col gap-3 pr-2 w-full">
-          {tasks.length > 0 ? (
-            tasks
-              .slice(0, 3)
-              .map((task) => (
-                <TodoCheckUncheck
-                  key={task.id}
-                  label={task.name}
-                  checked={task.doneAt !== null}
-                  onChange={() => handleToggle(task.id, task.doneAt)}
-                />
-              ))
-          ) : (
-            <p className="text-sm font-normal text-text-default">
-              아직 체크리스트가 없어요.
-            </p>
-          )}
-        </div>
+        {status !== '완료' && (
+          <div className="flex flex-col gap-3 pr-2 w-full">
+            {tasks.length > 0 ? (
+              tasks
+                .slice(0, 3)
+                .map((task) => (
+                  <TodoCheckUncheck
+                    key={task.id}
+                    label={task.name}
+                    checked={task.doneAt !== null}
+                    onChange={() => handleToggle(task.id, task.doneAt)}
+                  />
+                ))
+            ) : (
+              <p className="text-sm font-normal text-text-default">
+                아직 체크리스트가 없어요.
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       {is('taskEdit') && <ModalTaskEdit onClose={close} />}
