@@ -6,12 +6,14 @@ import {
   BOARD_BEST_LIST_PARAMS,
   BOARD_DEVICE_TYPE,
   BOARD_DEVICE_TYPE_LIMIT,
-  getBoardBestPosts,
 } from '@/app/(service)/boards/constants';
 import useBoardBestMemo from '@/app/(service)/boards/hooks/useBoardBestMemo';
 import { usePagination } from '@/app/(service)/boards/hooks/usePagination';
 import type { Post } from '@/app/(service)/boards/types';
-import { hasPosts } from '@/app/(service)/boards/utils/boardUtils';
+import {
+  getBoardBestPosts,
+  hasPosts,
+} from '@/app/(service)/boards/utils/boardUtils';
 import { useArticleListQuery } from '@/hooks/useArticle';
 import useDeviceType from '@/hooks/useDeviceType';
 

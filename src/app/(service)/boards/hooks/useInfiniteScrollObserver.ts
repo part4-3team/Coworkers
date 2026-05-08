@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 
+import { BOARD_LIST_LOAD_MORE_ROOT_MARGIN } from '@/app/(service)/boards/constants';
+
 type UseInfiniteScrollObserverParams = {
   fetchNextPage: () => Promise<unknown>;
   hasNextPage?: boolean;
@@ -13,7 +15,7 @@ export function useInfiniteScrollObserver({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
-  rootMargin = '200px',
+  rootMargin = BOARD_LIST_LOAD_MORE_ROOT_MARGIN,
 }: UseInfiniteScrollObserverParams) {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 

@@ -26,9 +26,9 @@ export default function BoardList({ isSearchMode, keyword }: BoardListProps) {
       },
       teamId: TEAM_ID,
     });
-  const boardPosts = useInfinitePages<Post>({
-    pages: data?.pages,
-  });
+
+  const boardPosts = useInfinitePages<Post>({ pages: data?.pages });
+
   const sentinelRef = useInfiniteScrollObserver({
     fetchNextPage,
     hasNextPage,
