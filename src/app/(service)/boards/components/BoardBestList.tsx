@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import BoardBestCard from '@/app/(service)/boards/components/BoardBestCard';
 import BoardBestPagination from '@/app/(service)/boards/components/BoardBestPagination';
 import {
@@ -11,19 +9,15 @@ import {
   getBoardBestPosts,
 } from '@/app/(service)/boards/constants';
 import useBoardBestMemo from '@/app/(service)/boards/hooks/useBoardBestMemo';
+import { usePagination } from '@/app/(service)/boards/hooks/usePagination';
 import type { Post } from '@/app/(service)/boards/types';
-import {
-  getCurrentPosts,
-  getTotalPages,
-  hasPosts,
-} from '@/app/(service)/boards/utils/boardUtils';
+import { hasPosts } from '@/app/(service)/boards/utils/boardUtils';
 import { useArticleListQuery } from '@/hooks/useArticle';
 import useDeviceType from '@/hooks/useDeviceType';
 
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID ?? '';
 
 export default function BoardBestList() {
-  const [currentPage, setCurrentPage] = useState(1);
   const deviceType = useDeviceType();
   const pageSize =
     BOARD_DEVICE_TYPE_LIMIT[deviceType ?? BOARD_DEVICE_TYPE.MOBILE];
@@ -37,9 +31,17 @@ export default function BoardBestList() {
   const hasBoardPosts = hasPosts(boardPosts);
 
   const { emptyMessage } = useBoardBestMemo({ boardBestPosts, hasBoardPosts });
-
-  const totalPages = getTotalPages(boardBestPosts, pageSize);
-  const currentPosts = getCurrentPosts(boardBestPosts, pageSize, currentPage);
+  const {
+    currentItems: currentPosts,
+    currentPage,
+    handleNextPage,
+    handlePageSelect,
+    handlePrevPage,
+    totalPages,
+  } = usePagination({
+    items: boardBestPosts,
+    pageSize,
+  });
 
   return (
     <section
@@ -69,7 +71,9 @@ export default function BoardBestList() {
               <BoardBestPagination
                 totalPages={totalPages}
                 currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                onPrevPage={handlePrevPage}
+                onNextPage={handleNextPage}
+                onSelectPage={handlePageSelect}
               />
             ) : null}
           </>

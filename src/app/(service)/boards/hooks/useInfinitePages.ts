@@ -6,13 +6,11 @@ type InfinitePage<TItem> = {
   list?: TItem[];
 };
 
-type UseInfinitePagesParams<TItem> = {
+type UseInfinitePagesParams = {
   pages?: unknown[];
 };
 
-export function useInfinitePages<TItem>({
-  pages,
-}: UseInfinitePagesParams<TItem>) {
+export function useInfinitePages<TItem>({ pages }: UseInfinitePagesParams) {
   return useMemo(() => {
     if (!pages) {
       return [];
