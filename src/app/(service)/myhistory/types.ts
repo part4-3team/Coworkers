@@ -8,6 +8,7 @@ import type {
   RefObject,
 } from 'react';
 
+import { MY_HISTORY_DATE_RANGE_MODES } from '@/app/(service)/myhistory/constants';
 import type { DatePickerRangeValue } from '@/components/common/form/types';
 
 export type MyHistoryFilter = {
@@ -18,7 +19,8 @@ export type MyHistoryFilter = {
 
 export type MyHistoryFilterId = 'once' | 'recurring';
 
-export type MyHistoryDateSelectionMode = 'all' | 'month' | 'range';
+export type MyHistoryDateSelectionMode =
+  (typeof MY_HISTORY_DATE_RANGE_MODES)[keyof typeof MY_HISTORY_DATE_RANGE_MODES];
 
 export type MyHistoryResolvedDateRange = {
   endDate: Date;
@@ -35,12 +37,15 @@ export type MyHistoryDraftDateRange = {
 };
 
 export type MyHistorySummaryDetail = {
+  doneCount: number;
   countText: string;
   id: string;
+  totalCount: number;
   title: string;
 };
 
 export type MyHistorySummaryItem = {
+  count: number;
   countText: string;
   details: MyHistorySummaryDetail[];
   id: string;
@@ -178,7 +183,6 @@ export type UseDragScrollReturn = {
 export type HistoryMonthNavigatorProps = {
   onApplyRange: (range: MyHistoryResolvedDateRange) => void;
   onMoveMonth: (monthOffset: number) => void;
-  onResetRange: () => void;
   selectedRange: MyHistoryDateRange;
   title: string;
 };
@@ -188,7 +192,6 @@ export type UseHistoryMonthNavigatorParams = {
   isCalendarOpen: boolean;
   onApplyRange: (range: MyHistoryResolvedDateRange) => void;
   onMoveMonth: (monthOffset: number) => void;
-  onResetRange: () => void;
   selectedRange: MyHistoryDateRange;
   toggleCalendar: () => void;
 };
@@ -203,7 +206,6 @@ export type HistoryBoardProps = {
   isProgressivelyLoading: boolean;
   onApplyRange: (range: MyHistoryResolvedDateRange) => void;
   onMoveMonth: (monthOffset: number) => void;
-  onResetRange: () => void;
   onSelectFilter: (filterId: string) => void;
   selectedRange: MyHistoryDateRange;
   title: string;

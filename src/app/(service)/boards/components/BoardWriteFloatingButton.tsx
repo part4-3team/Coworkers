@@ -5,12 +5,28 @@ import { useRouter } from 'next/navigation';
 import { IcPencil } from '@/assets';
 import { FloatingButton } from '@/components/common/button';
 import { ROUTES } from '@/constants/ROUTES';
+import { buildLoginPath } from '@/utils/authRedirect';
+import { hasAuthSession } from '@/utils/authSession';
 
 export default function BoardWriteFloatingButton() {
   const router = useRouter();
+  const writePath = `${ROUTES.BOARDS}?write=true`;
 
   const handleClick = () => {
-    router.push(`${ROUTES.BOARDS}?write=true`, { scroll: false });
+    if (!hasAuthSession()) {
+      router.push(
+        buildLoginPath({
+          notice: 'auth-required',
+          redirectTo: writePath,
+        }),
+        {
+          scroll: false,
+        },
+      );
+      return;
+    }
+
+    router.push(writePath, { scroll: false });
   };
 
   return (
