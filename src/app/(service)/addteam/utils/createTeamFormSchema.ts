@@ -11,6 +11,10 @@ export const createTeamFormSchema = z.object({
     .trim()
     .min(1, '팀 이름을 입력해주세요.')
     .refine(
+      (value) => !/^\d+$/.test(value),
+      '숫자로만 이루어진 팀 이름은 사용할 수 없습니다.',
+    )
+    .refine(
       (value) => !/[^a-zA-Z0-9가-힣\s]/.test(value),
       '특수기호가 포함된 이름은 사용할 수 없습니다.',
     )
