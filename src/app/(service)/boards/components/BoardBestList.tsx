@@ -5,25 +5,36 @@ import { useState } from 'react';
 import BoardBestCard from '@/app/(service)/boards/components/BoardBestCard';
 import BoardBestPagination from '@/app/(service)/boards/components/BoardBestPagination';
 import {
+  BOARD_BEST_LIST_PARAMS,
   BOARD_DEVICE_TYPE,
   BOARD_DEVICE_TYPE_LIMIT,
+  getBoardBestPosts,
 } from '@/app/(service)/boards/constants';
 import useBoardBestMemo from '@/app/(service)/boards/hooks/useBoardBestMemo';
-import type { BoardBestListProps } from '@/app/(service)/boards/types';
+import type { Post } from '@/app/(service)/boards/types';
 import {
   getCurrentPosts,
   getTotalPages,
+  hasPosts,
 } from '@/app/(service)/boards/utils/boardUtils';
+import { useArticleListQuery } from '@/hooks/useArticle';
 import useDeviceType from '@/hooks/useDeviceType';
 
-export default function BoardBestList({
-  boardBestPosts,
-  hasBoardPosts,
-}: BoardBestListProps) {
+const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID ?? '';
+
+export default function BoardBestList() {
   const [currentPage, setCurrentPage] = useState(1);
   const deviceType = useDeviceType();
   const pageSize =
     BOARD_DEVICE_TYPE_LIMIT[deviceType ?? BOARD_DEVICE_TYPE.MOBILE];
+  const { data } = useArticleListQuery({
+    params: BOARD_BEST_LIST_PARAMS,
+    teamId: TEAM_ID,
+  });
+  const boardPosts = ((data as { list?: Post[] } | undefined)?.list ??
+    []) as Post[];
+  const boardBestPosts = getBoardBestPosts(boardPosts);
+  const hasBoardPosts = hasPosts(boardPosts);
 
   const { emptyMessage } = useBoardBestMemo({ boardBestPosts, hasBoardPosts });
 
