@@ -1,16 +1,14 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
-import { queryKeys } from '@/api/queryKeys';
-import { changePassword } from '@/api/userApi';
 import { passwordSchema } from '@/app/(service)/mypage/schemas/passwordSchema';
 import { PasswordFormValues } from '@/app/(service)/mypage/types';
 import { AuthInput } from '@/components/common/form';
 import Modal from '@/components/common/modal';
 import { useToast } from '@/components/common/toast';
+import { useChangePasswordMutation } from '@/hooks/useUser';
 
 type Props = {
   onClose: () => void;
@@ -18,7 +16,6 @@ type Props = {
 
 export default function PasswordModal({ onClose }: Props) {
   const { showToast } = useToast();
-  const queryClient = useQueryClient();
 
   const handleConfirm = () => {
     showToast('비밀번호가 변경되었습니다.', 'success');
@@ -26,10 +23,8 @@ export default function PasswordModal({ onClose }: Props) {
     onClose();
   };
 
-  const { mutate: updatePassword } = useMutation({
-    mutationFn: changePassword,
+  const { mutate: updatePassword } = useChangePasswordMutation({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.user.me() });
       handleConfirm();
     },
     onError: (error) => {

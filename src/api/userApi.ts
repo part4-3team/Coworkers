@@ -9,11 +9,16 @@ import type {
   CompletedTaskHistoryQueryParams,
   QueryParams,
 } from '@/api/queryKeys';
-import { ChangePassword, UserInfo } from '@/app/(service)/mypage/types';
+import type {
+  ResetPasswordBody,
+  SendResetPasswordEmailBody,
+} from '@/api/types';
+import type { ChangePassword, UserInfo } from '@/app/(service)/mypage/types';
 
 export async function getMe() {
   return apiClient<UserInfo>(teamEndpoint('/user'));
 }
+
 export async function updateMe(
   body: Partial<Pick<UserInfo, 'nickname' | 'image'>>,
 ) {
@@ -51,7 +56,8 @@ export async function changePassword(body: ChangePassword) {
     method: HTTP_METHODS.PATCH,
     body: JSON.stringify(body),
   });
-  
+}
+
 export async function sendResetPasswordEmail(
   teamId: string,
   body: SendResetPasswordEmailBody,

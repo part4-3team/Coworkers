@@ -1,32 +1,25 @@
+/**
+ * 계정 설정 페이지를 구성하는 파일입니다.
+ */
 'use client';
 import { useState } from 'react';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
-import { queryKeys } from '@/api/queryKeys';
-import { getMe, updateMe } from '@/api/userApi';
 import AccountForm from '@/app/(service)/mypage/components/AccountForm';
 import WithdrawModal from '@/app/(service)/mypage/components/WithdrawModal';
 import { IcLogout } from '@/assets/index';
 import { PrimaryButton } from '@/components/common/button';
+import { useMeQuery, useUpdateMeMutation } from '@/hooks/useUser';
 
 export default function MyPage() {
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const queryClient = useQueryClient();
 
-  const { data: me } = useQuery({
-    queryKey: queryKeys.user.me(),
-    queryFn: getMe,
-  });
+  const { data: me } = useMeQuery();
 
-  const { mutateAsync: updateProfile } = useMutation({
-    mutationFn: updateMe,
+  const { mutateAsync: updateProfile } = useUpdateMeMutation({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.user.me() });
       setSubmitError(null);
-      // setIsDirty(false)는 훅 내부 onSubmit에서 처리
     },
     onError: (error) => {
       setSubmitError(error.message);
