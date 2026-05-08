@@ -1,107 +1,97 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+/**
+ * 계정 설정 폼의 입력, 이미지 업로드, 제출 흐름을 관리하는 훅입니다.
+ */
+
+import { useCallback } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 
-import { uploadImage } from '@/api/imageApi';
+import useAccountDirtyState from '@/app/(service)/mypage/hook/useAccountDirtyState';
+import useAccountUnsavedChangesGuard from '@/app/(service)/mypage/hook/useAccountUnsavedChangesGuard';
 import { accountSchema } from '@/app/(service)/mypage/schemas/accountSchema';
-import {
+import type {
   AccountFormValues,
   UseAccountFormProps,
   UserInfo,
 } from '@/app/(service)/mypage/types';
 import { useToast } from '@/components/common/toast';
+import { useUploadImageMutation } from '@/hooks/useImage';
 
 export function useAccountForm({
   initialEmail,
-  initialName,
   initialImage,
+  initialName,
   isDirty,
   onDirtyChange,
   onSubmitData,
 }: UseAccountFormProps) {
-  const { showToast, removeToast } = useToast();
-  const toastIdRef = useRef<string | null>(null);
-  const imageRef = useRef<string | null>(initialImage ?? null);
-
-  const baseNameRef = useRef<string>(initialName ?? '');
-  const baseImageRef = useRef<string | null>(initialImage ?? null);
-  const [imageResetKey, setImageResetKey] = useState(0);
-
-  const {
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-    register,
-  } = useForm<AccountFormValues>({
-    resolver: zodResolver(accountSchema),
-    mode: 'onChange',
-    defaultValues: {
-      name: initialName,
+  const { showToast } = useToast();
+  const uploadImageMutation = useUploadImageMutation();
+  const { control, handleSubmit, register, reset } = useForm<AccountFormValues>(
+    {
+      defaultValues: {
+        name: initialName,
+      },
+      mode: 'onChange',
+      resolver: zodResolver(accountSchema),
     },
+  );
+  const resetName = useCallback(
+    (name: string) => {
+      reset({ name });
+    },
+    [reset],
+  );
+  const {
+    baseImageRef,
+    baseNameRef,
+    checkIsDirty,
+    handleDiscardChanges,
+    imageRef,
+    imageResetKey,
+  } = useAccountDirtyState({
+    initialImage,
+    initialName,
+    isDirty,
+    onDirtyChange,
+    resetName,
   });
-
-  useEffect(() => {
-    if (isDirty) return;
-    reset({ name: baseNameRef.current });
-  }, [initialName, isDirty, reset]);
-
   const name = useWatch({
     control,
     name: 'name',
   });
 
-  const checkIsDirty = (currentName: string) => {
-    const nameChanged = currentName !== baseNameRef.current;
-    const imageChanged = imageRef.current !== baseImageRef.current;
-    const dirty = nameChanged || imageChanged;
-
-    if (dirty && !isDirty) {
-      toastIdRef.current = showToast(
-        '저장하지 않은 변경사항이 있어요!',
-        'error',
-        {
-          hideCloseButton: true,
-          label: '변경사항 취소하기',
-          textClassName: 'text-status-danger',
-          onClick: () => {
-            reset({ name: baseNameRef.current });
-            imageRef.current = baseImageRef.current;
-            setImageResetKey((prev) => prev + 1);
-            onDirtyChange(false);
-          },
-        },
-      );
-    }
-
-    if (!dirty && isDirty) {
-      if (toastIdRef.current) removeToast(toastIdRef.current);
-    }
-    onDirtyChange(dirty);
-  };
+  useAccountUnsavedChangesGuard({
+    hasUnsavedChanges: isDirty,
+    onDiscardChanges: handleDiscardChanges,
+  });
 
   const handleImageChange = async (file: File | null) => {
     if (file) {
       try {
-        const { url } = await uploadImage(file);
+        const { url } = await uploadImageMutation.mutateAsync({ file });
         imageRef.current = url;
-      } catch (error) {
+      } catch {
         showToast('이미지 업로드에 실패했습니다.', 'error');
         return;
       }
     } else {
       imageRef.current = null;
     }
+
     checkIsDirty(name);
   };
 
   const { onChange: onNameChange, ...nameRegister } = register('name');
-  const handleNameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await onNameChange(e);
-    checkIsDirty(e.target.value);
+
+  const handleNameChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    await onNameChange(event);
+    checkIsDirty(event.target.value);
   };
 
   const onSubmit = async (data: AccountFormValues) => {
@@ -110,29 +100,27 @@ export function useAccountForm({
     if (data.name !== baseNameRef.current) {
       payload.nickname = data.name;
     }
+
     if (imageRef.current !== baseImageRef.current) {
       payload.image = imageRef.current ?? undefined;
     }
 
     try {
-      await onSubmitData(payload); // mutateAsync라 실패 시 throw함
+      await onSubmitData(payload);
       baseNameRef.current = data.name;
       baseImageRef.current = imageRef.current;
-      if (toastIdRef.current) removeToast(toastIdRef.current);
       onDirtyChange(false);
     } catch {}
   };
 
   return {
     email: initialEmail,
-    name,
-    errors,
-    register,
-    handleSubmit,
-    nameRegister,
-    handleNameChange,
     handleImageChange,
-    onSubmit,
+    handleNameChange,
+    handleSubmit,
     imageResetKey,
+    name,
+    nameRegister,
+    onSubmit,
   };
 }
