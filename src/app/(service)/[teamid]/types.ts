@@ -2,10 +2,12 @@ import type { ReactNode } from 'react';
 
 export type TaskProps = {
   status: '시작 전' | '진행 중' | '완료';
+  taskLists: TaskList[];
 };
 export type TaskItemProps = {
   title: string;
   status: string;
+  tasks: TaskItemDetailProps[];
 };
 
 export type MemberCardProps = {
@@ -83,4 +85,50 @@ export type GroupType = {
   createdAt: string;
   updatedAt: string;
   teamId: string;
+};
+
+export type RoleProps = 'ADMIN' | 'MEMBER'; // 단순 유니온으로
+export type TaskList = {
+  id: number;
+  name: string;
+  tasks: TaskItemDetailProps[];
+};
+export type TeamDetailData = GroupType & {
+  members: MemberChipsProps[];
+  taskLists: TaskList[];
+};
+export type TeamProgressProps = {
+  role?: RoleProps;
+  teamdata: TeamDetailData | undefined;
+};
+
+export type Writer = {
+  id: number;
+  nickname: string;
+  image: string;
+};
+
+export type Frequency = 'ONCE' | 'DAILY' | 'WEEKLY' | 'MONTHLY';
+
+export type TaskItemDetailProps = {
+  id: number;
+  name: string;
+  description: string;
+  date: string;
+  doneAt: string | null;
+  updatedAt: string;
+  user: Writer | null;
+  recurringId: number;
+  deletedAt: string | null;
+  displayIndex: number;
+  writer: Writer;
+  doneBy: {
+    user: Writer | null;
+  };
+  commentCount: number;
+  frequency: Frequency;
+};
+
+export type TaskItemPropsExtended = TaskItemProps & {
+  taskListId: number;
 };

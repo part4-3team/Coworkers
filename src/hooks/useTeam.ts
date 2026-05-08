@@ -25,10 +25,12 @@ type UseTeamTasksByDateParams<TData = TeamTasksByDateData> = {
   teamId: string;
 };
 
-export function useTeamDetailQuery<TData = TeamDetailData>({
-  options,
-  teamId,
-}: UseTeamDetailParams<TData>) {
+export function useTeamDetailQuery<TData = TeamDetailData>(
+  {
+    options,
+    teamId,
+  }: UseTeamDetailParams<TData> = {} as UseTeamDetailParams<TData>,
+) {
   return useQuery(teamQueryOptions.detail<TData>(teamId, options));
 }
 

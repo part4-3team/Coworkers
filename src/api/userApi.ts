@@ -10,8 +10,10 @@ import type {
   QueryParams,
 } from '@/api/queryKeys';
 import type {
+  MembershipInfo,
   ResetPasswordBody,
   SendResetPasswordEmailBody,
+  UserInfo,
 } from '@/api/types';
 import { getStoredAccessToken } from '@/utils/authSession';
 
@@ -19,7 +21,7 @@ export async function getMe() {
   if (!getStoredAccessToken()) {
     return null;
   }
-  return apiClient<unknown>(teamEndpoint('/user'));
+  return apiClient<UserInfo>(teamEndpoint('/user'));
 }
 
 export async function deleteMe() {
@@ -35,7 +37,7 @@ export async function getMyGroups(params?: QueryParams) {
 
 export async function getMyMemberships(params?: QueryParams) {
   const endpoint = `${teamEndpoint('/user/memberships')}${buildQueryString(params)}`;
-  return apiClient<unknown>(endpoint);
+  return apiClient<MembershipInfo>(endpoint);
 }
 
 export async function getCompletedTasks(
