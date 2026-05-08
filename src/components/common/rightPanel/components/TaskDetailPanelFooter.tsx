@@ -4,7 +4,10 @@ import { IcCheckInverse } from '@/assets';
 import type { TaskDetailPanelFooterProps } from '@/components/common/rightPanel/types';
 
 export default function TaskDetailPanelFooter({
+  completionActionLabel = '완료하기',
   isEditing,
+  isSubmitting,
+  onToggleCompletion,
   onSubmitEdit,
 }: TaskDetailPanelFooterProps) {
   return (
@@ -13,7 +16,8 @@ export default function TaskDetailPanelFooter({
         <button
           data-allow-unsaved="true"
           type="button"
-          className="inline-flex h-11 items-center gap-1.5 rounded-full bg-brand-primary px-5 text-sm font-semibold text-text-inverse md:h-12 md:px-6 md:text-base"
+          disabled={isSubmitting}
+          className="inline-flex h-11 items-center gap-1.5 rounded-full bg-brand-primary px-5 text-sm font-semibold text-text-inverse disabled:bg-interaction-inactive md:h-12 md:px-6 md:text-base"
           onClick={onSubmitEdit}
         >
           <IcCheckInverse
@@ -27,7 +31,9 @@ export default function TaskDetailPanelFooter({
       ) : (
         <button
           type="button"
-          className="inline-flex h-11 items-center gap-1.5 rounded-full bg-brand-primary px-5 text-sm font-semibold text-text-inverse md:h-12 md:px-6 md:text-base"
+          disabled={isSubmitting}
+          className="inline-flex h-11 items-center gap-1.5 rounded-full bg-brand-primary px-5 text-sm font-semibold text-text-inverse disabled:bg-interaction-inactive md:h-12 md:px-6 md:text-base"
+          onClick={onToggleCompletion}
         >
           <IcCheckInverse
             width={16}
@@ -35,7 +41,7 @@ export default function TaskDetailPanelFooter({
             className="size-4"
             aria-hidden="true"
           />
-          완료하기
+          {completionActionLabel}
         </button>
       )}
     </div>

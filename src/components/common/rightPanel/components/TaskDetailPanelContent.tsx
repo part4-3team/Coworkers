@@ -14,25 +14,30 @@ import TaskDetailPanelMeta from '@/components/common/rightPanel/components/TaskD
 import useTaskDetailPanel from '@/components/common/rightPanel/hooks/useTaskDetailPanel';
 import useUnsavedChangesToastGuard from '@/components/common/rightPanel/hooks/useUnsavedChangesToastGuard';
 import type { TaskDetailPanelContentProps } from '@/components/common/rightPanel/types';
-import { useToast } from '@/components/common/toast';
 
 export default function TaskDetailPanelContent({
+  apiTeamId,
   assigneeName,
-  comments,
+  completionActionDoneValue = true,
+  completionActionLabel,
   description: initialDescription,
   frequency,
   initialMode,
   startedAt,
+  taskId,
+  taskListId,
+  teamId,
   title: initialTitle,
 }: TaskDetailPanelContentProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { showToast } = useToast();
   const {
     comments: editableComments,
     description,
     draftCommentContent,
     draftDescription,
     draftTitle,
+    handleCreateComment,
+    handleDeleteTask,
     handleDeleteComment,
     handleDiscardUnsavedChanges,
     editingCommentId,
@@ -41,17 +46,25 @@ export default function TaskDetailPanelContent({
     handleStartTaskEdit,
     handleSubmitCommentEdit,
     handleSubmitTaskEdit,
+    handleToggleCompletion,
     hasUnsavedChanges,
+    isCommentSubmitting,
+    isSubmittingNewComment,
+    isTaskActionSubmitting,
     isTaskEditing,
     setDraftCommentContent,
     setDraftDescription,
     setDraftTitle,
     title,
   } = useTaskDetailPanel({
-    initialComments: comments,
+    apiTeamId,
+    completionActionDoneValue,
+    groupId: teamId,
     initialDescription: initialDescription,
     initialMode,
     initialTitle,
+    taskId,
+    taskListId,
   });
 
   useUnsavedChangesToastGuard({
@@ -67,14 +80,19 @@ export default function TaskDetailPanelContent({
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
+    const isDeleted = await handleDeleteTask();
+
+    if (!isDeleted) {
+      return;
+    }
+
     setIsDeleteModalOpen(false);
-    showToast('삭제 되었습니다.', 'error');
   };
 
   return (
-    <div className="relative flex h-full flex-col">
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-36 pt-8 md:px-8 md:pb-40 md:pt-10">
+    <div className="flex h-full flex-col">
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-8 pt-8 md:px-8 md:pb-10 md:pt-10">
         <TaskDetailPanelHeader
           draftTitle={draftTitle}
           isEditing={isTaskEditing}
@@ -99,19 +117,22 @@ export default function TaskDetailPanelContent({
           draftCommentContent={draftCommentContent}
           draftDescription={draftDescription}
           editingCommentId={editingCommentId}
+          isCommentSubmitting={isCommentSubmitting}
+          isSubmittingNewComment={isSubmittingNewComment}
           isTaskEditing={isTaskEditing}
           onCancelCommentEdit={handleCancelCommentEdit}
           onChangeDraftCommentContent={setDraftCommentContent}
           onChangeDraftDescription={setDraftDescription}
+          onCreateComment={handleCreateComment}
           onDeleteComment={handleDeleteComment}
           onStartCommentEdit={handleStartCommentEdit}
           onSubmitCommentEdit={handleSubmitCommentEdit}
         />
-      </div>
-
-      <div className="absolute inset-x-0 bottom-20 px-6 md:px-8">
         <TaskDetailPanelFooter
+          completionActionLabel={completionActionLabel}
           isEditing={isTaskEditing}
+          isSubmitting={isTaskActionSubmitting}
+          onToggleCompletion={handleToggleCompletion}
           onSubmitEdit={handleSubmitTaskEdit}
         />
       </div>

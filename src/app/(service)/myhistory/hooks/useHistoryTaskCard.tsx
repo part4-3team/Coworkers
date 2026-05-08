@@ -1,34 +1,50 @@
 'use client';
 
+/**
+ * 내 히스토리 작업 카드의 수정, 삭제, 오른쪽 패널 열기 동작을 관리하는 훅입니다.
+ */
+
 import { useState } from 'react';
 
-import {
-  MY_HISTORY_DETAIL_ASSIGNEE,
-  MY_HISTORY_DETAIL_COMMENTS,
-  MY_HISTORY_DETAIL_DESCRIPTION,
-  MY_HISTORY_DETAIL_STARTED_AT,
-} from '@/app/(service)/myhistory/constants';
 import type { UseHistoryTaskCardParams } from '@/app/(service)/myhistory/types';
 import TaskDetailPanelContent from '@/components/common/rightPanel/components/TaskDetailPanelContent';
 import { useToast } from '@/components/common/toast';
 import useRightPanel from '@/components/layout/hooks/useRightPanel';
+import { useDeleteTaskMutation } from '@/hooks/useTask';
+import { useMeQuery } from '@/hooks/useUser';
+
+const API_TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID ?? '';
 
 export default function useHistoryTaskCard({ task }: UseHistoryTaskCardParams) {
   const { openRightPanel } = useRightPanel();
   const { showToast } = useToast();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { data: meData } = useMeQuery();
+  const deleteTaskMutation = useDeleteTaskMutation();
+  const assigneeName =
+    typeof meData === 'object' &&
+    meData !== null &&
+    'nickname' in meData &&
+    typeof meData.nickname === 'string'
+      ? meData.nickname
+      : '';
 
   const handleEdit = () => {
     openRightPanel({
       content: (
         <TaskDetailPanelContent
           key={task.id}
-          assigneeName={MY_HISTORY_DETAIL_ASSIGNEE}
-          comments={MY_HISTORY_DETAIL_COMMENTS}
-          description={MY_HISTORY_DETAIL_DESCRIPTION}
+          apiTeamId={API_TEAM_ID}
+          assigneeName={assigneeName}
+          completionActionDoneValue={false}
+          completionActionLabel="완료 취소하기"
+          description={task.description}
           frequency={task.frequency}
           initialMode="edit"
-          startedAt={MY_HISTORY_DETAIL_STARTED_AT}
+          startedAt={task.startedAt}
+          taskId={task.id}
+          taskListId={task.taskListId}
+          teamId={task.teamId}
           title={task.title}
         />
       ),
@@ -43,9 +59,21 @@ export default function useHistoryTaskCard({ task }: UseHistoryTaskCardParams) {
     setIsDeleteModalOpen(false);
   };
 
-  const handleConfirmDelete = () => {
-    setIsDeleteModalOpen(false);
-    showToast('삭제 되었습니다.', 'error');
+  const handleConfirmDelete = async () => {
+    try {
+      await deleteTaskMutation.mutateAsync({
+        taskId: task.id,
+        taskListId: task.taskListId,
+        teamId: task.teamId,
+      });
+      setIsDeleteModalOpen(false);
+      showToast('삭제되었습니다.', 'error');
+    } catch (error) {
+      showToast(
+        error instanceof Error ? error.message : '할 일 삭제에 실패했습니다.',
+        'error',
+      );
+    }
   };
 
   return {

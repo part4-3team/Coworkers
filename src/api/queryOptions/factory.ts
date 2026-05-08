@@ -14,52 +14,20 @@
 
 import {
   keepPreviousData,
-  type MutationKey,
   mutationOptions,
-  type QueryKey,
   queryOptions,
-  type UndefinedInitialDataOptions,
-  type UseMutationOptions,
 } from '@tanstack/react-query';
 
-export type QueryOptionsOverrides<
-  TQueryFnData,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
-> = Omit<
-  UndefinedInitialDataOptions<TQueryFnData, Error, TData, TQueryKey>,
-  'queryFn' | 'queryKey'
->;
+import type {
+  CreateMutationOptionsParams,
+  CreateQueryOptionsParams,
+  QueryKey,
+} from '@/api/queryOptions/factory.types';
 
-export type MutationOptionsOverrides<
-  TData,
-  TVariables,
-  TOnMutateResult = unknown,
-> = Omit<
-  UseMutationOptions<TData, Error, TVariables, TOnMutateResult>,
-  'mutationFn' | 'mutationKey'
->;
-
-type CreateQueryOptionsParams<
-  TQueryFnData,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
-> = {
-  options?: QueryOptionsOverrides<TQueryFnData, TData, TQueryKey>;
-  queryFn: () => Promise<TQueryFnData>;
-  queryKey: TQueryKey;
-  staleTime?: number;
-};
-
-type CreateMutationOptionsParams<
-  TData,
-  TVariables,
-  TOnMutateResult = unknown,
-> = {
-  mutationFn: (variables: TVariables) => Promise<TData>;
-  mutationKey?: MutationKey;
-  options?: MutationOptionsOverrides<TData, TVariables, TOnMutateResult>;
-};
+export type {
+  MutationOptionsOverrides,
+  QueryOptionsOverrides,
+} from '@/api/queryOptions/factory.types';
 
 export function createQueryOptions<
   TQueryFnData,
