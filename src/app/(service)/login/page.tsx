@@ -4,6 +4,22 @@
 
 import LoginPageContent from '@/app/(service)/login/components/LoginPageContent';
 
-export default function LoginPage() {
-  return <LoginPageContent />;
+type LoginPageProps = {
+  searchParams: Promise<{
+    email?: string;
+    notice?: 'auth-required';
+    redirectTo?: string;
+  }>;
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const { email, notice, redirectTo } = await searchParams;
+
+  return (
+    <LoginPageContent
+      loginNotice={notice}
+      prefilledEmail={email}
+      redirectTo={redirectTo}
+    />
+  );
 }

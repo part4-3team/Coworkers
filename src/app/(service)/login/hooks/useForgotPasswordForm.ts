@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 
+import type { ApiError } from '@/api/types';
 import { useToast } from '@/components/common/toast';
 import { useSendResetPasswordEmailMutation } from '@/hooks/useUser';
 import {
@@ -18,6 +19,18 @@ type UseForgotPasswordFormParams = {
   onSuccess: () => void;
 };
 
+function getForgotPasswordErrorMessage(error: ApiError) {
+  if (error.status === 404) {
+    return '가입하지 않은 이메일입니다. 입력한 이메일을 다시 확인해주세요.';
+  }
+
+  if (error.status === 400 && error.message.includes('이메일')) {
+    return '가입하지 않은 이메일입니다. 입력한 이메일을 다시 확인해주세요.';
+  }
+
+  return '비밀번호 재설정 링크를 보내지 못했습니다. 잠시 후 다시 시도해주세요.';
+}
+
 export default function useForgotPasswordForm({
   onSuccess,
 }: UseForgotPasswordFormParams) {
@@ -25,7 +38,7 @@ export default function useForgotPasswordForm({
   const [serverError, setServerError] = useState('');
   const sendResetPasswordEmailMutation = useSendResetPasswordEmailMutation({
     onError: (error) => {
-      setServerError(error.message);
+      setServerError(getForgotPasswordErrorMessage(error));
     },
     onSuccess: () => {
       onSuccess();
