@@ -41,3 +41,8 @@ export function useTeamTasksByDateQuery<TData = TeamTasksByDateData>({
 }: UseTeamTasksByDateParams<TData>) {
   return useQuery(teamQueryOptions.tasksByDate<TData>(teamId, params, options));
 }
+
+export {
+  useAcceptTeamInvitationMutation,
+  useCreateTeamMutation,
+} from '@/hooks/useTeamMutations';

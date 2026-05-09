@@ -19,26 +19,24 @@ import {
 } from '@/app/(service)/[teamid]/tasklist/taskListBoardConstants';
 import type {
   TaskListBoardProps,
-  TaskListBoardTask,
   TaskListTaskDetailOpenMode,
 } from '@/app/(service)/[teamid]/tasklist/types';
 import useRightPanel from '@/components/layout/hooks/useRightPanel';
-import { getAuthSession } from '@/utils/authSession';
 import { cn } from '@/utils/cn';
 
 export default function TaskListBoard({
   columnTitle,
   className,
+  teamId,
 }: TaskListBoardProps) {
   const { openRightPanel } = useRightPanel();
-  const currentUserName = getAuthSession()?.user?.nickname ?? '';
   const {
-    handleApplyTaskDetailPatch,
     handleCloseDeleteModal,
-    handleCompleteTaskFromDetail,
     handleConfirmDelete,
+    handleRemoveTask,
     handleRequestDelete,
-    handleRequestDeleteFromDetail,
+    handleSyncTaskChecked,
+    handleSyncTaskDetail,
     handleToggleChecked,
     isTaskListEmpty,
     selectedDate,
@@ -48,27 +46,27 @@ export default function TaskListBoard({
   } = useTaskListBoard();
 
   const handleOpenTaskDetail = useCallback(
-    (task: TaskListBoardTask, mode: TaskListTaskDetailOpenMode) => {
+    (task: (typeof sortedTasks)[number], mode: TaskListTaskDetailOpenMode) => {
       openRightPanel({
         content: (
           <TaskListTaskDetailPanel
             key={`${task.id}-${mode}`}
-            currentUserName={currentUserName}
             initialMode={mode}
             task={task}
-            onApplyPatch={handleApplyTaskDetailPatch}
-            onCompleteTask={handleCompleteTaskFromDetail}
-            onRequestDeleteTask={handleRequestDeleteFromDetail}
+            teamId={teamId}
+            onDeleteTask={handleRemoveTask}
+            onSyncTaskChecked={handleSyncTaskChecked}
+            onSyncTaskDetail={handleSyncTaskDetail}
           />
         ),
       });
     },
     [
-      handleApplyTaskDetailPatch,
-      handleCompleteTaskFromDetail,
-      handleRequestDeleteFromDetail,
+      handleRemoveTask,
+      handleSyncTaskChecked,
+      handleSyncTaskDetail,
       openRightPanel,
-      currentUserName,
+      teamId,
     ],
   );
 

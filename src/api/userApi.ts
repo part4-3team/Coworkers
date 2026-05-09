@@ -15,13 +15,18 @@ import type {
   SendResetPasswordEmailBody,
   UserInfo,
 } from '@/api/types';
-import { getStoredAccessToken } from '@/utils/authSession';
+import type { ChangePassword } from '@/app/(service)/mypage/types';
 
 export async function getMe() {
-  if (!getStoredAccessToken()) {
-    return null;
-  }
   return apiClient<UserInfo>(teamEndpoint('/user'));
+}
+export async function updateMe(
+  body: Partial<Pick<UserInfo, 'nickname' | 'image'>>,
+) {
+  return apiClient<UserInfo>(teamEndpoint('/user'), {
+    method: HTTP_METHODS.PATCH,
+    body: JSON.stringify(body),
+  });
 }
 
 export async function deleteMe() {
@@ -45,6 +50,13 @@ export async function getCompletedTasks(
 ) {
   const endpoint = `${teamEndpoint('/user/history')}${buildQueryString(params)}`;
   return apiClient<unknown>(endpoint);
+}
+
+export async function changePassword(body: ChangePassword) {
+  return apiClient<{ message: string }>(teamEndpoint('/user/password'), {
+    method: HTTP_METHODS.PATCH,
+    body: JSON.stringify(body),
+  });
 }
 
 export async function sendResetPasswordEmail(

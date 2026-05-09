@@ -81,7 +81,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: '**', // 수정 마무리에 삭제할 예정
       },
     ],
   },
