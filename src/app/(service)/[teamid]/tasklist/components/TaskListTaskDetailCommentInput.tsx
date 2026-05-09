@@ -87,7 +87,7 @@ export default function TaskListTaskDetailCommentInput({
       <button
         type="button"
         aria-label="댓글 등록"
-        onMouseDown={handleSubmit}
+        onPointerDown={handleSubmit}
         disabled={!isActive}
         className="flex size-6 shrink-0 items-center justify-center cursor-pointer"
       >

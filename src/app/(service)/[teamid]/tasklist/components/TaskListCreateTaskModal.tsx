@@ -78,8 +78,8 @@ export default function TaskListCreateTaskModal({
       await createRecurring(String(groupId), taskListId, body);
       await onSubmit?.();
       onClose();
-    } catch {
-      // TODO: 에러 처리
+    } catch (error) {
+      console.log(error);
     }
   };
 

@@ -1,7 +1,5 @@
 'use client';
-/**
- * 할 일 리스트에서 공통 오른쪽 패널을 열기 위한 tasklist 전용 래퍼입니다.
- */
+
 import type { TaskListTaskDetailPanelProps } from '@/app/(service)/[teamid]/tasklist/types';
 import TaskDetailPanelContent from '@/components/common/rightPanel/components/TaskDetailPanelContent';
 
