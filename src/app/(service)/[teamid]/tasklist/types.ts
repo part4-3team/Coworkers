@@ -1,5 +1,4 @@
 /** 할 일 리스트 라우트에서 사용하는 타입 정의입니다. */
-
 import type { ReactNode, RefObject } from 'react';
 
 export type TaskListColumnItem = {
@@ -18,33 +17,27 @@ export type TaskListTaskComment = {
 };
 
 export type TaskListBoardTask = {
+  assigneeName: string;
   id: string;
-  title: string;
   checked: boolean;
   commentCount: number;
+  comments: TaskListTaskComment[];
+  description: string;
   dueDateLabel: string;
   repeatLabel: string;
   sortOrder: number;
-  assigneeName: string;
-  description: string;
   startedAtLabel: string;
-  comments: TaskListTaskComment[];
+  taskListId: string;
+  teamId: string;
+  title: string;
+};
+
+export type TaskListTaskDetailApplyPatch = {
+  description: string;
+  title: string;
 };
 
 export type TaskListTaskDetailOpenMode = 'view' | 'edit';
-
-export type TaskListTaskDetailApplyPatch = {
-  title: string;
-  description: string;
-  comments: TaskListTaskComment[];
-};
-
-/** 할 일 만들기 모달 — 반복 설정 값 */
-export type TaskListCreateTaskRepeatValue =
-  | 'once'
-  | 'daily'
-  | 'monthly'
-  | 'weekly';
 
 export type TaskListOpenTaskDetail = {
   mode: TaskListTaskDetailOpenMode;
@@ -52,8 +45,8 @@ export type TaskListOpenTaskDetail = {
 };
 
 export type TaskListBoardProps = {
-  columnTitle: string;
   className?: string;
+  columnTitle: string;
   groupId: number | null;
   taskListId: string;
   teamId: string;
@@ -99,22 +92,17 @@ export type TaskListCreateTaskModalDateTimeSectionProps = {
 };
 
 export type TaskListSidebarProps = {
+  activeId: string;
   className?: string;
   columns: TaskListColumnItem[];
-  activeId: string;
-  onSelectColumn: (id: string) => void;
-  onRequestRenameColumn: (item: TaskListColumnItem) => void;
-  onRequestDeleteColumn: (item: TaskListColumnItem) => void;
   onAddListClick: () => void;
+  onRequestDeleteColumn: (item: TaskListColumnItem) => void;
+  onRequestRenameColumn: (item: TaskListColumnItem) => void;
+  onSelectColumn: (id: string) => void;
 };
 
 export type TaskListTaskDetailPanelProps = {
-  currentUserImage: string | null;
-  currentUserName: string;
   initialMode: TaskListTaskDetailOpenMode;
-  onApplyPatch: (taskId: string, patch: TaskListTaskDetailApplyPatch) => void;
-  onCompleteTask: (taskId: string) => void;
-  onRequestDeleteTask: (task: TaskListBoardTask) => void;
   task: TaskListBoardTask;
   teamId: string;
 };
@@ -130,3 +118,10 @@ export type TaskListTaskDetailCommentItemProps = {
   onStartEdit: () => void;
   onSubmitEdit: () => void;
 };
+
+/** 할 일 만들기 모달 — 반복 설정 값 */
+export type TaskListCreateTaskRepeatValue =
+  | 'once'
+  | 'daily'
+  | 'monthly'
+  | 'weekly';

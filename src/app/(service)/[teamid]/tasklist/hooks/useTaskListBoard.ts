@@ -6,10 +6,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { taskQueryOptions } from '@/api/queryOptions';
 import { deleteTask, updateTask } from '@/api/taskApi';
-import type {
-  TaskListBoardTask,
-  TaskListTaskDetailApplyPatch,
-} from '@/app/(service)/[teamid]/tasklist/types';
+import type { TaskListBoardTask } from '@/app/(service)/[teamid]/tasklist/types';
 import { useToast } from '@/components/common/toast';
 
 export function useTaskListBoard(groupId: number | null, taskListId: string) {
@@ -19,7 +16,6 @@ export function useTaskListBoard(groupId: number | null, taskListId: string) {
 
   const dateString = selectedDate.toISOString().slice(0, 10);
 
-  // API에서 taskList 상세 조회 (tasks 포함)
   const { data: taskListDetail } = useQuery({
     ...taskQueryOptions.taskListDetail(String(groupId), taskListId, {
       date: dateString,
@@ -27,7 +23,6 @@ export function useTaskListBoard(groupId: number | null, taskListId: string) {
     enabled: groupId !== null && taskListId !== '',
   });
 
-  // API 응답을 TaskListBoardTask 형태로 변환
   const tasks: TaskListBoardTask[] = useMemo(() => {
     if (!taskListDetail?.tasks) return [];
     return taskListDetail.tasks.map((task) => ({
@@ -44,9 +39,11 @@ export function useTaskListBoard(groupId: number | null, taskListId: string) {
       assigneeName: task.writer.nickname,
       description: task.description ?? '',
       startedAtLabel: task.date.slice(0, 10),
+      taskListId: String(taskListId),
+      teamId: String(groupId),
       comments: [],
     }));
-  }, [taskListDetail]);
+  }, [taskListDetail, taskListId, groupId]);
 
   const [taskPendingDelete, setTaskPendingDelete] =
     useState<TaskListBoardTask | null>(null);
@@ -91,49 +88,10 @@ export function useTaskListBoard(groupId: number | null, taskListId: string) {
     }
   }, [taskPendingDelete, groupId, taskListId, queryClient, showToast]);
 
-  const handleApplyTaskDetailPatch = useCallback(
-    async (taskId: string, patch: TaskListTaskDetailApplyPatch) => {
-      if (!groupId) return;
-      try {
-        await updateTask(String(groupId), taskListId, taskId, {
-          name: patch.title,
-          description: patch.description,
-        });
-        await queryClient.invalidateQueries({ queryKey: ['teams'] });
-      } catch {
-        // TODO: 에러 처리
-      }
-    },
-    [groupId, taskListId, queryClient],
-  );
-
-  const handleCompleteTaskFromDetail = useCallback(
-    async (taskId: string) => {
-      if (!groupId) return;
-      try {
-        await updateTask(String(groupId), taskListId, taskId, { done: true });
-        await queryClient.invalidateQueries({ queryKey: ['teams'] });
-      } catch {
-        // TODO: 에러 처리
-      }
-    },
-    [groupId, taskListId, queryClient],
-  );
-
-  const handleRequestDeleteFromDetail = useCallback(
-    (task: TaskListBoardTask) => {
-      setTaskPendingDelete(task);
-    },
-    [],
-  );
-
   return {
-    handleApplyTaskDetailPatch,
     handleCloseDeleteModal,
-    handleCompleteTaskFromDetail,
     handleConfirmDelete,
     handleRequestDelete,
-    handleRequestDeleteFromDetail,
     handleToggleChecked,
     isTaskListEmpty,
     selectedDate,

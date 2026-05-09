@@ -1,109 +1,30 @@
 'use client';
-
-import TaskListTaskDetailPanelContent from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDetailPanelContent';
-import TaskListTaskDetailPanelFooterActions from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDetailPanelFooterActions';
-import useTaskListTaskDetailPanel from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListTaskDetailPanel';
+/**
+ * 할 일 리스트에서 공통 오른쪽 패널을 열기 위한 tasklist 전용 래퍼입니다.
+ */
 import type { TaskListTaskDetailPanelProps } from '@/app/(service)/[teamid]/tasklist/types';
-import useUnsavedChangesToastGuard from '@/components/common/rightPanel/hooks/useUnsavedChangesToastGuard';
-import useRightPanel from '@/components/layout/hooks/useRightPanel';
+import TaskDetailPanelContent from '@/components/common/rightPanel/components/TaskDetailPanelContent';
+
+const API_TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID ?? '';
 
 export default function TaskListTaskDetailPanel({
-  currentUserImage,
-  currentUserName,
   initialMode,
-  onApplyPatch,
-  onCompleteTask,
-  onRequestDeleteTask,
   task,
   teamId,
 }: TaskListTaskDetailPanelProps) {
-  const { closeRightPanel } = useRightPanel();
-
-  const {
-    comments,
-    commitTaskEdit,
-    description,
-    draftCommentContent,
-    draftDescription,
-    draftTitle,
-    handleCancelCommentEdit,
-    handleCancelTaskEdit,
-    handleCreateComment,
-    handleDeleteComment,
-    handleStartCommentEdit,
-    handleStartTaskEdit,
-    handleSubmitCommentEdit,
-    handleDiscardUnsavedChanges,
-    hasUnsavedChanges,
-    isTaskEditing,
-    setDraftCommentContent,
-    setDraftDescription,
-    setDraftTitle,
-    title,
-    editingCommentId,
-  } = useTaskListTaskDetailPanel({
-    currentUserName,
-    initialMode,
-    task,
-    taskId: task.id,
-    teamId,
-  });
-
-  useUnsavedChangesToastGuard({
-    hasUnsavedChanges,
-    onDiscardChanges: handleDiscardUnsavedChanges,
-  });
-
-  const handleRegisterTask = () => {
-    const patch = commitTaskEdit();
-    onApplyPatch(task.id, patch);
-    closeRightPanel();
-  };
-
-  const handleComplete = () => {
-    onCompleteTask(task.id);
-    closeRightPanel();
-  };
-
-  const handleDeleteFromPanel = () => {
-    onRequestDeleteTask(task);
-    closeRightPanel();
-  };
-
   return (
-    <div className="relative flex h-full flex-col">
-      <TaskListTaskDetailPanelContent
-        comments={comments}
-        currentUserImage={currentUserImage}
-        currentUserName={currentUserName}
-        description={description}
-        draftCommentContent={draftCommentContent}
-        draftDescription={draftDescription}
-        draftTitle={draftTitle}
-        editingCommentId={editingCommentId}
-        isTaskEditing={isTaskEditing}
-        onCancelCommentEdit={handleCancelCommentEdit}
-        onChangeDraftContent={setDraftCommentContent}
-        onCreateComment={handleCreateComment}
-        onDeleteComment={handleDeleteComment}
-        onStartCommentEdit={handleStartCommentEdit}
-        onSubmitCommentEdit={handleSubmitCommentEdit}
-        onDeleteFromPanel={handleDeleteFromPanel}
-        onStartTaskEdit={handleStartTaskEdit}
-        setDraftDescription={setDraftDescription}
-        setDraftTitle={setDraftTitle}
-        task={task}
-        title={title}
-      />
-
-      <div className="absolute inset-x-0 bottom-20 px-6 md:px-8">
-        <TaskListTaskDetailPanelFooterActions
-          isTaskEditing={isTaskEditing}
-          onCancelTaskEdit={handleCancelTaskEdit}
-          onComplete={handleComplete}
-          onRegisterTask={handleRegisterTask}
-        />
-      </div>
-    </div>
+    <TaskDetailPanelContent
+      key={`${task.id}-${initialMode}`}
+      apiTeamId={API_TEAM_ID}
+      assigneeName={task.assigneeName}
+      description={task.description}
+      frequency={task.repeatLabel}
+      initialMode={initialMode}
+      startedAt={task.startedAtLabel}
+      taskId={task.id}
+      taskListId={task.taskListId}
+      teamId={teamId}
+      title={task.title}
+    />
   );
 }

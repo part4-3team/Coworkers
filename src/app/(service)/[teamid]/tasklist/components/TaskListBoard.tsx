@@ -4,8 +4,6 @@
 
 'use client';
 
-import { useCallback } from 'react';
-
 import TaskListBoardEmptyTaskRow from '@/app/(service)/[teamid]/tasklist/components/TaskListBoardEmptyTaskRow';
 import TaskListMonthNavigator from '@/app/(service)/[teamid]/tasklist/components/TaskListMonthNavigator';
 import TaskListTaskDeleteModal from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDeleteModal';
@@ -19,30 +17,23 @@ import {
 } from '@/app/(service)/[teamid]/tasklist/taskListBoardConstants';
 import type {
   TaskListBoardProps,
-  TaskListBoardTask,
   TaskListTaskDetailOpenMode,
 } from '@/app/(service)/[teamid]/tasklist/types';
 import useRightPanel from '@/components/layout/hooks/useRightPanel';
-import { getAuthSession } from '@/utils/authSession';
 import { cn } from '@/utils/cn';
 
 export default function TaskListBoard({
-  columnTitle,
   className,
+  columnTitle,
   groupId,
   taskListId,
   teamId,
 }: TaskListBoardProps) {
   const { openRightPanel } = useRightPanel();
-  const currentUserName = getAuthSession()?.user?.nickname ?? '';
-  const currentUserImage = getAuthSession()?.user?.image ?? null;
   const {
-    handleApplyTaskDetailPatch,
     handleCloseDeleteModal,
-    handleCompleteTaskFromDetail,
     handleConfirmDelete,
     handleRequestDelete,
-    handleRequestDeleteFromDetail,
     handleToggleChecked,
     isTaskListEmpty,
     selectedDate,
@@ -51,34 +42,21 @@ export default function TaskListBoard({
     taskPendingDelete,
   } = useTaskListBoard(groupId, taskListId);
 
-  const handleOpenTaskDetail = useCallback(
-    (task: TaskListBoardTask, mode: TaskListTaskDetailOpenMode) => {
-      openRightPanel({
-        content: (
-          <TaskListTaskDetailPanel
-            key={`${task.id}-${mode}`}
-            currentUserImage={currentUserImage}
-            currentUserName={currentUserName}
-            initialMode={mode}
-            task={task}
-            teamId={teamId}
-            onApplyPatch={handleApplyTaskDetailPatch}
-            onCompleteTask={handleCompleteTaskFromDetail}
-            onRequestDeleteTask={handleRequestDeleteFromDetail}
-          />
-        ),
-      });
-    },
-    [
-      handleApplyTaskDetailPatch,
-      handleCompleteTaskFromDetail,
-      handleRequestDeleteFromDetail,
-      openRightPanel,
-      currentUserImage,
-      currentUserName,
-      teamId,
-    ],
-  );
+  const handleOpenTaskDetail = (
+    task: (typeof sortedTasks)[number],
+    mode: TaskListTaskDetailOpenMode,
+  ) => {
+    openRightPanel({
+      content: (
+        <TaskListTaskDetailPanel
+          key={`${task.id}-${mode}`}
+          initialMode={mode}
+          task={task}
+          teamId={teamId}
+        />
+      ),
+    });
+  };
 
   return (
     <section
