@@ -102,7 +102,7 @@ export default function SidebarNavItem({
         {shouldShowCollapsedTooltip && (
           <span
             role="tooltip"
-            className="pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-lg bg-text-primary px-3 py-2 text-sm font-medium text-text-inverse opacity-0 shadow-lg invisible transition-all duration-200 group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 motion-reduce:transition-none"
+            className="pointer-events-none absolute left-full top-1/2 z-20 ml-3 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-lg bg-text-primary px-3 py-2 text-sm font-medium text-text-inverse opacity-0 shadow-lg invisible transition-all duration-200 group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-x-0 group-focus-within:opacity-100 motion-reduce:transition-none"
           >
             {label}
           </span>
