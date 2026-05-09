@@ -65,3 +65,26 @@ export async function updateGroup(
     },
   );
 }
+
+export async function deleteGroup(groupId: QueryKeyId) {
+  return apiClient<unknown>(
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
+    {
+      method: HTTP_METHODS.DELETE,
+    },
+  );
+}
+
+export async function removeMemberGroup(
+  groupId: QueryKeyId,
+  memberUserId: QueryKeyId,
+) {
+  return apiClient<unknown>(
+    teamEndpoint(
+      `${API_PATH_SEGMENTS.GROUPS}/${groupId}/member/${memberUserId}`,
+    ),
+    {
+      method: HTTP_METHODS.DELETE,
+    },
+  );
+}

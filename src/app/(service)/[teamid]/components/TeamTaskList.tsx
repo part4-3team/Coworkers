@@ -17,7 +17,7 @@ export default function TeamTaskList({ taskLists }: TeamDetailData) {
         ))}
       </div>{' '}
       {taskLists.length === 0 && (
-        <div className="flex items-center justify-center rounded-2xl py-20 text-sm font-normal text-text-default xl:py-40">
+        <div className=" items-center justify-center rounded-2xl py-20 text-sm font-normal text-text-default hidden xl:py-40 xl:flex">
           아직 등록된 할 일이 없어요.
         </div>
       )}

@@ -37,11 +37,17 @@ export type ModalKey =
   | 'teamDelete'
   | 'teamLeave';
 
+export type ModalMemberProps = {
+  onClose: () => void;
+  onPrimaryButtonClick?: () => void;
+  member: MemberChipsProps | null;
+  onMemberClick?: (member: MemberChipsProps) => void;
+};
 export type ModalMembersProps = {
   onClose: () => void;
   onPrimaryButtonClick?: () => void;
-  member?: MemberChipsProps | null;
   onMemberClick?: (member: MemberChipsProps) => void;
+  members: MemberChipsProps[];
 };
 export type ModalTaskProps = {
   onClose: () => void;
@@ -76,8 +82,10 @@ export type TeamProgressModalProps = {
   is: (key: ModalKey) => boolean;
   close: () => void;
   open: (key: ModalKey) => void;
+  reset: () => void;
   selectedMember: MemberChipsProps | null;
   openMemberDetail: (member: MemberChipsProps) => void;
+  members: MemberChipsProps[];
 };
 
 export type OpenModal = (modal: ModalKey) => void;

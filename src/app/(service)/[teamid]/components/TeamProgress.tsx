@@ -77,6 +77,7 @@ export default function TeamProgress({ role, teamData }: TeamProgressProps) {
         open={open}
         selectedMember={selectedMember}
         openMemberDetail={openMemberDetail}
+        members={teamData.members}
       />
     </section>
   );
