@@ -9,13 +9,9 @@ import NoGroups from '@/app/(service)/[teamid]/components/NoGroups';
 import TeamMemberList from '@/app/(service)/[teamid]/components/TeamMemberList';
 import TeamProgress from '@/app/(service)/[teamid]/components/TeamProgress';
 import TeamTaskList from '@/app/(service)/[teamid]/components/TeamTaskList';
-import { TeamDetailData } from '@/app/(service)/[teamid]/types';
+import { TeamDetailData, TeamPageProps } from '@/app/(service)/[teamid]/types';
 import { useTeamDetailQuery } from '@/hooks/useTeam';
 import { type MeData, useMeQuery } from '@/hooks/useUser';
-
-type TeamPageProps = {
-  params: Promise<{ teamid: string }>;
-};
 
 export default function TaskDetailPage({ params }: TeamPageProps) {
   const { teamid } = use(params);

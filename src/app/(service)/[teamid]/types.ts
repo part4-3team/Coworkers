@@ -58,6 +58,10 @@ export type ConfirmModalProps = {
   children?: ReactNode;
 };
 
+export type TeamPageProps = {
+  params: Promise<{ teamid: string }>;
+};
+
 export type TeamMemberListContentProps = {
   members: MemberChipsProps[];
   onMemberClick: (member: MemberChipsProps) => void;
@@ -87,7 +91,7 @@ export type GroupType = {
   teamId: string;
 };
 
-export type RoleProps = 'ADMIN' | 'MEMBER'; // 단순 유니온으로
+export type RoleProps = 'ADMIN' | 'MEMBER';
 export type TaskList = {
   id: number;
   name: string;

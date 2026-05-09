@@ -52,3 +52,16 @@ export async function acceptGroupInvitation(
     },
   );
 }
+
+export async function updateGroup(
+  groupId: QueryKeyId,
+  body: { image?: string; name: string },
+) {
+  return apiClient<unknown>(
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.PATCH,
+    },
+  );
+}

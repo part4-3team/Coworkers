@@ -80,6 +80,11 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3001', // API 서버 포트
+      },
+      {
         protocol: 'https',
         hostname: '**', // 수정 마무리에 삭제할 예정
       },

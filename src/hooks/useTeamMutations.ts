@@ -6,13 +6,17 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { acceptGroupInvitation, createGroup } from '@/api/groupApi';
+import {
+  acceptGroupInvitation,
+  createGroup,
+  updateGroup,
+} from '@/api/groupApi';
+import { queryKeys } from '@/api/queryKeys';
 import {
   createMutationOptions,
   type MutationOptionsOverrides,
 } from '@/api/queryOptions/factory';
 import { refetchUserQueries } from '@/api/queryRefetch';
-
 type CreateTeamData = Awaited<ReturnType<typeof createGroup>>;
 type AcceptTeamInvitationData = Awaited<
   ReturnType<typeof acceptGroupInvitation>
@@ -26,6 +30,12 @@ type CreateTeamVariables = {
 type AcceptTeamInvitationVariables = {
   body: Parameters<typeof acceptGroupInvitation>[1];
   teamId: Parameters<typeof acceptGroupInvitation>[0];
+};
+type UpdateTeamData = Awaited<ReturnType<typeof updateGroup>>;
+
+type UpdateTeamVariables = {
+  body: Parameters<typeof updateGroup>[1];
+  teamId: Parameters<typeof updateGroup>[0];
 };
 
 export function useCreateTeamMutation(
@@ -65,6 +75,30 @@ export function useAcceptTeamInvitationMutation(
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
+          await refetchUserQueries(queryClient);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
+}
+
+export function useUpdateTeamMutation(
+  options?: MutationOptionsOverrides<UpdateTeamData, UpdateTeamVariables>,
+) {
+  const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
+
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ body, teamId }: UpdateTeamVariables) =>
+        updateGroup(teamId, body),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await queryClient.invalidateQueries({
+            queryKey: queryKeys.team.detail(String(variables.teamId)),
+          });
           await refetchUserQueries(queryClient);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
