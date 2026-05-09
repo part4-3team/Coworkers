@@ -29,9 +29,13 @@ import { cn } from '@/utils/cn';
 export default function TaskListBoard({
   columnTitle,
   className,
+  groupId,
+  taskListId,
+  teamId,
 }: TaskListBoardProps) {
   const { openRightPanel } = useRightPanel();
   const currentUserName = getAuthSession()?.user?.nickname ?? '';
+  const currentUserImage = getAuthSession()?.user?.image ?? null;
   const {
     handleApplyTaskDetailPatch,
     handleCloseDeleteModal,
@@ -45,7 +49,7 @@ export default function TaskListBoard({
     setSelectedDate,
     sortedTasks,
     taskPendingDelete,
-  } = useTaskListBoard();
+  } = useTaskListBoard(groupId, taskListId);
 
   const handleOpenTaskDetail = useCallback(
     (task: TaskListBoardTask, mode: TaskListTaskDetailOpenMode) => {
@@ -53,9 +57,11 @@ export default function TaskListBoard({
         content: (
           <TaskListTaskDetailPanel
             key={`${task.id}-${mode}`}
+            currentUserImage={currentUserImage}
             currentUserName={currentUserName}
             initialMode={mode}
             task={task}
+            teamId={teamId}
             onApplyPatch={handleApplyTaskDetailPatch}
             onCompleteTask={handleCompleteTaskFromDetail}
             onRequestDeleteTask={handleRequestDeleteFromDetail}
@@ -68,7 +74,9 @@ export default function TaskListBoard({
       handleCompleteTaskFromDetail,
       handleRequestDeleteFromDetail,
       openRightPanel,
+      currentUserImage,
       currentUserName,
+      teamId,
     ],
   );
 

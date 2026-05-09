@@ -12,6 +12,7 @@ export type TaskListColumnItem = {
 export type TaskListTaskComment = {
   id: string;
   author: string;
+  authorImage: string | null;
   content: string;
   meta: string;
 };
@@ -53,11 +54,16 @@ export type TaskListOpenTaskDetail = {
 export type TaskListBoardProps = {
   columnTitle: string;
   className?: string;
+  groupId: number | null;
+  taskListId: string;
+  teamId: string;
 };
 
 export type TaskListCreateTaskModalProps = {
   onClose: () => void;
   onSubmit?: () => void;
+  groupId: number;
+  taskListId: string;
 };
 
 export type TaskListCalendarVariant =
@@ -103,12 +109,14 @@ export type TaskListSidebarProps = {
 };
 
 export type TaskListTaskDetailPanelProps = {
+  currentUserImage: string | null;
   currentUserName: string;
   initialMode: TaskListTaskDetailOpenMode;
   onApplyPatch: (taskId: string, patch: TaskListTaskDetailApplyPatch) => void;
   onCompleteTask: (taskId: string) => void;
   onRequestDeleteTask: (task: TaskListBoardTask) => void;
   task: TaskListBoardTask;
+  teamId: string;
 };
 
 export type TaskListTaskDetailCommentItemProps = {

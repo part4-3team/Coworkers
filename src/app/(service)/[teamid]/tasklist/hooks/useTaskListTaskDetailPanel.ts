@@ -1,7 +1,15 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
+
+import {
+  createTaskComment,
+  deleteTaskComment,
+  getTaskComments,
+  updateTaskComment,
+} from '@/api/commentApi';
 import type {
   TaskListBoardTask,
   TaskListTaskComment,
@@ -13,13 +21,36 @@ type UseTaskListTaskDetailPanelParams = {
   currentUserName: string;
   initialMode: TaskListTaskDetailOpenMode;
   task: TaskListBoardTask;
+  taskId: string;
+  teamId: string;
 };
+
+type ApiComment = {
+  id: number;
+  content: string;
+  createdAt: string;
+  user: { nickname: string; image: string | null };
+};
+
+function toLocalComments(data: ApiComment[]): TaskListTaskComment[] {
+  return data.map((c) => ({
+    id: String(c.id),
+    author: c.user.nickname,
+    authorImage: c.user.image,
+    content: c.content,
+    meta: c.createdAt,
+  }));
+}
 
 export default function useTaskListTaskDetailPanel({
   currentUserName,
   initialMode,
   task,
+  taskId,
+  teamId,
 }: UseTaskListTaskDetailPanelParams) {
+  const queryClient = useQueryClient();
+
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [comments, setComments] = useState<TaskListTaskComment[]>(() =>
@@ -32,6 +63,19 @@ export default function useTaskListTaskDetailPanel({
   const [isTaskEditing, setIsTaskEditing] = useState(
     () => initialMode === 'edit',
   );
+
+  // 패널 열릴 때 댓글 조회
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const data = await getTaskComments(teamId, taskId);
+        setComments(toLocalComments(data as ApiComment[]));
+      } catch {
+        // TODO: 에러 처리
+      }
+    };
+    fetchComments();
+  }, [teamId, taskId]);
 
   const handleStartTaskEdit = useCallback(() => {
     setDraftTitle(title);
@@ -59,12 +103,24 @@ export default function useTaskListTaskDetailPanel({
     return patch;
   }, [comments, draftDescription, draftTitle]);
 
+  /** 댓글 작성 */
+  const handleCreateComment = useCallback(
+    async (content: string) => {
+      try {
+        await createTaskComment(teamId, taskId, { content });
+        const updated = await getTaskComments(teamId, taskId);
+        setComments(toLocalComments(updated as ApiComment[]));
+        await queryClient.invalidateQueries({ queryKey: ['teams'] });
+      } catch {
+        // TODO: 에러 처리
+      }
+    },
+    [teamId, taskId, queryClient],
+  );
+
   const handleStartCommentEdit = useCallback(
     (comment: TaskListTaskComment) => {
-      if (comment.author !== currentUserName) {
-        return;
-      }
-
+      if (comment.author !== currentUserName) return;
       setIsTaskEditing(false);
       setEditingCommentId(comment.id);
       setDraftCommentContent(comment.content);
@@ -77,53 +133,58 @@ export default function useTaskListTaskDetailPanel({
     setDraftCommentContent('');
   }, []);
 
-  const handleSubmitCommentEdit = useCallback(() => {
-    if (!editingCommentId) {
-      return;
-    }
+  /** 댓글 수정 */
+  const handleSubmitCommentEdit = useCallback(async () => {
+    if (!editingCommentId) return;
+    const edited = comments.find((c) => c.id === editingCommentId);
+    if (!edited || edited.author !== currentUserName) return;
 
-    const edited = comments.find((comment) => comment.id === editingCommentId);
-    if (!edited || edited.author !== currentUserName) {
-      return;
-    }
-
-    setComments((prev) =>
-      prev.map((comment) => {
-        if (comment.id !== editingCommentId) {
-          return comment;
-        }
-
-        return {
-          ...comment,
-          content: draftCommentContent,
-        };
-      }),
-    );
-    setEditingCommentId(null);
-    setDraftCommentContent('');
-  }, [comments, currentUserName, draftCommentContent, editingCommentId]);
-
-  const handleDeleteComment = useCallback(
-    (commentId: string) => {
-      const target = comments.find((comment) => comment.id === commentId);
-      if (!target || target.author !== currentUserName) {
-        return;
-      }
-
-      setComments((prev) => prev.filter((comment) => comment.id !== commentId));
-
-      if (editingCommentId !== commentId) {
-        return;
-      }
-
+    try {
+      await updateTaskComment(teamId, taskId, editingCommentId, {
+        content: draftCommentContent,
+      });
+      const updated = await getTaskComments(teamId, taskId);
+      setComments(toLocalComments(updated as ApiComment[]));
       setEditingCommentId(null);
       setDraftCommentContent('');
+      await queryClient.invalidateQueries({ queryKey: ['teams'] });
+    } catch {
+      // TODO: 에러 처리
+    }
+  }, [
+    comments,
+    currentUserName,
+    draftCommentContent,
+    editingCommentId,
+    teamId,
+    taskId,
+    queryClient,
+  ]);
+
+  /** 댓글 삭제 */
+  const handleDeleteComment = useCallback(
+    async (commentId: string) => {
+      const target = comments.find((c) => c.id === commentId);
+      if (!target || target.author !== currentUserName) return;
+
+      try {
+        await deleteTaskComment(teamId, taskId, commentId);
+        const updated = await getTaskComments(teamId, taskId);
+        setComments(toLocalComments(updated as ApiComment[]));
+        if (editingCommentId === commentId) {
+          setEditingCommentId(null);
+          setDraftCommentContent('');
+        }
+        await queryClient.invalidateQueries({ queryKey: ['teams'] });
+      } catch {
+        // TODO: 에러 처리
+      }
     },
-    [comments, currentUserName, editingCommentId],
+    [comments, currentUserName, editingCommentId, teamId, taskId, queryClient],
   );
 
   const editingComment = editingCommentId
-    ? (comments.find((comment) => comment.id === editingCommentId) ?? null)
+    ? (comments.find((c) => c.id === editingCommentId) ?? null)
     : null;
   const hasUnsavedTaskChanges =
     isTaskEditing && (draftTitle !== title || draftDescription !== description);
@@ -136,11 +197,7 @@ export default function useTaskListTaskDetailPanel({
       handleCancelTaskEdit();
       return;
     }
-
-    if (!editingCommentId) {
-      return;
-    }
-
+    if (!editingCommentId) return;
     handleCancelCommentEdit();
   }, [
     editingCommentId,
@@ -157,6 +214,7 @@ export default function useTaskListTaskDetailPanel({
     draftDescription,
     draftTitle,
     editingCommentId,
+    handleCreateComment,
     handleDiscardUnsavedChanges,
     handleCancelCommentEdit,
     handleCancelTaskEdit,

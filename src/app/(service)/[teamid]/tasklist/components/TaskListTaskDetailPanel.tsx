@@ -8,12 +8,14 @@ import useUnsavedChangesToastGuard from '@/components/common/rightPanel/hooks/us
 import useRightPanel from '@/components/layout/hooks/useRightPanel';
 
 export default function TaskListTaskDetailPanel({
+  currentUserImage,
   currentUserName,
   initialMode,
   onApplyPatch,
   onCompleteTask,
   onRequestDeleteTask,
   task,
+  teamId,
 }: TaskListTaskDetailPanelProps) {
   const { closeRightPanel } = useRightPanel();
 
@@ -26,6 +28,7 @@ export default function TaskListTaskDetailPanel({
     draftTitle,
     handleCancelCommentEdit,
     handleCancelTaskEdit,
+    handleCreateComment,
     handleDeleteComment,
     handleStartCommentEdit,
     handleStartTaskEdit,
@@ -38,7 +41,13 @@ export default function TaskListTaskDetailPanel({
     setDraftTitle,
     title,
     editingCommentId,
-  } = useTaskListTaskDetailPanel({ currentUserName, initialMode, task });
+  } = useTaskListTaskDetailPanel({
+    currentUserName,
+    initialMode,
+    task,
+    taskId: task.id,
+    teamId,
+  });
 
   useUnsavedChangesToastGuard({
     hasUnsavedChanges,
@@ -65,6 +74,7 @@ export default function TaskListTaskDetailPanel({
     <div className="relative flex h-full flex-col">
       <TaskListTaskDetailPanelContent
         comments={comments}
+        currentUserImage={currentUserImage}
         currentUserName={currentUserName}
         description={description}
         draftCommentContent={draftCommentContent}
@@ -74,6 +84,7 @@ export default function TaskListTaskDetailPanel({
         isTaskEditing={isTaskEditing}
         onCancelCommentEdit={handleCancelCommentEdit}
         onChangeDraftContent={setDraftCommentContent}
+        onCreateComment={handleCreateComment}
         onDeleteComment={handleDeleteComment}
         onStartCommentEdit={handleStartCommentEdit}
         onSubmitCommentEdit={handleSubmitCommentEdit}
