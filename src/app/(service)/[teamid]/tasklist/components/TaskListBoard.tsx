@@ -4,6 +4,8 @@
 
 'use client';
 
+import { useCallback } from 'react';
+
 import TaskListBoardEmptyTaskRow from '@/app/(service)/[teamid]/tasklist/components/TaskListBoardEmptyTaskRow';
 import TaskListMonthNavigator from '@/app/(service)/[teamid]/tasklist/components/TaskListMonthNavigator';
 import TaskListTaskDeleteModal from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDeleteModal';
@@ -43,24 +45,30 @@ export default function TaskListBoard({
     taskPendingDelete,
   } = useTaskListBoard();
 
-  const handleOpenTaskDetail = (
-    task: (typeof sortedTasks)[number],
-    mode: TaskListTaskDetailOpenMode,
-  ) => {
-    openRightPanel({
-      content: (
-        <TaskListTaskDetailPanel
-          key={`${task.id}-${mode}`}
-          initialMode={mode}
-          task={task}
-          teamId={teamId}
-          onDeleteTask={handleRemoveTask}
-          onSyncTaskChecked={handleSyncTaskChecked}
-          onSyncTaskDetail={handleSyncTaskDetail}
-        />
-      ),
-    });
-  };
+  const handleOpenTaskDetail = useCallback(
+    (task: (typeof sortedTasks)[number], mode: TaskListTaskDetailOpenMode) => {
+      openRightPanel({
+        content: (
+          <TaskListTaskDetailPanel
+            key={`${task.id}-${mode}`}
+            initialMode={mode}
+            task={task}
+            teamId={teamId}
+            onDeleteTask={handleRemoveTask}
+            onSyncTaskChecked={handleSyncTaskChecked}
+            onSyncTaskDetail={handleSyncTaskDetail}
+          />
+        ),
+      });
+    },
+    [
+      handleRemoveTask,
+      handleSyncTaskChecked,
+      handleSyncTaskDetail,
+      openRightPanel,
+      teamId,
+    ],
+  );
 
   return (
     <section
