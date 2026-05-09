@@ -16,7 +16,8 @@ import { ListDropdown } from '@/components/common/dropdown';
 export default function TeamProgress({ role, teamData }: TeamProgressProps) {
   const router = useRouter();
   const params = useParams();
-  const { open, close, is, selectedMember, openMemberDetail } = useModalState();
+  const { open, close, reset, is, selectedMember, openMemberDetail } =
+    useModalState();
 
   if (!teamData) return null;
 
@@ -74,6 +75,7 @@ export default function TeamProgress({ role, teamData }: TeamProgressProps) {
       <TeamProgressModals
         is={is}
         close={close}
+        reset={reset}
         open={open}
         selectedMember={selectedMember}
         openMemberDetail={openMemberDetail}
