@@ -1,133 +1,161 @@
-/** 할 일 리스트 라우트에서 사용하는 타입 정의입니다. */
-import type { ReactNode, RefObject } from 'react';
+import type { ReactNode } from 'react';
 
-export type TaskListColumnItem = {
-  id: string;
-  title: string;
-  completed: number;
-  total: number;
-};
-
-export type TaskListTaskComment = {
-  id: string;
+export type RightPanelComment = {
+  authorId?: string;
+  authorImage?: string;
   author: string;
-  authorImage: string | null;
   content: string;
+  id: string;
+  isMine?: boolean;
   meta: string;
 };
 
-export type TaskListBoardTask = {
-  assigneeName: string;
-  id: string;
-  checked: boolean;
-  commentCount: number;
-  comments: TaskListTaskComment[];
-  description: string;
-  dueDateLabel: string;
-  repeatLabel: string;
-  sortOrder: number;
-  startedAtLabel: string;
-  taskListId: string;
-  teamId: string;
-  title: string;
+export type RightPanelContent = {
+  ariaLabel?: string;
+  body?: ReactNode;
+  content?: ReactNode;
+  footer?: ReactNode;
+  headerAction?: ReactNode;
+  meta?: ReactNode;
+  title?: ReactNode;
 };
 
-export type TaskListTaskDetailApplyPatch = {
-  description: string;
-  title: string;
-};
-
-export type TaskListTaskDetailOpenMode = 'view' | 'edit';
-
-export type TaskListOpenTaskDetail = {
-  mode: TaskListTaskDetailOpenMode;
-  task: TaskListBoardTask;
-};
-
-export type TaskListBoardProps = {
-  className?: string;
-  columnTitle: string;
-  groupId: number | null;
-  taskListId: string;
-  teamId: string;
-};
-
-export type TaskListCreateTaskModalProps = {
+export type RightPanelProps = RightPanelContent & {
+  isRendered: boolean;
+  isVisible: boolean;
   onClose: () => void;
-  onSubmit?: () => void;
-  groupId: number;
+};
+
+export type RightPanelShellProps = RightPanelContent & {
+  className?: string;
+  onClose: () => void;
+};
+
+export type RightPanelCloseButtonProps = {
+  onClose: () => void;
+};
+
+export type TaskDetailPanelBodyProps = {
+  commentCount: number;
+  comments: readonly RightPanelComment[];
+  description: string;
+  draftCommentContent: string;
+  draftDescription: string;
+  editingCommentId: string | null;
+  isCommentSubmitting: boolean;
+  isSubmittingNewComment: boolean;
+  isTaskEditing: boolean;
+  onCancelCommentEdit: () => void;
+  onChangeDraftCommentContent: (value: string) => void;
+  onChangeDraftDescription: (value: string) => void;
+  onCreateComment: (content: string) => Promise<boolean>;
+  onDeleteComment: (commentId: string) => Promise<void> | void;
+  onStartCommentEdit: (comment: RightPanelComment) => void;
+  onSubmitCommentEdit: () => Promise<void> | void;
+};
+
+export type TaskDetailPanelContentProps = {
+  apiTeamId: string;
+  assigneeName: string;
+  completionActionDoneValue?: boolean;
+  completionActionLabel?: string;
+  description: string;
+  frequency: string;
+  initialMode?: 'view' | 'edit';
+  onTaskCheckedChanged?: (checked: boolean) => void;
+  onTaskDeleted?: () => void;
+  onTaskUpdated?: (title: string, description: string) => void;
+  startedAt: string;
+  taskId: string;
   taskListId: string;
-};
-
-export type TaskListCalendarVariant =
-  | 'anchored'
-  | 'inlineExpand'
-  | 'modalOverlay';
-
-export type TaskListCalendarPopoverProps = {
-  calendarRef: RefObject<HTMLDivElement | null>;
-  onSelectDate: (date: Date | null) => void;
-  selectedDate: Date;
-  variant?: TaskListCalendarVariant;
-};
-
-export type TaskListContentAreaProps = {
-  children: ReactNode;
-  className?: string;
-};
-
-export type TaskListCreateTaskModalDateTimeSectionProps = {
-  calendarButtonRef: RefObject<HTMLDivElement | null>;
-  calendarRef: RefObject<HTMLDivElement | null>;
-  formId: string;
-  isCalendarOpen: boolean;
-  isTimePopoverOpen: boolean;
-  onDateChange: (date: Date | null) => void;
-  onOpenDateCalendar: () => void;
-  onOpenTime: () => void;
-  selectedDate: Date;
-  startTime: string;
-  timePopoverContainerRef: RefObject<HTMLDivElement | null>;
-  onStartTimeChange: (value: string) => void;
-};
-
-export type TaskListSidebarProps = {
-  activeId: string;
-  className?: string;
-  columns: TaskListColumnItem[];
-  onAddListClick: () => void;
-  onRequestDeleteColumn: (item: TaskListColumnItem) => void;
-  onRequestRenameColumn: (item: TaskListColumnItem) => void;
-  onSelectColumn: (id: string) => void;
-};
-
-export type TaskListTaskDetailPanelProps = {
-  initialMode: TaskListTaskDetailOpenMode;
-  onDeleteTask: (taskId: string) => void;
-  onSyncTaskChecked: (taskId: string, checked: boolean) => void;
-  onSyncTaskDetail: (
-    taskId: string,
-    patch: TaskListTaskDetailApplyPatch,
-  ) => void;
-  task: TaskListBoardTask;
   teamId: string;
+  title: string;
 };
 
-export type TaskListTaskDetailCommentItemProps = {
-  comment: TaskListTaskComment;
-  currentUserName: string;
-  draftContent: string;
+export type TaskDetailPanelFooterProps = {
+  completionActionLabel?: string;
   isEditing: boolean;
-  onCancelEdit: () => void;
-  onChangeDraftContent: (value: string) => void;
+  isSubmitting: boolean;
+  onToggleCompletion: () => Promise<boolean> | void;
+  onSubmitEdit: () => Promise<boolean> | void;
+};
+
+export type TaskDetailPanelHeaderProps = {
+  draftTitle: string;
+  isEditing: boolean;
+  onChangeDraftTitle: (value: string) => void;
   onDelete: () => void;
   onStartEdit: () => void;
-  onSubmitEdit: () => void;
+  title: string;
 };
 
-/** 할 일 만들기 모달 — 반복 설정 값 */
-export type TaskListCreateTaskRepeatValue =
-  | 'once'
-  | 'daily'
-  | 'monthly'
-  | 'weekly';
+export type TaskDetailPanelMetaProps = {
+  assigneeName: string;
+  frequency: string;
+  startedAt: string;
+};
+
+export type TaskDetailCommentsSectionProps = {
+  commentCount: number;
+  comments: readonly RightPanelComment[];
+  draftCommentContent: string;
+  editingCommentId: string | null;
+  isCommentSubmitting: boolean;
+  isSubmittingNewComment: boolean;
+  onCancelCommentEdit: () => void;
+  onChangeDraftCommentContent: (value: string) => void;
+  onCreateComment: (content: string) => Promise<boolean>;
+  onDeleteComment: (commentId: string) => Promise<void> | void;
+  onStartCommentEdit: (comment: RightPanelComment) => void;
+  onSubmitCommentEdit: () => Promise<void> | void;
+};
+
+export type TaskDetailCommentItemProps = {
+  comment: RightPanelComment;
+  draftContent: string;
+  isEditing: boolean;
+  isSubmitting: boolean;
+  onCancelEdit: () => void;
+  onChangeDraftContent: (value: string) => void;
+  onDelete: () => Promise<void> | void;
+  onStartEdit: () => void;
+  onSubmitEdit: () => Promise<void> | void;
+};
+
+export type TaskDetailCommentActionsProps = {
+  isPrimaryDisabled?: boolean;
+  onCancel: () => void;
+  onPrimaryAction: () => Promise<void> | void;
+  primaryLabel: string;
+};
+
+export type UseTaskDetailCommentsParams = {
+  apiTeamId: string;
+  groupId: string;
+  taskId: string;
+};
+
+export type UseTaskDetailDraftStateParams = {
+  initialDescription: string;
+  initialMode?: 'view' | 'edit';
+  initialTitle: string;
+};
+
+export type UseTaskDetailPanelParams = UseTaskDetailDraftStateParams &
+  UseTaskDetailCommentsParams & {
+    completionActionDoneValue: boolean;
+    onTaskCheckedChanged?: (checked: boolean) => void;
+    onTaskDeleted?: () => void;
+    onTaskUpdated?: (title: string, description: string) => void;
+    taskListId: string;
+  };
+
+export type UseTaskDetailTaskActionsParams = {
+  completionActionDoneValue: boolean;
+  currentDoneState: boolean;
+  draftDescription: string;
+  draftTitle: string;
+  taskId: string;
+  taskListId: string;
+  teamId: string;
+};
