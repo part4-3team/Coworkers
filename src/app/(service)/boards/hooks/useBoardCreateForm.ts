@@ -5,7 +5,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import useBoardFormFields from '@/app/(service)/boards/hooks/useBoardFormFields';
-import { normalizeArticleImageUrl } from '@/app/(service)/boards/utils/boardUtils';
+import {
+  getArticleSubmitErrorMessage,
+  normalizeArticleImageUrl,
+} from '@/app/(service)/boards/utils/boardUtils';
 import { useToast } from '@/components/common/toast';
 import { ROUTES } from '@/constants/ROUTES';
 import { useCreateArticleMutation } from '@/hooks/useArticle';
@@ -79,8 +82,8 @@ export default function useBoardCreateForm() {
 
       showToast('게시글이 성공적으로 등록되었습니다.', 'success');
       router.push(ROUTES.BOARDS);
-    } catch {
-      showToast('등록 중 오류가 발생했습니다.', 'error');
+    } catch (error: unknown) {
+      showToast(getArticleSubmitErrorMessage(error, 'create'), 'error');
     } finally {
       setIsLoading(false);
     }

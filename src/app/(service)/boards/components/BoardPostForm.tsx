@@ -58,7 +58,9 @@ export default function BoardPostForm({
       <div className="mt-8 md:mt-10">
         <div>
           <div className={LABEL_ROW}>
-            <span className={FIELD_LABEL}>제목</span>
+            <label htmlFor="title" className={FIELD_LABEL}>
+              제목
+            </label>
             <IcStarRed width={8} height={8} role="img" aria-label="필수 입력" />
           </div>
           <TitleInput
@@ -73,7 +75,9 @@ export default function BoardPostForm({
         </div>
         <div className="mt-6 md:mt-8">
           <div className={LABEL_ROW}>
-            <span className={FIELD_LABEL}>내용</span>
+            <label htmlFor="content" className={FIELD_LABEL}>
+              내용
+            </label>
             <IcStarRed width={8} height={8} role="img" aria-label="필수 입력" />
           </div>
           <ContentTextarea
