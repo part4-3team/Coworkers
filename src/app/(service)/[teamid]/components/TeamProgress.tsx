@@ -27,6 +27,20 @@ export default function TeamProgress({ role, teamData }: TeamProgressProps) {
     open,
   );
   const memberItems = CREATE_MEMBER_ITEMS(open);
+
+  const totalTasks = teamData.taskLists.reduce(
+    (acc, taskList) => acc + taskList.tasks.length,
+    0,
+  );
+
+  const doneTasks = teamData.taskLists.reduce(
+    (acc, taskList) =>
+      acc + taskList.tasks.filter((task) => task.doneAt !== null).length,
+    0,
+  );
+  const donePercent =
+    totalTasks === 0 ? 0 : Math.round((doneTasks / totalTasks) * 100);
+
   return (
     <section className="w-full bg-background-inverse p-6 shadow-[0_4px_10px_rgba(49,84,153,0.06)] md:rounded-[20px] xl:shadow-[0_8px_20px_rgba(49,84,153,0.12)]">
       <div className="flex gap-3 items-center mb-8">
@@ -53,15 +67,15 @@ export default function TeamProgress({ role, teamData }: TeamProgressProps) {
               오늘의 진행 상황
             </p>
             <p className="text-[32px] font-bold text-brand-primary md:text-[40px]">
-              0%
+              {donePercent}%
             </p>
           </div>
-          <TeamProgressStats today={teamData.taskLists.length} done={0} />
+          <TeamProgressStats today={totalTasks} done={doneTasks} />
         </div>
 
         <div className="flex gap-4">
           <div className="w-full h-5 md:h-7">
-            <TeamProgressBar />
+            <TeamProgressBar completed={donePercent} />
           </div>
           <div className="hidden xl:block">
             <ListDropdown

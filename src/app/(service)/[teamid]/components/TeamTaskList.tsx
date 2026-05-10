@@ -28,9 +28,7 @@ export default function TeamTaskList({ taskLists }: TeamDetailData) {
     return result;
   };
   const classified = classifyTaskLists(taskLists);
-  console.log('시작 전', classified['시작 전']);
-  console.log('진행 중', classified['진행 중']);
-  console.log('완료', classified['완료']);
+
   return (
     <section className="w-full px-4 flex flex-col gap-4 md:px-0 xl:px-0 xl:w-[calc(100%-264px)]">
       <h2 className="text-base text-text-primary font-medium flex gap-1 items-center xl:text-xl">
