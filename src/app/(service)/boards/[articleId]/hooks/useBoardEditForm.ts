@@ -98,7 +98,7 @@ export default function useBoardEditForm({
       });
 
       showToast('게시글이 성공적으로 수정되었습니다.', 'success');
-      router.push(ROUTES.BOARDS);
+      router.push(ROUTES.BOARD_DETAIL(String(articleId)));
     } catch (error: unknown) {
       showToast(getArticleUpdateSubmitErrorMessage(error), 'error');
     } finally {
