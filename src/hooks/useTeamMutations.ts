@@ -28,8 +28,7 @@ type AcceptTeamInvitationData = Awaited<
 type UpdateTeamData = Awaited<ReturnType<typeof updateGroup>>;
 
 type UpdateTeamVariables = {
-  body: Parameters<typeof updateGroup>[2];
-  groupId: Parameters<typeof updateGroup>[1];
+  body: Parameters<typeof updateGroup>[1];
   teamId: Parameters<typeof updateGroup>[0];
 };
 
@@ -56,7 +55,7 @@ type RemoveMemberTeamData = Awaited<ReturnType<typeof removeMemberGroup>>;
 
 type GetInvitationData = Awaited<ReturnType<typeof getGroupInvitation>>;
 type GetInvitationVariables = {
-  groupId: number;
+  teamId: number;
 };
 
 export function useCreateTeamMutation(
@@ -112,8 +111,8 @@ export function useUpdateTeamMutation(
 
   return useMutation(
     createMutationOptions({
-      mutationFn: ({ body, teamId, groupId }: UpdateTeamVariables) =>
-        updateGroup(teamId, groupId, body),
+      mutationFn: ({ body, teamId }: UpdateTeamVariables) =>
+        updateGroup(teamId, body),
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
@@ -177,8 +176,8 @@ export function useGetInvitationMutation(
 ) {
   return useMutation(
     createMutationOptions({
-      mutationFn: ({ groupId }: GetInvitationVariables) =>
-        getGroupInvitation(groupId),
+      mutationFn: ({ teamId }: GetInvitationVariables) =>
+        getGroupInvitation(teamId),
       options,
     }),
   );

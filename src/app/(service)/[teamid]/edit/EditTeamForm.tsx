@@ -40,7 +40,6 @@ export default function EditTeamForm({ teamData, teamid }: EditTeamFormProps) {
     updateTeam(
       {
         teamId: teamid,
-        groupId: teamData.id,
         body: { name: teamName, image: imageUrl },
       },
       {
@@ -54,6 +53,7 @@ export default function EditTeamForm({ teamData, teamid }: EditTeamFormProps) {
       },
     );
   };
+
   return (
     <section className="px-4 py-25 md:px-14 flex justify-around items-center h-full">
       <div className="bg-background-primary px-6 pt-10 pb-15 rounded-[20px] w-full max-w-xl md:px-11">

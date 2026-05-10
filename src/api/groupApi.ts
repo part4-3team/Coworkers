@@ -15,18 +15,18 @@ import type {
 } from '@/api/types';
 import type { GroupDetail } from '@/types/group';
 
-export async function getTeamDetail(groupId: QueryKeyId) {
+export async function getTeamDetail(teamId: QueryKeyId) {
   return apiClient<GroupDetail>(
-    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${teamId}`),
   );
 }
 
 export async function getTeamTasksByDate(
-  groupId: QueryKeyId,
+  teamId: QueryKeyId,
   params: TeamScopedDateQueryParams,
 ) {
   const endpoint = `${teamEndpoint(
-    `${API_PATH_SEGMENTS.GROUPS}/${groupId}${API_PATH_SEGMENTS.TASKS}`,
+    `${API_PATH_SEGMENTS.GROUPS}/${teamId}${API_PATH_SEGMENTS.TASKS}`,
   )}${buildQueryString(params)}`;
 
   return apiClient<unknown>(endpoint);
@@ -42,13 +42,9 @@ export async function createGroup(teamId: string, body: CreateGroupBody) {
   );
 }
 
-export async function updateGroup(
-  teamId: string,
-  groupId: QueryKeyId,
-  body: UpdateGroupBody,
-) {
+export async function updateGroup(teamId: string, body: UpdateGroupBody) {
   return apiClient<GroupDetail>(
-    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`, teamId),
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${teamId}`),
     {
       body: JSON.stringify(body),
       method: HTTP_METHODS.PATCH,
@@ -56,9 +52,9 @@ export async function updateGroup(
   );
 }
 
-export async function deleteGroup(groupId: QueryKeyId) {
+export async function deleteGroup(teamId: QueryKeyId) {
   return apiClient<unknown>(
-    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${teamId}`),
     {
       method: HTTP_METHODS.DELETE,
     },
@@ -66,12 +62,12 @@ export async function deleteGroup(groupId: QueryKeyId) {
 }
 
 export async function removeMemberGroup(
-  groupId: QueryKeyId,
+  teamId: QueryKeyId,
   memberUserId: QueryKeyId,
 ) {
   return apiClient<unknown>(
     teamEndpoint(
-      `${API_PATH_SEGMENTS.GROUPS}/${groupId}/member/${memberUserId}`,
+      `${API_PATH_SEGMENTS.GROUPS}/${teamId}/member/${memberUserId}`,
     ),
     {
       method: HTTP_METHODS.DELETE,
@@ -79,9 +75,9 @@ export async function removeMemberGroup(
   );
 }
 
-export async function getGroupInvitation(groupId: QueryKeyId) {
+export async function getGroupInvitation(teamId: QueryKeyId) {
   return apiClient<string>(
-    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}/invitation`),
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${teamId}/invitation`),
   );
 }
 export async function acceptGroupInvitation(
