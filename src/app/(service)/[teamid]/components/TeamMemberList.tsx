@@ -34,8 +34,8 @@ export default function TeamMemberList({ teamData }: TeamMemberProps) {
       <TeamMemberListContent
         members={members}
         onMemberClick={(member) => {
-          close(); // memberInvite 닫기
-          openMemberDetail(member); // memberDetail 열기
+          close();
+          openMemberDetail(member);
         }}
       />
 

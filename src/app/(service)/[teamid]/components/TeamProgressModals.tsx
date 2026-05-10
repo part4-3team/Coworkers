@@ -78,6 +78,10 @@ export function TeamProgressModals({
             close();
             openMemberDetail(member);
           }}
+          onPrimaryButtonClick={() => {
+            close();
+            open('memberInvite');
+          }}
         />
       )}
       {is('memberDetail') && (

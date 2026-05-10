@@ -10,6 +10,7 @@ import {
   acceptGroupInvitation,
   createGroup,
   deleteGroup,
+  getGroupInvitation,
   removeMemberGroup,
   updateGroup,
 } from '@/api/groupApi';
@@ -50,6 +51,11 @@ type RemoveMemberTeamVariables = {
   teamId: QueryKeyId;
 };
 type RemoveMemberTeamData = Awaited<ReturnType<typeof removeMemberGroup>>;
+
+type GetInvitationData = Awaited<ReturnType<typeof getGroupInvitation>>;
+type GetInvitationVariables = {
+  groupId: number;
+};
 
 export function useCreateTeamMutation(
   options?: MutationOptionsOverrides<CreateTeamData, CreateTeamVariables>,
@@ -160,6 +166,18 @@ export function useRemoveMemberTeamMutation(
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
+    }),
+  );
+}
+
+export function useGetInvitationMutation(
+  options?: MutationOptionsOverrides<GetInvitationData, GetInvitationVariables>,
+) {
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ groupId }: GetInvitationVariables) =>
+        getGroupInvitation(groupId),
+      options,
     }),
   );
 }

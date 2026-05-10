@@ -88,3 +88,9 @@ export async function removeMemberGroup(
     },
   );
 }
+
+export async function getGroupInvitation(groupId: QueryKeyId) {
+  return apiClient<string>(
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}/invitation`),
+  );
+}

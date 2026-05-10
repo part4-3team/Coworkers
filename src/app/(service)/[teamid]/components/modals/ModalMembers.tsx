@@ -10,20 +10,22 @@ export function ModalMembers({
   members,
 }: ModalMembersProps) {
   return (
-    <Modal
-      title="멤버"
-      subTitle={`(${members.length}명)`}
-      onClose={onClose}
-      hasCloseButton={false}
-      lineButtonText="취소"
-      onLineButtonClick={onClose}
-      primaryButtonText="초대하기"
-      onPrimaryButtonClick={onPrimaryButtonClick ?? onClose}
-    >
-      <TeamMemberListContent
-        members={members}
-        onMemberClick={onMemberClick ?? (() => {})}
-      />
-    </Modal>
+    <>
+      <Modal
+        title="멤버"
+        subTitle={`(${members.length}명)`}
+        onClose={onClose}
+        hasCloseButton={false}
+        lineButtonText="취소"
+        onLineButtonClick={onClose}
+        primaryButtonText="초대하기"
+        onPrimaryButtonClick={onPrimaryButtonClick}
+      >
+        <TeamMemberListContent
+          members={members}
+          onMemberClick={onMemberClick ?? (() => {})}
+        />
+      </Modal>
+    </>
   );
 }

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import { ConfirmModal } from '@/app/(service)/[teamid]/components/modals/ConfirmModal';
@@ -55,7 +56,7 @@ export default function TaskItem({
       >
         <div className="flex gap-3 items-center justify-center">
           <p className="flex-1 text-text-primary text-sm font-semibold whitespace-nowrap">
-            {title}
+            <Link href={`/${teamId}/tasklist/${taskListId}`}>{title}</Link>
           </p>
           <div>
             <Badge completed={completedCount} total={tasks.length} />
