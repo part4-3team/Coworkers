@@ -8,7 +8,10 @@ import { ModalTaskProps } from '@/app/(service)/[teamid]/types';
 import { Input } from '@/components/common/form';
 import Modal from '@/components/common/modal';
 import { useToast } from '@/components/common/toast';
-import { useCreateTaskListMutation } from '@/hooks/useTaskList';
+import {
+  useCreateTaskListMutation,
+  useUpdateTaskListMutation,
+} from '@/hooks/useTaskList';
 
 export function ModalTaskAdd({ onClose }: ModalTaskProps) {
   const { showToast } = useToast();
@@ -54,16 +57,34 @@ export function ModalTaskAdd({ onClose }: ModalTaskProps) {
 export function ModalTaskEdit({
   onClose,
   initialTitle,
-  // taskListId, 나중에 수정 API 연결할 때 사용할 예정
+  taskListId,
 }: ModalTaskProps & { initialTitle?: string; taskListId?: number }) {
   const { showToast } = useToast();
+  const params = useParams();
+  const teamId = params.teamid as string;
+  const { mutate: updateTaskList } = useUpdateTaskListMutation();
 
   const [taskListName, setTaskListName] = useState(initialTitle ?? '');
 
   const handleTaskEdit = () => {
-    showToast('할 일 목록이 수정되었습니다.', 'success');
-
-    onClose();
+    if (!taskListId) return;
+    updateTaskList(
+      {
+        groupId: teamId,
+        taskListId,
+        body: { name: taskListName.trim() },
+        teamId,
+      },
+      {
+        onSuccess: () => {
+          showToast('할 일 목록이 수정되었습니다.', 'success');
+          onClose();
+        },
+        onError: () => {
+          showToast('수정에 실패했습니다.', 'error');
+        },
+      },
+    );
   };
 
   return (

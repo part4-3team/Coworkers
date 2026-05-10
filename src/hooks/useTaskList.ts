@@ -15,7 +15,12 @@ import {
   type MutationOptionsOverrides,
   type QueryOptionsOverrides,
 } from '@/api/queryOptions/factory';
-import { createTaskList, getTaskListDetail } from '@/api/taskApi';
+import {
+  createTaskList,
+  deleteTaskList,
+  getTaskListDetail,
+  updateTaskList,
+} from '@/api/taskApi';
 
 type TaskListDetailData = Awaited<ReturnType<typeof getTaskListDetail>>;
 
@@ -33,6 +38,19 @@ type CreateTaskListVariables = {
   groupId: Parameters<typeof createTaskList>[0];
 };
 
+type UpdateTaskListVariables = {
+  groupId: Parameters<typeof updateTaskList>[0];
+  taskListId: Parameters<typeof updateTaskList>[1];
+  body: Parameters<typeof updateTaskList>[2];
+  teamId: string;
+};
+
+type DeleteTaskListVariables = {
+  groupId: Parameters<typeof deleteTaskList>[0];
+  taskListId: Parameters<typeof deleteTaskList>[1];
+  teamId: string;
+};
+
 export function useTaskListDetailQuery<TData = TaskListDetailData>({
   options,
   params,
@@ -41,6 +59,52 @@ export function useTaskListDetailQuery<TData = TaskListDetailData>({
 }: UseTaskListDetailParams<TData>) {
   return useQuery(
     taskQueryOptions.taskListDetail<TData>(teamId, taskListId, params, options),
+  );
+}
+
+export function useUpdateTaskListMutation(
+  options?: MutationOptionsOverrides<unknown, UpdateTaskListVariables>,
+) {
+  const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
+
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ groupId, taskListId, body }: UpdateTaskListVariables) =>
+        updateTaskList(groupId, taskListId, body),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await queryClient.invalidateQueries({
+            queryKey: queryKeys.team.detail(variables.teamId),
+          });
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
+}
+
+export function useDeleteTaskListMutation(
+  options?: MutationOptionsOverrides<void, DeleteTaskListVariables>,
+) {
+  const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
+
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ groupId, taskListId }: DeleteTaskListVariables) =>
+        deleteTaskList(groupId, taskListId),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await queryClient.invalidateQueries({
+            queryKey: queryKeys.team.detail(variables.teamId),
+          });
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
   );
 }
 

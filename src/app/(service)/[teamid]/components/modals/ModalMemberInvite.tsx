@@ -25,8 +25,7 @@ export function ModalMembersInvite({ onClose }: ModalFrameProps) {
 
   const handleCopy = async () => {
     try {
-      getInvitation({ groupId });
-      onClose();
+      getInvitation({ teamId: groupId });
     } catch (err) {
       console.error('복사 실패:', err);
     }
