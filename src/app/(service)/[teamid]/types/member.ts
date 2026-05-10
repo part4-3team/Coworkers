@@ -2,7 +2,7 @@
 // 유저 / 멤버 관련 타입
 // ========================
 
-// import type { ModalKey } from '@/app/(service)/[teamid]/types/common';
+import type { RoleProps } from '@/app/(service)/[teamid]/types';
 
 /** 태스크 작성자 정보 */
 export type Writer = {
@@ -21,7 +21,7 @@ export type MemberCardProps = {
 
 /** 멤버 칩(태그) 컴포넌트 Props - 멤버를 칩 형태로 표시할 때 사용 */
 export type MemberChipsProps = {
-  role: string;
+  role: RoleProps;
   userImage: string;
   userEmail: string;
   userName: string;

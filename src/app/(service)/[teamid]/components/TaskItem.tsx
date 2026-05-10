@@ -9,7 +9,7 @@ import { TaskItemPropsExtended } from '@/app/(service)/[teamid]/types';
 import { Badge } from '@/components/common/badge';
 import { ListDropdown } from '@/components/common/dropdown';
 import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
-import { useUpdateTaskMutation } from '@/hooks/useTask'; // ← 실제 훅 경로로 변경
+import { useUpdateTaskMutation } from '@/hooks/useTask';
 import { cn } from '@/utils/cn';
 
 export default function TaskItem({

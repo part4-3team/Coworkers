@@ -1,35 +1,32 @@
 'use client';
 
-import { use, useState } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { TeamDetailData, TeamPageProps } from '@/app/(service)/[teamid]/types';
+import { TeamDetailData } from '@/app/(service)/[teamid]/types';
 import AddUserImg from '@/components/common/adduserimg/AddUserImg';
 import { Input } from '@/components/common/form';
 import { useToast } from '@/components/common/toast';
 import { useUploadImageMutation } from '@/hooks/useImage';
-import { useTeamDetailQuery, useUpdateTeamMutation } from '@/hooks/useTeam';
+import { useUpdateTeamMutation } from '@/hooks/useTeam';
 
-export default function EditTeamPage({ params }: TeamPageProps) {
+type EditTeamFormProps = {
+  teamData: TeamDetailData;
+  teamid: string;
+};
+
+export default function EditTeamForm({ teamData, teamid }: EditTeamFormProps) {
   const { showToast } = useToast();
   const router = useRouter();
-  const { teamid } = use(params);
-
-  const { data: teamData } = useTeamDetailQuery<TeamDetailData>({
-    teamId: teamid,
-  });
   const { mutate: updateTeam, isPending: isUpdating } = useUpdateTeamMutation();
   const { mutateAsync: uploadImage, isPending: isUploading } =
     useUploadImageMutation();
 
-  const [teamName, setTeamName] = useState(teamData?.name ?? '');
+  const [teamName, setTeamName] = useState(teamData.name);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  if (!teamData) return null;
-
   const isPending = isUpdating || isUploading;
-
   const isSubmittable = teamName.trim().length > 0;
 
   const handleEditTeam = async () => {
@@ -79,8 +76,9 @@ export default function EditTeamPage({ params }: TeamPageProps) {
           </div>
         </form>
         <button
+          type="button"
           className="text-base text-text-inverse bg-brand-primary w-full h-12 rounded-xl mb-5 hover:bg-interaction-hover disabled:opacity-50"
-          disabled={isPending}
+          disabled={isPending || !isSubmittable}
           onClick={handleEditTeam}
         >
           {isPending ? '수정 중...' : '수정하기'}
