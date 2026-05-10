@@ -43,4 +43,5 @@ export function useTeamTasksByDateQuery<TData = TeamTasksByDateData>({
 export {
   useAcceptTeamInvitationMutation,
   useCreateTeamMutation,
+  useUpdateTeamMutation,
 } from '@/hooks/useTeamMutations';

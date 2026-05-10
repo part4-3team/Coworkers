@@ -6,7 +6,12 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { acceptGroupInvitation, createGroup } from '@/api/groupApi';
+import {
+  acceptGroupInvitation,
+  createGroup,
+  updateGroup,
+} from '@/api/groupApi';
+import { queryKeys } from '@/api/queryKeys';
 import {
   createMutationOptions,
   type MutationOptionsOverrides,
@@ -17,6 +22,7 @@ type CreateTeamData = Awaited<ReturnType<typeof createGroup>>;
 type AcceptTeamInvitationData = Awaited<
   ReturnType<typeof acceptGroupInvitation>
 >;
+type UpdateTeamData = Awaited<ReturnType<typeof updateGroup>>;
 
 type CreateTeamVariables = {
   body: Parameters<typeof createGroup>[1];
@@ -26,6 +32,12 @@ type CreateTeamVariables = {
 type AcceptTeamInvitationVariables = {
   body: Parameters<typeof acceptGroupInvitation>[1];
   teamId: Parameters<typeof acceptGroupInvitation>[0];
+};
+
+type UpdateTeamVariables = {
+  body: Parameters<typeof updateGroup>[2];
+  groupId: Parameters<typeof updateGroup>[1];
+  teamId: Parameters<typeof updateGroup>[0];
 };
 
 export function useCreateTeamMutation(
@@ -66,6 +78,32 @@ export function useAcceptTeamInvitationMutation(
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {
           await refetchUserQueries(queryClient);
+          await handleSuccess?.(data, variables, onMutateResult, context);
+        },
+      },
+    }),
+  );
+}
+
+export function useUpdateTeamMutation(
+  options?: MutationOptionsOverrides<UpdateTeamData, UpdateTeamVariables>,
+) {
+  const queryClient = useQueryClient();
+  const handleSuccess = options?.onSuccess;
+
+  return useMutation(
+    createMutationOptions({
+      mutationFn: ({ body, groupId, teamId }: UpdateTeamVariables) =>
+        updateGroup(teamId, groupId, body),
+      options: {
+        ...options,
+        onSuccess: async (data, variables, onMutateResult, context) => {
+          await Promise.all([
+            refetchUserQueries(queryClient),
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.team.detail(String(variables.groupId)),
+            }),
+          ]);
           await handleSuccess?.(data, variables, onMutateResult, context);
         },
       },
