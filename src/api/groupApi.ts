@@ -52,9 +52,9 @@ export async function updateGroup(teamId: string, body: UpdateGroupBody) {
   );
 }
 
-export async function deleteGroup(teamId: QueryKeyId) {
-  return apiClient<unknown>(
-    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${teamId}`),
+export async function deleteGroup(groupId: QueryKeyId) {
+  return apiClient<void>(
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
     {
       method: HTTP_METHODS.DELETE,
     },
