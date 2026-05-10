@@ -51,8 +51,15 @@ export function ModalTaskAdd({ onClose }: ModalTaskProps) {
   );
 }
 
-export function ModalTaskEdit({ onClose }: ModalTaskProps) {
+export function ModalTaskEdit({
+  onClose,
+  initialTitle,
+  // taskListId, 나중에 수정 API 연결할 때 사용할 예정
+}: ModalTaskProps & { initialTitle?: string; taskListId?: number }) {
   const { showToast } = useToast();
+
+  const [taskListName, setTaskListName] = useState(initialTitle ?? '');
+
   const handleTaskEdit = () => {
     showToast('할 일 목록이 수정되었습니다.', 'success');
 
@@ -66,7 +73,10 @@ export function ModalTaskEdit({ onClose }: ModalTaskProps) {
       primaryButtonText="수정하기"
       onPrimaryButtonClick={handleTaskEdit}
     >
-      <Input />
+      <Input
+        value={taskListName}
+        onChange={(e) => setTaskListName(e.target.value)}
+      />
     </Modal>
   );
 }

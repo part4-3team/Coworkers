@@ -8,9 +8,8 @@ import { EMPTY_MESSAGE } from '../constants';
 
 export default function TaskGroup({ status, taskLists }: TaskProps) {
   const { open, close, is } = useModalState();
-
   return (
-    <div className="flex flex-col gap-5 min-w-0 xl:flex-1">
+    <div className="flex flex-col gap-3 min-w-0 xl:flex-1 xl:gap:5">
       <div className="flex justify-between items-center bg-background-tertiary rounded-xl pl-5 pr-2 h-9.5 w-full">
         <h3 className="text-text-primary text-sm font-medium">{status}</h3>
         {status === '시작 전' && (
@@ -27,21 +26,23 @@ export default function TaskGroup({ status, taskLists }: TaskProps) {
           </button>
         )}
       </div>
-      {taskLists.map((taskItems) => (
-        <TaskItem
-          key={taskItems.id}
-          title={taskItems.name}
-          status={status}
-          tasks={taskItems.tasks}
-          taskListId={taskItems.id}
-        />
-      ))}
+      <div className="flex flex-col gap-3 xl:gap-2">
+        {taskLists.map((taskItems) => (
+          <TaskItem
+            key={taskItems.id}
+            title={taskItems.name}
+            status={status}
+            tasks={taskItems.tasks}
+            taskListId={taskItems.id}
+          />
+        ))}
 
-      {taskLists.length === 0 && (
-        <div className="rounded-2xl px-6 py-8 text-center text-sm font-normal text-text-default block xl:hidden">
-          {EMPTY_MESSAGE[status]}
-        </div>
-      )}
+        {taskLists.length === 0 && (
+          <div className="rounded-2xl px-6 py-8 text-center text-sm font-normal text-text-default block xl:hidden">
+            {EMPTY_MESSAGE[status]}
+          </div>
+        )}
+      </div>
       {is('taskAdd') && <ModalTaskAdd onClose={close} />}
     </div>
   );

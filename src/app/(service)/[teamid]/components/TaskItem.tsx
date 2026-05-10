@@ -55,7 +55,7 @@ export default function TaskItem({
         )}
       >
         <div className="flex gap-3 items-center justify-center">
-          <p className="flex-1 text-text-primary text-sm font-semibold whitespace-nowrap">
+          <p className="flex-1 text-text-primary text-sm font-semibold whitespace-nowrap truncate ">
             <Link href={`/${teamId}/tasklist/${taskListId}`}>{title}</Link>
           </p>
           <div>
@@ -87,7 +87,13 @@ export default function TaskItem({
         )}
       </div>
 
-      {is('taskEdit') && <ModalTaskEdit onClose={close} />}
+      {is('taskEdit') && (
+        <ModalTaskEdit
+          onClose={close}
+          initialTitle={title}
+          taskListId={taskListId}
+        />
+      )}
       {is('taskDelete') && (
         <ConfirmModal
           onClose={close}

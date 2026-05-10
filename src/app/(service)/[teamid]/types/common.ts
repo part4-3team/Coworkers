@@ -29,6 +29,8 @@ export type Frequency = 'ONCE' | 'DAILY' | 'WEEKLY' | 'MONTHLY';
 export type ModalTaskProps = {
   onClose: () => void;
   onPrimaryButtonClick?: () => void;
+  initialTitle?: string;
+  taskListId?: number;
 };
 
 /** 확인(Confirm) 모달 Props - 삭제/탈퇴 등 위험 액션 확인용 */
