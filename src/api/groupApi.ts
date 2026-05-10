@@ -11,10 +11,12 @@ import type {
   AcceptGroupInvitationResponse,
   CreateGroupBody,
   CreateGroupResponse,
+  UpdateGroupBody,
 } from '@/api/types';
+import type { GroupDetail } from '@/types/group';
 
 export async function getTeamDetail(groupId: QueryKeyId) {
-  return apiClient<unknown>(
+  return apiClient<GroupDetail>(
     teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
   );
 }
@@ -36,6 +38,20 @@ export async function createGroup(teamId: string, body: CreateGroupBody) {
     {
       body: JSON.stringify(body),
       method: HTTP_METHODS.POST,
+    },
+  );
+}
+
+export async function updateGroup(
+  teamId: string,
+  groupId: QueryKeyId,
+  body: UpdateGroupBody,
+) {
+  return apiClient<GroupDetail>(
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`, teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.PATCH,
     },
   );
 }

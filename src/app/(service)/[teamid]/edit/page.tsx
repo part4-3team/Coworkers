@@ -4,27 +4,44 @@
 'use client';
 import { useState } from 'react';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import AddUserImg from '@/components/common/adduserimg/AddUserImg';
 import { Input } from '@/components/common/form';
 import { useToast } from '@/components/common/toast';
+import { useTeamDetailQuery, useUpdateTeamMutation } from '@/hooks/useTeam';
+
+const API_TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID ?? '';
+
 export default function EditTeamPage() {
   const { showToast } = useToast();
   const router = useRouter();
+  const params = useParams<{ teamid: string }>();
+  const teamId = params.teamid;
+  const { data: teamDetail } = useTeamDetailQuery({
+    teamId,
+  });
+  const [draftTeamName, setDraftTeamName] = useState<string | null>(null);
+  const updateTeamMutation = useUpdateTeamMutation();
+  const teamName = draftTeamName ?? teamDetail?.name ?? '';
 
-  const [teamName, setTeamName] = useState('');
-
-  const handleEditTeam = () => {
+  const handleEditTeam = async () => {
     if (!teamName.trim()) {
       showToast('팀 이름을 입력해주세요.', 'error');
       return;
     }
 
-    // TODO: API 호출로 팀 이름 저장
-
-    showToast('팀 이름이 수정 되었습니다.', 'success');
-    router.push(`/${teamName}`); // 수정된 팀 이름으로 이동
+    try {
+      await updateTeamMutation.mutateAsync({
+        body: { name: teamName.trim() },
+        groupId: teamId,
+        teamId: API_TEAM_ID,
+      });
+      showToast('팀 이름이 수정 되었습니다.', 'success');
+      router.push(`/${teamId}`);
+    } catch {
+      showToast('팀 이름 수정에 실패했습니다.', 'error');
+    }
   };
   return (
     <section className="px-4 py-25 md:px-14 flex justify-around items-center h-full">
@@ -45,7 +62,7 @@ export default function EditTeamPage() {
             <Input
               id="teamName"
               value={teamName}
-              onChange={(e) => setTeamName(e.target.value)} // 입력값 반영
+              onChange={(event) => setDraftTeamName(event.target.value)}
             />
           </div>
         </form>
