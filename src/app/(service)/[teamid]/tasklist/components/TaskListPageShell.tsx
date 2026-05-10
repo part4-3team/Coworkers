@@ -31,14 +31,12 @@ export default function TaskListPageShell({ teamId }: TaskListPageShellProps) {
   const queryClient = useQueryClient();
 
   // 1. 내 그룹 목록 조회
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: groups } = useQuery({
     ...userQueryOptions.groups(),
   });
 
   // 첫 번째 그룹 자동 선택
-  // URL 파라미터의 teamId를 기반으로 그룹 ID 설정
-  const groupId = Number(teamId);
+  const groupId = groups?.[0]?.id ?? null;
 
   // 2. 선택된 그룹 상세 조회 → taskLists 가져오기
   const { data: groupDetail } = useQuery({
