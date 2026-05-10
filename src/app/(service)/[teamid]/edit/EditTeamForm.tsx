@@ -22,7 +22,6 @@ export default function EditTeamForm({ teamData, teamid }: EditTeamFormProps) {
   const { mutate: updateTeam, isPending: isUpdating } = useUpdateTeamMutation();
   const { mutateAsync: uploadImage, isPending: isUploading } =
     useUploadImageMutation();
-
   const [teamName, setTeamName] = useState(teamData.name);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -39,7 +38,11 @@ export default function EditTeamForm({ teamData, teamid }: EditTeamFormProps) {
     }
 
     updateTeam(
-      { teamId: teamid, body: { name: teamName, image: imageUrl } },
+      {
+        teamId: teamid,
+        groupId: teamData.id,
+        body: { name: teamName, image: imageUrl },
+      },
       {
         onSuccess: () => {
           showToast('팀 정보가 수정 되었습니다.', 'success');
@@ -51,7 +54,6 @@ export default function EditTeamForm({ teamData, teamid }: EditTeamFormProps) {
       },
     );
   };
-
   return (
     <section className="px-4 py-25 md:px-14 flex justify-around items-center h-full">
       <div className="bg-background-primary px-6 pt-10 pb-15 rounded-[20px] w-full max-w-xl md:px-11">

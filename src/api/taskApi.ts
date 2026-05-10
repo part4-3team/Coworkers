@@ -166,16 +166,6 @@ export async function deleteRecurring(
   );
 }
 
-export async function createTaskList(
-  groupId: QueryKeyId,
-  body: { name: string },
-) {
-  return apiClient<unknown>(teamEndpoint(createGroupTaskListsPath(groupId)), {
-    body: JSON.stringify(body),
-    method: HTTP_METHODS.POST,
-  });
-}
-
 export async function updateTaskList(
   groupId: QueryKeyId,
   taskListId: QueryKeyId,

@@ -28,7 +28,8 @@ type AcceptTeamInvitationData = Awaited<
 type UpdateTeamData = Awaited<ReturnType<typeof updateGroup>>;
 
 type UpdateTeamVariables = {
-  body: Parameters<typeof updateGroup>[1];
+  body: Parameters<typeof updateGroup>[2];
+  groupId: Parameters<typeof updateGroup>[1];
   teamId: Parameters<typeof updateGroup>[0];
 };
 
@@ -111,8 +112,8 @@ export function useUpdateTeamMutation(
 
   return useMutation(
     createMutationOptions({
-      mutationFn: ({ body, teamId }: UpdateTeamVariables) =>
-        updateGroup(teamId, body),
+      mutationFn: ({ body, teamId, groupId }: UpdateTeamVariables) =>
+        updateGroup(teamId, groupId, body),
       options: {
         ...options,
         onSuccess: async (data, variables, onMutateResult, context) => {

@@ -56,32 +56,6 @@ export async function updateGroup(
   );
 }
 
-export async function acceptGroupInvitation(
-  teamId: string,
-  body: AcceptGroupInvitationBody,
-) {
-  return apiClient<AcceptGroupInvitationResponse>(
-    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/accept-invitation`, teamId),
-    {
-      body: JSON.stringify(body),
-      method: HTTP_METHODS.POST,
-    },
-  );
-}
-
-export async function updateGroup(
-  groupId: QueryKeyId,
-  body: { image?: string; name: string },
-) {
-  return apiClient<unknown>(
-    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
-    {
-      body: JSON.stringify(body),
-      method: HTTP_METHODS.PATCH,
-    },
-  );
-}
-
 export async function deleteGroup(groupId: QueryKeyId) {
   return apiClient<unknown>(
     teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
@@ -108,5 +82,17 @@ export async function removeMemberGroup(
 export async function getGroupInvitation(groupId: QueryKeyId) {
   return apiClient<string>(
     teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}/invitation`),
+  );
+}
+export async function acceptGroupInvitation(
+  teamId: string,
+  body: AcceptGroupInvitationBody,
+) {
+  return apiClient<AcceptGroupInvitationResponse>(
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/accept-invitation`, teamId),
+    {
+      body: JSON.stringify(body),
+      method: HTTP_METHODS.POST,
+    },
   );
 }

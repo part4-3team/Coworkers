@@ -9,7 +9,7 @@ import {
   TeamMemberProps,
 } from '@/app/(service)/[teamid]/types';
 
-export default function TeamMemberList({ teamData }: TeamMemberProps) {
+export default function TeamMemberList({ teamData, role }: TeamMemberProps) {
   const { open, close, is, openMemberDetail, selectedMember } = useModalState();
 
   const members = teamData.members;
@@ -46,6 +46,7 @@ export default function TeamMemberList({ teamData }: TeamMemberProps) {
           onClose={close}
           member={selectedMember}
           onPrimaryButtonClick={() => open('memberDelete')}
+          role={role}
         />
       )}
 

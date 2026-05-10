@@ -1,22 +1,20 @@
-/**
- * 팀 페이지를 구성하는 파일입니다.
- */
 'use client';
 
 import { use } from 'react';
 
+import type { UserInfo } from '@/api/types';
 import NoGroups from '@/app/(service)/[teamid]/components/NoGroups';
 import TeamMemberList from '@/app/(service)/[teamid]/components/TeamMemberList';
 import TeamProgress from '@/app/(service)/[teamid]/components/TeamProgress';
 import TeamTaskList from '@/app/(service)/[teamid]/components/TeamTaskList';
 import { TeamDetailData, TeamPageProps } from '@/app/(service)/[teamid]/types';
 import { useTeamDetailQuery } from '@/hooks/useTeam';
-import { type MeData, useMeQuery } from '@/hooks/useUser';
+import { useMeQuery } from '@/hooks/useUser';
 
 export default function TaskDetailPage({ params }: TeamPageProps) {
   const { teamid } = use(params);
 
-  const { data: meData } = useMeQuery() as { data: MeData | undefined };
+  const { data: meData } = useMeQuery<UserInfo>();
   const { data: teamData, isLoading: isTeamLoading } =
     useTeamDetailQuery<TeamDetailData>({ teamId: teamid });
 
