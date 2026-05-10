@@ -2,7 +2,8 @@
 // 태스크 관련 타입
 // ========================
 
-import type { Frequency, Writer } from '@/app/(service)/[teamid]/types';
+import type { Frequency } from '@/app/(service)/[teamid]/types/common';
+import type { Writer } from '@/app/(service)/[teamid]/types/member';
 
 /** 태스크 상세 항목 - API 응답 기반의 태스크 전체 데이터 */
 export type TaskItemDetailProps = {

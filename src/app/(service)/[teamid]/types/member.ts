@@ -2,7 +2,7 @@
 // 유저 / 멤버 관련 타입
 // ========================
 
-import type { RoleProps } from '@/app/(service)/[teamid]/types';
+import type { RoleProps } from '@/app/(service)/[teamid]/types/common';
 
 /** 태스크 작성자 정보 */
 export type Writer = {

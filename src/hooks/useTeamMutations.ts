@@ -25,6 +25,12 @@ type CreateTeamData = Awaited<ReturnType<typeof createGroup>>;
 type AcceptTeamInvitationData = Awaited<
   ReturnType<typeof acceptGroupInvitation>
 >;
+type UpdateTeamData = Awaited<ReturnType<typeof updateGroup>>;
+
+type UpdateTeamVariables = {
+  body: Parameters<typeof updateGroup>[1];
+  teamId: Parameters<typeof updateGroup>[0];
+};
 
 type CreateTeamVariables = {
   body: Parameters<typeof createGroup>[1];
@@ -34,11 +40,6 @@ type CreateTeamVariables = {
 type AcceptTeamInvitationVariables = {
   body: Parameters<typeof acceptGroupInvitation>[1];
   teamId: Parameters<typeof acceptGroupInvitation>[0];
-};
-type UpdateTeamData = Awaited<ReturnType<typeof updateGroup>>;
-type UpdateTeamVariables = {
-  body: Parameters<typeof updateGroup>[1];
-  teamId: Parameters<typeof updateGroup>[0];
 };
 
 type DeleteTeamVariables = {
