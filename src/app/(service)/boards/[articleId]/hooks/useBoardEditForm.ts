@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import type { QueryKeyId } from '@/api/queryKeys';
+import { BOARD_EDIT_UNSAVED_LEAVE_TOAST_MESSAGE } from '@/app/(service)/boards/constants';
 import useBoardFormFields from '@/app/(service)/boards/hooks/useBoardFormFields';
 import {
   getArticleSubmitErrorMessage,
@@ -44,6 +45,7 @@ export default function useBoardEditForm({
     handleImageChange,
     handleTitleBlur,
     handleTitleChange,
+    hasFormChanged,
     imageFile,
     isSubmittable,
     setIsSubmitted,
@@ -52,6 +54,22 @@ export default function useBoardEditForm({
     initialFormData: { content, image, title },
     requiresChange: true,
   });
+
+  const hasUnsavedChangesRef = useRef(hasFormChanged);
+
+  useEffect(() => {
+    hasUnsavedChangesRef.current = hasFormChanged;
+  }, [hasFormChanged]);
+
+  const savedSuccessfullyRef = useRef(false);
+
+  useEffect(() => {
+    return () => {
+      if (savedSuccessfullyRef.current) return;
+      if (!hasUnsavedChangesRef.current) return;
+      showToast(BOARD_EDIT_UNSAVED_LEAVE_TOAST_MESSAGE, 'error');
+    };
+  }, [showToast]);
 
   const isMutationPending =
     uploadImageMutation.isPending || updateArticleMutation.isPending;
@@ -97,6 +115,7 @@ export default function useBoardEditForm({
         token,
       });
 
+      savedSuccessfullyRef.current = true;
       showToast('게시글이 성공적으로 수정되었습니다.', 'success');
       router.push(ROUTES.BOARD_DETAIL(String(articleId)));
     } catch (error: unknown) {
