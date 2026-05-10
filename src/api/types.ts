@@ -35,6 +35,8 @@ export type CreateGroupBody = {
   name: string;
 };
 
+export type UpdateGroupBody = Partial<CreateGroupBody>;
+
 export type CreateGroupResponse = {
   createdAt: string;
   id: number;

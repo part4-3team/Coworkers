@@ -18,6 +18,7 @@ export type TaskListTaskComment = {
 
 export type TaskListBoardTask = {
   assigneeName: string;
+  assigneeImage: string | null;
   id: string;
   checked: boolean;
   commentCount: number;
@@ -47,7 +48,7 @@ export type TaskListOpenTaskDetail = {
 export type TaskListBoardProps = {
   className?: string;
   columnTitle: string;
-  groupId: number | null;
+  groupId: string | null;
   taskListId: string;
   teamId: string;
 };

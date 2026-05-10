@@ -4,12 +4,13 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { queryKeys } from '@/api/queryKeys';
 import { taskQueryOptions } from '@/api/queryOptions';
 import { deleteTask, updateTask } from '@/api/taskApi';
 import type { TaskListBoardTask } from '@/app/(service)/[teamid]/tasklist/types';
 import { useToast } from '@/components/common/toast';
 
-export function useTaskListBoard(groupId: number | null, taskListId: string) {
+export function useTaskListBoard(groupId: string | null, taskListId: string) {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
   const [selectedDate, setSelectedDate] = useState(() => new Date());
@@ -26,6 +27,7 @@ export function useTaskListBoard(groupId: number | null, taskListId: string) {
   const tasks: TaskListBoardTask[] = useMemo(() => {
     if (!taskListDetail?.tasks) return [];
     return taskListDetail.tasks.map((task) => ({
+      assigneeImage: task.writer.image,
       id: String(task.id),
       title: task.name,
       checked: task.doneAt !== null,
@@ -40,7 +42,7 @@ export function useTaskListBoard(groupId: number | null, taskListId: string) {
       description: task.description ?? '',
       startedAtLabel: task.date.slice(0, 10),
       taskListId: String(taskListId),
-      teamId: String(groupId),
+      teamId: groupId ?? '',
       comments: [],
     }));
   }, [taskListDetail, taskListId, groupId]);
@@ -59,13 +61,17 @@ export function useTaskListBoard(groupId: number | null, taskListId: string) {
     async (id: string, checked: boolean) => {
       if (!groupId) return;
       try {
-        await updateTask(String(groupId), taskListId, id, { done: checked });
-        await queryClient.invalidateQueries({ queryKey: ['teams'] });
+        await updateTask(groupId, taskListId, id, { done: checked });
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.taskList.detail(groupId, taskListId, {
+            date: dateString,
+          }),
+        });
       } catch {
         // TODO: 에러 처리
       }
     },
-    [groupId, taskListId, queryClient],
+    [dateString, groupId, taskListId, queryClient],
   );
 
   const handleRequestDelete = useCallback((task: TaskListBoardTask) => {
@@ -79,14 +85,25 @@ export function useTaskListBoard(groupId: number | null, taskListId: string) {
   const handleConfirmDelete = useCallback(async () => {
     if (!taskPendingDelete || !groupId) return;
     try {
-      await deleteTask(String(groupId), taskListId, taskPendingDelete.id);
-      await queryClient.invalidateQueries({ queryKey: ['teams'] });
+      await deleteTask(groupId, taskListId, taskPendingDelete.id);
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.taskList.detail(groupId, taskListId, {
+          date: dateString,
+        }),
+      });
       setTaskPendingDelete(null);
       showToast('삭제되었습니다.', 'error');
     } catch {
       // TODO: 에러 처리
     }
-  }, [taskPendingDelete, groupId, taskListId, queryClient, showToast]);
+  }, [
+    dateString,
+    taskPendingDelete,
+    groupId,
+    taskListId,
+    queryClient,
+    showToast,
+  ]);
 
   return {
     handleCloseDeleteModal,

@@ -14,6 +14,7 @@ export default function TaskListTaskDetailPanel({
     <TaskDetailPanelContent
       key={`${task.id}-${initialMode}`}
       apiTeamId={API_TEAM_ID}
+      assigneeImage={task.assigneeImage}
       assigneeName={task.assigneeName}
       description={task.description}
       frequency={task.repeatLabel}

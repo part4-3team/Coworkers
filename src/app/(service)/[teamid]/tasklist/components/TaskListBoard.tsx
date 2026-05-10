@@ -4,6 +4,8 @@
 
 'use client';
 
+import { useCallback } from 'react';
+
 import TaskListBoardEmptyTaskRow from '@/app/(service)/[teamid]/tasklist/components/TaskListBoardEmptyTaskRow';
 import TaskListMonthNavigator from '@/app/(service)/[teamid]/tasklist/components/TaskListMonthNavigator';
 import TaskListTaskDeleteModal from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskDeleteModal';
@@ -42,35 +44,29 @@ export default function TaskListBoard({
     taskPendingDelete,
   } = useTaskListBoard(groupId, taskListId);
 
-  const handleOpenTaskDetail = (
-    task: (typeof sortedTasks)[number],
-    mode: TaskListTaskDetailOpenMode,
-  ) => {
-    openRightPanel({
-      content: (
-        <TaskListTaskDetailPanel
-          key={`${task.id}-${mode}`}
-          initialMode={mode}
-          task={task}
-          teamId={teamId}
-        />
-      ),
-    });
-  };
+  const handleOpenTaskDetail = useCallback(
+    (task: (typeof sortedTasks)[number], mode: TaskListTaskDetailOpenMode) => {
+      openRightPanel({
+        content: (
+          <TaskListTaskDetailPanel
+            key={`${task.id}-${mode}`}
+            initialMode={mode}
+            task={task}
+            teamId={teamId}
+          />
+        ),
+      });
+    },
+    [openRightPanel, teamId],
+  );
 
   return (
     <section
       className={cn(TASK_LIST_BOARD_CARD_SHELL_CLASS, className)}
-      aria-label={isTaskListEmpty ? '할 일 보드' : `${columnTitle} 할 일 보드`}
+      aria-label={`${columnTitle} 할 일 보드`}
     >
       <header className="flex min-w-0 flex-row items-center gap-2 sm:gap-6">
-        {isTaskListEmpty ? (
-          <h2 className="min-w-0 flex-1 text-base font-semibold leading-6 text-interaction-inactive md:text-xl md:leading-6">
-            목록이 없습니다.
-          </h2>
-        ) : (
-          <h2 className={TASK_LIST_BOARD_COLUMN_TITLE_CLASS}>{columnTitle}</h2>
-        )}
+        <h2 className={TASK_LIST_BOARD_COLUMN_TITLE_CLASS}>{columnTitle}</h2>
         <div className="shrink-0">
           <TaskListMonthNavigator
             selectedDate={selectedDate}

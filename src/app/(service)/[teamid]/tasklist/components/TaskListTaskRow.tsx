@@ -34,22 +34,12 @@ export default function TaskListTaskRow({
   onToggleChecked,
   onRequestDelete,
 }: TaskListTaskRowProps) {
-  const handleRowClick = (event: React.MouseEvent<HTMLElement>) => {
-    const target = event.target as HTMLElement;
-    if (target.closest('[data-task-detail-ignore]')) {
-      return;
-    }
-
-    onOpenDetail(task, 'view');
-  };
-
   return (
     <article
       className={cn(
         'relative flex items-start rounded-xl border border-background-tertiary bg-background-primary px-3 py-3 sm:px-4',
         task.checked && 'bg-background-secondary',
       )}
-      onClick={handleRowClick}
     >
       <div className="min-w-0 flex-1 pr-10 sm:pr-11">
         <div className="flex min-w-0 items-center gap-2">
