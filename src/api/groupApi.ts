@@ -56,6 +56,15 @@ export async function updateGroup(
   );
 }
 
+export async function deleteGroup(groupId: QueryKeyId) {
+  return apiClient<void>(
+    teamEndpoint(`${API_PATH_SEGMENTS.GROUPS}/${groupId}`),
+    {
+      method: HTTP_METHODS.DELETE,
+    },
+  );
+}
+
 export async function acceptGroupInvitation(
   teamId: string,
   body: AcceptGroupInvitationBody,
