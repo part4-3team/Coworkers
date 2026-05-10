@@ -30,7 +30,10 @@ export default function EditTeamPage({ params }: TeamPageProps) {
 
   const isPending = isUpdating || isUploading;
 
+  const isSubmittable = teamName.trim().length > 0;
+
   const handleEditTeam = async () => {
+    if (!isSubmittable) return;
     let imageUrl = teamData.image;
 
     if (imageFile) {

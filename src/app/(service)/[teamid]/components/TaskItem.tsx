@@ -8,7 +8,7 @@ import { TaskItemPropsExtended } from '@/app/(service)/[teamid]/types';
 import { Badge } from '@/components/common/badge';
 import { ListDropdown } from '@/components/common/dropdown';
 import TodoCheckUncheck from '@/components/common/todo/TodoCheckUncheck';
-import { useDeleteTaskMutation, useUpdateTaskMutation } from '@/hooks/useTask'; // ← 실제 훅 경로로 변경
+import { useUpdateTaskMutation } from '@/hooks/useTask'; // ← 실제 훅 경로로 변경
 import { cn } from '@/utils/cn';
 
 export default function TaskItem({
@@ -22,7 +22,6 @@ export default function TaskItem({
 
   const { open, close, is } = useModalState();
   const { mutate: updateTask } = useUpdateTaskMutation();
-  const { mutate: deleteTask } = useDeleteTaskMutation();
 
   const completedCount = tasks.filter((task) => task.doneAt !== null).length;
 
@@ -35,8 +34,8 @@ export default function TaskItem({
     });
   };
 
-  const handleDelete = (taskId: number) => {
-    deleteTask({ teamId, taskListId, taskId });
+  const handleDelete = () => {
+    // deleteTaskList ({ teamId, taskListId });
   };
 
   const DropdownItems = [
@@ -94,7 +93,7 @@ export default function TaskItem({
           title="해당 할 일 목록을 삭제하시겠습니까?"
           confirmText="삭제"
           toastMessage="삭제 되었습니다."
-          onConfirm={() => handleDelete(tasks[0]?.id)}
+          onConfirm={() => handleDelete()}
         />
       )}
     </div>

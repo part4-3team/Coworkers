@@ -8,6 +8,12 @@ export const TEAM_MEMBERS: MemberChipsProps[] = [];
 
 export const STATUS = ['시작 전', '진행 중', '완료'] as const;
 
+export const EMPTY_MESSAGE = {
+  '시작 전': '아직 등록된 할 일이 없어요.',
+  '진행 중': '아직 진행 중인 할 일이 없어요.',
+  완료: '아직 완료된 할 일이 없습니다.',
+} as const;
+
 export const SETTING_BUTTON = (
   <IcSettingsLarge width="24" height="24" role="img" aria-label="설정 아이콘" />
 );
