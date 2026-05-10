@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import type { QueryKeyId } from '@/api/queryKeys';
-import { BOARD_EDIT_UNSAVED_LEAVE_TOAST_MESSAGE } from '@/app/(service)/boards/constants';
+import useBoardEditUnsavedChangesGuard from '@/app/(service)/boards/[articleId]/hooks/useBoardEditUnsavedChangesGuard';
 import useBoardFormFields from '@/app/(service)/boards/hooks/useBoardFormFields';
 import {
   getArticleSubmitErrorMessage,
@@ -43,6 +43,7 @@ export default function useBoardEditForm({
     handleContentBlur,
     handleContentChange,
     handleImageChange,
+    handleDiscardChanges,
     handleTitleBlur,
     handleTitleChange,
     hasFormChanged,
@@ -55,21 +56,12 @@ export default function useBoardEditForm({
     requiresChange: true,
   });
 
-  const hasUnsavedChangesRef = useRef(hasFormChanged);
-
-  useEffect(() => {
-    hasUnsavedChangesRef.current = hasFormChanged;
-  }, [hasFormChanged]);
+  useBoardEditUnsavedChangesGuard({
+    hasUnsavedChanges: hasFormChanged,
+    onDiscardChanges: handleDiscardChanges,
+  });
 
   const savedSuccessfullyRef = useRef(false);
-
-  useEffect(() => {
-    return () => {
-      if (savedSuccessfullyRef.current) return;
-      if (!hasUnsavedChangesRef.current) return;
-      showToast(BOARD_EDIT_UNSAVED_LEAVE_TOAST_MESSAGE, 'error');
-    };
-  }, [showToast]);
 
   const isMutationPending =
     uploadImageMutation.isPending || updateArticleMutation.isPending;

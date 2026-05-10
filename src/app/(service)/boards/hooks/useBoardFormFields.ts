@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { isRequiredTextValid } from '@/app/(service)/boards/utils/boardUtils';
 
@@ -64,6 +64,14 @@ export default function useBoardFormFields({
     }
   };
 
+  const handleDiscardChanges = useCallback(() => {
+    setFormData(defaultFormData);
+    setImageFile(null);
+    setIsSubmitted(false);
+    setIsTitleTouched(false);
+    setIsContentTouched(false);
+  }, [defaultFormData]);
+
   return {
     formData,
     imageFile,
@@ -80,6 +88,7 @@ export default function useBoardFormFields({
       : undefined,
     setIsSubmitted,
     defaultFormData,
+    handleDiscardChanges,
     handleTitleChange,
     handleContentChange,
     handleTitleBlur,
