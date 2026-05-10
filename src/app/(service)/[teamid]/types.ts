@@ -75,3 +75,7 @@ export type TeamProgressModalProps = {
   selectedMember: MemberChipsProps | null;
   openMemberDetail: (member: MemberChipsProps) => void;
 };
+export type TeamProgressStatsProps = {
+  today: number;
+  done: number;
+};
