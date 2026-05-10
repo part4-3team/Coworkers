@@ -35,7 +35,7 @@ export default function TaskDetailPage({ params }: TeamPageProps) {
       <TeamProgress role={myRole} teamData={teamData} />
       <div className="flex w-full xl:border-t xl:border-background-tertiary xl:pt-8 xl:gap-6">
         <TeamTaskList {...teamData} />
-        <TeamMemberList teamData={teamData} />
+        <TeamMemberList teamData={teamData} role={myRole} />
       </div>
     </div>
   );

@@ -29,11 +29,16 @@ export function TeamProgressModals({
   const { mutate: removeMemberTeam } = useRemoveMemberTeamMutation();
 
   const handleDeleteTeam = () => {
+    const deletedTeamId = Number(params.teamid);
+    const nextTeam = meData?.memberships?.find(
+      (m) => m.groupId !== deletedTeamId,
+    );
+
     deleteTeam(
       { teamId: params.teamid as string },
       {
         onSuccess: () => {
-          router.push('/');
+          router.push(nextTeam ? `/${nextTeam.groupId}` : '/');
         },
       },
     );
