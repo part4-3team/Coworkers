@@ -28,6 +28,8 @@ export default function TaskListBoard({
   className,
   columnTitle,
   groupId,
+  onSelectDate,
+  selectedDate,
   taskListId,
   teamId,
 }: TaskListBoardProps) {
@@ -38,11 +40,9 @@ export default function TaskListBoard({
     handleRequestDelete,
     handleToggleChecked,
     isTaskListEmpty,
-    selectedDate,
-    setSelectedDate,
     sortedTasks,
     taskPendingDelete,
-  } = useTaskListBoard(groupId, taskListId);
+  } = useTaskListBoard(groupId, taskListId, selectedDate);
 
   const handleOpenTaskDetail = useCallback(
     (task: (typeof sortedTasks)[number], mode: TaskListTaskDetailOpenMode) => {
@@ -70,7 +70,7 @@ export default function TaskListBoard({
         <div className="shrink-0">
           <TaskListMonthNavigator
             selectedDate={selectedDate}
-            onSelectDate={setSelectedDate}
+            onSelectDate={onSelectDate}
           />
         </div>
       </header>
@@ -78,7 +78,7 @@ export default function TaskListBoard({
       <TaskListWeekStrip
         className="mt-6 md:mt-8"
         selectedDate={selectedDate}
-        onSelectDate={setSelectedDate}
+        onSelectDate={onSelectDate}
       />
 
       <ul className="mt-6 flex list-none flex-col gap-3 p-0 md:mt-8 md:gap-4">

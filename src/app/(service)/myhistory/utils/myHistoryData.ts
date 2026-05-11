@@ -8,6 +8,7 @@ export type {
 } from '@/app/(service)/myhistory/types';
 export { buildHistoryDateSections } from '@/app/(service)/myhistory/utils/myHistorySectionBuilders';
 export { buildHistorySummaryData } from '@/app/(service)/myhistory/utils/myHistorySummaryBuilders';
+export { getVisibleCompletedTasks } from '@/app/(service)/myhistory/utils/historyBoardDataUtils';
 export {
   getCompletedTasksInRange,
   getLatestHistoryTaskDate,

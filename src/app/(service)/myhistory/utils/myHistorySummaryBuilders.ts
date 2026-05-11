@@ -5,23 +5,26 @@
 import type {
   HistoryTaskListDetailSource,
   HistoryTeamDetail,
+  MyHistoryCompletedTaskRecord,
 } from '@/app/(service)/myhistory/types';
+import { getTaskMetaMap } from '@/app/(service)/myhistory/utils/myHistorySectionUtils';
 import {
-  accumulateTeamSummariesFromTaskLists,
+  buildCompletedTaskCountMap,
   buildHistoryTeamFilters,
   buildTeamSummaryCards,
 } from '@/app/(service)/myhistory/utils/myHistorySummaryBuilderUtils';
 
 export function buildHistorySummaryData(
-  currentUserId: number | string | undefined,
   teamDetails: readonly HistoryTeamDetail[],
+  completedTasks: readonly MyHistoryCompletedTaskRecord[],
   sources: readonly HistoryTaskListDetailSource[],
 ) {
-  const teamSummaryMap = accumulateTeamSummariesFromTaskLists(
-    currentUserId,
-    sources,
+  const taskMetaMap = getTaskMetaMap(teamDetails, sources);
+  const completedTaskCountMap = buildCompletedTaskCountMap(
+    completedTasks,
+    taskMetaMap,
   );
-  const items = buildTeamSummaryCards(teamDetails, teamSummaryMap);
+  const items = buildTeamSummaryCards(teamDetails, completedTaskCountMap);
 
   return {
     filters: buildHistoryTeamFilters(items),

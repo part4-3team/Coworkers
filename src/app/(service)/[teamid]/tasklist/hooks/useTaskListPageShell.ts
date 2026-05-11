@@ -1,42 +1,38 @@
 'use client';
 
-import { useCallback, useMemo, useRef, useState } from 'react'; // useRef 추가
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
 import { queryKeys } from '@/api/queryKeys';
 import { createTaskList, deleteTaskList, updateTaskList } from '@/api/taskApi';
+import useTaskListSidebarColumns from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListSidebarColumns';
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
+import { toTaskListDateString } from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
 import { useToast } from '@/components/common/toast';
 import { useTeamDetailQuery } from '@/hooks/useTeam';
 
 type UseTaskListPageShellParams = {
+  selectedDate: Date;
   teamId: string;
   taskId: string;
 };
 
 export default function useTaskListPageShell({
+  selectedDate,
   teamId,
   taskId,
 }: UseTaskListPageShellParams) {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
   const { data: groupDetail } = useTeamDetailQuery({ teamId });
-  const isCreatingColumnRef = useRef(false); // 추가
-  const columns = useMemo<TaskListColumnItem[]>(
-    () =>
-      (groupDetail?.taskLists ?? [])
-        .slice()
-        .sort((a, b) => a.displayIndex - b.displayIndex)
-        .map((taskList) => ({
-          completed: taskList.tasks.filter((task) => task.doneAt !== null)
-            .length,
-          id: String(taskList.id),
-          title: taskList.name,
-          total: taskList.tasks.length,
-        })),
-    [groupDetail?.taskLists],
-  );
+  const isCreatingColumnRef = useRef(false);
+  const dateString = toTaskListDateString(selectedDate);
+  const columns = useTaskListSidebarColumns({
+    selectedDate,
+    taskLists: groupDetail?.taskLists ?? [],
+    teamId,
+  });
   const [columnPendingDelete, setColumnPendingDelete] =
     useState<TaskListColumnItem | null>(null);
   const [columnPendingRename, setColumnPendingRename] =
@@ -66,11 +62,13 @@ export default function useTaskListPageShell({
       }),
       effectiveActiveId
         ? queryClient.invalidateQueries({
-            queryKey: queryKeys.taskList.detail(teamId, effectiveActiveId),
+            queryKey: queryKeys.taskList.detail(teamId, effectiveActiveId, {
+              date: dateString,
+            }),
           })
         : Promise.resolve(),
     ]);
-  }, [effectiveActiveId, queryClient, teamId]);
+  }, [dateString, effectiveActiveId, queryClient, teamId]);
 
   const handleConfirmDeleteColumn = useCallback(async () => {
     if (!columnPendingDelete) return;

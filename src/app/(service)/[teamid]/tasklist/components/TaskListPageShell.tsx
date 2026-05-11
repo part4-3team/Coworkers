@@ -4,6 +4,8 @@
 
 'use client';
 
+import { useState } from 'react';
+
 import { useRouter } from 'next/navigation';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -33,6 +35,7 @@ export default function TaskListPageShell({
   teamId,
   taskId,
 }: TaskListPageShellProps) {
+  const [selectedDate, setSelectedDate] = useState(() => new Date());
   const router = useRouter();
   const queryClient = useQueryClient();
   const { showToast } = useToast();
@@ -54,7 +57,7 @@ export default function TaskListPageShell({
     setColumnPendingRename,
     setIsCreateColumnOpen,
     setIsCreateTaskOpen,
-  } = useTaskListPageShell({ teamId, taskId });
+  } = useTaskListPageShell({ selectedDate, teamId, taskId });
 
   const handleConfirmDeleteColumnWithNav = async () => {
     const wasActive = columnPendingDelete?.id === taskId;
@@ -110,6 +113,8 @@ export default function TaskListPageShell({
           className="lg:col-start-2 lg:row-start-2"
           columnTitle={columnTitle}
           groupId={teamId}
+          onSelectDate={setSelectedDate}
+          selectedDate={selectedDate}
           taskListId={effectiveActiveId}
           teamId={teamId}
         />

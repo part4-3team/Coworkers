@@ -14,6 +14,7 @@ import type { UseHistoryBoardDataParams } from '@/app/(service)/myhistory/types'
 import {
   buildHistoryDateSections,
   buildHistorySummaryData,
+  getVisibleCompletedTasks,
 } from '@/app/(service)/myhistory/utils/myHistoryData';
 
 export default function useHistoryBoardData({
@@ -24,7 +25,6 @@ export default function useHistoryBoardData({
 }: UseHistoryBoardDataParams) {
   const {
     completedDateKeys,
-    currentUserId,
     isMembershipsError,
     isMembershipsLoading,
     isMeError,
@@ -48,16 +48,25 @@ export default function useHistoryBoardData({
     teamDetails,
     visibleDateKeys,
   });
+  const visibleCompletedTasks = useMemo(
+    () => getVisibleCompletedTasks(completedTasks, visibleDateKeys),
+    [completedTasks, visibleDateKeys],
+  );
 
   const historySections = useMemo(
     () =>
-      buildHistoryDateSections(completedTasks, taskListSources, activeFilterId),
-    [activeFilterId, completedTasks, taskListSources],
+      buildHistoryDateSections(
+        visibleCompletedTasks,
+        teamDetails,
+        taskListSources,
+        activeFilterId,
+      ),
+    [activeFilterId, taskListSources, teamDetails, visibleCompletedTasks],
   );
 
   const summaryData = useMemo(
-    () => buildHistorySummaryData(currentUserId, teamDetails, taskListSources),
-    [currentUserId, taskListSources, teamDetails],
+    () => buildHistorySummaryData(teamDetails, completedTasks, taskListSources),
+    [completedTasks, taskListSources, teamDetails],
   );
 
   return {

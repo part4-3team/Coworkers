@@ -3,83 +3,74 @@
  */
 
 import type {
-  HistorySummaryAccumulator,
-  HistoryTaskListDetailSource,
+  HistoryTaskMeta,
   HistoryTeamDetail,
+  MyHistoryCompletedTaskRecord,
   MyHistoryFilter,
   MyHistorySummaryItem,
 } from '@/app/(service)/myhistory/types';
+import { toHistoryTaskIdentityKey } from '@/app/(service)/myhistory/utils/myHistoryShared';
 
-function countCompletedTasksForCurrentUser(
-  currentUserId: number | string | undefined,
-  source: HistoryTaskListDetailSource,
+type HistoryTaskMetaMap = ReadonlyMap<string, HistoryTaskMeta>;
+
+function countUniqueTaskListTotal(
+  taskList: HistoryTeamDetail['taskLists'][number],
 ) {
-  return source.tasks.filter((task) =>
-    currentUserId !== undefined
-      ? String(task.doneByUserId) === String(currentUserId)
-      : Boolean(task.doneAt),
-  ).length;
+  return new Set(
+    taskList.tasks.map((task) =>
+      toHistoryTaskIdentityKey(task.id, task.recurringId),
+    ),
+  ).size;
 }
 
-function createEmptyTeamSummary(source: HistoryTaskListDetailSource) {
-  return {
-    details: new Map(),
-    doneCount: 0,
-    name: source.teamName,
-  } satisfies HistorySummaryAccumulator;
+function getTaskId(task: MyHistoryCompletedTaskRecord) {
+  return typeof task.id === 'string' || typeof task.id === 'number'
+    ? String(task.id)
+    : null;
 }
 
-function createEmptyTaskListSummary(source: HistoryTaskListDetailSource) {
-  return {
-    displayIndex: source.displayIndex,
-    doneCount: 0,
-    name: source.taskListName,
-    totalCount: 0,
-  } as const;
-}
-
-export function accumulateTeamSummariesFromTaskLists(
-  currentUserId: number | string | undefined,
-  sources: readonly HistoryTaskListDetailSource[],
+export function buildCompletedTaskCountMap(
+  completedTasks: readonly MyHistoryCompletedTaskRecord[],
+  taskMetaMap: HistoryTaskMetaMap,
 ) {
-  return sources.reduce<Map<string, HistorySummaryAccumulator>>(
-    (summaries, source) => {
-      const teamSummary =
-        summaries.get(source.teamId) ?? createEmptyTeamSummary(source);
-      const taskListSummary =
-        teamSummary.details.get(source.taskListId) ??
-        createEmptyTaskListSummary(source);
-      const completedCount = countCompletedTasksForCurrentUser(
-        currentUserId,
-        source,
-      );
+  const completedTaskMap = completedTasks.reduce<Map<string, Set<string>>>(
+    (taskCountMap, task) => {
+      const taskId = getTaskId(task);
 
-      taskListSummary.doneCount += completedCount;
-      taskListSummary.totalCount += source.tasks.length;
-      teamSummary.doneCount += completedCount;
-      teamSummary.details.set(source.taskListId, {
-        ...taskListSummary,
-      });
-      summaries.set(source.teamId, teamSummary);
+      if (!taskId) {
+        return taskCountMap;
+      }
 
-      return summaries;
+      const taskMeta = taskMetaMap.get(taskId);
+
+      if (!taskMeta) {
+        return taskCountMap;
+      }
+
+      const taskListKey = `${taskMeta.teamId}:${taskMeta.taskListId}`;
+      const completedTaskSet =
+        taskCountMap.get(taskListKey) ?? new Set<string>();
+
+      completedTaskSet.add(taskMeta.taskIdentityKey);
+      taskCountMap.set(taskListKey, completedTaskSet);
+
+      return taskCountMap;
     },
     new Map(),
   );
+
+  return completedTaskMap;
 }
 
 export function buildTeamSummaryCards(
   teamDetails: readonly HistoryTeamDetail[],
-  teamSummaryMap: ReadonlyMap<string, HistorySummaryAccumulator>,
+  completedTaskCountMap: ReadonlyMap<string, Set<string>>,
 ) {
   return teamDetails.map((teamDetail) => {
-    const matchedTeamSummary = teamSummaryMap.get(teamDetail.id);
     const details = teamDetail.taskLists.map((taskList) => {
-      const matchedTaskListSummary = matchedTeamSummary?.details.get(
-        taskList.id,
-      );
-      const doneCount = matchedTaskListSummary?.doneCount ?? 0;
-      const totalCount = matchedTaskListSummary?.totalCount ?? 0;
+      const doneCount =
+        completedTaskCountMap.get(`${teamDetail.id}:${taskList.id}`)?.size ?? 0;
+      const totalCount = countUniqueTaskListTotal(taskList);
 
       return {
         doneCount,
@@ -89,7 +80,10 @@ export function buildTeamSummaryCards(
         title: taskList.name,
       };
     });
-    const doneCount = matchedTeamSummary?.doneCount ?? 0;
+    const doneCount = details.reduce(
+      (sum, detail) => sum + detail.doneCount,
+      0,
+    );
 
     return {
       count: doneCount,

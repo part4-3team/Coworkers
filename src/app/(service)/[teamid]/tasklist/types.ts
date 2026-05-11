@@ -49,6 +49,8 @@ export type TaskListBoardProps = {
   className?: string;
   columnTitle: string;
   groupId: string | null;
+  onSelectDate: (date: Date) => void;
+  selectedDate: Date;
   taskListId: string;
   teamId: string;
 };

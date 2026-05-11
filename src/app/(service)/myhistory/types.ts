@@ -104,6 +104,15 @@ export type HistoryTaskListSummary = {
   displayIndex: number;
   id: string;
   name: string;
+  tasks: HistoryTaskListSummaryTask[];
+};
+
+export type HistoryTaskListSummaryTask = {
+  commentCount: number;
+  displayIndex: number;
+  id: string;
+  name: string;
+  recurringId?: number;
 };
 
 export type HistoryTeamDetail = {
@@ -121,6 +130,7 @@ export type HistoryTaskListTask = {
   frequency?: string;
   id: string;
   name: string;
+  recurringId?: number;
 };
 
 export type HistoryTaskListDetailSource = {
@@ -136,9 +146,11 @@ export type HistoryTaskListDetailSource = {
 export type HistoryTaskMeta = {
   commentCount: number;
   taskDisplayIndex: number;
+  taskIdentityKey: string;
   taskListDisplayIndex: number;
   taskListId: string;
   taskListName: string;
+  taskName: string;
   teamId: string;
   teamName: string;
 };

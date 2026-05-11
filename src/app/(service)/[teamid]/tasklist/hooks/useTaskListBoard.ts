@@ -8,18 +8,23 @@ import { queryKeys } from '@/api/queryKeys';
 import { taskQueryOptions } from '@/api/queryOptions';
 import { deleteTask, updateTask } from '@/api/taskApi';
 import type { TaskListBoardTask } from '@/app/(service)/[teamid]/tasklist/types';
+import { toTaskListDateString } from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
+import {
+  syncCheckedTaskToGroupDetail,
+  syncCheckedTaskToTaskListDetail,
+} from '@/app/(service)/[teamid]/tasklist/utils/taskListQueryCache';
 import { useToast } from '@/components/common/toast';
+import type { GroupDetail } from '@/types/group';
+import type { TaskListDetail } from '@/types/task';
 
-export function useTaskListBoard(groupId: string | null, taskListId: string) {
+export function useTaskListBoard(
+  groupId: string | null,
+  taskListId: string,
+  selectedDate: Date,
+) {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
-  const [selectedDate, setSelectedDate] = useState(() => new Date());
-
-  const dateString = [
-    selectedDate.getFullYear(),
-    String(selectedDate.getMonth() + 1).padStart(2, '0'),
-    String(selectedDate.getDate()).padStart(2, '0'),
-  ].join('-');
+  const dateString = toTaskListDateString(selectedDate);
 
   const { data: taskListDetail } = useQuery({
     ...taskQueryOptions.taskListDetail(String(groupId), taskListId, {
@@ -66,6 +71,27 @@ export function useTaskListBoard(groupId: string | null, taskListId: string) {
       if (!groupId) return;
       try {
         await updateTask(groupId, taskListId, id, { done: checked });
+        queryClient.setQueryData<GroupDetail | undefined>(
+          queryKeys.team.detail(groupId),
+          (previousGroupDetail) =>
+            syncCheckedTaskToGroupDetail(
+              previousGroupDetail,
+              taskListId,
+              id,
+              checked,
+            ),
+        );
+        queryClient.setQueryData<TaskListDetail | undefined>(
+          queryKeys.taskList.detail(groupId, taskListId, {
+            date: dateString,
+          }),
+          (previousTaskListDetail) =>
+            syncCheckedTaskToTaskListDetail(
+              previousTaskListDetail,
+              id,
+              checked,
+            ),
+        );
         await Promise.all([
           queryClient.invalidateQueries({
             queryKey: queryKeys.taskList.detail(groupId, taskListId, {
@@ -131,8 +157,6 @@ export function useTaskListBoard(groupId: string | null, taskListId: string) {
     handleRequestDelete,
     handleToggleChecked,
     isTaskListEmpty,
-    selectedDate,
-    setSelectedDate,
     sortedTasks,
     taskPendingDelete,
   };

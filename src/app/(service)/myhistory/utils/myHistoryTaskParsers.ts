@@ -84,6 +84,7 @@ export function toHistoryTaskListDetailSource(
           typeof task.frequency === 'string' ? task.frequency : undefined,
         id: taskId,
         name: taskName,
+        recurringId: toNumber(task.recurringId),
       });
 
       return tasks;

@@ -4,6 +4,7 @@
 
 import type {
   HistoryTaskListDetailSource,
+  HistoryTeamDetail,
   MyHistoryCompletedTaskRecord,
 } from '@/app/(service)/myhistory/types';
 import { buildHistoryDateSectionMap } from '@/app/(service)/myhistory/utils/myHistorySectionBuilderUtils';
@@ -13,10 +14,11 @@ import { getTaskMetaMap } from '@/app/(service)/myhistory/utils/myHistorySection
 
 export function buildHistoryDateSections(
   completedTasks: readonly MyHistoryCompletedTaskRecord[],
+  teamDetails: readonly HistoryTeamDetail[],
   sources: readonly HistoryTaskListDetailSource[],
   activeTeamId: string | null,
 ) {
-  const taskMetaMap = getTaskMetaMap(sources);
+  const taskMetaMap = getTaskMetaMap(teamDetails, sources);
   const teamVisibleTasks = filterHistoryTasksByActiveTeam(
     completedTasks,
     activeTeamId,

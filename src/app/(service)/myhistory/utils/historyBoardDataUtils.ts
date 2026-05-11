@@ -7,6 +7,7 @@ import type {
   HistoryTeamDetail,
   MyHistoryCompletedTaskRecord,
 } from '@/app/(service)/myhistory/types';
+import { toSectionDateKey } from '@/app/(service)/myhistory/utils/myHistoryTaskDateHelpers';
 
 export function getCompletedDateKeys(
   completedTasks: readonly MyHistoryCompletedTaskRecord[],
@@ -42,4 +43,17 @@ export function getHistoryTaskListDescriptors(
       })),
     ),
   ) satisfies HistoryTaskListDescriptor[];
+}
+
+export function getVisibleCompletedTasks(
+  completedTasks: readonly MyHistoryCompletedTaskRecord[],
+  visibleDateKeys: readonly string[],
+) {
+  const visibleDateKeySet = new Set(visibleDateKeys);
+
+  return completedTasks.filter((task) => {
+    const sectionDateKey = toSectionDateKey(task);
+
+    return sectionDateKey ? visibleDateKeySet.has(sectionDateKey) : false;
+  });
 }
