@@ -51,7 +51,10 @@ export default function TaskListTaskRow({
             />
           </span>
 
-          <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base">
+          <span
+            className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base cursor-pointer"
+            onClick={() => onOpenDetail(task, 'view')}
+          >
             <IcComment
               width={22}
               height={22}
