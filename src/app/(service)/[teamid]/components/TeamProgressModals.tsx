@@ -28,6 +28,10 @@ export function TeamProgressModals({
 
   const { mutate: deleteTeam } = useDeleteTeamMutation();
   const { mutate: removeMemberTeam } = useRemoveMemberTeamMutation();
+  const canDeleteSelectedMember =
+    role === 'ADMIN' &&
+    selectedMember !== null &&
+    selectedMember.userId !== meData?.id;
 
   const handleDeleteTeam = () => {
     const fallbackRoute = resolveTeamExitRoute(
@@ -99,8 +103,15 @@ export function TeamProgressModals({
       {is('memberDetail') && (
         <ModalMemberDetail
           onClose={close}
+          canDeleteMember={canDeleteSelectedMember}
           member={selectedMember}
-          onPrimaryButtonClick={() => open('memberDelete')}
+          onPrimaryButtonClick={() => {
+            if (!canDeleteSelectedMember) {
+              return;
+            }
+
+            open('memberDelete');
+          }}
           role={role}
         />
       )}
