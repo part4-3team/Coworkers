@@ -20,6 +20,7 @@ export default function TaskListCreateTaskModal({
   onSubmit,
   groupId,
   taskListId,
+  initialDate,
 }: TaskListCreateTaskModalProps) {
   const {
     calendarButtonRef,
@@ -44,7 +45,7 @@ export default function TaskListCreateTaskModal({
     title,
     toggleWeekDay,
     weekDays,
-  } = useTaskListCreateTaskForm();
+  } = useTaskListCreateTaskForm(initialDate);
 
   const isDisabled = title.trim().length === 0;
   const { handleCreateTask } = useTaskListCreateTaskSubmit({

@@ -62,6 +62,7 @@ export type TaskListCreateTaskModalProps = {
   onSubmit?: () => void;
   groupId: number;
   taskListId: string;
+  initialDate?: Date;
 };
 
 export type TaskListCalendarVariant =
