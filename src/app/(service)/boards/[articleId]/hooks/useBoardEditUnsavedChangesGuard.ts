@@ -6,10 +6,8 @@
 
 import { useEffect, useRef } from 'react';
 
-import shouldBlockBoardEditInteraction from '@/app/(service)/boards/utils/boardEditShouldBlockInteraction';
+import { attachBoardEditUnsavedGuard } from '@/app/(service)/boards/[articleId]/utils/attachBoardEditUnsavedGuard';
 import { useToast } from '@/components/common/toast';
-
-const BOARD_EDIT_UNSAVED_TOAST_DURATION = 3000;
 
 type UseBoardEditUnsavedChangesGuardParams = {
   hasUnsavedChanges: boolean;
@@ -38,80 +36,13 @@ export default function useBoardEditUnsavedChangesGuard({
       return;
     }
 
-    const showUnsavedChangesToast = () => {
-      if (isToastVisibleRef.current) {
-        return;
-      }
-
-      isToastVisibleRef.current = true;
-      const toastId = showToast('저장하지 않은 변경사항이 있어요!', 'error', {
-        hideCloseButton: true,
-        label: '변경사항 취소',
-        onClick: onDiscardChanges,
-        textClassName: 'text-status-danger',
-      });
-
-      toastTimeoutRef.current = window.setTimeout(() => {
-        removeToast(toastId);
-        isToastVisibleRef.current = false;
-        toastTimeoutRef.current = null;
-      }, BOARD_EDIT_UNSAVED_TOAST_DURATION);
-    };
-
-    const blockNavigation = (event: Event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      showUnsavedChangesToast();
-    };
-
-    const handlePointerDownCapture = (event: PointerEvent) => {
-      if (!shouldBlockBoardEditInteraction(event.target)) {
-        return;
-      }
-
-      isBlockedPointerDownRef.current = true;
-      blockNavigation(event);
-    };
-
-    const handleClickCapture = (event: MouseEvent) => {
-      if (isBlockedPointerDownRef.current) {
-        isBlockedPointerDownRef.current = false;
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        return;
-      }
-
-      if (!shouldBlockBoardEditInteraction(event.target)) {
-        return;
-      }
-
-      blockNavigation(event);
-    };
-
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = '';
-    };
-
-    document.addEventListener('pointerdown', handlePointerDownCapture, true);
-    document.addEventListener('click', handleClickCapture, true);
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      if (toastTimeoutRef.current) {
-        window.clearTimeout(toastTimeoutRef.current);
-        toastTimeoutRef.current = null;
-      }
-      isToastVisibleRef.current = false;
-      document.removeEventListener(
-        'pointerdown',
-        handlePointerDownCapture,
-        true,
-      );
-      document.removeEventListener('click', handleClickCapture, true);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
+    return attachBoardEditUnsavedGuard({
+      isBlockedPointerDownRef,
+      isToastVisibleRef,
+      onDiscardChanges,
+      removeToast,
+      showToast,
+      toastTimeoutRef,
+    });
   }, [hasUnsavedChanges, onDiscardChanges, removeToast, showToast]);
 }
