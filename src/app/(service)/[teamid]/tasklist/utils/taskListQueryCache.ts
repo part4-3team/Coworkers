@@ -1,5 +1,5 @@
 /**
- * 리스트 페이지의 할 일 체크 상태를 캐시에 즉시 반영하는 유틸입니다.
+ * 리스트 페이지의 할 일 체크 상태와 목록 삭제 결과를 캐시에 즉시 반영하는 유틸입니다.
  */
 
 import type { GroupDetail } from '@/types/group';
@@ -55,5 +55,21 @@ export function syncCheckedTaskToTaskListDetail(
   return {
     ...taskListDetail,
     tasks: applyDoneAt(taskListDetail.tasks, taskId, checked),
+  };
+}
+
+export function removeTaskListFromGroupDetail(
+  groupDetail: GroupDetail | undefined,
+  taskListId: string,
+) {
+  if (!groupDetail) {
+    return groupDetail;
+  }
+
+  return {
+    ...groupDetail,
+    taskLists: groupDetail.taskLists.filter(
+      (taskList) => String(taskList.id) !== taskListId,
+    ),
   };
 }

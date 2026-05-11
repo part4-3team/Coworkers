@@ -32,8 +32,13 @@ export default function TaskListPage({
   useEffect(() => {
     if (firstTaskList) {
       router.replace(ROUTES.TASK_LIST_ITEM(teamid, String(firstTaskList.id)));
+      return;
     }
-  }, [firstTaskList, router, teamid]);
+
+    if (groupDetail && groupDetail.taskLists.length === 0) {
+      router.replace(ROUTES.TEAM(teamid));
+    }
+  }, [firstTaskList, groupDetail, router, teamid]);
 
   if (isLoading || !isAccessible) {
     return null;

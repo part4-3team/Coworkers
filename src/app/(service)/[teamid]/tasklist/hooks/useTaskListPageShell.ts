@@ -10,9 +10,11 @@ import useTeamRouteGuard from '@/app/(service)/[teamid]/hooks/useTeamRouteGuard'
 import useTaskListSidebarColumns from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListSidebarColumns';
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
 import { toTaskListDateString } from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
+import { removeTaskListFromGroupDetail } from '@/app/(service)/[teamid]/tasklist/utils/taskListQueryCache';
 import { resolveTeamExitRoute } from '@/app/(service)/[teamid]/utils/teamRouteAccess';
 import { useToast } from '@/components/common/toast';
 import { useTeamDetailQuery } from '@/hooks/useTeam';
+import type { GroupDetail } from '@/types/group';
 
 type UseTaskListPageShellParams = {
   selectedDate: Date;
@@ -89,6 +91,12 @@ export default function useTaskListPageShell({
     const deletedColumnId = columnPendingDelete.id;
 
     await deleteTaskList(teamId, deletedColumnId);
+
+    queryClient.setQueryData<GroupDetail | undefined>(
+      queryKeys.team.detail(teamId),
+      (previousGroupDetail) =>
+        removeTaskListFromGroupDetail(previousGroupDetail, deletedColumnId),
+    );
 
     queryClient.removeQueries({
       queryKey: queryKeys.taskList.detail(teamId, deletedColumnId),

@@ -62,10 +62,23 @@ export default function TaskListPageShell({
   } = useTaskListPageShell({ selectedDate, teamId, taskId });
 
   const handleConfirmDeleteColumnWithNav = async () => {
-    const wasActive = columnPendingDelete?.id === taskId;
+    if (!columnPendingDelete) {
+      return;
+    }
+
+    const wasActive = columnPendingDelete.id === taskId;
+    const nextColumnId = columns.find(
+      (column) => column.id !== columnPendingDelete.id,
+    )?.id;
+
     await handleConfirmDeleteColumn();
+
     if (wasActive) {
-      router.replace(ROUTES.TASK_LIST(teamId));
+      router.replace(
+        nextColumnId
+          ? ROUTES.TASK_LIST_ITEM(teamId, nextColumnId)
+          : ROUTES.TEAM(teamId),
+      );
     }
   };
 
