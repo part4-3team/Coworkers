@@ -24,7 +24,11 @@ export function buildHistorySummaryData(
     completedTasks,
     taskMetaMap,
   );
-  const items = buildTeamSummaryCards(teamDetails, completedTaskCountMap);
+  const items = buildTeamSummaryCards(
+    teamDetails,
+    completedTaskCountMap,
+    sources,
+  );
 
   return {
     filters: buildHistoryTeamFilters(items),

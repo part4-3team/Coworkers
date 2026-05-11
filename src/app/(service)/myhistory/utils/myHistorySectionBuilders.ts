@@ -10,6 +10,7 @@ import type {
 import { buildHistoryDateSectionMap } from '@/app/(service)/myhistory/utils/myHistorySectionBuilderUtils';
 import { filterHistoryTasksByActiveTeam } from '@/app/(service)/myhistory/utils/myHistorySectionFilterUtils';
 import { sortHistoryTasksByDisplayOrder } from '@/app/(service)/myhistory/utils/myHistorySectionSortUtils';
+import { collapseRecurringHistoryTasks } from '@/app/(service)/myhistory/utils/myHistorySectionTaskUtils';
 import { getTaskMetaMap } from '@/app/(service)/myhistory/utils/myHistorySectionUtils';
 
 export function buildHistoryDateSections(
@@ -24,8 +25,12 @@ export function buildHistoryDateSections(
     activeTeamId,
     taskMetaMap,
   );
-  const sortedTasks = sortHistoryTasksByDisplayOrder(
+  const latestVisibleTasks = collapseRecurringHistoryTasks(
     teamVisibleTasks,
+    taskMetaMap,
+  );
+  const sortedTasks = sortHistoryTasksByDisplayOrder(
+    latestVisibleTasks,
     taskMetaMap,
   );
   const sectionsByDate = buildHistoryDateSectionMap(sortedTasks, taskMetaMap);
