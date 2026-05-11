@@ -6,6 +6,7 @@
 
 import { useMemo } from 'react';
 
+import { MY_HISTORY_VIEW_MODES } from '@/app/(service)/myhistory/constants';
 import useHistoryBoardBaseData from '@/app/(service)/myhistory/hooks/useHistoryBoardBaseData';
 import useHistoryTaskListSources from '@/app/(service)/myhistory/hooks/useHistoryTaskListSources';
 import useHistoryTeamDetails from '@/app/(service)/myhistory/hooks/useHistoryTeamDetails';
@@ -14,6 +15,8 @@ import type { UseHistoryBoardDataParams } from '@/app/(service)/myhistory/types'
 import {
   buildHistoryDateSections,
   buildHistorySummaryData,
+  buildPendingHistoryDateSections,
+  getTeamTaskDateKeys,
   getVisibleCompletedTasks,
 } from '@/app/(service)/myhistory/utils/myHistoryData';
 
@@ -22,6 +25,7 @@ export default function useHistoryBoardData({
   completedTasks,
   isAllRange,
   shouldLimitTeamQueries,
+  viewMode,
 }: UseHistoryBoardDataParams) {
   const {
     completedDateKeys,
@@ -31,13 +35,20 @@ export default function useHistoryBoardData({
     isMeLoading,
     uniqueTeams,
   } = useHistoryBoardBaseData(completedTasks);
-  const { isProgressivelyLoading, visibleDateKeys } =
-    useProgressiveHistoryDateKeys(completedDateKeys, isAllRange);
   const {
     isError: isTeamDetailsError,
     isLoading: isTeamDetailsLoading,
     teamDetails,
   } = useHistoryTeamDetails(uniqueTeams);
+  const historyDateKeys = useMemo(
+    () =>
+      viewMode === MY_HISTORY_VIEW_MODES.PENDING
+        ? getTeamTaskDateKeys(teamDetails)
+        : completedDateKeys,
+    [completedDateKeys, teamDetails, viewMode],
+  );
+  const { isProgressivelyLoading, visibleDateKeys } =
+    useProgressiveHistoryDateKeys(historyDateKeys, isAllRange);
   const {
     isError: isTaskListSourcesError,
     isLoading: isTaskListSourcesLoading,
@@ -53,20 +64,34 @@ export default function useHistoryBoardData({
     [completedTasks, visibleDateKeys],
   );
 
-  const historySections = useMemo(
-    () =>
-      buildHistoryDateSections(
-        visibleCompletedTasks,
-        teamDetails,
-        taskListSources,
-        activeFilterId,
-      ),
-    [activeFilterId, taskListSources, teamDetails, visibleCompletedTasks],
-  );
+  const historySections = useMemo(() => {
+    if (viewMode === MY_HISTORY_VIEW_MODES.PENDING) {
+      return buildPendingHistoryDateSections(taskListSources, activeFilterId);
+    }
+
+    return buildHistoryDateSections(
+      visibleCompletedTasks,
+      teamDetails,
+      taskListSources,
+      activeFilterId,
+    );
+  }, [
+    activeFilterId,
+    taskListSources,
+    teamDetails,
+    viewMode,
+    visibleCompletedTasks,
+  ]);
 
   const summaryData = useMemo(
-    () => buildHistorySummaryData(teamDetails, completedTasks, taskListSources),
-    [completedTasks, taskListSources, teamDetails],
+    () =>
+      buildHistorySummaryData(
+        teamDetails,
+        completedTasks,
+        taskListSources,
+        viewMode,
+      ),
+    [completedTasks, taskListSources, teamDetails, viewMode],
   );
 
   return {

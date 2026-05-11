@@ -27,6 +27,20 @@ export function sortHistoryDateKeysByRecency(dateKeys: readonly string[]) {
   });
 }
 
+export function getTeamTaskDateKeys(teamDetails: readonly HistoryTeamDetail[]) {
+  return Array.from(
+    new Set(
+      teamDetails.flatMap((teamDetail) =>
+        teamDetail.taskLists.flatMap((taskList) =>
+          taskList.tasks
+            .map((task) => task.date.slice(0, 10))
+            .filter((dateKey) => Boolean(dateKey)),
+        ),
+      ),
+    ),
+  );
+}
+
 export function getHistoryTaskListDescriptors(
   teamDetails: readonly HistoryTeamDetail[],
   completedDateKeys: readonly string[],

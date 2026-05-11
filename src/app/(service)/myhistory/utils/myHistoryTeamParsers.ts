@@ -30,7 +30,11 @@ function toHistoryTaskListSummaryTask(task: unknown) {
 
   return {
     commentCount: toNumber(task.commentCount) ?? 0,
+    date: typeof task.date === 'string' ? task.date : '',
+    description: typeof task.description === 'string' ? task.description : '',
     displayIndex: toNumber(task.displayIndex) ?? 0,
+    doneAt: typeof task.doneAt === 'string' ? task.doneAt : undefined,
+    frequency: typeof task.frequency === 'string' ? task.frequency : undefined,
     id: taskId,
     name: taskName,
     recurringId: toNumber(task.recurringId),

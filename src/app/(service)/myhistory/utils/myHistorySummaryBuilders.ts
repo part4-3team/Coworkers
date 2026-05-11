@@ -6,18 +6,20 @@ import type {
   HistoryTaskListDetailSource,
   HistoryTeamDetail,
   MyHistoryCompletedTaskRecord,
+  MyHistoryViewMode,
 } from '@/app/(service)/myhistory/types';
 import { getTaskMetaMap } from '@/app/(service)/myhistory/utils/myHistorySectionUtils';
 import {
   buildCompletedTaskCountMap,
   buildHistoryTeamFilters,
-  buildTeamSummaryCards,
 } from '@/app/(service)/myhistory/utils/myHistorySummaryBuilderUtils';
+import { buildTeamSummaryCards } from '@/app/(service)/myhistory/utils/myHistorySummaryItemBuilders';
 
 export function buildHistorySummaryData(
   teamDetails: readonly HistoryTeamDetail[],
   completedTasks: readonly MyHistoryCompletedTaskRecord[],
   sources: readonly HistoryTaskListDetailSource[],
+  viewMode: MyHistoryViewMode,
 ) {
   const taskMetaMap = getTaskMetaMap(teamDetails, sources);
   const completedTaskCountMap = buildCompletedTaskCountMap(
@@ -28,6 +30,7 @@ export function buildHistorySummaryData(
     teamDetails,
     completedTaskCountMap,
     sources,
+    viewMode,
   );
 
   return {

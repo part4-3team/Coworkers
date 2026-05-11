@@ -75,6 +75,7 @@ export function toHistoryTaskListDetailSource(
 
       tasks.push({
         commentCount: toNumber(task.commentCount) ?? 0,
+        date: typeof task.date === 'string' ? task.date : descriptor.dateKey,
         description:
           typeof task.description === 'string' ? task.description : '',
         displayIndex: toNumber(task.displayIndex) ?? 0,

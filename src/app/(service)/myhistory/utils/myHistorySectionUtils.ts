@@ -69,6 +69,7 @@ export function toHistoryTask(
     dueDate: toDateLabel(task.date),
     frequency: formatHistoryTaskFrequency(task.frequency),
     id: String(task.id ?? `${task.name}-${task.doneAt}`),
+    isCompleted: true,
     startedAt: toDateLabel(task.date),
     taskListId: meta?.taskListId ?? '',
     teamId: meta?.teamId ?? '',
