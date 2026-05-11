@@ -95,6 +95,7 @@ export default function BoardEditorForm({
             이미지
           </label>
           <ImageUploadField
+            id="image"
             variant="post"
             src={formData.image || null}
             previewAlt="게시글 이미지"

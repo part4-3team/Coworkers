@@ -1,13 +1,29 @@
 /**
- * 게시글 수정 화면에서 미저장 변경이 있을 때 document·window 이벤트를 붙였다 떼는 유틸리티 함수입니다.
+ * 게시글 작성·수정 화면에서 미저장 변경이 있을 때 document·window 이벤트를 붙였다 떼는 유틸리티 함수입니다.
  */
 
 import type { MutableRefObject } from 'react';
 
-import shouldBlockBoardEditInteraction from '@/app/(service)/boards/utils/boardEditShouldBlockInteraction';
+import shouldBlockBoardFormInteraction from '@/app/(service)/boards/utils/boardFormShouldBlockInteraction';
 import type { ToastAction } from '@/components/common/toast/types';
 
-const BOARD_EDIT_UNSAVED_TOAST_DURATION = 3000;
+const BOARD_FORM_UNSAVED_TOAST_DURATION = 3000;
+
+export type BoardFormUnsavedIntent = 'create' | 'edit';
+
+const UNSAVED_TOAST_COPY: Record<
+  BoardFormUnsavedIntent,
+  { discardLabel: string; message: string }
+> = {
+  create: {
+    message: '아직 게시글을 작성하지 않았어요!',
+    discardLabel: '작성 취소',
+  },
+  edit: {
+    message: '저장하지 않은 변경사항이 있어요!',
+    discardLabel: '변경사항 취소',
+  },
+};
 
 type ShowToastFn = (
   message: string,
@@ -15,7 +31,8 @@ type ShowToastFn = (
   action?: ToastAction,
 ) => string;
 
-type AttachBoardEditUnsavedGuardParams = {
+type AttachBoardFormUnsavedGuardParams = {
+  intent: BoardFormUnsavedIntent;
   isBlockedPointerDownRef: MutableRefObject<boolean>;
   isToastVisibleRef: MutableRefObject<boolean>;
   onDiscardChanges: () => void;
@@ -24,23 +41,26 @@ type AttachBoardEditUnsavedGuardParams = {
   toastTimeoutRef: MutableRefObject<number | null>;
 };
 
-export function attachBoardEditUnsavedGuard({
+export function attachBoardFormUnsavedGuard({
+  intent,
   isBlockedPointerDownRef,
   isToastVisibleRef,
   onDiscardChanges,
   removeToast,
   showToast,
   toastTimeoutRef,
-}: AttachBoardEditUnsavedGuardParams): () => void {
+}: AttachBoardFormUnsavedGuardParams): () => void {
+  const { discardLabel, message } = UNSAVED_TOAST_COPY[intent];
+
   const showUnsavedChangesToast = () => {
     if (isToastVisibleRef.current) {
       return;
     }
 
     isToastVisibleRef.current = true;
-    const toastId = showToast('저장하지 않은 변경사항이 있어요!', 'error', {
+    const toastId = showToast(message, 'error', {
       hideCloseButton: true,
-      label: '변경사항 취소',
+      label: discardLabel,
       onClick: onDiscardChanges,
       textClassName: 'text-status-danger',
     });
@@ -49,7 +69,7 @@ export function attachBoardEditUnsavedGuard({
       removeToast(toastId);
       isToastVisibleRef.current = false;
       toastTimeoutRef.current = null;
-    }, BOARD_EDIT_UNSAVED_TOAST_DURATION);
+    }, BOARD_FORM_UNSAVED_TOAST_DURATION);
   };
 
   const blockNavigation = (event: Event) => {
@@ -60,7 +80,7 @@ export function attachBoardEditUnsavedGuard({
   };
 
   const handlePointerDownCapture = (event: PointerEvent) => {
-    if (!shouldBlockBoardEditInteraction(event.target)) {
+    if (!shouldBlockBoardFormInteraction(event.target)) {
       return;
     }
 
@@ -77,7 +97,7 @@ export function attachBoardEditUnsavedGuard({
       return;
     }
 
-    if (!shouldBlockBoardEditInteraction(event.target)) {
+    if (!shouldBlockBoardFormInteraction(event.target)) {
       return;
     }
 

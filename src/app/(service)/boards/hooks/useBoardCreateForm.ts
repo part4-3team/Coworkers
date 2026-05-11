@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import useBoardFormFields from '@/app/(service)/boards/hooks/useBoardFormFields';
+import useBoardFormUnsavedChangesGuard from '@/app/(service)/boards/hooks/useBoardFormUnsavedChangesGuard';
 import {
   buildArticleMutationBody,
   getArticleSubmitErrorMessage,
@@ -28,14 +29,22 @@ export default function useBoardCreateForm() {
     formData,
     handleContentBlur,
     handleContentChange,
+    handleDiscardChanges,
     handleImageChange,
     handleTitleBlur,
     handleTitleChange,
+    hasFormChanged,
     imageFile,
     isSubmittable,
     setIsSubmitted,
     titleErrorMessage,
   } = useBoardFormFields();
+
+  useBoardFormUnsavedChangesGuard({
+    hasUnsavedChanges: hasFormChanged,
+    intent: 'create',
+    onDiscardChanges: handleDiscardChanges,
+  });
 
   const isMutationPending =
     uploadImageMutation.isPending || createArticleMutation.isPending;

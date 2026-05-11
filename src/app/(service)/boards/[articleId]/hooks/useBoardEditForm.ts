@@ -5,9 +5,9 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import type { QueryKeyId } from '@/api/queryKeys';
-import useBoardEditUnsavedChangesGuard from '@/app/(service)/boards/[articleId]/hooks/useBoardEditUnsavedChangesGuard';
 import { executeBoardArticleEdit } from '@/app/(service)/boards/[articleId]/utils/executeBoardArticleEdit';
 import useBoardFormFields from '@/app/(service)/boards/hooks/useBoardFormFields';
+import useBoardFormUnsavedChangesGuard from '@/app/(service)/boards/hooks/useBoardFormUnsavedChangesGuard';
 import { getArticleSubmitErrorMessage } from '@/app/(service)/boards/utils/boardFormUtils';
 import { useToast } from '@/components/common/toast';
 import { ROUTES } from '@/constants/ROUTES';
@@ -54,8 +54,9 @@ export default function useBoardEditForm({
     requiresChange: true,
   });
 
-  useBoardEditUnsavedChangesGuard({
+  useBoardFormUnsavedChangesGuard({
     hasUnsavedChanges: hasFormChanged,
+    intent: 'edit',
     onDiscardChanges: handleDiscardChanges,
   });
 
