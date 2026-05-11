@@ -50,6 +50,7 @@ export default function TaskListTaskRow({
               onChange={(checked) => onToggleChecked(task.id, checked)}
             />
           </span>
+
           <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base">
             <IcComment
               width={22}
@@ -66,9 +67,11 @@ export default function TaskListTaskRow({
             <IcCalendarSmall width={16} height={16} aria-hidden="true" />
             {task.dueDateLabel}
           </span>
+
           <span aria-hidden="true" className="text-border-secondary">
             |
           </span>
+
           <span className="flex items-center gap-2">
             <IcRepeatSmall width={22} height={22} aria-hidden="true" />
             {task.repeatLabel}
@@ -87,7 +90,7 @@ export default function TaskListTaskRow({
             {
               label: '수정하기',
               onClick: () => {
-                onOpenDetail(task, 'edit');
+                onOpenDetail(task, 'view');
               },
             },
             {
