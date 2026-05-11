@@ -17,6 +17,7 @@ import {
   buildHistorySummaryData,
   buildPendingHistoryDateSections,
   getTeamTaskDateKeys,
+  getTodayHistoryDateKey,
   getVisibleCompletedTasks,
 } from '@/app/(service)/myhistory/utils/myHistoryData';
 
@@ -40,13 +41,17 @@ export default function useHistoryBoardData({
     isLoading: isTeamDetailsLoading,
     teamDetails,
   } = useHistoryTeamDetails(uniqueTeams);
-  const historyDateKeys = useMemo(
-    () =>
-      viewMode === MY_HISTORY_VIEW_MODES.PENDING
-        ? getTeamTaskDateKeys(teamDetails)
-        : completedDateKeys,
-    [completedDateKeys, teamDetails, viewMode],
-  );
+  const historyDateKeys = useMemo(() => {
+    if (viewMode !== MY_HISTORY_VIEW_MODES.PENDING) {
+      return completedDateKeys;
+    }
+
+    if (isAllRange) {
+      return [getTodayHistoryDateKey()];
+    }
+
+    return getTeamTaskDateKeys(teamDetails);
+  }, [completedDateKeys, isAllRange, teamDetails, viewMode]);
   const { isProgressivelyLoading, visibleDateKeys } =
     useProgressiveHistoryDateKeys(historyDateKeys, isAllRange);
   const {

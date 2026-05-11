@@ -10,6 +10,7 @@ export { buildHistoryDateSections } from '@/app/(service)/myhistory/utils/myHist
 export { buildPendingHistoryDateSections } from '@/app/(service)/myhistory/utils/myHistoryPendingSectionBuilders';
 export { buildHistorySummaryData } from '@/app/(service)/myhistory/utils/myHistorySummaryBuilders';
 export {
+  getTodayHistoryDateKey,
   getTeamTaskDateKeys,
   getVisibleCompletedTasks,
 } from '@/app/(service)/myhistory/utils/historyBoardDataUtils';

@@ -9,6 +9,7 @@ import type {
   MyHistoryViewMode,
 } from '@/app/(service)/myhistory/types';
 import {
+  buildSourceTaskIdentityMap,
   buildTaskListTotalIdentityMap,
   toHistoryTaskListSummaryKey,
 } from '@/app/(service)/myhistory/utils/myHistorySummaryCountUtils';
@@ -60,6 +61,8 @@ export function buildTeamSummaryCards(
     teamDetails,
     sources,
   );
+  const pendingTaskIdentityMap = buildSourceTaskIdentityMap(sources, 'pending');
+  const sourceTaskIdentityMap = buildSourceTaskIdentityMap(sources, 'all');
 
   return teamDetails.map((teamDetail) => {
     const details = Array.from(
@@ -75,10 +78,13 @@ export function buildTeamSummaryCards(
           taskList.id,
         );
         const doneCount = completedTaskCountMap.get(taskListKey)?.size ?? 0;
-        const totalCount = taskListTotalIdentityMap.get(taskListKey)?.size ?? 0;
+        const totalCount =
+          viewMode === 'pending'
+            ? (sourceTaskIdentityMap.get(taskListKey)?.size ?? 0)
+            : (taskListTotalIdentityMap.get(taskListKey)?.size ?? 0);
         const count =
           viewMode === 'pending'
-            ? Math.max(totalCount - doneCount, 0)
+            ? (pendingTaskIdentityMap.get(taskListKey)?.size ?? 0)
             : doneCount;
 
         return {

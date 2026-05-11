@@ -9,6 +9,7 @@ import type {
 import { toHistoryTaskIdentityKey } from '@/app/(service)/myhistory/utils/myHistoryShared';
 
 type HistoryTaskIdentityLike = {
+  doneAt?: string;
   id: string;
   recurringId?: number;
 };
@@ -61,4 +62,31 @@ export function buildTaskListTotalIdentityMap(
   });
 
   return totalIdentityMap;
+}
+
+export function buildSourceTaskIdentityMap(
+  sources: readonly HistoryTaskListDetailSource[],
+  status: 'all' | 'pending',
+) {
+  const taskIdentityMap = new Map<string, Set<string>>();
+
+  sources.forEach((source) => {
+    const taskListKey = toHistoryTaskListSummaryKey(
+      source.teamId,
+      source.taskListId,
+    );
+    const identitySet = taskIdentityMap.get(taskListKey) ?? new Set<string>();
+
+    source.tasks.forEach((task) => {
+      if (status === 'pending' && task.doneAt) {
+        return;
+      }
+
+      identitySet.add(toHistoryTaskIdentityKey(task.id, task.recurringId));
+    });
+
+    taskIdentityMap.set(taskListKey, identitySet);
+  });
+
+  return taskIdentityMap;
 }

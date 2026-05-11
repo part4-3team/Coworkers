@@ -49,16 +49,14 @@ export default function MyHistoryPageContent() {
         onClick: () => setViewMode(MY_HISTORY_VIEW_MODES.COMPLETED),
       },
       {
-        label: '내가 해야 할 일',
+        label: '앞으로 할 일',
         onClick: () => setViewMode(MY_HISTORY_VIEW_MODES.PENDING),
       },
     ],
     [],
   );
   const summaryTitle =
-    viewMode === MY_HISTORY_VIEW_MODES.PENDING
-      ? '내가 해야 할 일'
-      : '내가 한 일';
+    viewMode === MY_HISTORY_VIEW_MODES.PENDING ? '앞으로 할 일' : '내가 한 일';
 
   return (
     <div className="min-h-screen bg-background-secondary px-5 pb-10 pt-14 min-[411px]:px-6.5 md:py-17.5 2xl:px-21 2xl:py-22.5">
