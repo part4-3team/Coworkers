@@ -33,7 +33,6 @@ export default function PageHeader({
           <ListDropdown
             className="relative"
             items={settingsItems}
-            itemTextAlign="start"
             trigger={
               <>
                 <span className="sr-only">{`${title} 설정 메뉴 열기`}</span>
