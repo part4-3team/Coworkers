@@ -6,9 +6,11 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { queryKeys } from '@/api/queryKeys';
 import { createTaskList, deleteTaskList, updateTaskList } from '@/api/taskApi';
+import useTeamRouteGuard from '@/app/(service)/[teamid]/hooks/useTeamRouteGuard';
 import useTaskListSidebarColumns from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListSidebarColumns';
 import type { TaskListColumnItem } from '@/app/(service)/[teamid]/tasklist/types';
 import { toTaskListDateString } from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
+import { resolveTeamExitRoute } from '@/app/(service)/[teamid]/utils/teamRouteAccess';
 import { useToast } from '@/components/common/toast';
 import { useTeamDetailQuery } from '@/hooks/useTeam';
 
@@ -25,7 +27,18 @@ export default function useTaskListPageShell({
 }: UseTaskListPageShellParams) {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
-  const { data: groupDetail } = useTeamDetailQuery({ teamId });
+  const {
+    hasMemberships,
+    isAccessible,
+    isLoading: isTeamRouteLoading,
+    meData,
+  } = useTeamRouteGuard({ teamId });
+  const { data: groupDetail } = useTeamDetailQuery({
+    teamId,
+    options: {
+      enabled: hasMemberships && isAccessible,
+    },
+  });
   const isCreatingColumnRef = useRef(false);
   const dateString = toTaskListDateString(selectedDate);
   const columns = useTaskListSidebarColumns({
@@ -138,12 +151,15 @@ export default function useTaskListPageShell({
     columns,
     effectiveActiveId,
     groupDetail,
+    hasAccessibleTeamRoute: isAccessible,
     handleConfirmDeleteColumn,
     handleCreateColumn,
     handleCreateTask,
     handleRenameColumn,
+    isTeamRouteLoading,
     isCreateColumnOpen,
     isCreateTaskOpen,
+    leaveFallbackRoute: resolveTeamExitRoute(teamId, meData?.memberships),
     setColumnPendingDelete,
     setColumnPendingRename,
     setIsCreateColumnOpen,

@@ -25,6 +25,8 @@ export type TaskListBoardTask = {
   comments: TaskListTaskComment[];
   description: string;
   dueDateLabel: string;
+  frequency: 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'ONCE';
+  recurringId: string | null;
   repeatLabel: string;
   sortOrder: number;
   startedAtLabel: string;

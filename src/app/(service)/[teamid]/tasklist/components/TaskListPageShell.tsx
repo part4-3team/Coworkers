@@ -12,7 +12,6 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { deleteGroup } from '@/api/groupApi';
 import { refetchUserQueries } from '@/api/queryRefetch';
-import { getMyGroups } from '@/api/userApi';
 import TaskListBoard from '@/app/(service)/[teamid]/tasklist/components/TaskListBoard';
 import TaskListColumnDeleteModal from '@/app/(service)/[teamid]/tasklist/components/TaskListColumnDeleteModal';
 import TaskListContentArea from '@/app/(service)/[teamid]/tasklist/components/TaskListContentArea';
@@ -47,12 +46,15 @@ export default function TaskListPageShell({
     columns,
     effectiveActiveId,
     groupDetail,
+    hasAccessibleTeamRoute,
     handleConfirmDeleteColumn,
     handleCreateColumn,
     handleCreateTask,
     handleRenameColumn,
+    isTeamRouteLoading,
     isCreateColumnOpen,
     isCreateTaskOpen,
+    leaveFallbackRoute,
     setColumnPendingDelete,
     setColumnPendingRename,
     setIsCreateColumnOpen,
@@ -71,19 +73,12 @@ export default function TaskListPageShell({
     await deleteGroup(teamId);
     await refetchUserQueries(queryClient);
     showToast('삭제되었습니다.', 'error');
-
-    try {
-      const groups = await getMyGroups();
-      const firstGroupId = groups[0]?.id;
-      router.push(
-        firstGroupId
-          ? ROUTES.TEAM(String(firstGroupId))
-          : ROUTES.TEAM('nogroup'),
-      );
-    } catch {
-      router.push(ROUTES.TEAM('nogroup'));
-    }
+    router.replace(leaveFallbackRoute);
   };
+
+  if (isTeamRouteLoading || !hasAccessibleTeamRoute) {
+    return null;
+  }
 
   return (
     <>

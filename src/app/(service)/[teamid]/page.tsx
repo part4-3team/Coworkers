@@ -2,25 +2,28 @@
 
 import { use } from 'react';
 
-import type { UserInfo } from '@/api/types';
 import NoGroups from '@/app/(service)/[teamid]/components/NoGroups';
 import TeamMemberList from '@/app/(service)/[teamid]/components/TeamMemberList';
 import TeamProgress from '@/app/(service)/[teamid]/components/TeamProgress';
 import TeamTaskList from '@/app/(service)/[teamid]/components/TeamTaskList';
+import useTeamRouteGuard from '@/app/(service)/[teamid]/hooks/useTeamRouteGuard';
 import useTodayTeamTaskLists from '@/app/(service)/[teamid]/hooks/useTodayTeamTaskLists';
 import { TeamDetailData, TeamPageProps } from '@/app/(service)/[teamid]/types';
 import { useTeamDetailQuery } from '@/hooks/useTeam';
-import { useMeQuery } from '@/hooks/useUser';
 
 export default function TaskDetailPage({ params }: TeamPageProps) {
   const { teamid } = use(params);
-
-  const { data: meData, isLoading: isMeLoading } = useMeQuery<UserInfo>();
+  const {
+    hasMemberships,
+    isAccessible,
+    isLoading: isTeamRouteLoading,
+    meData,
+  } = useTeamRouteGuard({ teamId: teamid });
   const { data: teamData, isLoading: isTeamLoading } =
     useTeamDetailQuery<TeamDetailData>({
       teamId: teamid,
       options: {
-        enabled: !!meData?.memberships?.length,
+        enabled: hasMemberships && isAccessible,
       },
     });
   const { isLoading: isTodayTaskListsLoading, todayTaskLists } =
@@ -29,9 +32,12 @@ export default function TaskDetailPage({ params }: TeamPageProps) {
       teamId: teamid,
     });
 
-  if (isMeLoading || isTeamLoading || isTodayTaskListsLoading) return null;
+  if (isTeamRouteLoading || isTeamLoading || isTodayTaskListsLoading)
+    return null;
 
-  if (!meData?.memberships?.length) {
+  if (!isAccessible) return null;
+
+  if (!hasMemberships) {
     return <NoGroups />;
   }
 
@@ -42,7 +48,7 @@ export default function TaskDetailPage({ params }: TeamPageProps) {
     taskLists: todayTaskLists,
   };
 
-  const myRole = meData.memberships.find(
+  const myRole = meData?.memberships.find(
     (m) => m.groupId === Number(teamid),
   )?.role;
 

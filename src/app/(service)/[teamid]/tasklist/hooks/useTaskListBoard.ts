@@ -6,8 +6,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { queryKeys } from '@/api/queryKeys';
 import { taskQueryOptions } from '@/api/queryOptions';
-import { deleteTask, updateTask } from '@/api/taskApi';
+import { updateTask } from '@/api/taskApi';
 import type { TaskListBoardTask } from '@/app/(service)/[teamid]/tasklist/types';
+import { deleteTaskListBoardTask } from '@/app/(service)/[teamid]/tasklist/utils/deleteTaskListBoardTask';
 import { toTaskListDateString } from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
 import {
   syncCheckedTaskToGroupDetail,
@@ -42,6 +43,8 @@ export function useTaskListBoard(
       checked: task.doneAt !== null,
       commentCount: task.commentCount,
       dueDateLabel: task.date.slice(0, 10),
+      frequency: task.frequency,
+      recurringId: String(task.recurringId),
       repeatLabel:
         task.frequency === 'ONCE'
           ? ''
@@ -123,7 +126,7 @@ export function useTaskListBoard(
   const handleConfirmDelete = useCallback(async () => {
     if (!taskPendingDelete || !groupId) return;
     try {
-      await deleteTask(groupId, taskListId, taskPendingDelete.id);
+      await deleteTaskListBoardTask(groupId, taskListId, taskPendingDelete);
       await Promise.all([
         queryClient.invalidateQueries({
           queryKey: queryKeys.taskList.detail(groupId, taskListId, {

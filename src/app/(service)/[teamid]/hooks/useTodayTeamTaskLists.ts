@@ -42,9 +42,9 @@ export default function useTodayTeamTaskLists({
 
   return {
     isError: taskListDetailQueries.some((query) => query.isError),
-    isLoading:
-      !teamData ||
-      taskListDetailQueries.some((query) => query.isLoading || query.isPending),
+    isLoading: taskListDetailQueries.some(
+      (query) => query.isLoading || query.isPending,
+    ),
     todayTaskLists,
   } as const;
 }
