@@ -190,6 +190,7 @@ export type UseHistoryBoardDataParams = {
   activeFilterId: string | null;
   completedTasks: readonly MyHistoryCompletedTaskRecord[];
   isAllRange: boolean;
+  selectedRange: MyHistoryDateRange;
   shouldLimitTeamQueries: boolean;
   viewMode: MyHistoryViewMode;
 };

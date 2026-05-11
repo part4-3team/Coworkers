@@ -16,7 +16,7 @@ import {
   buildHistoryDateSections,
   buildHistorySummaryData,
   buildPendingHistoryDateSections,
-  getTeamTaskDateKeys,
+  getHistoryDateKeysFromRange,
   getTodayHistoryDateKey,
   getVisibleCompletedTasks,
 } from '@/app/(service)/myhistory/utils/myHistoryData';
@@ -25,6 +25,7 @@ export default function useHistoryBoardData({
   activeFilterId,
   completedTasks,
   isAllRange,
+  selectedRange,
   shouldLimitTeamQueries,
   viewMode,
 }: UseHistoryBoardDataParams) {
@@ -50,8 +51,8 @@ export default function useHistoryBoardData({
       return [getTodayHistoryDateKey()];
     }
 
-    return getTeamTaskDateKeys(teamDetails);
-  }, [completedDateKeys, isAllRange, teamDetails, viewMode]);
+    return getHistoryDateKeysFromRange(selectedRange);
+  }, [completedDateKeys, isAllRange, selectedRange, viewMode]);
   const { isProgressivelyLoading, visibleDateKeys } =
     useProgressiveHistoryDateKeys(historyDateKeys, isAllRange);
   const {

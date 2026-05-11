@@ -66,6 +66,7 @@ export default function useHistoryBoard(
     activeFilterId,
     completedTasks: completedTasksInRange,
     isAllRange,
+    selectedRange,
     shouldLimitTeamQueries: activeFilterId !== null && isAllRange,
     viewMode,
   });

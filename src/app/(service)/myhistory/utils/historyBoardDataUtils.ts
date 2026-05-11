@@ -6,7 +6,9 @@ import type {
   HistoryTaskListDescriptor,
   HistoryTeamDetail,
   MyHistoryCompletedTaskRecord,
+  MyHistoryDateRange,
 } from '@/app/(service)/myhistory/types';
+import { addDays } from '@/app/(service)/myhistory/utils/formatHistoryDate';
 import { toSectionDateKey } from '@/app/(service)/myhistory/utils/myHistoryTaskDateHelpers';
 
 export function getCompletedDateKeys(
@@ -29,11 +31,36 @@ export function sortHistoryDateKeysByRecency(dateKeys: readonly string[]) {
 
 export function getTodayHistoryDateKey() {
   const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
+  return formatHistoryDateKey(today);
+}
+
+function formatHistoryDateKey(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
 
   return `${year}-${month}-${day}`;
+}
+
+export function getHistoryDateKeysFromRange(range: MyHistoryDateRange) {
+  const dateKeys: string[] = [];
+  let currentDate = new Date(
+    range.startDate.getFullYear(),
+    range.startDate.getMonth(),
+    range.startDate.getDate(),
+  );
+  const endDate = new Date(
+    range.endDate.getFullYear(),
+    range.endDate.getMonth(),
+    range.endDate.getDate(),
+  );
+
+  while (currentDate.getTime() <= endDate.getTime()) {
+    dateKeys.push(formatHistoryDateKey(currentDate));
+    currentDate = addDays(currentDate, 1);
+  }
+
+  return dateKeys;
 }
 
 export function getTeamTaskDateKeys(teamDetails: readonly HistoryTeamDetail[]) {
