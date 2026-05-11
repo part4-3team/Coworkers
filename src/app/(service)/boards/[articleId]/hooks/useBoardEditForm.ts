@@ -5,12 +5,10 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import type { QueryKeyId } from '@/api/queryKeys';
-import useBoardEditUnsavedChangesGuard from '@/app/(service)/boards/[articleId]/hooks/useBoardEditUnsavedChangesGuard';
+import { executeBoardArticleEdit } from '@/app/(service)/boards/[articleId]/utils/executeBoardArticleEdit';
 import useBoardFormFields from '@/app/(service)/boards/hooks/useBoardFormFields';
-import {
-  getArticleSubmitErrorMessage,
-  normalizeArticleImageUrl,
-} from '@/app/(service)/boards/utils/boardUtils';
+import useBoardFormUnsavedChangesGuard from '@/app/(service)/boards/hooks/useBoardFormUnsavedChangesGuard';
+import { getArticleSubmitErrorMessage } from '@/app/(service)/boards/utils/boardFormUtils';
 import { useToast } from '@/components/common/toast';
 import { ROUTES } from '@/constants/ROUTES';
 import { useUpdateArticleMutation } from '@/hooks/useArticle';
@@ -37,6 +35,7 @@ export default function useBoardEditForm({
   const updateArticleMutation = useUpdateArticleMutation();
   const uploadImageMutation = useUploadImageMutation();
   const [isLoading, setIsLoading] = useState(false);
+
   const {
     contentErrorMessage,
     formData,
@@ -56,9 +55,13 @@ export default function useBoardEditForm({
     requiresChange: true,
   });
 
-  useBoardEditUnsavedChangesGuard({
+  useBoardFormUnsavedChangesGuard({
     hasUnsavedChanges: hasFormChanged,
-    onDiscardChanges: handleDiscardChanges,
+    intent: 'edit',
+    onDiscardChanges: () => {
+      handleDiscardChanges();
+      router.push(ROUTES.BOARDS);
+    },
   });
 
   const savedSuccessfullyRef = useRef(false);
@@ -68,7 +71,12 @@ export default function useBoardEditForm({
   const isSubmitBusy = isLoading || isMutationPending;
   const isSubmitDisabled = isSubmitBusy || !isSubmittable;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleCancel = () => {
+    handleDiscardChanges();
+    router.push(ROUTES.BOARDS);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitted(true);
 
@@ -87,24 +95,22 @@ export default function useBoardEditForm({
 
     try {
       setIsLoading(true);
-      const token = getStoredAccessToken() ?? undefined;
-      const uploadedImage = imageFile
-        ? await uploadImageMutation.mutateAsync({ file: imageFile })
-        : null;
 
-      const imageForRequest = normalizeArticleImageUrl(
-        uploadedImage ? uploadedImage.url : formData.image,
-      );
+      const token = getStoredAccessToken();
 
-      await updateArticleMutation.mutateAsync({
+      if (!token) {
+        showToast('로그인이 필요합니다.', 'error');
+        return;
+      }
+
+      await executeBoardArticleEdit({
         articleId,
-        body: {
-          content: formData.content.trim(),
-          image: imageForRequest,
-          title: formData.title.trim(),
-        },
+        formData,
+        imageFile,
         teamId: TEAM_ID,
         token,
+        updateArticleMutateAsync: updateArticleMutation.mutateAsync,
+        uploadImageMutateAsync: uploadImageMutation.mutateAsync,
       });
 
       savedSuccessfullyRef.current = true;
@@ -129,5 +135,6 @@ export default function useBoardEditForm({
     handleContentBlur,
     handleImageChange,
     handleSubmit,
+    handleCancel,
   };
 }
