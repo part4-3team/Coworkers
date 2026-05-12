@@ -33,6 +33,7 @@ export type TaskListBoardTask = {
   taskListId: string;
   teamId: string;
   title: string;
+  weekDays?: number[];
 };
 
 export type TaskListTaskDetailApplyPatch = {
@@ -58,8 +59,9 @@ export type TaskListBoardProps = {
 };
 
 export type TaskListCreateTaskModalProps = {
+  initialSelectedDate: Date;
   onClose: () => void;
-  onSubmit?: () => void;
+  onSubmit?: (selectedDate: Date) => void | Promise<void>;
   groupId: number;
   taskListId: string;
 };

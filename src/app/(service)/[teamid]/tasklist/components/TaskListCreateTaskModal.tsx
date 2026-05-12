@@ -16,6 +16,7 @@ import type { TaskListCreateTaskModalProps } from '@/app/(service)/[teamid]/task
 import Modal from '@/components/common/modal';
 
 export default function TaskListCreateTaskModal({
+  initialSelectedDate,
   onClose,
   onSubmit,
   groupId,
@@ -44,7 +45,7 @@ export default function TaskListCreateTaskModal({
     title,
     toggleWeekDay,
     weekDays,
-  } = useTaskListCreateTaskForm();
+  } = useTaskListCreateTaskForm(initialSelectedDate);
 
   const isDisabled = title.trim().length === 0;
   const { handleCreateTask } = useTaskListCreateTaskSubmit({

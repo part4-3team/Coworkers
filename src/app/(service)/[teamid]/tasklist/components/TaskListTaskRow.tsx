@@ -51,8 +51,10 @@ export default function TaskListTaskRow({
             />
           </span>
 
-          <span
-            className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base cursor-pointer"
+          <button
+            type="button"
+            className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base mb-1.5"
+            aria-label={`${task.title} 댓글 ${task.commentCount}개 보기`}
             onClick={() => onOpenDetail(task, 'view')}
           >
             <IcComment
@@ -62,10 +64,10 @@ export default function TaskListTaskRow({
               aria-hidden="true"
             />
             {task.commentCount}
-          </span>
+          </button>
         </div>
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-normal text-text-default md:mt-2.5 md:text-base">
+        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-normal text-text-default md:mt-2 md:text-base">
           <span className="flex items-center gap-2">
             <IcCalendarSmall width={16} height={16} aria-hidden="true" />
             {task.dueDateLabel}
