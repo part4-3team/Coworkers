@@ -34,16 +34,27 @@ export default function TaskListTaskRow({
   onToggleChecked,
   onRequestDelete,
 }: TaskListTaskRowProps) {
+  const handleOpenDetail = () => {
+    onOpenDetail(task, 'view');
+  };
+
   return (
     <article
       className={cn(
-        'relative flex items-start rounded-xl border border-background-tertiary bg-background-primary px-3 py-3 sm:px-4',
+        'relative flex items-start rounded-xl border border-background-tertiary bg-background-primary px-3 py-3 transition-colors hover:bg-background-secondary focus-visible:bg-background-secondary sm:px-4',
         task.checked && 'bg-background-secondary',
       )}
     >
-      <div className="min-w-0 flex-1 pr-10 sm:pr-11">
+      <button
+        type="button"
+        onClick={handleOpenDetail}
+        className="absolute inset-0 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
+        aria-label={`${task.title} 상세 열기`}
+      />
+
+      <div className="relative z-10 min-w-0 flex-1 pr-10 pointer-events-none sm:pr-11">
         <div className="flex min-w-0 items-center gap-2">
-          <span data-task-detail-ignore>
+          <span className="pointer-events-auto">
             <TodoCheckUncheck
               label={task.title}
               checked={task.checked}
@@ -51,9 +62,11 @@ export default function TaskListTaskRow({
             />
           </span>
 
-          <span
-            className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base cursor-pointer"
-            onClick={() => onOpenDetail(task, 'view')}
+          <button
+            type="button"
+            className="pointer-events-auto mb-1.5 flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base"
+            aria-label={`${task.title} 댓글 ${task.commentCount}개 보기`}
+            onClick={handleOpenDetail}
           >
             <IcComment
               width={22}
@@ -62,10 +75,10 @@ export default function TaskListTaskRow({
               aria-hidden="true"
             />
             {task.commentCount}
-          </span>
+          </button>
         </div>
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-normal text-text-default md:mt-2.5 md:text-base">
+        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-normal text-text-default md:mt-2 md:text-base">
           <span className="flex items-center gap-2">
             <IcCalendarSmall width={16} height={16} aria-hidden="true" />
             {task.dueDateLabel}
@@ -76,24 +89,20 @@ export default function TaskListTaskRow({
           </span>
 
           <span className="flex items-center gap-2">
-            <IcRepeatSmall width={22} height={22} aria-hidden="true" />
+            <IcRepeatSmall width={20} height={20} aria-hidden="true" />
             {task.repeatLabel}
           </span>
         </div>
       </div>
 
-      <div
-        className="absolute right-3 top-3 sm:right-4 sm:top-3"
-        data-task-detail-ignore
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="absolute right-3 top-3 z-10 sm:right-4 sm:top-3">
         <TaskListTaskRowOptionsMenu
           className="shrink-0"
           items={[
             {
               label: '수정하기',
               onClick: () => {
-                onOpenDetail(task, 'view');
+                handleOpenDetail();
               },
             },
             {

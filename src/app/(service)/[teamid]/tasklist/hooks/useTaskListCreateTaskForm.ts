@@ -1,9 +1,18 @@
 'use client';
 
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import useTaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListCalendarPopover';
 import type { TaskListCreateTaskRepeatValue } from '@/app/(service)/[teamid]/tasklist/types';
+
+const DEFAULT_WEEKLY_REPEAT_DAYS = [1, 2, 3, 4, 5] as const;
 
 export function clampMonthDay(n: number): number {
   if (Number.isNaN(n) || n < 1) return 1;
@@ -11,14 +20,20 @@ export function clampMonthDay(n: number): number {
   return Math.floor(n);
 }
 
-export function useTaskListCreateTaskForm() {
+export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
   const formId = useId();
   const [title, setTitle] = useState('');
-  const [startDate, setStartDate] = useState<Date | null>(() => new Date());
+  const [startDate, setStartDate] = useState<Date | null>(
+    () => new Date(initialSelectedDate),
+  );
   const [startTime, setStartTime] = useState('15:30');
   const [repeat, setRepeat] = useState<TaskListCreateTaskRepeatValue>('once');
-  const [weekDays, setWeekDays] = useState<number[]>([1, 2, 3, 4, 5]);
-  const [monthDay, setMonthDay] = useState(() => new Date().getDate());
+  const [weekDays, setWeekDays] = useState<number[]>([
+    ...DEFAULT_WEEKLY_REPEAT_DAYS,
+  ]);
+  const [monthDayInput, setMonthDayInput] = useState(() =>
+    String(initialSelectedDate.getDate()),
+  );
   const [memo, setMemo] = useState('');
 
   const {
@@ -71,6 +86,31 @@ export function useTaskListCreateTaskForm() {
     );
   }, []);
 
+  const handleMonthDayChange = useCallback((value: string) => {
+    if (!/^\d{0,2}$/.test(value)) {
+      return;
+    }
+
+    setMonthDayInput(value);
+  }, []);
+
+  const handleMonthDayBlur = useCallback(() => {
+    setMonthDayInput((previousValue) =>
+      String(clampMonthDay(Number(previousValue))),
+    );
+  }, []);
+
+  const handleRepeatChange = useCallback(
+    (value: TaskListCreateTaskRepeatValue) => {
+      setRepeat(value);
+
+      if (value === 'weekly' && weekDays.length === 0) {
+        setWeekDays([...DEFAULT_WEEKLY_REPEAT_DAYS]);
+      }
+    },
+    [weekDays.length],
+  );
+
   const handleOpenTime = useCallback(() => {
     if (isCalendarOpen) closeCalendar();
     setIsTimePopoverOpen((prev) => !prev);
@@ -82,6 +122,10 @@ export function useTaskListCreateTaskForm() {
   }, [toggleCalendar]);
 
   const selected = startDate ?? new Date();
+  const monthDay = useMemo(
+    () => clampMonthDay(Number(monthDayInput)),
+    [monthDayInput],
+  );
 
   return {
     calendarButtonRef,
@@ -89,17 +133,19 @@ export function useTaskListCreateTaskForm() {
     closeTimePopover,
     formId,
     handleDateChange,
+    handleMonthDayBlur,
+    handleMonthDayChange,
     handleOpenDateCalendar,
     handleOpenTime,
+    handleRepeatChange,
     isCalendarOpen,
     isTimePopoverOpen,
     memo,
     monthDay,
+    monthDayInput,
     repeat,
     selected,
     setMemo,
-    setMonthDay,
-    setRepeat,
     setStartTime,
     setTitle,
     startTime,

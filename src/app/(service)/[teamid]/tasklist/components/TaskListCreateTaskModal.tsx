@@ -7,15 +7,13 @@
 import TaskListCreateTaskModalDateTimeSection from '@/app/(service)/[teamid]/tasklist/components/TaskListCreateTaskModalDateTimeSection';
 import TaskListCreateTaskModalRepeatSection from '@/app/(service)/[teamid]/tasklist/components/TaskListCreateTaskModalRepeatSection';
 import TaskListCreateTaskModalTextFields from '@/app/(service)/[teamid]/tasklist/components/TaskListCreateTaskModalTextFields';
-import {
-  clampMonthDay,
-  useTaskListCreateTaskForm,
-} from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListCreateTaskForm';
+import { useTaskListCreateTaskForm } from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListCreateTaskForm';
 import useTaskListCreateTaskSubmit from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListCreateTaskSubmit';
 import type { TaskListCreateTaskModalProps } from '@/app/(service)/[teamid]/tasklist/types';
 import Modal from '@/components/common/modal';
 
 export default function TaskListCreateTaskModal({
+  initialSelectedDate,
   onClose,
   onSubmit,
   groupId,
@@ -26,17 +24,19 @@ export default function TaskListCreateTaskModal({
     calendarRef,
     formId,
     handleDateChange,
+    handleMonthDayBlur,
+    handleMonthDayChange,
     handleOpenDateCalendar,
     handleOpenTime,
+    handleRepeatChange,
     isCalendarOpen,
     isTimePopoverOpen,
     memo,
     monthDay,
+    monthDayInput,
     repeat,
     selected,
     setMemo,
-    setMonthDay,
-    setRepeat,
     setStartTime,
     setTitle,
     startTime,
@@ -44,7 +44,7 @@ export default function TaskListCreateTaskModal({
     title,
     toggleWeekDay,
     weekDays,
-  } = useTaskListCreateTaskForm();
+  } = useTaskListCreateTaskForm(initialSelectedDate);
 
   const isDisabled = title.trim().length === 0;
   const { handleCreateTask } = useTaskListCreateTaskSubmit({
@@ -98,10 +98,10 @@ export default function TaskListCreateTaskModal({
 
         <TaskListCreateTaskModalRepeatSection
           formId={formId}
-          monthDay={monthDay}
-          onMonthDayBlur={() => setMonthDay((d) => clampMonthDay(d))}
-          onMonthDayChange={setMonthDay}
-          onRepeatChange={setRepeat}
+          monthDay={monthDayInput}
+          onMonthDayBlur={handleMonthDayBlur}
+          onMonthDayChange={handleMonthDayChange}
+          onRepeatChange={handleRepeatChange}
           onToggleWeekDay={toggleWeekDay}
           repeat={repeat}
           weekDays={weekDays}

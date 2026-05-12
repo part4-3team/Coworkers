@@ -17,6 +17,7 @@ export type Task = {
   commentCount: number;
   recurringId: number;
   frequency: 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'ONCE';
+  weekDays?: number[];
   writer: UserSummary;
   doneBy: { user: UserSummary } | null;
 };
@@ -31,6 +32,9 @@ export type TaskListSummary = {
   createdAt: string;
   tasks: Task[];
 };
+
+/** 할 일 목록 생성 응답 */
+export type TaskListCreateResponse = Omit<TaskListSummary, 'tasks'>;
 
 /** 할 일 목록 상세 — task-list 단건 조회 응답 */
 export type TaskListDetail = {
