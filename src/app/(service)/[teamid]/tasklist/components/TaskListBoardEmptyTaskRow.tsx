@@ -4,6 +4,8 @@
 
 'use client';
 
+import type { KeyboardEvent } from 'react';
+
 import { IcCalendarSmall, IcCheckboxLarge, IcRepeatSmall } from '@/assets';
 import { cn } from '@/utils/cn';
 
@@ -15,21 +17,36 @@ function formatBoardPlaceholderDate(d: Date) {
 }
 
 type TaskListBoardEmptyTaskRowProps = {
-  selectedDate: Date;
   className?: string;
+  onClick: () => void;
+  selectedDate: Date;
 };
 
 export default function TaskListBoardEmptyTaskRow({
   selectedDate,
   className,
+  onClick,
 }: TaskListBoardEmptyTaskRowProps) {
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+
+    event.preventDefault();
+    onClick();
+  };
+
   return (
     <article
       className={cn(
-        'relative flex items-start rounded-xl border border-background-tertiary bg-background-primary px-3 py-3 sm:px-4',
+        'relative flex items-start rounded-xl border border-background-tertiary bg-background-primary px-3 py-3 transition-colors hover:bg-background-secondary focus-visible:bg-background-secondary sm:px-4',
         className,
       )}
-      aria-hidden
+      role="button"
+      tabIndex={0}
+      aria-label="할 일 만들기 열기"
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
     >
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-start gap-2 md:gap-2.5">

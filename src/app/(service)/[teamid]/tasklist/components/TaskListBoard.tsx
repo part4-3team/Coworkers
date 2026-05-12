@@ -28,6 +28,7 @@ export default function TaskListBoard({
   className,
   columnTitle,
   groupId,
+  onOpenCreateTask,
   onSelectDate,
   selectedDate,
   taskListId,
@@ -84,7 +85,10 @@ export default function TaskListBoard({
       <ul className="mt-6 flex list-none flex-col gap-3 p-0 md:mt-8 md:gap-4">
         {isTaskListEmpty ? (
           <li className="list-none">
-            <TaskListBoardEmptyTaskRow selectedDate={selectedDate} />
+            <TaskListBoardEmptyTaskRow
+              selectedDate={selectedDate}
+              onClick={onOpenCreateTask}
+            />
           </li>
         ) : (
           sortedTasks.map((task) => (

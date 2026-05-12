@@ -126,6 +126,7 @@ export default function TaskListPageShell({
           className="lg:col-start-2 lg:row-start-2"
           columnTitle={columnTitle}
           groupId={teamId}
+          onOpenCreateTask={() => setIsCreateTaskOpen(true)}
           onSelectDate={setSelectedDate}
           selectedDate={selectedDate}
           taskListId={effectiveActiveId}

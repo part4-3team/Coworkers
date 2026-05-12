@@ -4,6 +4,8 @@
 
 'use client';
 
+import type { KeyboardEvent, MouseEvent } from 'react';
+
 import TaskListTaskRowOptionsMenu from '@/app/(service)/[teamid]/tasklist/components/TaskListTaskRowOptionsMenu';
 import type {
   TaskListBoardTask,
@@ -34,12 +36,42 @@ export default function TaskListTaskRow({
   onToggleChecked,
   onRequestDelete,
 }: TaskListTaskRowProps) {
+  const handleOpenDetail = () => {
+    onOpenDetail(task, 'view');
+  };
+
+  const handleCardClick = (event: MouseEvent<HTMLElement>) => {
+    if ((event.target as HTMLElement).closest('[data-task-detail-ignore]')) {
+      return;
+    }
+
+    handleOpenDetail();
+  };
+
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+
+    if ((event.target as HTMLElement).closest('[data-task-detail-ignore]')) {
+      return;
+    }
+
+    event.preventDefault();
+    handleOpenDetail();
+  };
+
   return (
     <article
       className={cn(
-        'relative flex items-start rounded-xl border border-background-tertiary bg-background-primary px-3 py-3 sm:px-4',
+        'relative flex items-start rounded-xl border border-background-tertiary bg-background-primary px-3 py-3 transition-colors hover:bg-background-secondary focus-visible:bg-background-secondary sm:px-4',
         task.checked && 'bg-background-secondary',
       )}
+      role="button"
+      tabIndex={0}
+      aria-label={`${task.title} 상세 열기`}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
     >
       <div className="min-w-0 flex-1 pr-10 sm:pr-11">
         <div className="flex min-w-0 items-center gap-2">
@@ -53,9 +85,10 @@ export default function TaskListTaskRow({
 
           <button
             type="button"
+            data-task-detail-ignore
             className="flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base mb-1.5"
             aria-label={`${task.title} 댓글 ${task.commentCount}개 보기`}
-            onClick={() => onOpenDetail(task, 'view')}
+            onClick={handleOpenDetail}
           >
             <IcComment
               width={22}
@@ -95,7 +128,7 @@ export default function TaskListTaskRow({
             {
               label: '수정하기',
               onClick: () => {
-                onOpenDetail(task, 'view');
+                handleOpenDetail();
               },
             },
             {

@@ -52,6 +52,7 @@ export type TaskListBoardProps = {
   className?: string;
   columnTitle: string;
   groupId: string | null;
+  onOpenCreateTask: () => void;
   onSelectDate: (date: Date) => void;
   selectedDate: Date;
   taskListId: string;
