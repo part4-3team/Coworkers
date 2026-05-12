@@ -150,6 +150,7 @@ export default function TaskListPageShell({
         <TaskListColumnDeleteModal
           onClose={() => setColumnPendingDelete(null)}
           onConfirm={handleConfirmDeleteColumnWithNav}
+          taskListTitle={columnPendingDelete.title}
         />
       )}
 
