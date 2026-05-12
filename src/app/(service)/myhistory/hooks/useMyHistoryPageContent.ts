@@ -32,13 +32,21 @@ export default function useMyHistoryPageContent() {
     [handleResetRange, handleSelectFilter],
   );
 
+  const handleSelectViewMode = useCallback(
+    (nextViewMode: MyHistoryViewMode) => {
+      handleResetRange();
+      setViewMode(nextViewMode);
+    },
+    [handleResetRange],
+  );
+
   const settingsItems = useMemo<ListDropdownItem[]>(
     () =>
       MY_HISTORY_VIEW_SETTINGS.map((item) => ({
         label: item.label,
-        onClick: () => setViewMode(item.value),
+        onClick: () => handleSelectViewMode(item.value),
       })),
-    [],
+    [handleSelectViewMode],
   );
 
   return {
