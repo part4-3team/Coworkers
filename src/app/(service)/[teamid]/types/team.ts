@@ -68,8 +68,3 @@ export type UseTeamProgressHandlersProps = {
   reset: () => void;
   role?: RoleProps;
 };
-
-export type TeamDetailDataProps = GroupType & {
-  members: MemberChipsProps[];
-  taskLists: TaskList[];
-};
