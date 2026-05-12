@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * 히스토리 보드 표시에 필요한 할 일 목록 상세 데이터 소스를 조회하는 훅입니다.
  */
@@ -9,7 +7,7 @@ import { useMemo } from 'react';
 import { useQueries } from '@tanstack/react-query';
 
 import { taskQueryOptions } from '@/api/queryOptions';
-import type { HistoryTeamDetail } from '@/app/(service)/myhistory/types';
+import type { UseHistoryTaskListSourcesQueryParams } from '@/app/(service)/myhistory/types';
 import { getHistoryTaskListDescriptors } from '@/app/(service)/myhistory/utils/historyBoardDataUtils';
 import {
   getHistoryTaskListSources,
@@ -18,19 +16,12 @@ import {
   hasHistoryQueryLoading,
 } from '@/app/(service)/myhistory/utils/historyBoardQueryUtils';
 
-type UseHistoryTaskListSourcesParams = {
-  activeFilterId: string | null;
-  shouldLimitTeamQueries: boolean;
-  teamDetails: readonly HistoryTeamDetail[];
-  visibleDateKeys: readonly string[];
-};
-
-export default function useHistoryTaskListSources({
+export default function useHistoryTaskListSourcesQuery({
   activeFilterId,
   shouldLimitTeamQueries,
   teamDetails,
   visibleDateKeys,
-}: UseHistoryTaskListSourcesParams) {
+}: UseHistoryTaskListSourcesQueryParams) {
   const taskListDescriptors = useMemo(
     () => getHistoryTaskListDescriptors(teamDetails, visibleDateKeys),
     [teamDetails, visibleDateKeys],

@@ -22,6 +22,14 @@ export function isGuestLayoutPath(pathname: string | null) {
   return (
     pathname === ROUTES.LOGIN ||
     pathname === ROUTES.SIGNUP ||
+    pathname?.startsWith(ROUTES.RESET_PASSWORD) === true ||
+    pathname?.startsWith('/password-reset') === true ||
     pathname?.startsWith('/oauth/') === true
+  );
+}
+
+export function isPublicServicePath(pathname: string | null) {
+  return (
+    isGuestLayoutPath(pathname) || pathname?.startsWith(ROUTES.BOARDS) === true
   );
 }

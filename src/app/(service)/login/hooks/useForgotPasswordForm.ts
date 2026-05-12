@@ -1,3 +1,7 @@
+/**
+ * 비밀번호 재설정 이메일 전송 폼의 입력, 검증, 제출 상태를 관리하는 훅입니다.
+ */
+
 'use client';
 
 import { useState } from 'react';
@@ -14,21 +18,37 @@ import {
 } from '@/types/auth';
 
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID;
+const UNKNOWN_EMAIL_ERROR_MESSAGE =
+  '가입하지 않은 이메일입니다. 입력한 이메일을 다시 확인해주세요.';
+const FORGOT_PASSWORD_DEFAULT_ERROR_MESSAGE =
+  '비밀번호 재설정 링크를 보내지 못했습니다. 잠시 후 다시 시도해주세요.';
+const UNKNOWN_EMAIL_ERROR_STATUSES = new Set([400, 404]);
+const UNKNOWN_EMAIL_ERROR_PATTERNS = [
+  '이메일',
+  '찾을 수 없',
+  '존재하지 않',
+  'not found',
+  'user not found',
+] as const;
 
 type UseForgotPasswordFormParams = {
   onSuccess: () => void;
 };
 
 function getForgotPasswordErrorMessage(error: ApiError) {
-  if (error.status === 404) {
-    return '가입하지 않은 이메일입니다. 입력한 이메일을 다시 확인해주세요.';
+  const normalizedMessage = error.message.toLowerCase();
+  const hasUnknownEmailStatus =
+    error.status !== undefined &&
+    UNKNOWN_EMAIL_ERROR_STATUSES.has(error.status);
+  const hasUnknownEmailPattern = UNKNOWN_EMAIL_ERROR_PATTERNS.some((pattern) =>
+    normalizedMessage.includes(pattern),
+  );
+
+  if (hasUnknownEmailStatus || hasUnknownEmailPattern) {
+    return UNKNOWN_EMAIL_ERROR_MESSAGE;
   }
 
-  if (error.status === 400 && error.message.includes('이메일')) {
-    return '가입하지 않은 이메일입니다. 입력한 이메일을 다시 확인해주세요.';
-  }
-
-  return '비밀번호 재설정 링크를 보내지 못했습니다. 잠시 후 다시 시도해주세요.';
+  return FORGOT_PASSWORD_DEFAULT_ERROR_MESSAGE;
 }
 
 export default function useForgotPasswordForm({
@@ -77,6 +97,7 @@ export default function useForgotPasswordForm({
     sendResetPasswordEmailMutation.mutate({
       body: {
         email: values.email,
+        // 백엔드가 재설정 경로와 토큰을 조합하므로 origin만 전달합니다.
         redirectUrl: window.location.origin,
       },
       teamId: TEAM_ID,

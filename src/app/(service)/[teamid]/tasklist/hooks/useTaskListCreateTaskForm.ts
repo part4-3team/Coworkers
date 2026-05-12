@@ -11,6 +11,10 @@ import {
 
 import useTaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListCalendarPopover';
 import type { TaskListCreateTaskRepeatValue } from '@/app/(service)/[teamid]/tasklist/types';
+import {
+  getCurrentKoreaCalendarDate,
+  getCurrentKoreaTimeString,
+} from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
 
 const DEFAULT_WEEKLY_REPEAT_DAYS = [1, 2, 3, 4, 5] as const;
 
@@ -26,7 +30,7 @@ export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
   const [startDate, setStartDate] = useState<Date | null>(
     () => new Date(initialSelectedDate),
   );
-  const [startTime, setStartTime] = useState('15:30');
+  const [startTime, setStartTime] = useState(() => getCurrentKoreaTimeString());
   const [repeat, setRepeat] = useState<TaskListCreateTaskRepeatValue>('once');
   const [weekDays, setWeekDays] = useState<number[]>([
     ...DEFAULT_WEEKLY_REPEAT_DAYS,
@@ -121,7 +125,7 @@ export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
     toggleCalendar();
   }, [toggleCalendar]);
 
-  const selected = startDate ?? new Date();
+  const selected = startDate ?? getCurrentKoreaCalendarDate();
   const monthDay = useMemo(
     () => clampMonthDay(Number(monthDayInput)),
     [monthDayInput],

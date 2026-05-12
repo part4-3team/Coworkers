@@ -10,8 +10,8 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { buildApiUrl, teamEndpoint } from '@/api/apiClient';
 import { useToast } from '@/components/common/toast/hooks/useToast';
-import { isGuestLayoutPath } from '@/components/layout/constants';
-import { ROUTES } from '@/constants/ROUTES';
+import { isPublicServicePath } from '@/components/layout/constants';
+import { buildLoginPath, getSafeRedirectTo } from '@/utils/authRedirect';
 import {
   clearAuthSession,
   getAccessTokenExpirationTime,
@@ -27,15 +27,24 @@ export default function useAuthSessionGuard() {
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (isGuestLayoutPath(pathname)) {
+    if (isPublicServicePath(pathname)) {
       return;
     }
+
+    const redirectTo = getSafeRedirectTo(
+      `${window.location.pathname}${window.location.search}`,
+    );
 
     const accessToken = getStoredAccessToken();
 
     if (!accessToken) {
       clearAuthSession('expired');
-      router.replace(ROUTES.LOGIN);
+      router.replace(
+        buildLoginPath({
+          notice: 'auth-required',
+          redirectTo,
+        }),
+      );
       return;
     }
 
@@ -43,7 +52,11 @@ export default function useAuthSessionGuard() {
 
     if (!expirationTime) {
       clearAuthSession('expired');
-      router.replace(ROUTES.LOGIN);
+      router.replace(
+        buildLoginPath({
+          redirectTo,
+        }),
+      );
       return;
     }
 
@@ -51,7 +64,11 @@ export default function useAuthSessionGuard() {
 
     if (remainingTime <= 0) {
       clearAuthSession('expired');
-      router.replace(ROUTES.LOGIN);
+      router.replace(
+        buildLoginPath({
+          redirectTo,
+        }),
+      );
       return;
     }
 
@@ -84,7 +101,11 @@ export default function useAuthSessionGuard() {
 
       clearAuthSession('expired');
       showToast('로그인 시간이 만료되었습니다. 다시 로그인해 주세요.', 'error');
-      router.replace(ROUTES.LOGIN);
+      router.replace(
+        buildLoginPath({
+          redirectTo,
+        }),
+      );
     }, remainingTime);
 
     return () => {
