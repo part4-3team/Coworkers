@@ -60,5 +60,16 @@ export type TeamProgressModalProps = {
   selectedMember: MemberChipsProps | null;
   openMemberDetail: (member: MemberChipsProps) => void;
   members: MemberChipsProps[];
-  role?: string;
+  role?: RoleProps;
+};
+
+export type UseTeamProgressHandlersProps = {
+  selectedMember: MemberChipsProps | null;
+  reset: () => void;
+  role?: RoleProps;
+};
+
+export type TeamDetailDataProps = GroupType & {
+  members: MemberChipsProps[];
+  taskLists: TaskList[];
 };

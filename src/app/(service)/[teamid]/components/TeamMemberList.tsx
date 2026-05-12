@@ -18,7 +18,7 @@ export default function TeamMemberList({ teamData, role }: TeamMemberProps) {
   const { open, close, is, openMemberDetail, reset, selectedMember } =
     useModalState();
   const { showToast } = useToast();
-  const { mutate: removeMemberTeam } = useRemoveMemberTeamMutation();
+  const { mutate: removeMemberFromTeam } = useRemoveMemberTeamMutation();
 
   const members = teamData.members;
   const canDeleteSelectedMember =
@@ -26,12 +26,12 @@ export default function TeamMemberList({ teamData, role }: TeamMemberProps) {
     selectedMember !== null &&
     selectedMember.role !== 'ADMIN';
 
-  const handleRemoveMemberTeam = () => {
+  const handleRemoveMemberFromTeam = () => {
     if (!selectedMember) {
       return;
     }
 
-    removeMemberTeam(
+    removeMemberFromTeam(
       {
         teamId: params.teamid as string,
         memberUserId: selectedMember.userId,
@@ -98,7 +98,7 @@ export default function TeamMemberList({ teamData, role }: TeamMemberProps) {
           title="해당 멤버를 삭제하시겠습니까?"
           confirmText="삭제하기"
           toastMessage="삭제 되었습니다."
-          onConfirm={handleRemoveMemberTeam}
+          onConfirm={handleRemoveMemberFromTeam}
         />
       )}
     </section>
