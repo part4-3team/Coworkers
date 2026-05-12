@@ -24,7 +24,7 @@ export function useTeamProgressHandlers({
   const canDeleteSelectedMember =
     role === 'ADMIN' &&
     selectedMember !== null &&
-    selectedMember.userId !== meData?.id;
+    selectedMember.role !== 'ADMIN';
 
   const handleDeleteTeam = () => {
     const fallbackRoute = resolveTeamExitRoute(

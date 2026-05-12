@@ -42,7 +42,7 @@ export type TeamProgressProps = {
 /** 팀 멤버 섹션 Props */
 export type TeamMemberProps = {
   teamData: TeamDetailData;
-  role?: string;
+  role?: RoleProps;
 };
 
 /** 팀 멤버 목록 컨텐츠 Props */
