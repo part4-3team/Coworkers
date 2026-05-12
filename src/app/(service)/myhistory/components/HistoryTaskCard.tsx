@@ -83,6 +83,7 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
         <TaskDeleteConfirmModal
           onClose={handleCloseDeleteModal}
           onConfirm={handleConfirmDelete}
+          taskTitle={task.title}
         />
       )}
     </article>

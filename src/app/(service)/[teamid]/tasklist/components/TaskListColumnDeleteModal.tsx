@@ -21,7 +21,7 @@ export default function TaskListColumnDeleteModal({
       onClose={onClose}
       onLineButtonClick={onClose}
       onSubButtonClick={onConfirm}
-      subButtonText="삭제"
+      subButtonText="삭제하기"
     />
   );
 }
