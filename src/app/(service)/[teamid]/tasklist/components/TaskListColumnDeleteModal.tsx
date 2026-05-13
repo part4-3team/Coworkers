@@ -2,15 +2,8 @@
  * 할 일 목록 삭제 확인 모달입니다.
  */
 
-'use client';
-
+import type { TaskListColumnDeleteModalProps } from '@/app/(service)/[teamid]/tasklist/types';
 import Modal from '@/components/common/modal';
-
-type TaskListColumnDeleteModalProps = {
-  onClose: () => void;
-  onConfirm: () => void;
-  taskListTitle?: string;
-};
 
 export default function TaskListColumnDeleteModal({
   onClose,

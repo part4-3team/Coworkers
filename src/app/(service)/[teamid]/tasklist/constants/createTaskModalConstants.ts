@@ -1,5 +1,11 @@
-import type { TaskListSelectDropdownItem } from '@/app/(service)/[teamid]/tasklist/components/TaskListSelectDropdown';
-import type { TaskListCreateTaskRepeatValue } from '@/app/(service)/[teamid]/tasklist/types';
+/**
+ * 할 일 만들기 모달의 레이아웃·타이포·반복 옵션 상수입니다.
+ */
+
+import type {
+  TaskListCreateTaskRepeatValue,
+  TaskListSelectDropdownItem,
+} from '@/app/(service)/[teamid]/tasklist/types';
 import { cn } from '@/utils/cn';
 
 /** 라벨·소제목 — 피그마 16 / leading 19 */
