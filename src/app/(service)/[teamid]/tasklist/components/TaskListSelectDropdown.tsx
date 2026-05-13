@@ -2,27 +2,10 @@
  * 할 일 목록(tasklist) 전용 선택 드롭다운. 공용 SelectDropdown과 분리합니다.
  */
 
-'use client';
-
+import type { TaskListSelectDropdownProps } from '@/app/(service)/[teamid]/tasklist/types';
 import { IcDownArrowLarge, IcDownArrowSmall } from '@/assets';
 import { useDropdown } from '@/components/common/dropdown/hooks/useDropdown';
 import { cn } from '@/utils/cn';
-
-export type TaskListSelectDropdownItem<T extends string> = {
-  label: string;
-  value: T;
-};
-
-type TaskListSelectDropdownProps<T extends string> = {
-  items: TaskListSelectDropdownItem<T>[];
-  value: T;
-  onChange: (value: T) => void;
-  placeholder?: string;
-  className?: string;
-  buttonClassName?: string;
-  menuClassName?: string;
-  variant?: 'overlay' | 'inlineExpand';
-};
 
 export default function TaskListSelectDropdown<T extends string>({
   items,

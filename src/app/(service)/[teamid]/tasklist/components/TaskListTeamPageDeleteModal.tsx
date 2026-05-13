@@ -2,15 +2,8 @@
  * 팀 삭제 확인 모달입니다.
  */
 
-'use client';
-
+import type { TaskListTeamPageDeleteModalProps } from '@/app/(service)/[teamid]/tasklist/types';
 import Modal from '@/components/common/modal';
-
-type TaskListTeamPageDeleteModalProps = {
-  onClose: () => void;
-  onConfirm: () => void;
-  teamName?: string;
-};
 
 export default function TaskListTeamPageDeleteModal({
   onClose,

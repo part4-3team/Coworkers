@@ -2,8 +2,6 @@
  * 할 일 만들기 모달의 날짜와 시간 선택 영역입니다.
  */
 
-'use client';
-
 import TaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/components/TaskListCalendarPopover';
 import TaskListTimePopover from '@/app/(service)/[teamid]/tasklist/components/TaskListTimePopover';
 import {
@@ -13,7 +11,7 @@ import {
   DATE_TIME_TRIGGER_ACTIVE_CLASS,
   DATE_TIME_TRIGGER_CLASS,
   MODAL_HEADING_TYPO,
-} from '@/app/(service)/[teamid]/tasklist/createTaskModalConstants';
+} from '@/app/(service)/[teamid]/tasklist/constants/createTaskModalConstants';
 import type { TaskListCreateTaskModalDateTimeSectionProps } from '@/app/(service)/[teamid]/tasklist/types';
 import {
   formatFullKoreanDate,
