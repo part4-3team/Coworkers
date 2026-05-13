@@ -31,6 +31,7 @@ export function useJoinTeamForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { showToast } = useToast();
+  const [hasStartedManualJoin, setHasStartedManualJoin] = useState(false);
   const [serverError, setServerError] = useState('');
   const hasHandledJoinedTeamRef = useRef(false);
   const acceptTeamInvitationMutation = useAcceptTeamInvitationMutation();
@@ -88,6 +89,10 @@ export function useJoinTeamForm() {
   }, [invitationGroupId, invitationToken, setValue]);
 
   useEffect(() => {
+    if (hasStartedManualJoin) {
+      return;
+    }
+
     if (invitationGroupId && hasJoinedInvitationGroup) {
       if (hasHandledJoinedTeamRef.current) {
         return;
@@ -104,6 +109,7 @@ export function useJoinTeamForm() {
     }
   }, [
     acceptTeamInvitationMutation,
+    hasStartedManualJoin,
     hasJoinedInvitationGroup,
     router,
     showToast,
@@ -111,6 +117,8 @@ export function useJoinTeamForm() {
   ]);
 
   const handleSubmitForm = handleSubmit(async (values) => {
+    setHasStartedManualJoin(true);
+
     const submitGroupId = extractInvitationGroupId(values.teamLink);
 
     if (
@@ -128,7 +136,7 @@ export function useJoinTeamForm() {
       return;
     }
 
-    await joinTeamByLink({
+    const isJoined = await joinTeamByLink({
       acceptInvitation: acceptTeamInvitationMutation,
       email: meQuery.data?.email,
       router,
@@ -137,6 +145,10 @@ export function useJoinTeamForm() {
       teamId: TEAM_ID,
       teamLink: values.teamLink,
     });
+
+    if (!isJoined) {
+      setHasStartedManualJoin(false);
+    }
   });
 
   return {
