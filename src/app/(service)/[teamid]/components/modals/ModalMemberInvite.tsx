@@ -1,5 +1,6 @@
 import { useParams } from 'next/navigation';
 
+import { buildJoinTeamLink } from '@/app/(service)/jointeam/utils/buildJoinTeamLink';
 import Modal from '@/components/common/modal';
 import { ModalFrameProps } from '@/components/common/modal/types';
 import { useToast } from '@/components/common/toast';
@@ -13,7 +14,10 @@ export function ModalMembersInvite({ onClose }: ModalFrameProps) {
 
   const { mutate: getInvitation } = useGetInvitationMutation({
     onSuccess: (token) => {
-      const inviteUrl = `${window.location.origin}/invite?token=${token}`;
+      const inviteUrl = `${window.location.origin}${buildJoinTeamLink({
+        groupId: String(groupId),
+        token,
+      })}`;
       navigator.clipboard.writeText(inviteUrl);
       showToast('링크가 복사되었습니다.', 'success');
       onClose();
