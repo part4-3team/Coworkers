@@ -1,3 +1,7 @@
+/**
+ * 팀 삭제 확인 모달입니다.
+ */
+
 'use client';
 
 import Modal from '@/components/common/modal';
@@ -5,17 +9,17 @@ import Modal from '@/components/common/modal';
 type TaskListTeamPageDeleteModalProps = {
   onClose: () => void;
   onConfirm: () => void;
-  pageTitle?: string;
+  teamName?: string;
 };
 
 export default function TaskListTeamPageDeleteModal({
   onClose,
   onConfirm,
-  pageTitle,
+  teamName,
 }: TaskListTeamPageDeleteModalProps) {
-  const modalTitle = pageTitle
-    ? `'${pageTitle}'\n페이지를 정말 삭제하시겠어요?`
-    : '페이지를 삭제하시겠습니까?';
+  const modalTitle = teamName
+    ? `'${teamName}'\n팀을 정말 삭제하시겠어요?`
+    : '팀을 정말 삭제하시겠어요?';
 
   return (
     <Modal
@@ -23,7 +27,7 @@ export default function TaskListTeamPageDeleteModal({
       hasIcon
       title={modalTitle}
       description="삭제 후에는 되돌릴 수 없습니다."
-      lineButtonText="닫기"
+      lineButtonText="취소"
       onClose={onClose}
       onLineButtonClick={onClose}
       onSubButtonClick={onConfirm}

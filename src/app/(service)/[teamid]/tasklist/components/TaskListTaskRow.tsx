@@ -64,7 +64,7 @@ export default function TaskListTaskRow({
 
           <button
             type="button"
-            className="pointer-events-auto mb-1.5 flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base"
+            className="pointer-events-auto mb-1 flex shrink-0 items-center gap-1 text-sm font-medium text-text-default md:text-base"
             aria-label={`${task.title} 댓글 ${task.commentCount}개 보기`}
             onClick={handleOpenDetail}
           >

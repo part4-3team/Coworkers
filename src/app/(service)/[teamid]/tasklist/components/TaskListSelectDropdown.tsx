@@ -21,6 +21,7 @@ type TaskListSelectDropdownProps<T extends string> = {
   className?: string;
   buttonClassName?: string;
   menuClassName?: string;
+  variant?: 'overlay' | 'inlineExpand';
 };
 
 export default function TaskListSelectDropdown<T extends string>({
@@ -31,14 +32,22 @@ export default function TaskListSelectDropdown<T extends string>({
   className,
   buttonClassName,
   menuClassName,
+  variant = 'overlay',
 }: TaskListSelectDropdownProps<T>) {
   const { isOpen, toggle, close, containerRef } = useDropdown();
+  const isInlineExpand = variant === 'inlineExpand';
 
   const selectedLabel =
     items.find((item) => item.value === value)?.label ?? placeholder;
 
   return (
-    <div ref={containerRef} className={cn('relative inline-block', className)}>
+    <div
+      ref={containerRef}
+      className={cn(
+        isInlineExpand ? 'flex w-full flex-col' : 'relative inline-block',
+        className,
+      )}
+    >
       <button
         type="button"
         onClick={toggle}
@@ -76,7 +85,9 @@ export default function TaskListSelectDropdown<T extends string>({
         <ul
           role="listbox"
           className={cn(
-            'absolute left-0 top-full z-10 mt-2 flex w-full flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
+            isInlineExpand
+              ? 'flex w-full flex-col overflow-hidden rounded-xl border border-brand-primary bg-background-primary p-0 shadow-lg mt-4'
+              : 'absolute left-0 top-full z-10 mt-2 flex w-full flex-col overflow-hidden rounded-xl border border-border-secondary bg-background-primary p-0',
             menuClassName,
           )}
         >

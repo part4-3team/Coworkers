@@ -61,9 +61,10 @@ export const CREATE_TASK_MODAL_COLUMN_CLASS = 'w-full min-w-0 max-w-full';
 /** 시간 트리거 열 — 피그마 고정 폭 124px */
 export const DATE_TIME_TIME_COLUMN_CLASS = 'relative z-10 w-[124px] shrink-0';
 
-/** 시간 선택 오버레이 — 달력과 톤을 맞춘 커스텀 선택 패널 */
-export const DATE_TIME_TIME_POPOVER_CLASS =
-  'absolute top-full right-0 z-30 mt-2 w-[240px] rounded-xl border border-brand-primary bg-background-primary p-4 shadow-lg';
+export const DATE_TIME_TIME_EXPAND_CLASS = cn(
+  'w-full rounded-xl border border-brand-primary bg-background-primary p-4 shadow-lg',
+  'md:ml-auto md:max-w-[240px]',
+);
 
 export const DATE_TIME_TIME_POPOVER_COLUMN_CLASS =
   'flex max-h-45 flex-col gap-1 overflow-y-auto rounded-lg bg-background-secondary p-1';

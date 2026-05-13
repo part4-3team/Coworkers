@@ -1,3 +1,7 @@
+/**
+ * 할 일 만들기 모달의 반복 설정과 추가 반복 옵션을 렌더링합니다.
+ */
+
 'use client';
 
 import TaskListRepeatWeekdayPicker from '@/app/(service)/[teamid]/tasklist/components/TaskListRepeatWeekdayPicker';
@@ -54,6 +58,7 @@ export default function TaskListCreateTaskModalRepeatSection({
           placeholder="선택"
           className={REPEAT_TRIGGER_LAYOUT_CLASS}
           buttonClassName={REPEAT_DROPDOWN_BUTTON_CLASS}
+          variant="inlineExpand"
         />
 
         {repeat === 'weekly' ? (

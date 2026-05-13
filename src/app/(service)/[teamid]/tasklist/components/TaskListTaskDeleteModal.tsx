@@ -1,3 +1,7 @@
+/**
+ * 할 일 삭제 확인 모달입니다.
+ */
+
 'use client';
 
 import Modal from '@/components/common/modal';
@@ -15,7 +19,7 @@ export default function TaskListTaskDeleteModal({
 }: TaskListTaskDeleteModalProps) {
   const modalTitle = taskTitle
     ? `'${taskTitle}'\n할 일을 정말 삭제하시겠어요?`
-    : '할 일을 삭제하시겠습니까?';
+    : '할 일을 정말 삭제하시겠어요?';
 
   return (
     <Modal
@@ -23,7 +27,7 @@ export default function TaskListTaskDeleteModal({
       hasIcon
       title={modalTitle}
       description="삭제 후에는 되돌릴 수 없습니다."
-      lineButtonText="닫기"
+      lineButtonText="취소"
       onClose={onClose}
       onLineButtonClick={onClose}
       onSubButtonClick={onConfirm}
