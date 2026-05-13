@@ -1,4 +1,5 @@
 import type { Post } from '@/app/(service)/boards/types';
+import { RoleProps } from '@/app/types';
 
 export type BoardDetailProps = {
   boardDetail: Post;
@@ -20,7 +21,7 @@ type Group = {
 /** 멤버십(그룹 가입 정보) 타입 */
 type Membership = {
   group: Group;
-  role: 'ADMIN' | 'MEMBER';
+  role: RoleProps;
   userImage: string | null;
   userEmail: string;
   userName: string;

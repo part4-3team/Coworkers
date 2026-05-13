@@ -2,7 +2,9 @@
 // 팀 / 그룹 관련 타입
 // ========================
 
-import type { ModalKey, RoleProps } from './common';
+import { RoleProps } from '@/app/types';
+
+import type { ModalKey } from './common';
 import type { MemberChipsProps } from './member';
 import type { TaskList } from './task';
 
@@ -42,7 +44,7 @@ export type TeamProgressProps = {
 /** 팀 멤버 섹션 Props */
 export type TeamMemberProps = {
   teamData: TeamDetailData;
-  role?: string;
+  role?: RoleProps;
 };
 
 /** 팀 멤버 목록 컨텐츠 Props */
@@ -60,5 +62,11 @@ export type TeamProgressModalProps = {
   selectedMember: MemberChipsProps | null;
   openMemberDetail: (member: MemberChipsProps) => void;
   members: MemberChipsProps[];
-  role?: string;
+  role?: RoleProps;
+};
+
+export type UseTeamProgressHandlersProps = {
+  selectedMember: MemberChipsProps | null;
+  reset: () => void;
+  role?: RoleProps;
 };
