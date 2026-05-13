@@ -1,11 +1,16 @@
 'use client';
 
+/**
+ * 게시글 수정 폼 제출·이미지 업로드·미저장 변경 가드를 한데 묶는 훅입니다.
+ */
+
 import { useRef, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import type { QueryKeyId } from '@/api/queryKeys';
 import { executeBoardArticleEdit } from '@/app/(service)/boards/[articleId]/utils/executeBoardArticleEdit';
+import { TEAM_ID } from '@/app/(service)/boards/constants';
 import useBoardFormFields from '@/app/(service)/boards/hooks/useBoardFormFields';
 import useBoardFormUnsavedChangesGuard from '@/app/(service)/boards/hooks/useBoardFormUnsavedChangesGuard';
 import { getArticleSubmitErrorMessage } from '@/app/(service)/boards/utils/boardFormUtils';
@@ -14,8 +19,6 @@ import { ROUTES } from '@/constants/ROUTES';
 import { useUpdateArticleMutation } from '@/hooks/useArticle';
 import { useUploadImageMutation } from '@/hooks/useImage';
 import { getStoredAccessToken } from '@/utils/authSession';
-
-const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID ?? '';
 
 type UseBoardEditFormParams = {
   articleId: QueryKeyId;
@@ -115,7 +118,7 @@ export default function useBoardEditForm({
 
       savedSuccessfullyRef.current = true;
       showToast('게시글이 성공적으로 수정되었습니다.', 'success');
-      router.push(ROUTES.BOARD_DETAIL(String(articleId)));
+      router.replace(ROUTES.BOARD_DETAIL(String(articleId)));
     } catch (error: unknown) {
       showToast(getArticleSubmitErrorMessage(error, 'update'), 'error');
     } finally {

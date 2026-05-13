@@ -1,5 +1,9 @@
 'use client';
 
+/**
+ * 댓글 목록을 본인 작성 우선·작성 시각 순으로 정렬해 반환하는 훅입니다.
+ */
+
 import { useMemo } from 'react';
 
 import {
@@ -7,17 +11,11 @@ import {
   MOVE_TO_FRONT,
 } from '@/app/(service)/boards/[articleId]/constants';
 import type { Comment } from '@/app/(service)/boards/[articleId]/types';
+import { parseCommentDateToTime } from '@/app/(service)/boards/[articleId]/utils/parseCommentDateToTime';
 
 type UseSortedCommentsParams = {
   comments: Comment[];
   userId?: number | null;
-};
-
-const parseDateToTime = (value: string) => {
-  const normalizedValue = value.replace(/\./g, '-');
-  const time = new Date(normalizedValue).getTime();
-
-  return Number.isNaN(time) ? 0 : time;
 };
 
 export const useSortedComments = ({
@@ -34,7 +32,10 @@ export const useSortedComments = ({
           return isAOwnComment ? MOVE_TO_FRONT : MOVE_TO_BACK;
         }
 
-        return parseDateToTime(b.createdAt) - parseDateToTime(a.createdAt);
+        return (
+          parseCommentDateToTime(b.createdAt) -
+          parseCommentDateToTime(a.createdAt)
+        );
       }),
     [comments, userId],
   );

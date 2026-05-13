@@ -1,9 +1,14 @@
 'use client';
 
+/**
+ * 게시글 작성 폼 제출·이미지 업로드·미저장 변경 가드를 한데 묶는 훅입니다.
+ */
+
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { TEAM_ID } from '@/app/(service)/boards/constants';
 import useBoardFormFields from '@/app/(service)/boards/hooks/useBoardFormFields';
 import useBoardFormUnsavedChangesGuard from '@/app/(service)/boards/hooks/useBoardFormUnsavedChangesGuard';
 import {
@@ -15,8 +20,6 @@ import { ROUTES } from '@/constants/ROUTES';
 import { useCreateArticleMutation } from '@/hooks/useArticle';
 import { useUploadImageMutation } from '@/hooks/useImage';
 import { getStoredAccessToken } from '@/utils/authSession';
-
-const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID ?? '';
 
 export default function useBoardCreateForm() {
   const router = useRouter();
@@ -90,7 +93,7 @@ export default function useBoardCreateForm() {
       });
 
       showToast('게시글이 성공적으로 등록되었습니다.', 'success');
-      router.push(ROUTES.BOARDS);
+      router.replace(ROUTES.BOARDS);
     } catch (error: unknown) {
       showToast(getArticleSubmitErrorMessage(error, 'create'), 'error');
     } finally {
