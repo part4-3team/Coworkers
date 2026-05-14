@@ -17,7 +17,6 @@ import useLockBodyScroll from '@/components/layout/hooks/useLockBodyScroll';
 import type { ServiceLayoutContextValue } from '@/components/layout/types';
 
 const OVERLAY_ANIMATION_DURATION = 300;
-
 export default function useServiceLayoutState(): ServiceLayoutContextValue {
   const pathname = usePathname();
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
