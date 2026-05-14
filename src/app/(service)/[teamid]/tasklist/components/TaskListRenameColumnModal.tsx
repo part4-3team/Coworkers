@@ -39,7 +39,7 @@ export default function TaskListRenameColumnModal({
   return (
     <Modal
       hasCloseButton
-      title="할 일 목록"
+      title="할 일 목록 수정하기"
       onClose={onClose}
       primaryButtonText="변경하기"
       isPrimaryButtonDisabled={isDisabled}
