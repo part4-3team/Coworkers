@@ -4,7 +4,7 @@
 
 const DATE_PART_LENGTH = 2;
 const KOREA_TIME_ZONE = 'Asia/Seoul';
-const ISO_UTC_SUFFIX = 'Z';
+const KOREA_UTC_OFFSET = '+09:00';
 
 type KoreaDateParts = {
   day: number;
@@ -91,7 +91,7 @@ export function getCurrentKoreaTimeString() {
 
 export function getCurrentKoreaDateTimeString() {
   const currentKoreaDateParts = getKoreaDateParts(new Date());
-  return `${formatTaskListDateParts(currentKoreaDateParts)}T${formatTaskListTimeParts(currentKoreaDateParts)}${ISO_UTC_SUFFIX}`;
+  return `${formatTaskListDateParts(currentKoreaDateParts)}T${formatTaskListTimeParts(currentKoreaDateParts)}${KOREA_UTC_OFFSET}`;
 }
 
 export function toTaskListDateString(date: Date) {
@@ -107,5 +107,5 @@ export function toTaskListDateTimeString(date: Date) {
     hours: date.getHours(),
     minutes: date.getMinutes(),
     seconds: date.getSeconds(),
-  })}${ISO_UTC_SUFFIX}`;
+  })}${KOREA_UTC_OFFSET}`;
 }

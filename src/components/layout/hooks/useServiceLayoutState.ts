@@ -17,7 +17,6 @@ import useLockBodyScroll from '@/components/layout/hooks/useLockBodyScroll';
 import type { ServiceLayoutContextValue } from '@/components/layout/types';
 
 const OVERLAY_ANIMATION_DURATION = 300;
-const MOBILE_LAYOUT_MAX_WIDTH = 768;
 
 export default function useServiceLayoutState(): ServiceLayoutContextValue {
   const pathname = usePathname();
@@ -25,10 +24,6 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
   const [rightPanelContent, setRightPanelContent] =
     useState<RightPanelContent | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const mobileRightPanelScrollRef = useRef<{
-    pathname: string;
-    scrollY: number;
-  } | null>(null);
   const {
     close: closeMobileSidebar,
     isRendered: isMobileSidebarRendered,
@@ -46,26 +41,6 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
     duration: OVERLAY_ANIMATION_DURATION,
   });
 
-  const isMobileLayoutViewport = useCallback(() => {
-    return window.innerWidth < MOBILE_LAYOUT_MAX_WIDTH;
-  }, []);
-
-  const restoreMobileRightPanelScroll = useCallback(() => {
-    const savedScroll = mobileRightPanelScrollRef.current;
-
-    mobileRightPanelScrollRef.current = null;
-
-    if (!savedScroll || !isMobileLayoutViewport()) {
-      return;
-    }
-
-    if (window.location.pathname !== savedScroll.pathname) {
-      return;
-    }
-
-    window.scrollTo({ top: savedScroll.scrollY, behavior: 'auto' });
-  }, [isMobileLayoutViewport]);
-
   const closeRightPanel = useCallback(() => {
     const unsavedGuard = getRightPanelUnsavedGuard();
 
@@ -82,14 +57,9 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
     closeAnimatedRightPanel({
       onAfterClose: () => {
         setRightPanelContent(null);
-        restoreMobileRightPanelScroll();
       },
     });
-  }, [
-    closeAnimatedRightPanel,
-    isRightPanelRendered,
-    restoreMobileRightPanelScroll,
-  ]);
+  }, [closeAnimatedRightPanel, isRightPanelRendered]);
 
   const handleSidebarInteraction = useCallback(() => {
     if (isRightPanelRendered) {
@@ -144,20 +114,6 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
       setRightPanelContent(content);
       setIsSidebarExpanded(false);
 
-      if (isMobileLayoutViewport()) {
-        if (
-          !isRightPanelVisible &&
-          mobileRightPanelScrollRef.current === null
-        ) {
-          mobileRightPanelScrollRef.current = {
-            pathname,
-            scrollY: window.scrollY,
-          };
-        }
-
-        window.scrollTo({ top: 0, behavior: 'auto' });
-      }
-
       if (isMobileSidebarVisible) {
         closeMobileSidebar();
       }
@@ -170,10 +126,8 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
     },
     [
       closeMobileSidebar,
-      isMobileLayoutViewport,
       isMobileSidebarVisible,
       isRightPanelVisible,
-      pathname,
       openRightPanelAnimated,
     ],
   );

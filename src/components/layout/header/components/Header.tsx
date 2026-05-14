@@ -15,7 +15,9 @@ import ProfileMenuDropdown from '@/components/layout/components/ProfileMenuDropd
 import MobileSidebarDrawer from '@/components/layout/header/components/MobileSidebarDrawer';
 import useMobileSidebar from '@/components/layout/header/hooks/useMobileSidebar';
 import useLayoutAuthState from '@/components/layout/hooks/useLayoutAuthState';
+import useServiceLayoutContext from '@/components/layout/hooks/useServiceLayoutContext';
 import { ROUTES } from '@/constants/ROUTES';
+import { cn } from '@/utils/cn';
 
 function subscribeMounted(callback: () => void) {
   callback();
@@ -34,6 +36,7 @@ function getServerSnapshot() {
 export default function Header() {
   const pathname = usePathname();
   const layoutAuthState = useLayoutAuthState(pathname);
+  const { isRightPanelVisible } = useServiceLayoutContext();
 
   const { handleClose, handleToggle, isRendered, isVisible, menuButtonRef } =
     useMobileSidebar();
@@ -54,7 +57,18 @@ export default function Header() {
 
   return (
     <>
-      <header className="md:hidden sticky top-0 z-40 flex h-13 w-full items-center border-b border-background-tertiary bg-background-inverse px-4">
+      {isRightPanelVisible && (
+        <div aria-hidden="true" className="h-13 md:hidden" />
+      )}
+
+      <header
+        className={cn(
+          'md:hidden flex h-13 w-full items-center border-b border-background-tertiary bg-background-inverse px-4',
+          isRightPanelVisible
+            ? 'fixed inset-x-0 top-0 z-40'
+            : 'sticky top-0 z-40',
+        )}
+      >
         <div className="flex items-center gap-3">
           <button
             ref={menuButtonRef}
