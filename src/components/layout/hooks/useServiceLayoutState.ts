@@ -131,27 +131,13 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
     (content: RightPanelContent) => {
       setRightPanelContent(content);
 
-      if (!isSidebarVisibleViewport) {
-        setIsSidebarExpanded(false);
-      }
-
-      if (isMobileSidebarVisible) {
-        closeMobileSidebar();
-      }
-
       if (isRightPanelVisible) {
         return;
       }
 
       openRightPanelAnimated();
     },
-    [
-      closeMobileSidebar,
-      isMobileSidebarVisible,
-      isRightPanelVisible,
-      isSidebarVisibleViewport,
-      openRightPanelAnimated,
-    ],
+    [isRightPanelVisible, openRightPanelAnimated],
   );
 
   useLayoutMediaSync({
