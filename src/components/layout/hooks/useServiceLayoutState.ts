@@ -17,15 +17,13 @@ import useLockBodyScroll from '@/components/layout/hooks/useLockBodyScroll';
 import type { ServiceLayoutContextValue } from '@/components/layout/types';
 
 const OVERLAY_ANIMATION_DURATION = 300;
-const RIGHT_PANEL_INLINE_DESKTOP_MEDIA_QUERY = '(min-width: 1536px)';
+const SIDEBAR_VISIBLE_MEDIA_QUERY = '(min-width: 768px)';
 
 export default function useServiceLayoutState(): ServiceLayoutContextValue {
   const pathname = usePathname();
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
-  const [
-    isInlineDesktopRightPanelViewport,
-    setIsInlineDesktopRightPanelViewport,
-  ] = useState(false);
+  const [isSidebarVisibleViewport, setIsSidebarVisibleViewport] =
+    useState(false);
   const [rightPanelContent, setRightPanelContent] =
     useState<RightPanelContent | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -47,12 +45,10 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
   });
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(
-      RIGHT_PANEL_INLINE_DESKTOP_MEDIA_QUERY,
-    );
+    const mediaQuery = window.matchMedia(SIDEBAR_VISIBLE_MEDIA_QUERY);
 
     const updateViewportState = () => {
-      setIsInlineDesktopRightPanelViewport(mediaQuery.matches);
+      setIsSidebarVisibleViewport(mediaQuery.matches);
     };
 
     updateViewportState();
@@ -135,7 +131,7 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
     (content: RightPanelContent) => {
       setRightPanelContent(content);
 
-      if (!isInlineDesktopRightPanelViewport) {
+      if (!isSidebarVisibleViewport) {
         setIsSidebarExpanded(false);
       }
 
@@ -151,9 +147,9 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
     },
     [
       closeMobileSidebar,
-      isInlineDesktopRightPanelViewport,
       isMobileSidebarVisible,
       isRightPanelVisible,
+      isSidebarVisibleViewport,
       openRightPanelAnimated,
     ],
   );
@@ -174,7 +170,7 @@ export default function useServiceLayoutState(): ServiceLayoutContextValue {
   useLockBodyScroll({
     isScrollLocked:
       isMobileSidebarRendered ||
-      (isRightPanelVisible && !isInlineDesktopRightPanelViewport),
+      (isRightPanelVisible && !isSidebarVisibleViewport),
   });
 
   return {
