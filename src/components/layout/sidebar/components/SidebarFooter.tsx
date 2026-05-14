@@ -32,8 +32,8 @@ function getServerSnapshot() {
   return false;
 }
 
-function getDisplayEmail(email: string) {
-  return email.length > 13 ? `${email.slice(0, 13)}...` : email;
+function getDisplayEmail(email: string, maxLength: number) {
+  return email.length > maxLength ? `${email.slice(0, maxLength)}...` : email;
 }
 
 export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
@@ -95,7 +95,12 @@ export default function SidebarFooter({ isExpanded }: SidebarFooterProps) {
                       title={layoutAuthState.currentUser.email}
                       className="block min-w-0 text-sm font-medium text-text-default"
                     >
-                      {getDisplayEmail(layoutAuthState.currentUser.email)}
+                      <span className="md:hidden">
+                        {getDisplayEmail(layoutAuthState.currentUser.email, 13)}
+                      </span>
+                      <span className="hidden md:inline">
+                        {getDisplayEmail(layoutAuthState.currentUser.email, 20)}
+                      </span>
                     </span>
                   ) : null}
                 </span>
