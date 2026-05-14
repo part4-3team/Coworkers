@@ -23,6 +23,15 @@ type KoreaFormatterParts = {
   year: number;
 };
 
+type KoreaDateStringParts = {
+  day: string;
+  hour: string;
+  minute: string;
+  month: string;
+  second: string;
+  year: string;
+};
+
 function getKoreaDateParts(date: Date): KoreaDateParts {
   const formatter = new Intl.DateTimeFormat('en-CA', {
     day: '2-digit',
@@ -49,6 +58,24 @@ function getKoreaDateParts(date: Date): KoreaDateParts {
     seconds: parts.second,
     year: parts.year,
   };
+}
+
+function getKoreaDateStringParts(date: Date) {
+  return Object.fromEntries(
+    new Intl.DateTimeFormat('en-CA', {
+      day: '2-digit',
+      hour: '2-digit',
+      hour12: false,
+      minute: '2-digit',
+      month: '2-digit',
+      second: '2-digit',
+      timeZone: KOREA_TIME_ZONE,
+      year: 'numeric',
+    })
+      .formatToParts(date)
+      .filter((part) => part.type !== 'literal')
+      .map((part) => [part.type, part.value]),
+  ) as KoreaDateStringParts;
 }
 
 function formatTaskListDateParts(
@@ -108,4 +135,16 @@ export function toTaskListDateTimeString(date: Date) {
     minutes: date.getMinutes(),
     seconds: date.getSeconds(),
   })}${KOREA_UTC_OFFSET}`;
+}
+
+export function toTaskListKoreaDateKey(dateString: string) {
+  const parsedDate = new Date(dateString);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return dateString.slice(0, 10);
+  }
+
+  const koreaDateParts = getKoreaDateStringParts(parsedDate);
+
+  return `${koreaDateParts.year}-${koreaDateParts.month}-${koreaDateParts.day}`;
 }
