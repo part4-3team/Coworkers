@@ -308,6 +308,15 @@ export type TaskListWeekStripProps = {
   selectedDate: Date;
 };
 
+export type TaskListWeekStripFadeState = {
+  canScrollLeft: boolean;
+  canScrollRight: boolean;
+};
+
+export type UseTaskListWeekStripFadeReturn = {
+  fadeState: TaskListWeekStripFadeState;
+};
+
 export type TaskListFABProps = {
   className?: string;
   onClick: () => void;
