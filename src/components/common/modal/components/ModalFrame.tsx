@@ -20,7 +20,7 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react';
 
 import { IcAlertCircleLarge, IcCloseMedium } from '@/assets/index';
@@ -48,17 +48,11 @@ export default function ModalFrame({
   onClose,
   overlayClassName,
 }: ModalFrameProps) {
-  const [isBottomModal, setIsBottomModal] = useState(
-    () =>
-      typeof window === 'undefined' ||
-      window.matchMedia('(max-width: 767px)').matches,
-  );
-
   useEffect(() => {
-    const mql = window.matchMedia('(max-width: 767px)');
-    const handler = (e: MediaQueryListEvent) => setIsBottomModal(e.matches);
-    mql.addEventListener('change', handler);
-    return () => mql.removeEventListener('change', handler);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, []);
 
   const handleKeyDownCapture = (event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -117,17 +111,13 @@ export default function ModalFrame({
       <div
         className={cn(
           'min-h-full flex justify-center',
-          isBottomModal
-            ? 'items-end pt-12 md:items-center md:py-6 md:px-4'
-            : 'items-center py-6 px-4',
+          'items-end pt-12 md:items-center md:py-6 md:px-4',
         )}
       >
         <div
           className={cn(
             'relative w-full bg-white text-center',
-            isBottomModal
-              ? 'rounded-tl-xl rounded-tr-xl py-10 px-5 pb-8 min-w-80 md:rounded-3xl'
-              : 'rounded-3xl p-6 pb-6',
+            'rounded-tl-xl rounded-tr-xl py-10 px-5 pb-8 min-w-80 md:rounded-3xl md:p-6',
             'md:max-w-sm',
           )}
           onClick={(e) => e.stopPropagation()}
