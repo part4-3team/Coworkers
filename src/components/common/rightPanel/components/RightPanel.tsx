@@ -36,14 +36,14 @@ export default function RightPanel({
     <>
       <div
         className={cn(
-          'hidden w-0 shrink-0 transition-[width] duration-300 ease-out 2xl:block',
+          'hidden relative z-20 w-0 shrink-0 transition-[width] duration-300 ease-out 2xl:block',
           isVisible ? 'w-195 overflow-visible' : 'w-0 overflow-hidden',
         )}
       >
         <aside
           aria-label={ariaLabel}
           className={cn(
-            'sticky top-0 h-dvh w-195 border-l border-background-tertiary bg-background-inverse shadow-[-16px_0_32px_rgba(15,23,42,0.08)] transition-[transform,opacity] duration-300 ease-out will-change-transform transform-gpu',
+            'sticky top-0 z-20 h-dvh w-195 border-l border-background-tertiary bg-background-inverse shadow-[-16px_0_32px_rgba(15,23,42,0.08)] transition-[transform,opacity] duration-300 ease-out will-change-transform transform-gpu',
             isVisible ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0',
           )}
         >
