@@ -124,6 +124,7 @@ export type TaskListCreateTaskModalDateTimeSectionProps = {
   selectedDate: Date;
   startTime: string;
   timePopoverContainerRef: RefObject<HTMLDivElement | null>;
+  timePopoverButtonRef: RefObject<HTMLButtonElement | null>;
   onStartTimeChange: (value: string) => void;
 };
 
