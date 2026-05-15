@@ -21,6 +21,7 @@ export type TaskListTaskComment = {
   authorImage: string | null;
   content: string;
   meta: string;
+  createdAt: string;
 };
 
 export type TaskListBoardTask = {

@@ -35,6 +35,7 @@ export type RightPanelComment = {
   id: string;
   isMine?: boolean;
   meta: string;
+  createdAt: string | null;
 };
 
 export type RightPanelContent = {

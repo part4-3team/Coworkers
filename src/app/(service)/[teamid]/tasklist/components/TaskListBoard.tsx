@@ -44,7 +44,6 @@ export default function TaskListBoard({
     sortedTasks,
     taskPendingDelete,
   } = useTaskListBoardQuery({ groupId, selectedDate, taskListId });
-  console.log('sortedTasks', sortedTasks);
 
   const handleOpenTaskDetail = useCallback(
     (task: (typeof sortedTasks)[number], mode: TaskListTaskDetailOpenMode) => {
