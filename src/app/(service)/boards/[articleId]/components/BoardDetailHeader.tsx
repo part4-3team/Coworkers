@@ -7,7 +7,6 @@ import type {
   BoardDetailProps,
   UserProfileResponse,
 } from '@/app/(service)/boards/[articleId]/types';
-import { getBoardHeaderAvatarImage } from '@/app/(service)/boards/[articleId]/utils/getBoardHeaderAvatarImage';
 import {
   formatDateToYmd,
   getLikeCount,
@@ -23,11 +22,8 @@ export default function BoardDetailHeader({
   boardDetail: BoardDetailProps['boardDetail'];
   userProfile: UserProfileResponse | null;
 }) {
-  const { isOwner, headerAvatarImage } = getBoardHeaderAvatarImage({
-    currentUserId: userProfile?.id,
-    writerId: boardDetail.writer.id,
-    writerImage: boardDetail.writer.image,
-  });
+  const isOwner = boardDetail.writer.id === userProfile?.id;
+  const writerProfileImage = boardDetail.writer.image?.trim() || null;
   const {
     menuItems,
     isDeleteModalOpen,
@@ -71,7 +67,7 @@ export default function BoardDetailHeader({
       <div className="flex items-center justify-between gap-2 mt-2 pb-3 border-b border-border-secondary md:mt-4">
         <div className="flex min-w-0 flex-1 items-center">
           <CommentWriterAvatar
-            image={headerAvatarImage}
+            image={writerProfileImage}
             nickname={boardDetail.writer.nickname}
             width={24}
             height={24}
