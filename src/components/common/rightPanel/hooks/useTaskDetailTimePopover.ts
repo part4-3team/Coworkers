@@ -4,21 +4,17 @@
 
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
-
-import useClickOutside from '@/hooks/useClickOutside';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type UseTaskDetailTimePopoverReturn = {
   closeTimePopover: () => void;
   isTimePopoverOpen: boolean;
-  timePopoverButtonRef: React.RefObject<HTMLButtonElement | null>;
   timePopoverContainerRef: React.RefObject<HTMLDivElement | null>;
   toggleTimePopover: () => void;
 };
 
 export default function useTaskDetailTimePopover(): UseTaskDetailTimePopoverReturn {
   const timePopoverContainerRef = useRef<HTMLDivElement>(null);
-  const timePopoverButtonRef = useRef<HTMLButtonElement>(null);
   const [isTimePopoverOpen, setIsTimePopoverOpen] = useState(false);
 
   const closeTimePopover = useCallback(() => {
@@ -29,15 +25,30 @@ export default function useTaskDetailTimePopover(): UseTaskDetailTimePopoverRetu
     setIsTimePopoverOpen((previousValue) => !previousValue);
   }, []);
 
-  useClickOutside({
-    onClickOutside: closeTimePopover,
-    refs: [timePopoverContainerRef, timePopoverButtonRef],
-  });
+  useEffect(() => {
+    if (!isTimePopoverOpen) {
+      return;
+    }
+
+    const handleOutsideClick = (event: PointerEvent) => {
+      if (
+        timePopoverContainerRef.current &&
+        !timePopoverContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsTimePopoverOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('pointerdown', handleOutsideClick);
+    };
+  }, [isTimePopoverOpen]);
 
   return {
     closeTimePopover,
     isTimePopoverOpen,
-    timePopoverButtonRef,
     timePopoverContainerRef,
     toggleTimePopover,
   };

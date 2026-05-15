@@ -27,7 +27,6 @@ export default function TaskListTimePopover({
       className="grid grid-cols-2 gap-3"
       role="dialog"
       aria-label="시간 선택"
-      tabIndex={-1}
     >
       <div className="flex flex-col gap-2">
         <p className="text-sm font-medium text-text-secondary">시</p>

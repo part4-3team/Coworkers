@@ -1,6 +1,13 @@
 'use client';
 
-import { useCallback, useId, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import useTaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListCalendarPopover';
 import type { TaskListCreateTaskRepeatValue } from '@/app/(service)/[teamid]/tasklist/types';
@@ -12,7 +19,6 @@ import {
   getCurrentCalendarDate,
   getCurrentTimeString,
 } from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
-import useClickOutside from '@/hooks/useClickOutside';
 
 export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
   const formId = useId();
@@ -39,17 +45,29 @@ export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
   } = useTaskListCalendarPopover();
 
   const timePopoverContainerRef = useRef<HTMLDivElement>(null);
-  const timePopoverButtonRef = useRef<HTMLButtonElement>(null);
   const [isTimePopoverOpen, setIsTimePopoverOpen] = useState(false);
 
   const closeTimePopover = useCallback(() => {
     setIsTimePopoverOpen(false);
   }, []);
 
-  useClickOutside({
-    onClickOutside: closeTimePopover,
-    refs: [timePopoverContainerRef, timePopoverButtonRef],
-  });
+  useEffect(() => {
+    if (!isTimePopoverOpen) return;
+
+    const handleOutsideClick = (event: PointerEvent) => {
+      if (
+        timePopoverContainerRef.current &&
+        !timePopoverContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsTimePopoverOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('pointerdown', handleOutsideClick);
+    };
+  }, [isTimePopoverOpen]);
 
   const handleDateChange = useCallback(
     (date: Date | null) => {
@@ -131,7 +149,6 @@ export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
     setStartTime,
     setTitle,
     startTime,
-    timePopoverButtonRef,
     timePopoverContainerRef,
     title,
     toggleWeekDay,

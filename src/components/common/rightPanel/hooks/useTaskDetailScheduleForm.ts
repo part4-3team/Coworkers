@@ -48,7 +48,6 @@ export default function useTaskDetailScheduleForm(
   const {
     closeTimePopover,
     isTimePopoverOpen,
-    timePopoverButtonRef,
     timePopoverContainerRef,
     toggleTimePopover,
   } = useTaskDetailTimePopover();
@@ -101,7 +100,6 @@ export default function useTaskDetailScheduleForm(
     selectedDate,
     setStartTime,
     startTime,
-    timePopoverButtonRef,
     timePopoverContainerRef,
     toggleWeekDay,
     weekDays,

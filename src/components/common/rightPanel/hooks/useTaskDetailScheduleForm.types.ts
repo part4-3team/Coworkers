@@ -24,7 +24,6 @@ export type UseTaskDetailScheduleFormReturn = {
   selectedDate: Date;
   setStartTime: (value: string) => void;
   startTime: string;
-  timePopoverButtonRef: RefObject<HTMLButtonElement | null>;
   timePopoverContainerRef: RefObject<HTMLDivElement | null>;
   toggleWeekDay: (dayIndex: number) => void;
   weekDays: number[];

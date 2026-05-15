@@ -31,7 +31,6 @@ export default function TaskListCreateTaskModalDateTimeSection({
   selectedDate,
   startTime,
   timePopoverContainerRef,
-  timePopoverButtonRef,
   onStartTimeChange,
 }: TaskListCreateTaskModalDateTimeSectionProps) {
   return (
@@ -70,7 +69,6 @@ export default function TaskListCreateTaskModalDateTimeSection({
             </div>
             <div className={DATE_TIME_TIME_COLUMN_CLASS}>
               <button
-                ref={timePopoverButtonRef}
                 type="button"
                 id={`${formId}-time-value`}
                 aria-label="시작 시간 선택"
