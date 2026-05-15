@@ -110,7 +110,10 @@ export default function TaskDetailCommentItem({
             )}
           </div>
 
-          <div className="mt-2 text-sm font-medium text-interaction-inactive mb-5">
+          <div
+            className="mt-2 text-sm font-medium text-interaction-inactive mb-5"
+            suppressHydrationWarning
+          >
             {formatCommentTime(comment.createdAt)}
           </div>
         </div>
