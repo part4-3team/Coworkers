@@ -8,7 +8,10 @@ import type {
   UserProfileResponse,
 } from '@/app/(service)/boards/[articleId]/types';
 import { getBoardHeaderAvatarImage } from '@/app/(service)/boards/[articleId]/utils/getBoardHeaderAvatarImage';
-import { formatDateToYmd } from '@/app/(service)/boards/utils/boardDisplayUtils';
+import {
+  formatDateToYmd,
+  getLikeCount,
+} from '@/app/(service)/boards/utils/boardDisplayUtils';
 import { IcHeartFilledRed, IcHeartSmall, IcMoreVerticalLarge } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import Modal from '@/components/common/modal';
@@ -22,7 +25,6 @@ export default function BoardDetailHeader({
 }) {
   const { isOwner, headerAvatarImage } = getBoardHeaderAvatarImage({
     currentUserId: userProfile?.id,
-    currentUserImage: userProfile?.image,
     writerId: boardDetail.writer.id,
     writerImage: boardDetail.writer.image,
   });
@@ -111,7 +113,7 @@ export default function BoardDetailHeader({
               />
             )}
             <span className="text-interaction-inactive text-sm font-medium leading-4 md:text-base">
-              {likeCount}
+              {getLikeCount(likeCount)}
             </span>
           </button>
         </div>
