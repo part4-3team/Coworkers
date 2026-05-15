@@ -22,7 +22,6 @@ export default function TaskDetailCommentItem({
   onStartEdit,
   onSubmitEdit,
 }: TaskDetailCommentItemProps) {
-  console.log('comment', comment);
   if (isEditing) {
     return (
       <li className="bg-background-secondary py-4 first:pt-4 last:pb-4">

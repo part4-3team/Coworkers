@@ -12,7 +12,6 @@ import { ROUTES } from '@/constants/ROUTES';
 export default function BoardBestCard({ post }: { post: Post }) {
   const likeCount = getLikeCount(post.likeCount);
 
-  console.log('post', post);
   return (
     <Link
       href={ROUTES.BOARD_DETAIL(post.id.toString())}

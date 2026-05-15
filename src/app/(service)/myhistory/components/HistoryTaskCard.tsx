@@ -27,7 +27,6 @@ export default function HistoryTaskCard({ task }: HistoryTaskCardProps) {
   } = useHistoryTaskCardMutation({ task });
 
   const startTime = formatKSTTime(task.startDate);
-  console.log('task', task);
   return (
     <article
       className={cn(
