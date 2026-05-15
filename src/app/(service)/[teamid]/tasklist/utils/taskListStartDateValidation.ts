@@ -1,23 +1,29 @@
 /**
- * 할 일 생성 시 시작 시각이 현재 한국 시간보다 이전인지 검증하는 유틸입니다.
+ * 할 일 생성 시 시작 시각이 현재 시간보다 이전인지 검증하는 유틸입니다.
  */
 
-function toMinuteTimestamp(dateTimeString: string) {
-  const parsedTime = new Date(dateTimeString).getTime();
-
-  if (Number.isNaN(parsedTime)) {
-    return Number.NaN;
-  }
-
-  return Math.floor(parsedTime / (60 * 1000));
-}
-
 export function isPastTaskListStartDate(startDateTimeString: string) {
-  const startMinuteTimestamp = toMinuteTimestamp(startDateTimeString);
+  const startDate = new Date(startDateTimeString);
 
-  if (Number.isNaN(startMinuteTimestamp)) {
+  if (Number.isNaN(startDate.getTime())) {
     return false;
   }
 
-  return startMinuteTimestamp < Math.floor(Date.now() / (60 * 1000));
+  const now = new Date();
+  const startMinute = new Date(
+    startDate.getFullYear(),
+    startDate.getMonth(),
+    startDate.getDate(),
+    startDate.getHours(),
+    startDate.getMinutes(),
+  );
+  const nowMinute = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    now.getHours(),
+    now.getMinutes(),
+  );
+
+  return startMinute.getTime() < nowMinute.getTime();
 }

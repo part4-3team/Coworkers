@@ -3,6 +3,11 @@
  */
 
 import type { HistoryTaskFrequency } from '@/app/(service)/myhistory/types';
+import { toHistoryDateLabel } from '@/app/(service)/myhistory/utils/myHistoryKoreaDate';
+import type {
+  TaskDetailScheduleEditConfig,
+  TaskDetailScheduleFrequencyType,
+} from '@/components/common/rightPanel/types';
 
 export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
@@ -23,17 +28,7 @@ export function toNumber(value: unknown) {
 }
 
 export function toDateLabel(dateString?: string) {
-  if (!dateString) {
-    return '-';
-  }
-
-  const date = new Date(dateString);
-
-  if (Number.isNaN(date.getTime())) {
-    return '-';
-  }
-
-  return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+  return toHistoryDateLabel(dateString);
 }
 
 export function formatHistoryTaskFrequency(frequency?: HistoryTaskFrequency) {
@@ -51,6 +46,49 @@ export function formatHistoryTaskFrequency(frequency?: HistoryTaskFrequency) {
     default:
       return '반복 없음';
   }
+}
+
+function toTaskDetailScheduleFrequencyType(
+  frequency?: HistoryTaskFrequency,
+): TaskDetailScheduleFrequencyType | null {
+  if (
+    frequency === 'ONCE' ||
+    frequency === 'DAILY' ||
+    frequency === 'WEEKLY' ||
+    frequency === 'MONTHLY'
+  ) {
+    return frequency;
+  }
+
+  return null;
+}
+
+export function toHistoryScheduleEditConfig({
+  frequency,
+  recurringId,
+  startedAtRaw,
+  weekDays,
+}: {
+  frequency?: HistoryTaskFrequency;
+  recurringId?: number;
+  startedAtRaw?: string;
+  weekDays?: number[];
+}) {
+  const frequencyType = toTaskDetailScheduleFrequencyType(frequency);
+
+  if (!frequencyType || !startedAtRaw) {
+    return undefined;
+  }
+
+  return {
+    frequencyType,
+    recurringId:
+      typeof recurringId === 'number' && recurringId > 0
+        ? String(recurringId)
+        : null,
+    startedAtRaw,
+    weekDays,
+  } satisfies TaskDetailScheduleEditConfig;
 }
 
 export function toHistoryTaskIdentityKey(taskId: string, recurringId?: number) {

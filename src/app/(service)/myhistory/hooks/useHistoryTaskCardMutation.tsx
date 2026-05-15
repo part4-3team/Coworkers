@@ -30,6 +30,13 @@ export default function useHistoryTaskCardMutation({
     typeof meData.nickname === 'string'
       ? meData.nickname
       : '';
+  const assigneeImage =
+    typeof meData === 'object' &&
+    meData !== null &&
+    'image' in meData &&
+    typeof meData.image === 'string'
+      ? meData.image
+      : null;
 
   const handleOpenDetailPanel = () => {
     openRightPanel({
@@ -37,6 +44,7 @@ export default function useHistoryTaskCardMutation({
         <TaskDetailPanelContent
           key={task.id}
           apiTeamId={MY_HISTORY_API_TEAM_ID}
+          assigneeImage={assigneeImage}
           assigneeName={assigneeName}
           completionActionDoneValue={!task.isCompleted}
           completionActionLabel={
@@ -45,6 +53,7 @@ export default function useHistoryTaskCardMutation({
           description={task.description}
           frequency={task.frequency}
           initialMode="view"
+          scheduleEditConfig={task.scheduleEditConfig}
           startedAt={task.startedAt}
           taskId={task.id}
           taskListId={task.taskListId}
@@ -77,6 +86,7 @@ export default function useHistoryTaskCardMutation({
   const handleConfirmDelete = async () => {
     try {
       await deleteTaskMutation.mutateAsync({
+        recurringId: task.scheduleEditConfig?.recurringId,
         taskId: task.id,
         taskListId: task.taskListId,
         teamId: task.teamId,

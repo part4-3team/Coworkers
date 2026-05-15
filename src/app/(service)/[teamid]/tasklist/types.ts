@@ -36,6 +36,7 @@ export type TaskListBoardTask = {
   recurringId: string | null;
   repeatLabel: string;
   sortOrder: number;
+  startedAtRaw: string;
   startedAtLabel: string;
   taskListId: string;
   teamId: string;
@@ -204,6 +205,7 @@ export type TaskListTaskDetailMetaProps = {
   assigneeName: string;
   frequency: string;
   startedAtLabel: string;
+  startedAtLabelText: string;
 };
 
 export type TaskListBoardEmptyTaskRowProps = {
@@ -306,6 +308,15 @@ export type TaskListWeekStripProps = {
   className?: string;
   onSelectDate: (date: Date) => void;
   selectedDate: Date;
+};
+
+export type TaskListWeekStripFadeState = {
+  canScrollLeft: boolean;
+  canScrollRight: boolean;
+};
+
+export type UseTaskListWeekStripFadeReturn = {
+  fadeState: TaskListWeekStripFadeState;
 };
 
 export type TaskListFABProps = {

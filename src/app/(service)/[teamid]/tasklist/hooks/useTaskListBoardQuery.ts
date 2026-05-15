@@ -4,20 +4,21 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-import { queryKeys } from '@/api/queryKeys';
 import { taskQueryOptions } from '@/api/queryOptions';
 import useTaskListRecurringWeekDaysQuery from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListRecurringWeekDaysQuery';
 import type {
   TaskListBoardTask,
   UseTaskListBoardQueryParams,
 } from '@/app/(service)/[teamid]/tasklist/types';
-import { deleteTaskListBoardTask } from '@/app/(service)/[teamid]/tasklist/utils/deleteTaskListBoardTask';
-import { toTaskListDateString } from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
+import {
+  toTaskListDateKey,
+  toTaskListDateString,
+} from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
 import { formatTaskListRepeatLabel } from '@/app/(service)/[teamid]/tasklist/utils/taskListRepeatLabel';
 import { useToast } from '@/components/common/toast';
-import { useUpdateTaskMutation } from '@/hooks/useTask';
+import { useDeleteTaskMutation, useUpdateTaskMutation } from '@/hooks/useTask';
 
 export function useTaskListBoardQuery({
   groupId,
@@ -25,8 +26,8 @@ export function useTaskListBoardQuery({
   taskListId,
 }: UseTaskListBoardQueryParams) {
   const { showToast } = useToast();
-  const queryClient = useQueryClient();
   const updateTaskMutation = useUpdateTaskMutation();
+  const deleteTaskMutation = useDeleteTaskMutation();
   const dateString = toTaskListDateString(selectedDate);
 
   const { data: taskListDetail } = useQuery({
@@ -49,6 +50,10 @@ export function useTaskListBoardQuery({
         task.weekDays && task.weekDays.length > 0
           ? task.weekDays
           : inferredRecurringWeekDays[String(task.recurringId)];
+      const recurringId =
+        typeof task.recurringId === 'number' && task.recurringId > 0
+          ? String(task.recurringId)
+          : null;
 
       return {
         assigneeImage: task.writer.image,
@@ -56,9 +61,9 @@ export function useTaskListBoardQuery({
         title: task.name,
         checked: task.doneAt !== null,
         commentCount: task.commentCount,
-        dueDateLabel: task.date.slice(0, 10),
+        dueDateLabel: toTaskListDateKey(task.date),
         frequency: task.frequency,
-        recurringId: String(task.recurringId),
+        recurringId,
         repeatLabel: formatTaskListRepeatLabel(
           task.frequency,
           resolvedWeekDays,
@@ -66,7 +71,8 @@ export function useTaskListBoardQuery({
         sortOrder: task.displayIndex,
         assigneeName: task.writer.nickname,
         description: task.description ?? '',
-        startedAtLabel: task.date.slice(0, 10),
+        startedAtRaw: task.date,
+        startedAtLabel: toTaskListDateKey(task.date),
         taskListId: String(taskListId),
         teamId: groupId ?? '',
         comments: [],
@@ -113,33 +119,18 @@ export function useTaskListBoardQuery({
   const handleConfirmDelete = useCallback(async () => {
     if (!taskPendingDelete || !groupId) return;
     try {
-      await deleteTaskListBoardTask(groupId, taskListId, taskPendingDelete);
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.taskList.detail(groupId, taskListId, {
-            date: dateString,
-          }),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.taskList.all(groupId),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.team.detail(groupId),
-        }),
-      ]);
+      await deleteTaskMutation.mutateAsync({
+        recurringId: taskPendingDelete.recurringId,
+        taskId: taskPendingDelete.id,
+        taskListId,
+        teamId: groupId,
+      });
       setTaskPendingDelete(null);
       showToast('삭제되었습니다.', 'error');
     } catch {
       // TODO: 에러 처리
     }
-  }, [
-    dateString,
-    taskPendingDelete,
-    groupId,
-    taskListId,
-    queryClient,
-    showToast,
-  ]);
+  }, [deleteTaskMutation, groupId, showToast, taskListId, taskPendingDelete]);
 
   return {
     handleCloseDeleteModal,
