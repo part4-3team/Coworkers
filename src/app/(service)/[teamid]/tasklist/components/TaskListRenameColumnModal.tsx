@@ -7,6 +7,7 @@ import { useMemo, useRef, useState } from 'react';
 import type { TaskListRenameColumnModalProps } from '@/app/(service)/[teamid]/tasklist/types';
 import TitleInput from '@/components/common/form/components/TitleInput';
 import Modal from '@/components/common/modal';
+import { TASKLIST_TEXT_LIMIT } from '@/constants/TEXT_LIMIT';
 
 export default function TaskListRenameColumnModal({
   initialName,
@@ -22,6 +23,7 @@ export default function TaskListRenameColumnModal({
   const isDisabled =
     trimmedName.length === 0 ||
     trimmedName === initialName.trim() ||
+    name.length > 15 ||
     isSubmitting;
 
   const handleRename = async () => {
@@ -53,18 +55,18 @@ export default function TaskListRenameColumnModal({
           placeholder="목록 명을 입력해주세요."
           aria-label="목록 이름 변경"
           className="placeholder:text-interaction-inactive"
-          maxLength={15}
+          maxLength={TASKLIST_TEXT_LIMIT}
         />
         <div className="flex items-center justify-between mt-1">
           {isAtLimit ? (
             <p className="text-sm font-medium text-status-danger">
-              15자 이내로 작성해주세요.
+              {TASKLIST_TEXT_LIMIT}자 이내로 작성해주세요.
             </p>
           ) : (
             <span />
           )}
           <p className="text-right text-sm text-text-default">
-            {name.length}/15
+            {name.length}/{TASKLIST_TEXT_LIMIT}
           </p>
         </div>
       </div>

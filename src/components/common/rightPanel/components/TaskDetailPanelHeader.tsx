@@ -4,6 +4,7 @@ import { IcMoreVerticalSmall } from '@/assets';
 import { ListDropdown } from '@/components/common/dropdown';
 import { TitleInput } from '@/components/common/form';
 import type { TaskDetailPanelHeaderProps } from '@/components/common/rightPanel/types';
+import { TITLE_TEXT_LIMIT } from '@/constants/TEXT_LIMIT';
 
 export default function TaskDetailPanelHeader({
   draftTitle,
@@ -20,7 +21,7 @@ export default function TaskDetailPanelHeader({
         <TitleInput
           value={draftTitle}
           placeholder="제목을 입력해주세요."
-          maxLength={30}
+          maxLength={TITLE_TEXT_LIMIT}
           onChange={(event) => {
             onChangeDraftTitle(event.target.value);
           }}
@@ -28,13 +29,13 @@ export default function TaskDetailPanelHeader({
         <div className="flex items-center justify-between mt-1">
           {isAtLimit ? (
             <p className="text-sm font-medium text-status-danger">
-              30자 이내로 작성해주세요.
+              {TITLE_TEXT_LIMIT}자 이내로 작성해주세요.
             </p>
           ) : (
             <span />
           )}
           <p className="text-right text-sm text-text-default">
-            {draftTitle.length}/30
+            {draftTitle.length}/{TITLE_TEXT_LIMIT}
           </p>
         </div>
       </>

@@ -13,6 +13,7 @@ import {
 } from '@/app/(service)/[teamid]/tasklist/constants/createTaskModalConstants';
 import type { TaskListCreateTaskModalTextFieldsProps } from '@/app/(service)/[teamid]/tasklist/types';
 import Input from '@/components/common/form/components/Input';
+import { MEMO_TEXT_LIMIT, TITLE_TEXT_LIMIT } from '@/constants/TEXT_LIMIT';
 import { cn } from '@/utils/cn';
 
 export default function TaskListCreateTaskModalTextFields({
@@ -40,20 +41,20 @@ export default function TaskListCreateTaskModalTextFields({
               value={title}
               onChange={(event) => onTitleChange(event.target.value)}
               placeholder="할 일 제목을 입력해주세요."
-              maxLength={30}
+              maxLength={TITLE_TEXT_LIMIT}
               className={cn(CREATE_TASK_TITLE_INPUT_INNER_CLASS, 'px-4')}
             />
           </div>
           <div className="flex items-center justify-between">
-            {title.length >= 30 ? (
+            {title.length >= TITLE_TEXT_LIMIT ? (
               <p className="text-sm font-medium text-status-danger">
-                30자 이내로 작성해주세요.
+                {TITLE_TEXT_LIMIT}자 이내로 작성해주세요.
               </p>
             ) : (
               <span />
             )}
             <p className="text-right text-sm text-text-default">
-              {title.length}/30
+              {title.length}/{TITLE_TEXT_LIMIT}
             </p>
           </div>
         </div>
@@ -84,15 +85,15 @@ export default function TaskListCreateTaskModalTextFields({
             </div>
           </div>
           <div className="flex items-center justify-between">
-            {memo.length >= 255 ? (
+            {memo.length >= MEMO_TEXT_LIMIT ? (
               <p className="text-sm font-medium text-status-danger">
-                255자 이내로 작성해주세요.
+                {MEMO_TEXT_LIMIT}자 이내로 작성해주세요.
               </p>
             ) : (
               <span />
             )}
             <p className="text-right text-sm text-text-default">
-              {memo.length}/255
+              {memo.length}/{MEMO_TEXT_LIMIT}
             </p>
           </div>
         </div>
