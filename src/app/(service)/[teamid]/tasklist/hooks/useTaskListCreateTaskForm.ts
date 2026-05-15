@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useId, useMemo, useRef, useState } from 'react';
 
 import useTaskListCalendarPopover from '@/app/(service)/[teamid]/tasklist/hooks/useTaskListCalendarPopover';
 import type { TaskListCreateTaskRepeatValue } from '@/app/(service)/[teamid]/tasklist/types';
@@ -19,6 +12,7 @@ import {
   getCurrentCalendarDate,
   getCurrentTimeString,
 } from '@/app/(service)/[teamid]/tasklist/utils/taskListDate';
+import useClickOutside from '@/hooks/useClickOutside';
 
 export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
   const formId = useId();
@@ -45,53 +39,17 @@ export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
   } = useTaskListCalendarPopover();
 
   const timePopoverContainerRef = useRef<HTMLDivElement>(null);
+  const timePopoverButtonRef = useRef<HTMLButtonElement>(null);
   const [isTimePopoverOpen, setIsTimePopoverOpen] = useState(false);
 
   const closeTimePopover = useCallback(() => {
     setIsTimePopoverOpen(false);
   }, []);
 
-  useEffect(() => {
-    if (!isTimePopoverOpen) return;
-
-    requestAnimationFrame(() => {
-      timePopoverContainerRef.current?.focus();
-    });
-
-    const isInsidePopover = (target: EventTarget | null) =>
-      target instanceof Node &&
-      timePopoverContainerRef.current?.contains(target);
-
-    const handleMouseDown = (event: MouseEvent) => {
-      if (isInsidePopover(event.target)) return;
-      setIsTimePopoverOpen(false);
-    };
-
-    let touchStartY = 0;
-
-    const handleTouchStart = (event: TouchEvent) => {
-      touchStartY = event.touches[0]?.clientY ?? 0;
-    };
-
-    const handleTouchEnd = (event: TouchEvent) => {
-      const touchEndY = event.changedTouches[0]?.clientY ?? 0;
-      if (Math.abs(touchEndY - touchStartY) > 10) return;
-      if (isInsidePopover(event.target)) return;
-      setIsTimePopoverOpen(false);
-    };
-
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('touchstart', handleTouchStart, {
-      passive: true,
-    });
-    document.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      document.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [isTimePopoverOpen]);
+  useClickOutside({
+    onClickOutside: closeTimePopover,
+    refs: [timePopoverContainerRef, timePopoverButtonRef],
+  });
 
   const handleDateChange = useCallback(
     (date: Date | null) => {
@@ -173,6 +131,7 @@ export function useTaskListCreateTaskForm(initialSelectedDate: Date) {
     setStartTime,
     setTitle,
     startTime,
+    timePopoverButtonRef,
     timePopoverContainerRef,
     title,
     toggleWeekDay,
