@@ -45,11 +45,11 @@ function isSectionIncludedInRange(
     : isDateWithinHistoryRange(section.parsedDate, range);
 }
 
-function sortSectionsByLatestDate(
+function sortSectionsByEarliestDate(
   firstSection: HistorySectionWithParsedDate,
   secondSection: HistorySectionWithParsedDate,
 ) {
-  return secondSection.parsedDate.getTime() - firstSection.parsedDate.getTime();
+  return firstSection.parsedDate.getTime() - secondSection.parsedDate.getTime();
 }
 
 function toSectionViewModel(
@@ -69,6 +69,6 @@ export function buildVisibleHistorySections(
   return sections
     .map(toDisplaySection)
     .filter((section) => isSectionIncludedInRange(section, range))
-    .sort(sortSectionsByLatestDate)
+    .sort(sortSectionsByEarliestDate)
     .map(toSectionViewModel);
 }

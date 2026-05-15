@@ -17,9 +17,9 @@ import {
 } from '@/app/(service)/myhistory/utils/getHistorySections';
 import {
   getCompletedTasksInRange,
-  getLatestHistoryTaskDate,
   toCompletedTaskRecords,
 } from '@/app/(service)/myhistory/utils/myHistoryData';
+import { getCurrentHistoryCalendarDate } from '@/app/(service)/myhistory/utils/myHistoryKoreaDate';
 import { useCompletedTasksQuery } from '@/hooks/useUser';
 
 export default function useHistoryBoardQuery(
@@ -32,10 +32,7 @@ export default function useHistoryBoardQuery(
     () => toCompletedTaskRecords(data),
     [data],
   );
-  const defaultAnchorDate = useMemo(
-    () => getLatestHistoryTaskDate(completedTasks) ?? new Date(),
-    [completedTasks],
-  );
+  const defaultAnchorDate = useMemo(() => getCurrentHistoryCalendarDate(), []);
   const {
     handleApplyRange,
     handleMoveMonth,
@@ -45,6 +42,7 @@ export default function useHistoryBoardQuery(
     title,
   } = useHistorySelectedRange({
     defaultAnchorDate,
+    viewMode,
   });
   const completedTasksInRange = useMemo(
     () =>

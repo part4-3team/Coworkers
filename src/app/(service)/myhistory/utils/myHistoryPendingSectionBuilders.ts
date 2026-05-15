@@ -8,6 +8,7 @@ import type {
   MyHistoryTask,
   PendingTaskSource,
 } from '@/app/(service)/myhistory/types';
+import { toHistoryDateKey } from '@/app/(service)/myhistory/utils/myHistoryKoreaDate';
 import {
   formatHistoryTaskFrequency,
   toDateLabel,
@@ -16,7 +17,7 @@ import {
 } from '@/app/(service)/myhistory/utils/myHistoryShared';
 
 function toPendingTaskDateKey(source: PendingTaskSource) {
-  return source.task.date.slice(0, 10) || source.source.dateKey;
+  return toHistoryDateKey(source.task.date) ?? source.source.dateKey;
 }
 
 function toPendingHistoryTask({ source, task }: PendingTaskSource) {
@@ -45,7 +46,7 @@ function collapsePendingSourcesByIdentity(
   sources: readonly HistoryTaskListDetailSource[],
   activeTeamId: string | null,
 ) {
-  const latestPendingTaskMap = new Map<string, PendingTaskSource>();
+  const nearestPendingTaskMap = new Map<string, PendingTaskSource>();
 
   sources.forEach((source) => {
     if (activeTeamId && source.teamId !== activeTeamId) {
@@ -61,15 +62,24 @@ function collapsePendingSourcesByIdentity(
         task.id,
         task.recurringId,
       );
-      const previousTask = latestPendingTaskMap.get(taskIdentityKey);
+      const previousTask = nearestPendingTaskMap.get(taskIdentityKey);
+      const currentDateKey = toPendingTaskDateKey({ source, task });
+      const previousDateKey = previousTask
+        ? toPendingTaskDateKey(previousTask)
+        : null;
 
-      if (!previousTask || task.date > previousTask.task.date) {
-        latestPendingTaskMap.set(taskIdentityKey, { source, task });
+      if (
+        !previousTask ||
+        (previousDateKey && currentDateKey < previousDateKey) ||
+        (previousDateKey === currentDateKey &&
+          task.date.localeCompare(previousTask.task.date) < 0)
+      ) {
+        nearestPendingTaskMap.set(taskIdentityKey, { source, task });
       }
     });
   });
 
-  return Array.from(latestPendingTaskMap.values());
+  return Array.from(nearestPendingTaskMap.values());
 }
 
 export function buildPendingHistoryDateSections(
