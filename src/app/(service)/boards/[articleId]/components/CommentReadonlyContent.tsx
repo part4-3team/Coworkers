@@ -1,5 +1,6 @@
 'use client';
 
+import CommentExpandableText from '@/app/(service)/boards/[articleId]/components/CommentExpandableText';
 import CommentWriterAvatar from '@/app/(service)/boards/[articleId]/components/CommentWriterAvatar';
 import type { Comment } from '@/app/(service)/boards/[articleId]/types';
 import { formatRelativeOrYmdHm } from '@/app/(service)/boards/utils/boardDisplayUtils';
@@ -50,7 +51,7 @@ export default function CommentReadonlyContent({
                   height={20}
                   className="cursor-pointer shrink-0"
                   role="img"
-                  aria-label="더보기 메뉴"
+                  aria-label="메뉴"
                 />
               }
               items={menuItems}
