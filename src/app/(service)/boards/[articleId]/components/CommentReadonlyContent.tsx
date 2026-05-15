@@ -1,7 +1,9 @@
+'use client';
+
 import CommentExpandableText from '@/app/(service)/boards/[articleId]/components/CommentExpandableText';
 import CommentWriterAvatar from '@/app/(service)/boards/[articleId]/components/CommentWriterAvatar';
 import type { Comment } from '@/app/(service)/boards/[articleId]/types';
-import { formatDateToYmd } from '@/app/(service)/boards/utils/boardDisplayUtils';
+import { formatRelativeOrYmdHm } from '@/app/(service)/boards/utils/boardDisplayUtils';
 import { IcMoreVerticalLarge } from '@/assets';
 import ListDropdown from '@/components/common/dropdown/components/ListDropdown';
 
@@ -31,8 +33,11 @@ export default function CommentReadonlyContent({
             {comment.writer.nickname}
           </p>
           <CommentExpandableText content={comment.content} />
-          <p className="text-sm font-medium text-interaction-inactive">
-            {formatDateToYmd(comment.createdAt)}
+          <p
+            className="text-sm font-medium text-interaction-inactive"
+            suppressHydrationWarning
+          >
+            {formatRelativeOrYmdHm(comment.createdAt)}
           </p>
         </div>
         <div className="shrink-0">
