@@ -8,7 +8,7 @@ import type {
   UserProfileResponse,
 } from '@/app/(service)/boards/[articleId]/types';
 import {
-  formatDateToYmd,
+  formatDateToYmdHm,
   getLikeCount,
 } from '@/app/(service)/boards/utils/boardDisplayUtils';
 import { IcHeartFilledRed, IcHeartSmall, IcMoreVerticalLarge } from '@/assets';
@@ -82,7 +82,7 @@ export default function BoardDetailHeader({
             |
           </span>
           <span className="text-interaction-inactive text-sm font-medium leading-4 shrink-0 md:text-base">
-            {formatDateToYmd(boardDetail.createdAt)}
+            {formatDateToYmdHm(boardDetail.createdAt)}
           </span>
         </div>
         <div className="flex shrink-0 items-center gap-1">
