@@ -131,13 +131,16 @@ export default function TaskDetailPanelContent({
     const titleToSave = draftTitle;
     const descriptionToSave = draftDescription;
 
-    if (hasTaskChanges) {
-      const ok = await handleSubmitTaskEdit();
+    // 1. 일정이 변경되었다면 서버에 일정 수정을 먼저 요청합니다.
+    if (hasPendingScheduleChanges) {
+      const ok = await commitScheduleEdit(titleToSave, descriptionToSave);
       if (!ok) return false;
     }
 
-    if (hasPendingScheduleChanges) {
-      const ok = await commitScheduleEdit(titleToSave, descriptionToSave);
+    // 2. 제목/설명이 변경되었거나, '일정만 변경된 경우'에도
+    // 패널의 수정 모드를 정상 종료(뷰 전환)하고 동기화하기 위해 handleSubmitTaskEdit를 실행합니다.
+    if (hasTaskChanges || hasPendingScheduleChanges) {
+      const ok = await handleSubmitTaskEdit();
       if (!ok) return false;
     }
 
