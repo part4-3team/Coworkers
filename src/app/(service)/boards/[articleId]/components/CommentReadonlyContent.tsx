@@ -1,6 +1,9 @@
+'use client';
+
+import CommentExpandableText from '@/app/(service)/boards/[articleId]/components/CommentExpandableText';
 import CommentWriterAvatar from '@/app/(service)/boards/[articleId]/components/CommentWriterAvatar';
 import type { Comment } from '@/app/(service)/boards/[articleId]/types';
-import { formatDateToYmd } from '@/app/(service)/boards/utils/boardDisplayUtils';
+import { formatRelativeOrYmdHm } from '@/app/(service)/boards/utils/boardDisplayUtils';
 import { IcMoreVerticalLarge } from '@/assets';
 import ListDropdown from '@/components/common/dropdown/components/ListDropdown';
 
@@ -29,11 +32,12 @@ export default function CommentReadonlyContent({
           <p className="text-sm font-bold text-text-primary">
             {comment.writer.nickname}
           </p>
-          <p className="line-clamp-1 text-sm font-normal text-text-primary">
-            {comment.content}
-          </p>
-          <p className="text-sm font-medium text-interaction-inactive">
-            {formatDateToYmd(comment.createdAt)}
+          <CommentExpandableText content={comment.content} />
+          <p
+            className="text-sm font-medium text-interaction-inactive"
+            suppressHydrationWarning
+          >
+            {formatRelativeOrYmdHm(comment.createdAt)}
           </p>
         </div>
         <div className="shrink-0">
@@ -45,7 +49,7 @@ export default function CommentReadonlyContent({
                   height={20}
                   className="cursor-pointer shrink-0"
                   role="img"
-                  aria-label="더보기 메뉴"
+                  aria-label="메뉴"
                 />
               }
               items={menuItems}

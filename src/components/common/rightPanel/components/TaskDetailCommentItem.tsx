@@ -9,6 +9,7 @@ import { ListDropdown } from '@/components/common/dropdown';
 import RightPanelAvatar from '@/components/common/rightPanel/components/RightPanelAvatar';
 import TaskDetailCommentActions from '@/components/common/rightPanel/components/TaskDetailCommentActions';
 import type { TaskDetailCommentItemProps } from '@/components/common/rightPanel/types';
+import { formatCommentTime } from '@/components/common/rightPanel/utils/rightPanelCommentParsers';
 
 export default function TaskDetailCommentItem({
   comment,
@@ -108,8 +109,11 @@ export default function TaskDetailCommentItem({
             )}
           </div>
 
-          <div className="mt-2 text-sm font-medium text-interaction-inactive mb-5">
-            {comment.meta}
+          <div
+            className="mt-2 text-sm font-medium text-interaction-inactive mb-5"
+            suppressHydrationWarning
+          >
+            {formatCommentTime(comment.createdAt)}
           </div>
         </div>
       </div>

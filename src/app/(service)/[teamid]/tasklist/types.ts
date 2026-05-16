@@ -21,6 +21,7 @@ export type TaskListTaskComment = {
   authorImage: string | null;
   content: string;
   meta: string;
+  createdAt: string;
 };
 
 export type TaskListBoardTask = {
@@ -36,6 +37,7 @@ export type TaskListBoardTask = {
   recurringId: string | null;
   repeatLabel: string;
   sortOrder: number;
+  startDate?: string;
   startedAtRaw: string;
   startedAtLabel: string;
   taskListId: string;
@@ -124,6 +126,7 @@ export type TaskListCreateTaskModalDateTimeSectionProps = {
   selectedDate: Date;
   startTime: string;
   timePopoverContainerRef: RefObject<HTMLDivElement | null>;
+  timePopoverButtonRef: RefObject<HTMLButtonElement | null>;
   onStartTimeChange: (value: string) => void;
 };
 
@@ -370,6 +373,8 @@ export type TaskListSelectDropdownVariant = 'overlay' | 'inlineExpand';
 export type TaskListSelectDropdownProps<T extends string> = {
   buttonClassName?: string;
   className?: string;
+  /** true이면 항목 선택 시에만 닫히고 바깥 클릭으로는 닫히지 않습니다. */
+  closeOnSelectOnly?: boolean;
   items: TaskListSelectDropdownItem<T>[];
   menuClassName?: string;
   onChange: (value: T) => void;

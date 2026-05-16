@@ -11,8 +11,14 @@ type UseDropdownReturn = {
   containerRef: React.RefObject<HTMLDivElement | null>;
 };
 
+type UseDropdownOptions = {
+  /** true이면 바깥 클릭·터치로 닫히지 않고 명시적 close 호출로만 닫힙니다. */
+  disableOutsideClose?: boolean;
+};
+
 export function useDropdown(
   ignoreRefs: React.RefObject<HTMLElement | null>[] = [],
+  { disableOutsideClose = false }: UseDropdownOptions = {},
 ): UseDropdownReturn {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,6 +27,8 @@ export function useDropdown(
   const close = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
+    if (disableOutsideClose) return;
+
     const handleOutsidePointerDown = (event: PointerEvent) => {
       const target = event.target as Node;
 
@@ -49,7 +57,7 @@ export function useDropdown(
       document.removeEventListener('pointerdown', handleOutsidePointerDown);
       document.removeEventListener('keydown', handleEscapeKeyDown);
     };
-  }, [isOpen, close, ignoreRefs]);
+  }, [isOpen, close, ignoreRefs, disableOutsideClose]);
 
   return { isOpen, toggle, close, containerRef };
 }
