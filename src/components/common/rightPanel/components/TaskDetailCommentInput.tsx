@@ -83,21 +83,45 @@ export default function TaskDetailCommentInput({
   };
 
   return (
-    <div className="flex items-center gap-3 border-y border-background-tertiary py-3">
-      <RightPanelAvatar alt="" image={userImage} />
-
-      <textarea
-        ref={textareaRef}
-        value={value}
-        disabled={isSubmitting}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        maxLength={COMMENT_TEXT_LIMIT}
-        rows={1}
-        placeholder="댓글을 달아주세요"
-        className="min-h-6 flex-1 resize-none overflow-hidden bg-transparent text-sm font-medium text-text-primary outline-none placeholder:text-text-default md:text-base"
-      />
-      <div className="flex items-center justify-between mt-1">
+    <>
+      <div className="flex flex-row items-center gap-3 border-y border-background-tertiary py-3">
+        <RightPanelAvatar alt="" image={userImage} />
+        <textarea
+          ref={textareaRef}
+          value={value}
+          disabled={isSubmitting}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          maxLength={COMMENT_TEXT_LIMIT}
+          rows={1}
+          placeholder="댓글을 달아주세요"
+          className="min-h-6 flex-1 resize-none overflow-hidden bg-transparent text-sm font-medium text-text-primary outline-none placeholder:text-text-default md:text-base"
+        />
+        <button
+          type="button"
+          aria-label="댓글 등록"
+          onClick={handleSubmit}
+          disabled={!isActive}
+          className="flex size-6 shrink-0 items-center justify-center"
+        >
+          {isActive ? (
+            <IcArrowUpCircleActive
+              width={24}
+              height={24}
+              className="size-6"
+              aria-hidden="true"
+            />
+          ) : (
+            <IcArrowUpCircle
+              width={24}
+              height={24}
+              className="size-6"
+              aria-hidden="true"
+            />
+          )}
+        </button>
+      </div>
+      <div className="flex items-center justify-between mt-1 w-full">
         {isCommentAtLimit ? (
           <p className="text-left text-sm font-medium text-status-danger">
             {COMMENT_TEXT_LIMIT}자 이내로 작성해주세요.
@@ -109,29 +133,6 @@ export default function TaskDetailCommentInput({
           {value.length}/{COMMENT_TEXT_LIMIT}
         </p>
       </div>
-      <button
-        type="button"
-        aria-label="댓글 등록"
-        onClick={handleSubmit}
-        disabled={!isActive}
-        className="flex size-6 shrink-0 items-center justify-center"
-      >
-        {isActive ? (
-          <IcArrowUpCircleActive
-            width={24}
-            height={24}
-            className="size-6"
-            aria-hidden="true"
-          />
-        ) : (
-          <IcArrowUpCircle
-            width={24}
-            height={24}
-            className="size-6"
-            aria-hidden="true"
-          />
-        )}
-      </button>
-    </div>
+    </>
   );
 }
