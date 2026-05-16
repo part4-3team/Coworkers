@@ -32,7 +32,10 @@ export default function CommentReadonlyContent({
           <p className="text-sm font-bold text-text-primary">
             {comment.writer.nickname}
           </p>
-          <CommentExpandableText content={comment.content} />
+          <CommentExpandableText
+            content={comment.content}
+            textClassName="min-w-0 wrap-anywhere font-normal text-text-primary"
+          />
           <p
             className="text-sm font-medium text-interaction-inactive"
             suppressHydrationWarning
