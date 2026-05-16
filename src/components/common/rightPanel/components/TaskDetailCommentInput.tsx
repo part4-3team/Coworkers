@@ -8,6 +8,7 @@ import { type ChangeEvent, type KeyboardEvent, useRef, useState } from 'react';
 
 import { IcArrowUpCircle, IcArrowUpCircleActive } from '@/assets';
 import RightPanelAvatar from '@/components/common/rightPanel/components/RightPanelAvatar';
+import { COMMENT_TEXT_LIMIT } from '@/constants/TEXT_LIMIT';
 
 type TaskDetailCommentInputProps = {
   isSubmitting: boolean;
@@ -23,6 +24,8 @@ export default function TaskDetailCommentInput({
   const [value, setValue] = useState('');
   const [isSubmittingLocally, setIsSubmittingLocally] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const isCommentAtLimit = value.length >= COMMENT_TEXT_LIMIT;
 
   const isActive =
     value.trim().length > 0 && !isSubmitting && !isSubmittingLocally;
@@ -89,11 +92,23 @@ export default function TaskDetailCommentInput({
         disabled={isSubmitting}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        maxLength={COMMENT_TEXT_LIMIT}
         rows={1}
         placeholder="댓글을 달아주세요"
         className="min-h-6 flex-1 resize-none overflow-hidden bg-transparent text-sm font-medium text-text-primary outline-none placeholder:text-text-default md:text-base"
       />
-
+      <div className="flex items-center justify-between mt-1">
+        {isCommentAtLimit ? (
+          <p className="text-left text-sm font-medium text-status-danger">
+            {COMMENT_TEXT_LIMIT}자 이내로 작성해주세요.
+          </p>
+        ) : (
+          <span />
+        )}
+        <p className="text-right text-sm text-text-default">
+          {value.length}/{COMMENT_TEXT_LIMIT}
+        </p>
+      </div>
       <button
         type="button"
         aria-label="댓글 등록"
