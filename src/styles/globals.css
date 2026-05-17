@@ -1,7 +1,18 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 @import 'react-datepicker/dist/react-datepicker.css';
 @import './colors.css';
 @import './datePicker.css';
+
+/* @tailwindcss/typography가 전역으로 추가하는 margin/padding을 .prose 밖에서 초기화합니다 */
+:is(p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, pre):not(:where(.prose, .prose *)) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+:is(ul, ol):not(:where(.prose, .prose *)) {
+  padding-inline-start: 0;
+}
 
 body {
   background: var(--color-background-primary);
