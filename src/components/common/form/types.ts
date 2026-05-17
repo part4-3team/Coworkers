@@ -1,3 +1,5 @@
+/** 폼 컴포넌트 TypeScript 타입 정의 파일입니다. */
+
 import type {
   InputHTMLAttributes,
   ReactNode,

@@ -1,3 +1,5 @@
+/** 게시글 상세 본문 컴포넌트입니다. */
+
 import type { BoardDetailProps } from '@/app/(service)/boards/[articleId]/types';
 import BoardPostImageWithFallback from '@/app/(service)/boards/components/BoardPostImageWithFallback';
 

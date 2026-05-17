@@ -1,3 +1,5 @@
+/** 게시판 목록 페이지 헤더(검색·정렬) 컴포넌트입니다. */
+
 import BoardSearch from '@/app/(service)/boards/components/BoardSearch';
 import type { BoardListSortValue } from '@/app/(service)/boards/types';
 
