@@ -60,29 +60,13 @@ export default function BoardContentEditor({
       </div>
 
       {isPreview ? (
-        <div
-          className={cn(
-            'min-h-50 md:min-h-60 w-full rounded-xl border border-border-primary bg-background-secondary px-4 py-3',
-            'prose prose-sm md:prose-base max-w-none min-w-0 wrap-anywhere text-text-primary',
-            'prose-headings:text-text-primary',
-            'prose-p:text-text-primary prose-p:leading-6',
-            'prose-strong:text-text-primary',
-            'prose-em:text-text-primary',
-            'prose-code:text-text-primary prose-code:bg-background-primary prose-code:rounded prose-code:px-1',
-            'prose-pre:bg-background-primary prose-pre:rounded-lg prose-pre:p-3',
-            'prose-blockquote:border-brand-primary prose-blockquote:text-text-secondary',
-            'prose-ul:text-text-primary prose-ol:text-text-primary',
-            'prose-li:text-text-primary',
-            'prose-a:text-brand-primary prose-a:underline',
-            'prose-hr:border-border-primary',
-          )}
-        >
+        <div className="markdown-body min-h-50 md:min-h-60 w-full rounded-xl border border-border-primary bg-background-secondary px-4 py-3">
           {value.trim() ? (
             <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
               {value}
             </ReactMarkdown>
           ) : (
-            <p className="text-text-disabled not-prose">
+            <p className="text-text-disabled" style={{ margin: 0 }}>
               미리볼 내용이 없습니다.
             </p>
           )}

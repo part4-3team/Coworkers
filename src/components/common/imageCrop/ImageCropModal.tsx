@@ -65,66 +65,64 @@ export default function ImageCropModal({
   return (
     <ModalPortal>
       <div
-        className="fixed inset-0 z-999 bg-black/60 overflow-y-auto"
+        className="fixed inset-0 z-999 flex items-center justify-center bg-black/60 px-4 py-6"
         onClick={onClose}
       >
-        <div className="min-h-full flex justify-center items-end pt-12 md:items-center md:py-6 md:px-4">
-          <div
-            className="relative w-full bg-background-primary rounded-tl-xl rounded-tr-xl py-8 px-5 md:rounded-3xl md:p-6 md:max-w-sm"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <p className="text-xl font-bold text-center mb-5">이미지 편집</p>
+        <div
+          className="relative w-full bg-background-primary rounded-3xl p-6 max-w-sm"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <p className="text-xl font-bold text-center mb-5">이미지 편집</p>
 
-            <div className="relative h-72 w-full overflow-hidden rounded-xl bg-black">
-              <Cropper
-                image={imageSrc}
-                crop={crop}
-                zoom={zoom}
-                aspect={1}
-                cropShape={cropShape}
-                showGrid={false}
-                onCropChange={setCrop}
-                onZoomChange={setZoom}
-                onCropComplete={handleCropComplete}
-              />
-            </div>
+          <div className="relative h-72 w-full overflow-hidden rounded-xl bg-black">
+            <Cropper
+              image={imageSrc}
+              crop={crop}
+              zoom={zoom}
+              aspect={1}
+              cropShape={cropShape}
+              showGrid={false}
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={handleCropComplete}
+            />
+          </div>
 
-            <div className="mt-4 flex items-center gap-3">
-              <span className="text-xs text-text-secondary whitespace-nowrap">
-                축소
-              </span>
-              <input
-                type="range"
-                min={1}
-                max={3}
-                step={0.01}
-                value={zoom}
-                aria-label="이미지 확대/축소"
-                onChange={(e) => setZoom(Number(e.target.value))}
-                className="w-full accent-brand-primary"
-              />
-              <span className="text-xs text-text-secondary whitespace-nowrap">
-                확대
-              </span>
-            </div>
+          <div className="mt-4 flex items-center gap-3">
+            <span className="text-xs text-text-secondary whitespace-nowrap">
+              축소
+            </span>
+            <input
+              type="range"
+              min={1}
+              max={3}
+              step={0.01}
+              value={zoom}
+              aria-label="이미지 확대/축소"
+              onChange={(e) => setZoom(Number(e.target.value))}
+              className="w-full accent-brand-primary"
+            />
+            <span className="text-xs text-text-secondary whitespace-nowrap">
+              확대
+            </span>
+          </div>
 
-            <div className="flex gap-2 mt-6 w-full mx-auto max-w-90">
-              <button
-                type="button"
-                className="border border-border-secondary rounded-xl px-4 py-2.75 w-full text-text-default font-medium hover:bg-background-secondary"
-                onClick={onClose}
-              >
-                취소
-              </button>
-              <button
-                type="button"
-                className="bg-brand-primary rounded-xl px-4 py-2.75 w-full text-white font-medium hover:enabled:bg-interaction-hover disabled:bg-interaction-inactive"
-                onClick={handleConfirm}
-                disabled={isSubmitting}
-              >
-                적용
-              </button>
-            </div>
+          <div className="flex gap-2 mt-6 w-full mx-auto max-w-90">
+            <button
+              type="button"
+              className="border border-border-secondary rounded-xl px-4 py-2.75 w-full text-text-default font-medium hover:bg-background-secondary"
+              onClick={onClose}
+            >
+              취소
+            </button>
+            <button
+              type="button"
+              className="bg-brand-primary rounded-xl px-4 py-2.75 w-full text-white font-medium hover:enabled:bg-interaction-hover disabled:bg-interaction-inactive"
+              onClick={handleConfirm}
+              disabled={isSubmitting}
+            >
+              적용
+            </button>
           </div>
         </div>
       </div>

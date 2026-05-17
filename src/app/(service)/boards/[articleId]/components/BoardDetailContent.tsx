@@ -10,20 +10,7 @@ import BoardPostImageWithFallback from '@/app/(service)/boards/components/BoardP
 export default function BoardDetailContent({ boardDetail }: BoardDetailProps) {
   return (
     <div className="min-h-50 min-w-0 py-4 md:py-7 lg:pb-10">
-      <div
-        className="prose prose-sm md:prose-base max-w-none min-w-0 wrap-anywhere text-text-primary
-        prose-headings:text-text-primary
-        prose-p:text-text-primary prose-p:leading-6
-        prose-strong:text-text-primary
-        prose-em:text-text-primary
-        prose-code:text-text-primary prose-code:bg-background-secondary prose-code:rounded prose-code:px-1
-        prose-pre:bg-background-secondary prose-pre:rounded-lg prose-pre:p-3
-        prose-blockquote:border-brand-primary prose-blockquote:text-text-secondary
-        prose-ul:text-text-primary prose-ol:text-text-primary
-        prose-li:text-text-primary
-        prose-a:text-brand-primary prose-a:underline
-        prose-hr:border-border-primary"
-      >
+      <div className="markdown-body">
         <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
           {boardDetail.content}
         </ReactMarkdown>
