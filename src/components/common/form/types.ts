@@ -46,8 +46,11 @@ export type DatePickerRangeValue = [Date | null, Date | null];
 
 export type ImageUploadFieldVariant = 'post' | 'profile';
 
+export type ImageCropShape = 'round' | 'rect';
+
 export type ImageUploadFieldProps = {
   buttonAriaLabel: string;
+  cropShape?: ImageCropShape;
   disabled?: boolean;
   id?: string;
   onChangeFile?: (file: File | null) => void;
