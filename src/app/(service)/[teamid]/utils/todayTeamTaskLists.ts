@@ -2,6 +2,7 @@
  * 팀 메인 화면에서 오늘 날짜 기준 task list 데이터를 만드는 유틸입니다.
  */
 
+import { getSafeTaskArray } from '@/app/(service)/[teamid]/tasklist/utils/taskListRuntimeGuards';
 import type { TaskList } from '@/app/(service)/[teamid]/types';
 import type { Task as ApiTask } from '@/types/task';
 
@@ -44,12 +45,22 @@ function toTeamTaskItem(task: ApiTask) {
 }
 
 export function toTodayTeamTaskLists(
-  taskLists: readonly TeamTaskListSummaryLike[],
+  taskLists: readonly (TeamTaskListSummaryLike | null | undefined)[],
   taskListDetails: readonly ({ tasks?: ApiTask[] } | undefined)[],
 ) {
-  return taskLists.map((taskList, index) => ({
-    id: taskList.id,
-    name: taskList.name,
-    tasks: (taskListDetails[index]?.tasks ?? []).map(toTeamTaskItem),
-  })) satisfies TaskList[];
+  return taskLists.reduce<TaskList[]>((safeTaskLists, taskList, index) => {
+    if (!taskList) {
+      return safeTaskLists;
+    }
+
+    safeTaskLists.push({
+      id: taskList.id,
+      name: taskList.name,
+      tasks: getSafeTaskArray(taskListDetails[index]?.tasks).map(
+        toTeamTaskItem,
+      ),
+    });
+
+    return safeTaskLists;
+  }, []);
 }
