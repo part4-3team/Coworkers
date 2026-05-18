@@ -56,7 +56,7 @@ export function useTaskListBoardQuery({
           : null;
 
       return {
-        assigneeImage: task.writer.image,
+        assigneeImage: task.writer?.image ?? null,
         id: String(task.id),
         title: task.name,
         checked: task.doneAt !== null,
@@ -69,7 +69,7 @@ export function useTaskListBoardQuery({
           resolvedWeekDays,
         ),
         sortOrder: task.displayIndex,
-        assigneeName: task.writer.nickname,
+        assigneeName: task.writer?.nickname ?? '',
         description: task.description ?? '',
         startDate: task.startDate,
         startedAtRaw: task.date,
