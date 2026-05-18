@@ -56,7 +56,10 @@ export function ModalTaskAdd({ onClose }: ModalTaskProps) {
       onPrimaryButtonClick={handleTaskAdd}
     >
       <Input
+        id="team-tasklist-add-name"
+        name="taskListName"
         placeholder="할 일 목록 명을 입력해주세요."
+        aria-label="할 일 목록 이름"
         disabled={isCreateTaskListPending}
         maxLength={TASKLIST_TEXT_LIMIT}
         onChange={(e) => setTaskListName(e.target.value)}
@@ -124,7 +127,10 @@ export function ModalTaskEdit({
       onPrimaryButtonClick={handleTaskEdit}
     >
       <Input
+        id="team-tasklist-edit-name"
+        name="taskListName"
         value={taskListName}
+        aria-label="할 일 목록 이름 변경"
         disabled={isUpdateTaskListPending}
         maxLength={TASKLIST_TEXT_LIMIT}
         onChange={(e) => setTaskListName(e.target.value)}
