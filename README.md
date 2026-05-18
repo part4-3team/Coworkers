@@ -107,8 +107,7 @@ React Query를 활용한 효율적인 서버 상태 관리와 직관적인 UI/UX
 
 <div align="center">
 
-<!-- 🖼️ 랜딩 페이지 스크린샷 (추후 추가) -->
-<!-- <img src="./docs/images/pages/landing.png" alt="Landing Page" width="80%" /> -->
+<img width="2511" height="4248" alt="image" src="https://github.com/user-attachments/assets/c85a77c1-f870-4bbe-9546-c2aad051c1f1" />
 
 </div>
 
@@ -122,8 +121,8 @@ React Query를 활용한 효율적인 서버 상태 관리와 직관적인 UI/UX
 
 <div align="center">
 
-<!-- 🖼️ 로그인·회원가입 페이지 스크린샷 (추후 추가) -->
-<!-- <img src="./docs/images/pages/auth.png" alt="Auth Pages" width="80%" /> -->
+<img width="2508" height="1252" alt="image" src="https://github.com/user-attachments/assets/ba581bd9-7e17-4722-959b-95de000caf81" />
+<img width="2508" height="1252" alt="image" src="https://github.com/user-attachments/assets/cc70a0ab-c21e-4725-a1a2-324c01b0c5b8" />
 
 </div>
 
@@ -139,8 +138,7 @@ React Query를 활용한 효율적인 서버 상태 관리와 직관적인 UI/UX
 
 <div align="center">
 
-<!-- 🖼️ 팀 페이지 스크린샷 (추후 추가) -->
-<!-- <img src="./docs/images/pages/team.png" alt="Team Page" width="80%" /> -->
+<img width="2508" height="1252" alt="image" src="https://github.com/user-attachments/assets/43c05887-ffaf-44c9-ae9f-033da38d14ea" />
 
 </div>
 
@@ -156,8 +154,7 @@ React Query를 활용한 효율적인 서버 상태 관리와 직관적인 UI/UX
 
 <div align="center">
 
-<!-- 🖼️ 할 일 리스트 스크린샷 (추후 추가) -->
-<!-- <img src="./docs/images/pages/tasklist.png" alt="Task List Page" width="80%" /> -->
+<img width="2508" height="1252" alt="image" src="https://github.com/user-attachments/assets/a61c1364-ca69-4912-a96e-bd5bdf427731" />
 
 </div>
 
@@ -169,12 +166,11 @@ React Query를 활용한 효율적인 서버 상태 관리와 직관적인 UI/UX
 
 ---
 
-### 📋 자유게시판 `/boards`
+### 📋 채용/홍보 게시판 `/boards`
 
 <div align="center">
 
-<!-- 🖼️ 자유게시판 스크린샷 (추후 추가) -->
-<!-- <img src="./docs/images/pages/boards.png" alt="Boards Page" width="80%" /> -->
+<img width="2508" height="1252" alt="image" src="https://github.com/user-attachments/assets/7250fbeb-2ada-45bd-b16b-02d6eefecf5b" />
 
 </div>
 
@@ -190,8 +186,7 @@ React Query를 활용한 효율적인 서버 상태 관리와 직관적인 UI/UX
 
 <div align="center">
 
-<!-- 🖼️ 마이 히스토리 스크린샷 (추후 추가) -->
-<!-- <img src="./docs/images/pages/myhistory.png" alt="My History Page" width="80%" /> -->
+<img width="2508" height="1252" alt="image" src="https://github.com/user-attachments/assets/1af3dffc-2454-4c20-bec2-5c4df66e6042" />
 
 </div>
 
@@ -205,8 +200,7 @@ React Query를 활용한 효율적인 서버 상태 관리와 직관적인 UI/UX
 
 <div align="center">
 
-<!-- 🖼️ 계정 설정 스크린샷 (추후 추가) -->
-<!-- <img src="./docs/images/pages/mypage.png" alt="My Page" width="80%" /> -->
+<img width="2508" height="1252" alt="image" src="https://github.com/user-attachments/assets/a9f01fc1-a5f8-46a7-9217-98260e56e1a6" />
 
 </div>
 
