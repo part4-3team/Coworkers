@@ -33,11 +33,13 @@ function toTeamTaskItem(task: ApiTask) {
     recurringId: task.recurringId,
     updatedAt: task.updatedAt,
     user: doneByUser,
-    writer: {
-      id: task.writer.id,
-      image: task.writer.image ?? '',
-      nickname: task.writer.nickname,
-    },
+    writer: task.writer
+      ? {
+          id: task.writer.id,
+          image: task.writer.image ?? '',
+          nickname: task.writer.nickname,
+        }
+      : { id: 0, image: '', nickname: '' },
   };
 }
 
