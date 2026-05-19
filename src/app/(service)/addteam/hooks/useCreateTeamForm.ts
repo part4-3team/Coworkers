@@ -90,12 +90,15 @@ export function useCreateTeamForm() {
     }
   });
 
+  const isPending =
+    createTeamMutation.isPending || uploadImageMutation.isPending;
+
   return {
     errorMessage: errors.teamName?.message ?? serverError,
     handleChangeFile,
     handleSubmit: handleSubmitForm,
-    isDisabled:
-      !isValid || createTeamMutation.isPending || uploadImageMutation.isPending,
+    isDisabled: !isValid || isPending,
+    isPending,
     teamNameField,
   };
 }

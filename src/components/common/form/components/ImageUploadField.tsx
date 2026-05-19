@@ -144,23 +144,25 @@ export default function ImageUploadField({
             aria-label={buttonAriaLabel}
             disabled={disabled}
           >
-            <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-[20px] border-2 border-border-primary bg-border-secondary md:rounded-4xl">
+            <div className="relative h-full w-full overflow-hidden rounded-[20px] border-2 border-border-primary bg-border-secondary md:rounded-4xl">
               {previewSrc ? (
                 <Image
                   src={previewSrc}
                   alt={previewAlt}
-                  width={98}
-                  height={98}
+                  fill
+                  sizes="100px"
                   loading="eager"
-                  className="h-full w-full object-cover"
+                  className="object-cover"
                 />
               ) : (
-                <IcUserLarge
-                  width={64}
-                  height={64}
-                  className="h-10 w-10 md:h-16 md:w-16"
-                  aria-hidden="true"
-                />
+                <span className="flex h-full w-full items-center justify-center">
+                  <IcUserLarge
+                    width={64}
+                    height={64}
+                    className="h-10 w-10 md:h-16 md:w-16"
+                    aria-hidden="true"
+                  />
+                </span>
               )}
             </div>
             <IcProfileEditLarge

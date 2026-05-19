@@ -44,13 +44,13 @@ export default function TeamProgress({ role, teamData }: TeamProgressProps) {
         {teamData ? (
           <>
             {teamData.image && (
-              <div className="size-9 shrink-0 overflow-hidden rounded-lg md:size-11">
+              <div className="relative size-9 shrink-0 overflow-hidden rounded-lg md:size-11">
                 <Image
                   src={teamData.image}
                   alt={`${teamData.name} 팀 이미지`}
-                  width={44}
-                  height={44}
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="(min-width: 768px) 44px, 36px"
+                  className="object-cover"
                 />
               </div>
             )}

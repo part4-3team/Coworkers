@@ -15,6 +15,7 @@ export default function CreateTeamPage() {
   const {
     errorMessage,
     isDisabled,
+    isPending,
     handleChangeFile,
     handleSubmit,
     teamNameField,
@@ -65,7 +66,7 @@ export default function CreateTeamPage() {
             disabled={isDisabled}
             className="mb-5 max-w-none"
           >
-            생성하기
+            {isPending ? '생성 중...' : '생성하기'}
           </PrimaryButton>
         </form>
 

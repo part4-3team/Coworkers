@@ -10,6 +10,15 @@ export type PixelCrop = {
 /** 5MB 파일 크기 제한 (바이트 단위) */
 export const IMAGE_UPLOAD_MAX_SIZE = 5 * 1024 * 1024;
 
+/**
+ * 이미지 URL을 <img> 요소로 로드합니다.
+ *
+ * 현대 브라우저(Chrome 81+, Firefox 79+, Safari 14+)에서는
+ * CSS image-orientation: from-image 가 기본값으로 적용되어,
+ * naturalWidth/naturalHeight 및 drawImage() 모두 EXIF 회전이 반영된
+ * 픽셀 데이터를 반환합니다. react-easy-crop도 동일한 기준을 사용하므로
+ * 좌표계가 자동으로 일치합니다.
+ */
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new window.Image();
@@ -40,6 +49,7 @@ export async function getCroppedImageFile(
   mimeType = 'image/jpeg',
 ): Promise<File> {
   const image = await loadImage(imageSrc);
+
   const canvas = document.createElement('canvas');
 
   // 출력 크기 고정 — zoom·원본 해상도와 무관하게 일정한 파일이 생성됨

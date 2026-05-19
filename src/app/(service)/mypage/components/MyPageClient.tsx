@@ -19,7 +19,7 @@ export default function MyPage() {
   const [isDirty, setIsDirty] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const { showToast } = useToast();
-  const { data: me } = useMeQuery();
+  const { data: me, isLoading: isMeLoading } = useMeQuery();
   const { isSocialLogin } = useSocialLoginState();
   const handleDiscardChanges = useCallback(() => setIsDirty(false), []);
 
@@ -28,16 +28,33 @@ export default function MyPage() {
     onDiscardChanges: handleDiscardChanges,
   });
 
-  const { mutateAsync: updateProfile } = useUpdateMeMutation({
-    onSuccess: () => {
-      setSubmitError(null);
-      dismissUnsavedToast();
-      showToast('변경되었습니다.', 'success');
-    },
-    onError: (error) => {
-      setSubmitError(error.message);
-    },
-  });
+  const { mutateAsync: updateProfile, isPending: isSubmitting } =
+    useUpdateMeMutation({
+      onSuccess: () => {
+        setSubmitError(null);
+        dismissUnsavedToast();
+        showToast('변경되었습니다.', 'success');
+      },
+      onError: (error) => {
+        setSubmitError(error.message);
+      },
+    });
+
+  if (isMeLoading) {
+    return (
+      <div
+        className="flex min-h-dvh items-center justify-center"
+        role="status"
+        aria-label="계정 정보를 불러오는 중"
+      >
+        <div className="sp-3balls">
+          <div className="ball ball01" />
+          <div className="ball ball02" />
+          <div className="ball ball03" />
+        </div>
+      </div>
+    );
+  }
 
   if (!me) return null;
 
@@ -73,8 +90,12 @@ export default function MyPage() {
             </button>
           </div>
           <div className="flex justify-center items-center pt-10 m-w-70 m-auto w-full">
-            <PrimaryButton form="accountForm" type="submit" disabled={!isDirty}>
-              변경하기
+            <PrimaryButton
+              form="accountForm"
+              type="submit"
+              disabled={!isDirty || isSubmitting}
+            >
+              {isSubmitting ? '저장 중...' : '변경하기'}
             </PrimaryButton>
           </div>
           {isWithdrawModalOpen && (

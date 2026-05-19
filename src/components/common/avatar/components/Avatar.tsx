@@ -34,9 +34,9 @@ export default function Avatar({
         <Image
           src={src}
           alt={alt ?? DEFAULT_AVATAR_ALT}
-          width={24}
-          height={24}
-          className="size-6 object-cover"
+          width={isSidebarFrame ? 40 : 24}
+          height={isSidebarFrame ? 40 : 24}
+          className="h-full w-full object-cover"
         />
       ) : (
         <IcUserLarge

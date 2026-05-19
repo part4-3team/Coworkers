@@ -155,6 +155,7 @@ export function useJoinTeamForm() {
     errorMessage: errors.teamLink?.message ?? serverError,
     handleSubmit: handleSubmitForm,
     isDisabled: !hasTeamLinkInput || acceptTeamInvitationMutation.isPending,
+    isPending: acceptTeamInvitationMutation.isPending,
     teamLinkField,
   };
 }

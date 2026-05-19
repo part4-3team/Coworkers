@@ -10,7 +10,7 @@ import { Input } from '@/components/common/form';
 import { cn } from '@/utils/cn';
 
 export default function JoinTeamPage() {
-  const { errorMessage, isDisabled, teamLinkField, handleSubmit } =
+  const { errorMessage, isDisabled, isPending, teamLinkField, handleSubmit } =
     useJoinTeamForm();
 
   return (
@@ -53,7 +53,7 @@ export default function JoinTeamPage() {
             disabled={isDisabled}
             className="mb-5 max-w-none"
           >
-            참여하기
+            {isPending ? '참여 중...' : '참여하기'}
           </PrimaryButton>
         </form>
 
