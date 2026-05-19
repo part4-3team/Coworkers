@@ -29,14 +29,23 @@ export default function BoardList({
   listSort,
 }: BoardListProps) {
   const router = useRouter();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
-    useArticleInfiniteListQuery({
-      params: {
-        ...BOARD_MAIN_LIST_PARAMS,
-        keyword,
-      },
-      teamId: TEAM_ID,
-    });
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    isPending,
+  } = useArticleInfiniteListQuery({
+    params: {
+      ...BOARD_MAIN_LIST_PARAMS,
+      keyword,
+    },
+    teamId: TEAM_ID,
+  });
+
+  /** 초기 로드가 아닌 검색어 변경·정렬 변경으로 재조회 중인 상태 */
+  const isRefetching = isFetching && !isPending;
 
   const boardPosts = useInfinitePages<Post>({ pages: data?.pages });
 
@@ -81,12 +90,15 @@ export default function BoardList({
 
       {isPending ? (
         <div
-          className="mt-5 items-center px-6 py-12 text-center md:mt-6 md:py-16"
+          className="mt-5 flex justify-center px-6 py-12 md:mt-6 md:py-16"
           role="status"
+          aria-label={BOARD_LIST_LOADING_MESSAGE}
         >
-          <span className="text-text-default text-sm font-regular md:text-sm">
-            {BOARD_LIST_LOADING_MESSAGE}
-          </span>
+          <div className="sp-3balls">
+            <div className="ball ball01" />
+            <div className="ball ball02" />
+            <div className="ball ball03" />
+          </div>
         </div>
       ) : !hasPostsValue ? (
         <div
@@ -100,10 +112,25 @@ export default function BoardList({
           </span>
         </div>
       ) : (
-        <div className="mt-5 grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {sortedPosts.map((post) => (
-            <BoardListCard key={post.id} post={post} />
-          ))}
+        <div className="relative mt-5">
+          {isRefetching && (
+            <div
+              className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background-primary/60"
+              role="status"
+              aria-label="검색 결과 불러오는 중"
+            >
+              <div className="sp-3balls">
+                <div className="ball ball01" />
+                <div className="ball ball02" />
+                <div className="ball ball03" />
+              </div>
+            </div>
+          )}
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+            {sortedPosts.map((post) => (
+              <BoardListCard key={post.id} post={post} />
+            ))}
+          </div>
         </div>
       )}
 

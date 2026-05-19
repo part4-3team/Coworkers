@@ -44,10 +44,16 @@ export default function HistoryBoard({
       ) : null}
 
       {isLoading ? (
-        <div className="flex min-h-80 items-center justify-center">
-          <p className="text-sm font-normal text-text-default">
-            {MY_HISTORY_BOARD_STATUS_TEXT.loading}
-          </p>
+        <div
+          className="flex min-h-80 items-center justify-center"
+          role="status"
+          aria-label={MY_HISTORY_BOARD_STATUS_TEXT.loading}
+        >
+          <div className="sp-3balls">
+            <div className="ball ball01" />
+            <div className="ball ball02" />
+            <div className="ball ball03" />
+          </div>
         </div>
       ) : isError ? (
         <div className="flex min-h-80 items-center justify-center">
@@ -63,16 +69,30 @@ export default function HistoryBoard({
           ))}
 
           {isProgressivelyLoading ? (
-            <p className="mt-6 text-center text-sm font-normal text-text-default">
-              {MY_HISTORY_BOARD_STATUS_TEXT.progressiveLoading}
-            </p>
+            <div
+              className="mt-6 flex justify-center"
+              role="status"
+              aria-label={MY_HISTORY_BOARD_STATUS_TEXT.progressiveLoading}
+            >
+              <div className="sp-3balls">
+                <div className="ball ball01" />
+                <div className="ball ball02" />
+                <div className="ball ball03" />
+              </div>
+            </div>
           ) : null}
         </div>
       ) : isProgressivelyLoading ? (
-        <div className="flex min-h-80 flex-1 items-center justify-center">
-          <p className="text-sm font-normal text-text-default">
-            {MY_HISTORY_BOARD_STATUS_TEXT.progressiveLoading}
-          </p>
+        <div
+          className="flex min-h-80 flex-1 items-center justify-center"
+          role="status"
+          aria-label={MY_HISTORY_BOARD_STATUS_TEXT.progressiveLoading}
+        >
+          <div className="sp-3balls">
+            <div className="ball ball01" />
+            <div className="ball ball02" />
+            <div className="ball ball03" />
+          </div>
         </div>
       ) : (
         <div className="flex min-h-80 flex-1 items-center justify-center">

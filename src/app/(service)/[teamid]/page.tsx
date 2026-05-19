@@ -32,8 +32,17 @@ export default function TaskDetailPage({ params }: TeamPageProps) {
       teamId: teamid,
     });
 
-  if (isTeamRouteLoading || isTeamLoading || isTodayTaskListsLoading)
-    return null;
+  if (isTeamRouteLoading || isTeamLoading || isTodayTaskListsLoading) {
+    return (
+      <div id="page-loader">
+        <div className="sp-3balls">
+          <div className="ball ball01" />
+          <div className="ball ball02" />
+          <div className="ball ball03" />
+        </div>
+      </div>
+    );
+  }
 
   if (!isAccessible) return null;
 
