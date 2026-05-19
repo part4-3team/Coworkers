@@ -21,7 +21,17 @@ function loadImage(src: string): Promise<HTMLImageElement> {
 }
 
 /**
+ * 고정 출력 크기 (px).
+ * zoom 배율·원본 이미지 해상도에 관계없이 항상 이 크기로 저장됩니다.
+ * - zoom=1: 넓은 영역을 300×300으로 축소
+ * - zoom=2: 좁은 영역(더 확대된 부분)을 300×300으로 스트레칭 → 줌 반영
+ */
+const OUTPUT_SIZE = 300;
+
+/**
  * 이미지 소스와 픽셀 크롭 영역을 받아 크롭된 File 객체를 반환합니다.
+ * 출력 크기는 OUTPUT_SIZE × OUTPUT_SIZE 로 고정되므로 zoom 배율이
+ * 항상 결과 이미지에 올바르게 반영됩니다.
  */
 export async function getCroppedImageFile(
   imageSrc: string,
@@ -31,8 +41,11 @@ export async function getCroppedImageFile(
 ): Promise<File> {
   const image = await loadImage(imageSrc);
   const canvas = document.createElement('canvas');
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
+
+  // 출력 크기 고정 — zoom·원본 해상도와 무관하게 일정한 파일이 생성됨
+  canvas.width = OUTPUT_SIZE;
+  canvas.height = OUTPUT_SIZE;
+
   const ctx = canvas.getContext('2d');
 
   if (!ctx) {
@@ -41,14 +54,14 @@ export async function getCroppedImageFile(
 
   ctx.drawImage(
     image,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
+    pixelCrop.x, // 원본에서 crop 시작 x
+    pixelCrop.y, // 원본에서 crop 시작 y
+    pixelCrop.width, // 원본에서 crop 너비 (zoom 클수록 이 값이 작아짐)
+    pixelCrop.height, // 원본에서 crop 높이
     0,
     0,
-    pixelCrop.width,
-    pixelCrop.height,
+    OUTPUT_SIZE, // 고정 출력 너비로 스트레칭
+    OUTPUT_SIZE, // 고정 출력 높이로 스트레칭
   );
 
   return new Promise((resolve, reject) => {
